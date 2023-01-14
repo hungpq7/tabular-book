@@ -8,16 +8,12 @@ parts:
 - caption: Python Programming
   chapters:
   - file: content/01-python-basic-concepts
-    title: (python) Basic Concepts
 
 - caption: Data Visualization
   chapters:
   - file: content/09-matplotlib-graph-construction
-    title: (matplotlib) Graph Construction
   - file: content/27-plotly-interactive-visualization
-    title: (plotly) Interactive Visualization
 
 - caption: Optimization
   chapters:
   - file: content/36-numpy-gradient-descent
-    title: (numpy) Gradient Descent
