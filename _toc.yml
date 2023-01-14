@@ -8,7 +8,7 @@ parts:
 - caption: Python Programming
   chapters:
   - file: content/01-python-basic-concepts
-    title: (python) Basic Concepts
+    title: Basic Concepts
 
 - caption: Data Visualization
   chapters:
@@ -20,3 +20,9 @@ parts:
   chapters:
   - file: content/36-numpy-gradient-descent
     title: (torch) Gradient Descent
+
+- caption: Jupyter Book tutorial
+  chapters:
+  - file: content/sample/markdown-notebooks.md
+  - file: content/sample/markdown.md
+  - file: content/sample/notebooks.ipynb

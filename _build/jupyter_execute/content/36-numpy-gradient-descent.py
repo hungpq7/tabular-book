@@ -7,9 +7,9 @@
 # There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
 # Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
 # 
-# <img src='image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
+# <img src='/image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
 # 
-# `<img src='image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>`
+# `<img src='/image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>`
 
 # <img src='content/image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
 # 
