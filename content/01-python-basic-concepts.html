@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Basic Concepts in Python &#8212; My sample book</title>
+    <title>1. Variables and objects &#8212; My sample book</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -123,7 +123,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   (python) Basic Concepts
+   1. Variables and objects
   </a>
  </li>
 </ul>
@@ -153,6 +153,28 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="36-numpy-gradient-descent.html">
    1. Gradient Descent variants
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Jupyter Book tutorial
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="sample/markdown-notebooks.html">
+   Notebooks with MyST Markdown
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sample/markdown.html">
+   Markdown Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sample/notebooks.html">
+   Content with notebooks
   </a>
  </li>
 </ul>
@@ -361,125 +383,125 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#variables-and-objects">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
    1. Variables and objects
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#simple-objects">
      1.1. Simple objects
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#object-identity">
      1.2. Object identity
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#operators">
    2. Operators
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#math-operators">
      2.1. Math operators
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#assignment-operators">
      2.2. Assignment operators
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#comparison-operators">
      2.3. Comparison operators
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#other-concepts">
    3. Other concepts
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#functions">
      3.1. Functions
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pipe">
      3.2. Pipe
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#special-punctuations">
      3.3. Special punctuations
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#magic-commands">
      3.4. Magic commands
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#libraries">
    4. Libraries
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#accessing-a-library">
      4.1. Accessing a library
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#libraries-help">
      4.2. Libraries help
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#libraries-management">
      4.3. Libraries management
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#control-flow-statements">
    5. Control flow statements
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-if-statement">
      5.1. The if statement
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-for-loop">
      5.2. The for loop
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-while-loop">
      5.3. The while loop
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#errors-handling">
      5.4. Errors handling
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
+     <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#type-of-errors">
        Type of errors
       </a>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
+     <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#exceptions-handling">
        Exceptions handling
       </a>
@@ -497,7 +519,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Basic Concepts in Python</h1>
+                <h1>1. Variables and objects</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -507,125 +529,125 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#variables-and-objects">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
    1. Variables and objects
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#simple-objects">
      1.1. Simple objects
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#object-identity">
      1.2. Object identity
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#operators">
    2. Operators
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#math-operators">
      2.1. Math operators
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#assignment-operators">
      2.2. Assignment operators
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#comparison-operators">
      2.3. Comparison operators
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#other-concepts">
    3. Other concepts
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#functions">
      3.1. Functions
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pipe">
      3.2. Pipe
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#special-punctuations">
      3.3. Special punctuations
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#magic-commands">
      3.4. Magic commands
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#libraries">
    4. Libraries
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#accessing-a-library">
      4.1. Accessing a library
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#libraries-help">
      4.2. Libraries help
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#libraries-management">
      4.3. Libraries management
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#control-flow-statements">
    5. Control flow statements
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-if-statement">
      5.1. The if statement
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-for-loop">
      5.2. The for loop
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-while-loop">
      5.3. The while loop
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#errors-handling">
      5.4. Errors handling
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
+     <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#type-of-errors">
        Type of errors
       </a>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
+     <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#exceptions-handling">
        Exceptions handling
       </a>
@@ -644,12 +666,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="basic-concepts-in-python">
-<h1>Basic Concepts in Python<a class="headerlink" href="#basic-concepts-in-python" title="Permalink to this headline">#</a></h1>
-<section id="variables-and-objects">
-<h2>1. Variables and objects<a class="headerlink" href="#variables-and-objects" title="Permalink to this headline">#</a></h2>
+  <section id="variables-and-objects">
+<h1>1. Variables and objects<a class="headerlink" href="#variables-and-objects" title="Permalink to this headline">#</a></h1>
 <section id="simple-objects">
-<h3>1.1. Simple objects<a class="headerlink" href="#simple-objects" title="Permalink to this headline">#</a></h3>
+<h2>1.1. Simple objects<a class="headerlink" href="#simple-objects" title="Permalink to this headline">#</a></h2>
 <p>Each object has a unique data type. Use the <code style='font-size:13px;'>type()</code> function to check the class of the object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -750,7 +770,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="object-identity">
-<h3>1.2. Object identity<a class="headerlink" href="#object-identity" title="Permalink to this headline">#</a></h3>
+<h2>1.2. Object identity<a class="headerlink" href="#object-identity" title="Permalink to this headline">#</a></h2>
 <p>The <code style='font-size:13px;'>id()</code> function displays the address of an object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -811,9 +831,9 @@ title="Print to PDF"
 </section>
 </section>
 <section id="operators">
-<h2>2. Operators<a class="headerlink" href="#operators" title="Permalink to this headline">#</a></h2>
+<h1>2. Operators<a class="headerlink" href="#operators" title="Permalink to this headline">#</a></h1>
 <section id="math-operators">
-<h3>2.1. Math operators<a class="headerlink" href="#math-operators" title="Permalink to this headline">#</a></h3>
+<h2>2.1. Math operators<a class="headerlink" href="#math-operators" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># addition</span>
@@ -907,7 +927,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="assignment-operators">
-<h3>2.2. Assignment operators<a class="headerlink" href="#assignment-operators" title="Permalink to this headline">#</a></h3>
+<h2>2.2. Assignment operators<a class="headerlink" href="#assignment-operators" title="Permalink to this headline">#</a></h2>
 <p>Assignment operators assign the value to a variable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -989,7 +1009,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="comparison-operators">
-<h3>2.3. Comparison operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">#</a></h3>
+<h2>2.3. Comparison operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">#</a></h2>
 <p>Comparison operators check if the two values are equal or not; returns <code style='font-size:13px;'>True</code> or <code style='font-size:13px;'>False</code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1093,9 +1113,9 @@ Comparison operators are very similar to identity operators, but they check the 
 </section>
 </section>
 <section id="other-concepts">
-<h2>3. Other concepts<a class="headerlink" href="#other-concepts" title="Permalink to this headline">#</a></h2>
+<h1>3. Other concepts<a class="headerlink" href="#other-concepts" title="Permalink to this headline">#</a></h1>
 <section id="functions">
-<h3>3.1. Functions<a class="headerlink" href="#functions" title="Permalink to this headline">#</a></h3>
+<h2>3.1. Functions<a class="headerlink" href="#functions" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello world&#39;</span><span class="p">)</span>
@@ -1147,7 +1167,7 @@ Jupyter
 </div>
 </section>
 <section id="pipe">
-<h3>3.2. Pipe<a class="headerlink" href="#pipe" title="Permalink to this headline">#</a></h3>
+<h2>3.2. Pipe<a class="headerlink" href="#pipe" title="Permalink to this headline">#</a></h2>
 <p>The idea of <code style='font-size:13px;'>sspipe</code> is inspired by the <em>pipe operator</em> <code style='font-size:13px;'>%&gt;%</code> from <code style='font-size:13px;'>magrittr</code>, a library of R. It has the ability to transform a complicated expression with nested parentheses to a sequence of simple expressions, which improves the human readability.</p>
 <p>The whole functionality of this library is exposed by two objects, <code style='font-size:13px;'>p</code> (as a <em>wrapper</em> for functions to be called on the piped object) and <code style='font-size:13px;'>px</code> (as a <em>placeholder</em> for piped object). By default, the function will take the piped object as its first argument.</p>
 <div class="cell docutils container">
@@ -1199,7 +1219,7 @@ Hello!
 </div>
 </section>
 <section id="special-punctuations">
-<h3>3.3. Special punctuations<a class="headerlink" href="#special-punctuations" title="Permalink to this headline">#</a></h3>
+<h2>3.3. Special punctuations<a class="headerlink" href="#special-punctuations" title="Permalink to this headline">#</a></h2>
 <p>This section introduces three punctuations having special functionality in Python</p>
 <ul class="simple">
 <li><p>The hash <code style='font-size:13px;'>#</code> indicates the rest of the line is commented content and will not be executed. Comments can be used to explain thinking process and mark some code lines for late execution.</p></li>
@@ -1247,7 +1267,7 @@ Hello!
 </div>
 </section>
 <section id="magic-commands">
-<h3>3.4. Magic commands<a class="headerlink" href="#magic-commands" title="Permalink to this headline">#</a></h3>
+<h2>3.4. Magic commands<a class="headerlink" href="#magic-commands" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show all magic commands</span>
@@ -1316,10 +1336,10 @@ z          int                           1
 </section>
 </section>
 <section id="libraries">
-<h2>4. Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">#</a></h2>
+<h1>4. Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">#</a></h1>
 <p>A library (also known as library or module) is a <code style='font-size:13px;'>.py</code> suffix file containing a set of functions and objects used for specific purposes.</p>
 <section id="accessing-a-library">
-<h3>4.1. Accessing a library<a class="headerlink" href="#accessing-a-library" title="Permalink to this headline">#</a></h3>
+<h2>4.1. Accessing a library<a class="headerlink" href="#accessing-a-library" title="Permalink to this headline">#</a></h2>
 <p>The examples below give access to the <code style='font-size:13px;'>pi</code> constant and the <code style='font-size:13px;'>degrees()</code> function of the <code style='font-size:13px;'>math</code> module, then convert the angle <span class="math notranslate nohighlight">\(\pi\)</span> from radian to degree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1379,7 +1399,7 @@ z          int                           1
 </div>
 </section>
 <section id="libraries-help">
-<h3>4.2. Libraries help<a class="headerlink" href="#libraries-help" title="Permalink to this headline">#</a></h3>
+<h2>4.2. Libraries help<a class="headerlink" href="#libraries-help" title="Permalink to this headline">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># list of functions and constants</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="nb">dir</span><span class="p">(</span><span class="n">math</span><span class="p">)</span>
@@ -1391,7 +1411,7 @@ z          int                           1
 </div>
 </section>
 <section id="libraries-management">
-<h3>4.3. Libraries management<a class="headerlink" href="#libraries-management" title="Permalink to this headline">#</a></h3>
+<h2>4.3. Libraries management<a class="headerlink" href="#libraries-management" title="Permalink to this headline">#</a></h2>
 <p>This section introduces <code class="docutils literal notranslate"><span class="pre">pip</span></code>, the packages manager for Python.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># install a library</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">pygame</span>
@@ -1424,10 +1444,10 @@ z          int                           1
 </section>
 </section>
 <section id="control-flow-statements">
-<h2>5. Control flow statements<a class="headerlink" href="#control-flow-statements" title="Permalink to this headline">#</a></h2>
+<h1>5. Control flow statements<a class="headerlink" href="#control-flow-statements" title="Permalink to this headline">#</a></h1>
 <p>In Python, indentation is a requirement, not just to make the code look pretty.</p>
 <section id="the-if-statement">
-<h3>5.1. The if statement<a class="headerlink" href="#the-if-statement" title="Permalink to this headline">#</a></h3>
+<h2>5.1. The if statement<a class="headerlink" href="#the-if-statement" title="Permalink to this headline">#</a></h2>
 <p>If the condition is <code style='font-size:13px;'>True</code>, then the body of <code style='font-size:13px;'>if</code> (recognized by indentation) gets executed. If the condition is <code style='font-size:13px;'>False</code>, then the body of <code style='font-size:13px;'>else</code> gets executed instead.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1500,7 +1520,7 @@ z          int                           1
 </div>
 </section>
 <section id="the-for-loop">
-<h3>5.2. The for loop<a class="headerlink" href="#the-for-loop" title="Permalink to this headline">#</a></h3>
+<h2>5.2. The for loop<a class="headerlink" href="#the-for-loop" title="Permalink to this headline">#</a></h2>
 <p>A <code style='font-size:13px;'>for</code> loop runs through every item of an iterable and executes its body part with that value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1557,7 +1577,7 @@ None
 </div>
 </section>
 <section id="the-while-loop">
-<h3>5.3. The while loop<a class="headerlink" href="#the-while-loop" title="Permalink to this headline">#</a></h3>
+<h2>5.3. The while loop<a class="headerlink" href="#the-while-loop" title="Permalink to this headline">#</a></h2>
 <p>A <code style='font-size:13px;'>while</code> loop statement repeatedly executes its body as long as the condition is <code style='font-size:13px;'>True</code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1627,9 +1647,9 @@ None
 </div>
 </section>
 <section id="errors-handling">
-<h3>5.4. Errors handling<a class="headerlink" href="#errors-handling" title="Permalink to this headline">#</a></h3>
+<h2>5.4. Errors handling<a class="headerlink" href="#errors-handling" title="Permalink to this headline">#</a></h2>
 <section id="type-of-errors">
-<h4>Type of errors<a class="headerlink" href="#type-of-errors" title="Permalink to this headline">#</a></h4>
+<h3>Type of errors<a class="headerlink" href="#type-of-errors" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Syntax errors: caused by improper syntax of Python</p></li>
 <li><p>Logical errors (or exceptions): occur at runtime</p></li>
@@ -1683,7 +1703,7 @@ None
 </div>
 </section>
 <section id="exceptions-handling">
-<h4>Exceptions handling<a class="headerlink" href="#exceptions-handling" title="Permalink to this headline">#</a></h4>
+<h3>Exceptions handling<a class="headerlink" href="#exceptions-handling" title="Permalink to this headline">#</a></h3>
 <p>While syntax errors are mostly done by beginners, experienced Data Scientist would always want to handle exceptions in practice. A code block which can raise exception is placed inside the <code style='font-size:13px;'>try</code> clause. The code that handles the exception is written in the <code style='font-size:13px;'>except</code> clause.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1769,7 +1789,6 @@ The reciprocal: 0.1
 </div>
 <hr class="docutils" />
 <p><em>♥ By Quang Hung x Thuy Linh ♥</em></p>
-</section>
 </section>
 </section>
 </section>
