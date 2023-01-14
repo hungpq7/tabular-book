@@ -1,0 +1,669 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; My sample book</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">My sample book</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p class="caption">
+ <span class="caption-text">
+  Python Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01-python-basic-concepts.html">
+   1. Variables and objects
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Data Visualization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../09-matplotlib-graph-construction.html">
+   1. Matplotlib API
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../27-plotly-interactive-visualization.html">
+   1. Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Optimization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../36-numpy-gradient-descent.html">
+   1. Gradient Descent variants
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/util/abbreviations.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/content/util/abbreviations.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1><no title></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <p><em>(Mainly algorithm names)</em></p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>Abbreviation</p></th>
+<th class="text-align:left head"><p>Definition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>ACF</p></td>
+<td class="text-align:left"><p><strong>a</strong>uto-<strong>c</strong>orrelation <strong>f</strong>unction</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>AdaBoost</p></td>
+<td class="text-align:left"><p><strong>ada</strong>ptive <strong>boost</strong>ing</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>AdaDelta</p></td>
+<td class="text-align:left"><p><strong>ada</strong>ptive <strong>delta</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>AdaGrad</p></td>
+<td class="text-align:left"><p><strong>ada</strong>ptive <strong>grad</strong>ients</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>Adam</p></td>
+<td class="text-align:left"><p><strong>ada</strong>ptive <strong>m</strong>omentum</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>AIC</p></td>
+<td class="text-align:left"><p><strong>a</strong>kaike <strong>i</strong>nformation <strong>c</strong>riteria</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>ALS</p></td>
+<td class="text-align:left"><p><strong>a</strong>lternating <strong>l</strong>east <strong>s</strong>quares</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>ANOVA</p></td>
+<td class="text-align:left"><p><strong>an</strong>alysis <strong>o</strong>f <strong>va</strong>riance</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>API</p></td>
+<td class="text-align:left"><p><strong>a</strong>pplication <strong>p</strong>rogramming <strong>i</strong>nterface</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>ARIMA</p></td>
+<td class="text-align:left"><p><strong>a</strong>uto-<strong>r</strong>egressive <strong>i</strong>ntegrate <strong>m</strong>oving <strong>a</strong>verage</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>AUC</p></td>
+<td class="text-align:left"><p><strong>a</strong>rea <strong>u</strong>nder the <strong>c</strong>urve</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>BIC</p></td>
+<td class="text-align:left"><p><strong>b</strong>ayesian <strong>i</strong>nformation <strong>c</strong>riteria</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>BERT</p></td>
+<td class="text-align:left"><p><strong>b</strong>idirectional <strong>e</strong>ncoder <strong>r</strong>epresentations from <strong>t</strong>ransformers</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>BPTT</p></td>
+<td class="text-align:left"><p><strong>b</strong>ack<strong>p</strong>ropagation <strong>t</strong>hrough <strong>t</strong>ime</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>CART</p></td>
+<td class="text-align:left"><p><strong>c</strong>lassification <strong>a</strong>nd <strong>r</strong>egression <strong>t</strong>ree</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>CatBoost</p></td>
+<td class="text-align:left"><p><strong>cat</strong>egorical <strong>boost</strong>ing</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>CDF</p></td>
+<td class="text-align:left"><p><strong>c</strong>umulative <strong>d</strong>istribution <strong>f</strong>unction</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>CNN</p></td>
+<td class="text-align:left"><p><strong>c</strong>onvolutional <strong>n</strong>eural <strong>n</strong>etwork</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>CPU</p></td>
+<td class="text-align:left"><p><strong>c</strong>entral <strong>p</strong>rocessing <strong>u</strong>nit</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>CSV</p></td>
+<td class="text-align:left"><p><strong>c</strong>omma-<strong>s</strong>eparated <strong>v</strong>alue</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>CV</p></td>
+<td class="text-align:left"><p><strong>c</strong>omputer <strong>v</strong>ision</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>CV</p></td>
+<td class="text-align:left"><p><strong>c</strong>ross <strong>v</strong>alidation</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>DART</p></td>
+<td class="text-align:left"><p><strong>d</strong>ropouts meet multiple <strong>a</strong>dditive <strong>r</strong>egression <strong>t</strong>rees</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>DBSCAN</p></td>
+<td class="text-align:left"><p><strong>d</strong>ensity-<strong>b</strong>ased <strong>s</strong>patial <strong>c</strong>lustering of <strong>a</strong>pplications with <strong>n</strong>oises</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>DFS</p></td>
+<td class="text-align:left"><p><strong>d</strong>eep <strong>f</strong>eature <strong>s</strong>ynthesis</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>EFB</p></td>
+<td class="text-align:left"><p><strong>e</strong>xclusive <strong>f</strong>eature <strong>b</strong>undling</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>ETS</p></td>
+<td class="text-align:left"><p><strong>e</strong>rror, <strong>t</strong>rend, <strong>s</strong>easonal</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>GBDT</p></td>
+<td class="text-align:left"><p><strong>g</strong>radient <strong>b</strong>oosted <strong>d</strong>ecision <strong>t</strong>rees</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>GMM</p></td>
+<td class="text-align:left"><p><strong>g</strong>aussian <strong>m</strong>ixture <strong>m</strong>odels</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>GOSS</p></td>
+<td class="text-align:left"><p><strong>g</strong>radient-based <strong>o</strong>ne-<strong>s</strong>ide <strong>s</strong>ampling</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>GPU</p></td>
+<td class="text-align:left"><p><strong>g</strong>raphics <strong>p</strong>rocessing <strong>u</strong>nit</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>HMM</p></td>
+<td class="text-align:left"><p><strong>h</strong>idden <strong>m</strong>arkov <strong>m</strong>odel</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>IQR</p></td>
+<td class="text-align:left"><p><strong>i</strong>nter<strong>q</strong>uartile <strong>r</strong>ange</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>JSON</p></td>
+<td class="text-align:left"><p><strong>j</strong>ava<strong>s</strong>cript <strong>o</strong>bject <strong>n</strong>otation</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>KDE</p></td>
+<td class="text-align:left"><p><strong>k</strong>ernel <strong>d</strong>ensity <strong>e</strong>stimation</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>KNN</p></td>
+<td class="text-align:left"><p><strong>k</strong>-<strong>n</strong>earest <strong>n</strong>eighbors</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>LDA</p></td>
+<td class="text-align:left"><p><strong>l</strong>inear <strong>d</strong>iscriminant <strong>a</strong>nalysis</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>LightGBM</p></td>
+<td class="text-align:left"><p><strong>light</strong> <strong>g</strong>radient <strong>b</strong>oosting <strong>m</strong>achine</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>MAB</p></td>
+<td class="text-align:left"><p><strong>m</strong>ulti-<strong>a</strong>rmed <strong>b</strong>andit</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>MAE</p></td>
+<td class="text-align:left"><p><strong>m</strong>ean <strong>a</strong>bsolute <strong>e</strong>rror</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>MAP</p></td>
+<td class="text-align:left"><p><strong>m</strong>aximum <strong>a</strong> <strong>p</strong>riori</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>MAPE</p></td>
+<td class="text-align:left"><p><strong>m</strong>ean <strong>a</strong>bsolute <strong>p</strong>ercentage <strong>e</strong>rror</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>MAR</p></td>
+<td class="text-align:left"><p><strong>m</strong>issing <strong>a</strong>t <strong>r</strong>andom</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>MCAR</p></td>
+<td class="text-align:left"><p><strong>m</strong>issing <strong>c</strong>ompletely <strong>a</strong>t <strong>r</strong>andom</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>MLE</p></td>
+<td class="text-align:left"><p><strong>m</strong>aximum <strong>l</strong>ikelihood <strong>e</strong>stimation</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>MLP</p></td>
+<td class="text-align:left"><p><strong>m</strong>ulti-<strong>l</strong>ayer <strong>p</strong>erceptron</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>MNAR</p></td>
+<td class="text-align:left"><p><strong>m</strong>issing <strong>n</strong>ot <strong>a</strong>t <strong>r</strong>andom</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>MSE</p></td>
+<td class="text-align:left"><p><strong>m</strong>ean <strong>s</strong>quared <strong>e</strong>rror</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>NaN</p></td>
+<td class="text-align:left"><p><strong>n</strong>ot <strong>a</strong> <strong>n</strong>umber</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>nCDG</p></td>
+<td class="text-align:left"><p><strong>n</strong>ormalized <strong>d</strong>iscounted <strong>c</strong>umulative <strong>g</strong>ain</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>NER</p></td>
+<td class="text-align:left"><p><strong>n</strong>amed-<strong>e</strong>ntity <strong>r</strong>ecognition</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>NGBoost</p></td>
+<td class="text-align:left"><p><strong>n</strong>atural <strong>g</strong>radient <strong>boost</strong>ing</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>NLP</p></td>
+<td class="text-align:left"><p><strong>n</strong>atural <strong>l</strong>anguage <strong>p</strong>rocessing</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>OLS</p></td>
+<td class="text-align:left"><p><strong>o</strong>rdinary <strong>l</strong>east <strong>s</strong>quare</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>OOP</p></td>
+<td class="text-align:left"><p><strong>o</strong>bject-<strong>o</strong>riented <strong>p</strong>rogramming</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>OS</p></td>
+<td class="text-align:left"><p><strong>o</strong>perating <strong>s</strong>ystem</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>PACF</p></td>
+<td class="text-align:left"><p><strong>p</strong>artial <strong>a</strong>uto-<strong>c</strong>orrelation <strong>f</strong>unction</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>PCA</p></td>
+<td class="text-align:left"><p><strong>p</strong>rinciple <strong>c</strong>omponent <strong>a</strong>nalysis</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>PDF</p></td>
+<td class="text-align:left"><p><strong>p</strong>robability <strong>d</strong>istribution <strong>f</strong>unction</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>POS</p></td>
+<td class="text-align:left"><p><strong>p</strong>art-<strong>o</strong>f-<strong>s</strong>peech</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>RegExp</p></td>
+<td class="text-align:left"><p><strong>reg</strong>ular <strong>exp</strong>ression</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>ReLU</p></td>
+<td class="text-align:left"><p><strong>re</strong>ctified <strong>l</strong>inear <strong>u</strong>nit</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>RMSE</p></td>
+<td class="text-align:left"><p><strong>r</strong>oot <strong>m</strong>ean <strong>s</strong>quared <strong>e</strong>rror</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>RMSprop</p></td>
+<td class="text-align:left"><p><strong>r</strong>oot <strong>m</strong>ean <strong>s</strong>quared <strong>prop</strong>agation</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>RNN</p></td>
+<td class="text-align:left"><p><strong>r</strong>ecurrent <strong>n</strong>eural <strong>n</strong>etwork</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>ROC</p></td>
+<td class="text-align:left"><p><strong>r</strong>eceiver <strong>o</strong>perating <strong>c</strong>haracteristics</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>SGD</p></td>
+<td class="text-align:left"><p><strong>s</strong>tochastic <strong>g</strong>radient <strong>d</strong>escent</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>SHAP</p></td>
+<td class="text-align:left"><p><strong>sh</strong>apley <strong>a</strong>dditive ex<strong>p</strong>lanations</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>SMBO</p></td>
+<td class="text-align:left"><p><strong>s</strong>equential <strong>m</strong>odel-<strong>b</strong>ased <strong>o</strong>ptimization</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>SMOTE</p></td>
+<td class="text-align:left"><p><strong>s</strong>ynthetic <strong>m</strong>inority <strong>o</strong>versampling <strong>te</strong>chique</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>SOTA</p></td>
+<td class="text-align:left"><p><strong>s</strong>tate-<strong>o</strong>f-<strong>t</strong>he-<strong>a</strong>rt</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>SQL</p></td>
+<td class="text-align:left"><p><strong>s</strong>tructured <strong>q</strong>uery <strong>l</strong>anguage</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>SVD</p></td>
+<td class="text-align:left"><p><strong>s</strong>ingular <strong>v</strong>alue <strong>d</strong>ecomposition</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>SVM</p></td>
+<td class="text-align:left"><p><strong>s</strong>upport <strong>v</strong>ector <strong>m</strong>achine</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>TBATS</p></td>
+<td class="text-align:left"><p><strong>t</strong>rigonometric seasonality, <strong>b</strong>ox-cox transformation, <strong>a</strong>rma errors, <strong>t</strong>rend and <strong>s</strong>easonal components</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>TF-IDF</p></td>
+<td class="text-align:left"><p><strong>t</strong>erm <strong>f</strong>requency <strong>i</strong>nverse <strong>d</strong>ocument <strong>f</strong>requency</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>TPE</p></td>
+<td class="text-align:left"><p><strong>T</strong>ree-structured <strong>P</strong>arzen <strong>E</strong>stimators</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>TSNE</p></td>
+<td class="text-align:left"><p><strong>t</strong>-<strong>d</strong>istributed <strong>s</strong>tochastic <strong>n</strong>eighbor <strong>e</strong>mbedding</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>UDF</p></td>
+<td class="text-align:left"><p><strong>u</strong>ser-<strong>d</strong>efined <strong>f</strong>unction</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>UI</p></td>
+<td class="text-align:left"><p><strong>u</strong>ser <strong>i</strong>nterface</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>UMAP</p></td>
+<td class="text-align:left"><p><strong>u</strong>niform <strong>m</strong>anifold <strong>a</strong>pproximation and <strong>p</strong>rojection</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>XGBoost</p></td>
+<td class="text-align:left"><p>e<strong>x</strong>treme <strong>g</strong>radient <strong>boost</strong>ing</p></td>
+</tr>
+</tbody>
+</table>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/util"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By The Jupyter Book Community<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
