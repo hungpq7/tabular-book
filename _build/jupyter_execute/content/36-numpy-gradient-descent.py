@@ -8,6 +8,20 @@
 # Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
 # 
 # <img src='image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
+# 
+# `<img src='image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>`
+
+# <img src='content/image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
+# 
+# `<img src='content/image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>`
+# 
+# <img src='./image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
+# 
+# `<img src='./image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>`
+
+# ![fishy](image/gradient_descent_evolutionary.png)
+# 
+# `![fishy](image/gradient_descent_evolutionary.png)`
 
 # ## 1.1. BGD
 # This section is about the most basic idea of the family, Full-Batch Gradient Descent (BGD). Also known as Vanilla GD.
