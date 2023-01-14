@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # 1. Variables and objects
+# # Basic Concepts in Python
 
-# ## 1.1. Simple objects
+# ## 1. Variables and objects
+
+# ### 1.1. Simple objects
 
 #  Each object has a unique data type. Use the <code style='font-size:13px;'>type()</code> function to check the class of the object.
 
@@ -64,7 +66,7 @@ a = a + 2
 a
 
 
-# ## 1.2. Object identity
+# ### 1.2. Object identity
 
 # The <code style='font-size:13px;'>id()</code> function displays the address of an object.
 
@@ -101,9 +103,9 @@ y = 10e5
 y is x
 
 
-# # 2. Operators
+# ## 2. Operators
 
-# ## 2.1. Math operators
+# ### 2.1. Math operators
 
 # In[12]:
 
@@ -154,7 +156,7 @@ y is x
 2 ** 5 == 32
 
 
-# ## 2.2. Assignment operators
+# ### 2.2. Assignment operators
 # Assignment operators assign the value to a variable.
 
 # In[19]:
@@ -206,7 +208,7 @@ x, y, z = 3, 8, 1
 print(x, y, z)
 
 
-# ## 2.3. Comparison operators
+# ### 2.3. Comparison operators
 # Comparison operators check if the two values are equal or not; returns <code style='font-size:13px;'>True</code> or <code style='font-size:13px;'>False</code>.
 
 # In[25]:
@@ -262,9 +264,9 @@ print(x, y, z)
 # <b style='color:navy'><i class="fa fa-info-circle"></i>&nbsp; Note</b><br>
 # Comparison operators are very similar to identity operators, but they check the values instead of addresses.
 
-# # 3. Other concepts
+# ## 3. Other concepts
 
-# ## 3.1. Functions
+# ### 3.1. Functions
 
 # In[33]:
 
@@ -288,7 +290,7 @@ get_ipython().run_line_magic('pinfo', 'print')
 print('Anaconda', 'Python', 'Jupyter', sep='\n')
 
 
-# ## 3.2. Pipe
+# ### 3.2. Pipe
 # The idea of <code style='font-size:13px;'>sspipe</code> is inspired by the *pipe operator* <code style='font-size:13px;'>%>%</code> from <code style='font-size:13px;'>magrittr</code>, a library of R. It has the ability to transform a complicated expression with nested parentheses to a sequence of simple expressions, which improves the human readability.
 # 
 # The whole functionality of this library is exposed by two objects, <code style='font-size:13px;'>p</code> (as a *wrapper* for functions to be called on the piped object) and <code style='font-size:13px;'>px</code> (as a *placeholder* for piped object). By default, the function will take the piped object as its first argument.
@@ -324,7 +326,7 @@ print(int(sqrt(abs(ceil(pi)))))
 pi | p(ceil) | p(abs) | p(sqrt) | p(int) | p(print)
 
 
-# ## 3.3. Special punctuations
+# ### 3.3. Special punctuations
 # This section introduces three punctuations having special functionality in Python
 # - The hash <code style='font-size:13px;'>#</code> indicates the rest of the line is commented content and will not be executed. Comments can be used to explain thinking process and mark some code lines for late execution.
 # - The backslash <code style='font-size:13px;'>\\</code> works as a continuation character, it tells Python that the line should continue.
@@ -349,7 +351,7 @@ print(1); print(2)
 print('Hello, world!')
 
 
-# ## 3.4. Magic commands
+# ### 3.4. Magic commands
 
 # In[42]:
 
@@ -379,10 +381,10 @@ get_ipython().run_line_magic('timeit', 'L = [n**2 for n in range(1000)]')
 get_ipython().run_line_magic('whos', '')
 
 
-# # 4. Libraries
+# ## 4. Libraries
 # A library (also known as library or module) is a <code style='font-size:13px;'>.py</code> suffix file containing a set of functions and objects used for specific purposes.
 
-# ## 4.1. Accessing a library
+# ### 4.1. Accessing a library
 
 # The examples below give access to the <code style='font-size:13px;'>pi</code> constant and the <code style='font-size:13px;'>degrees()</code> function of the <code style='font-size:13px;'>math</code> module, then convert the angle $\pi$ from radian to degree.
 
@@ -418,7 +420,7 @@ from math import pi as pi_number, degrees as radian_to_degree
 radian_to_degree(pi_number)
 
 
-# ## 4.2. Libraries help
+# ### 4.2. Libraries help
 # 
 # ```python
 # # list of functions and constants
@@ -430,7 +432,7 @@ radian_to_degree(pi_number)
 # help(math)
 # ```
 
-# ## 4.3. Libraries management
+# ### 4.3. Libraries management
 # This section introduces `pip`, the packages manager for Python.
 # 
 # ```python
@@ -462,10 +464,10 @@ radian_to_degree(pi_number)
 # conda install -c r r-irkernel
 # ```
 
-# # 5. Control flow statements
+# ## 5. Control flow statements
 # In Python, indentation is a requirement, not just to make the code look pretty.
 
-# ## 5.1. The if statement
+# ### 5.1. The if statement
 # If the condition is <code style='font-size:13px;'>True</code>, then the body of <code style='font-size:13px;'>if</code> (recognized by indentation) gets executed. If the condition is <code style='font-size:13px;'>False</code>, then the body of <code style='font-size:13px;'>else</code> gets executed instead.
 
 # In[51]:
@@ -516,7 +518,7 @@ x = 10
 print('x is positive') if x > 0 else print('x is at most 0')
 
 
-# ## 5.2. The for loop
+# ### 5.2. The for loop
 # A <code style='font-size:13px;'>for</code> loop runs through every item of an iterable and executes its body part with that value.
 
 # In[55]:
@@ -550,7 +552,7 @@ for i in [1, 2, 3, None, 5]:
 total
 
 
-# ## 5.3. The while loop
+# ### 5.3. The while loop
 # A <code style='font-size:13px;'>while</code> loop statement repeatedly executes its body as long as the condition is <code style='font-size:13px;'>True</code>.
 
 # In[2]:
@@ -597,9 +599,9 @@ while x < 10:
     print(x, end=' ')
 
 
-# ## 5.4. Errors handling
+# ### 5.4. Errors handling
 
-# ### Type of errors
+# #### Type of errors
 # - Syntax errors: caused by improper syntax of Python
 # - Logical errors (or exceptions): occur at runtime
 
@@ -622,7 +624,7 @@ if 1 > 0:
 print(no_name)
 
 
-# ### Exceptions handling
+# #### Exceptions handling
 # While syntax errors are mostly done by beginners, experienced Data Scientist would always want to handle exceptions in practice. A code block which can raise exception is placed inside the <code style='font-size:13px;'>try</code> clause. The code that handles the exception is written in the <code style='font-size:13px;'>except</code> clause.
 
 # In[65]:
