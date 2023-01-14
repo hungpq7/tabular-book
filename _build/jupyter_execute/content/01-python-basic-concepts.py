@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Basic Concepts in Python
-
 # ## 1. Variables and objects
 
 # ### 1.1. Simple objects
