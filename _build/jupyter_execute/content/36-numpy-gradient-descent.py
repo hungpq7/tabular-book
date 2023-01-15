@@ -1,29 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # 1. Gradient Descent variants
+# # Python: Gradient Descent
+
+# ## 1. Gradient Descent variants
 # In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where [Gradient Descent](https://en.wikipedia.org/wiki/Gradient_descent) (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a [differentiable](https://en.wikipedia.org/wiki/Differentiable_function) function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, $\mathcal{L}(\mathbf{w})$, where $\mathbf{w}$ represents model parameters. The gradient of this function is denoted $\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})$.
 # 
 # There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
 # Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
 # 
-# <img src='/image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
-# 
-# `<img src='/image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>`
-
-# <img src='content/image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
-# 
-# `<img src='content/image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>`
-# 
 # <img src='./image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
-# 
-# `<img src='./image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>`
 
-# ![fishy](image/gradient_descent_evolutionary.png)
-# 
-# `![fishy](image/gradient_descent_evolutionary.png)`
-
-# ## 1.1. BGD
+# ### 1.1. BGD
 # This section is about the most basic idea of the family, Full-Batch Gradient Descent (BGD). Also known as Vanilla GD.
 
 # In[1]:
@@ -36,7 +24,7 @@ plt.style.use(['seaborn', 'seaborn-whitegrid'])
 get_ipython().run_line_magic('config', "InlineBackend.figure_format = 'retina'")
 
 
-# ### Analysis of derivative
+# #### Analysis of derivative
 # To understand the smart idea behind Gradient Descent, we first analyze the relative position between a random point to its *closest* local minimum. We have already known derivarive at a point is the representation of *instantaneous velocity*, but how about its direction? To illustrate this, let's plot the derivatives at some points of a 1-dimensional function as vectors along the $x$-axis.
 # 
 # $$y=\frac{1}{128}(x^4-8x^3)$$
@@ -80,7 +68,7 @@ fig.savefig('output/directional_derivative.png', dpi=500, bbox_inches='tight')
 plt.close(fig)
 
 
-# ### Algorithm
+# #### Algorithm
 # From the above analyses, an iterative method call Gradient Descent has been proposed to find local minima. This algorithm initializes an arbitrary point and update its position at each iteration $t$ using the formula:
 # 
 # $$\begin{aligned}
@@ -209,10 +197,10 @@ listLabel = [
 compare_gd(listAlgo, listLabel)
 
 
-# ## 1.2. SGD
+# ### 1.2. SGD
 # In this section, we talk about some drawbacks of BGD in practice: (1) its heavy dependence on the intial point, (2) the capability of online learning, (3) the memory cost and how [Stochastic Gradient Descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) (SGD) comes to the rescue.
 
-# ### Stochastic behaviour
+# #### Stochastic behaviour
 # This Gradient Descent's variant only considers a part of data (mini-batch, or batch for short) instead of the whole dataset (full-batch) in each iteration to compute the gradient. The term *stochastic* means we add something *random*, *non-deterministic* into the algorithm. At first glance, a common sense is that using a part of data is less accurate, but it turns out SGD is amazingly efficient in practice. Let's analyze the advantages of SGD over BGD.
 # - SGD makes data in each iteration small enough so that it can be loaded into RAM with ease, this also reduces the computation cost significantly.
 # - Randomness in SGD works as a regularization mechanic, some sort of trade-off between exploration and exploitation. In short-term, noisy steps can lead the ball away from local minima or saddle points; while in long-term, the ball still tends to finish in a valley bottom. For BGD, the ball goes straight to the local minimum; this behaviour is deterministic and thus has no exploration.
@@ -220,7 +208,7 @@ compare_gd(listAlgo, listLabel)
 # 
 # As steps in SGD are very noisy, we need to update more frequently than BGD to reach *long-term* state. This leads to the idea of using more than one epoch (an epoch is a pass over all data samples), which will be described in the next part. Nowadays, the SGD algorithm using the epoch concept is implemented in many modern ML/DL frameworks. Later improved techniques are also developed based on this implementation; however, I still use BGD to make things as simple as possible.
 
-# ### Algorithm
+# #### Algorithm
 # *Input*
 # - A dataset $\mathcal{D}$ having $N$ samples
 # - A loss function $\mathcal{L}(\mathbf{w})$ and its gradient $\nabla{\mathcal{L}}$
@@ -240,12 +228,12 @@ compare_gd(listAlgo, listLabel)
 #     - Compute the step size by multiplying the learning rate and the gradient
 #     - Update the position using the rule: $\mathbf{w}\leftarrow\mathbf{w}-\eta\,\nabla{\mathcal{L}(\mathbf{w})}$
 
-# # 2. Enhanced methods
+# ## 2. Enhanced methods
 # For simplification purpose, in this section, the function to be minimized is $y=f(x)$.
 
-# ## 2.1. Adaptive gradient
+# ### 2.1. Adaptive gradient
 
-# ### Momentum
+# #### Momentum
 # As far as we know, GD works as a ball rolling down the hill and stops in a valley bottom. However, our ball will stuck in local minima most of the time, then we need some [acceleration](https://en.wikipedia.org/wiki/Acceleration) to helps it cross these traps. A Momentum term (in red) has been introduced to extend the GD's update rule as follows:
 # 
 # $$\begin{aligned}
@@ -345,7 +333,7 @@ path = 'output/momentum_gradient_descent.gif'
 gif.save(path, dpi=300, writer=PillowWriter())
 
 
-# ### Nesterov
+# #### Nesterov
 # NAG (Nesterov Accelerated Gradient) is an improved version of Momentum. As far as we know, Momentum adds $\gamma m_{t-1}$ to the current update; we can take advantage of this information to *approximately forecast* the next position $x_{t+1}\approx x_t+\gamma m_{t-1}$. The gradient is now computed at this new location. Using this *looking ahead* strategy, NAG makes the ball smarter instead of letting it rolls down slowly and blindly.
 # 
 # $$\begin{aligned}
@@ -420,9 +408,9 @@ listLabel = [
 compare_gd(listAlgo, listLabel)
 
 
-# ## 2.2. Adaptive learning rate
+# ### 2.2. Adaptive learning rate
 
-# ### AdaGrad
+# #### AdaGrad
 # AdaGrad (Adaptive Gradients)
 # The optimizers above remain one learning rate constant through training while AdaGrad adapts learning rate to the parameters, performing low learning rates for parameters associated with dense features, and higher learning rates for parameters associated with sparse features. AdaGrad is suitable for dealing with sparse data, the learning rate will be updated after each iteration.
 # 
@@ -494,7 +482,7 @@ listLabel = [
 compare_gd(listAlgo, listLabel)
 
 
-# ### RMSprop
+# #### RMSprop
 # RMSprop (Root Mean Squared Propagation) has been developed in attemp to resolve AdaGrad's radically diminishing learning rates. It defines $v_t$, an [exponentially moving average](https://en.wikipedia.org/wiki/Exponential_smoothing) which is calculated using $v_{t-1}$ and the last squared gradient $g_t^2$.
 # 
 # $$\begin{aligned}
@@ -571,7 +559,7 @@ listLabel = [
 compare_gd(listAlgo, listLabel)
 
 
-# ### AdaDelta
+# #### AdaDelta
 # AdaDelta (Adaptive Delta $\Delta x$) has both been developed in around the same time, but independently with RMSprop. Its main idea is very much like RMSprop, with an additional variable $u_t$, the exponential smoothing of $\Delta^2 x_t$. Both $u_t$ and $v_t$ share the same smoothing parameter, $\rho$. The update rules of AdaDelta is given below:
 # 
 # $$\begin{aligned}
@@ -651,9 +639,9 @@ listLabel = [
 compare_gd(listAlgo, listLabel)
 
 
-# ## 2.3. Addams family
+# ### 2.3. Addams family
 
-# ### Adam
+# #### Adam
 # Adam (Adaptive Momentum) is the combination of Momentum and RMSprop. It inherits $m_t$, the exponential smoothing of *gradient* from Momentum and $v_t$, the exponential smoothing of *squared gradient* from RMSprop. According to the author of Adam, the inititialize value of $m_t$ and $v_t$ are 0 so they are biased towards 0, especially with a large smoothing factor. Adam fixes these biases by computing the corrected version of exponential smoothing, $\hat{m}_t$ and $\hat{v}_t$.
 # 
 # $$\begin{aligned}
@@ -764,7 +752,7 @@ path = 'output/adam.gif'
 gif.save(path, dpi=300, writer=PillowWriter())
 
 
-# ### AdaMax
+# #### AdaMax
 # While Adam only updates $v_t$ using current gradient $g_t$ and past gradient $v_{t-1}$, it scales the gradient inversely proportionally with $L_2$ norm, AdaMax can generalize this update to the $L_p$ norm. But with large value of $p$, norms become unstable, however $L_\infty$ also generally exhibits stable behavior:
 # $\rho^\infty v_{t-1} + (1-\rho^\infty)|g_t|^\infty=\max(\rho v_{t-1},|g_t|)$.
 # 
@@ -778,7 +766,7 @@ gif.save(path, dpi=300, writer=PillowWriter())
 # 
 # AdaMax can perform better than Adam, especially in embedding problems.
 
-# ### Nadam
+# #### Nadam
 # Nadam (Nesterov accelerated Adam) is a combination of NAG and Adam. NAG performs more accurately than standard momentum because it allows to perform a more accurate step in the gradient direction by updating the parameters with the momentum step before computing the gradient.
 # 
 # $$\begin{aligned}
@@ -790,7 +778,7 @@ gif.save(path, dpi=300, writer=PillowWriter())
 # x_{t+1} &= x_t+\Delta x_t
 # \end{aligned}$$
 
-# ### AMSGrad
+# #### AMSGrad
 # AMSGrad is a variant of Adam which revisits the adaptive learning rate component in Adam and changes it to ensure that the current $v$ is always larger than the $v$ from the previous time step. In Adam, it has been observed that some minibatches provide large and informative gradients, but as these minibatches only occur rarely, exponential averaging diminishes their influence, which leads to poor convergence. By selecting max $v$, AMSGrad results in a non-increasing step size, which avoids the problems suffered by Adam.
 # 
 # $$\begin{aligned}
@@ -801,7 +789,7 @@ gif.save(path, dpi=300, writer=PillowWriter())
 # x_{t+1} &= x_t+\Delta x_t
 # \end{aligned}$$
 
-# # References
+# ## References
 # - *ruder.io - [An overview of gradient descent optimization algorithms](https://ruder.io/optimizing-gradient-descent/index.html)*
 # - *arxiv.org - [Advances in optimizing Recurrent Networks](https://arxiv.org/pdf/1212.0901v2.pdf)*
 # - *arxiv.org - [AdaDelta: An Adaptive Learning Rate Method](https://arxiv.org/pdf/1212.5701.pdf)*

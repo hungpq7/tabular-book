@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# # Python: Basic Concepts
+
 # ## 1. Variables and objects
 
 # ### 1.1. Simple objects
 
-#  Each object has a unique data type. Use the <code style='font-size:13px;'>type()</code> function to check the class of the object.
+#  Each object has a unique data type. Use the `type()` function to check the class of the object.
 
 # In[1]:
 
@@ -19,7 +21,7 @@ type(100)
 type('python')
 
 
-# The equal sign <code style='font-size:13px;'>=</code> is used to assign the value of an object to a variable. The variable is created at the first time an object is assigned to it.
+# The equal sign `=` is used to assign the value of an object to a variable. The variable is created at the first time an object is assigned to it.
 
 # In[3]:
 
@@ -45,7 +47,7 @@ a = 9
 a
 
 
-# There are some other ways to assign value to a variable as well. Python executes the right side of the equal sign <code style='font-size:13px;'>=</code> first, then assigns it to the left side.
+# There are some other ways to assign value to a variable as well. Python executes the right side of the equal sign `=` first, then assigns it to the left side.
 
 # In[6]:
 
@@ -65,8 +67,7 @@ a
 
 
 # ### 1.2. Object identity
-
-# The <code style='font-size:13px;'>id()</code> function displays the address of an object.
+# The `id()` function displays the address of an object.
 
 # In[8]:
 
@@ -75,7 +76,7 @@ pi = 3.14
 id(pi)
 
 
-# To check whether if two variables have the same address, try <code style='font-size:13px;'>is</code> or <code style='font-size:13px;'>is not</code> identity statement. If two variables point to the same small string or small integer, they will share the same address. Small strings (strings without spaces and have less than 20 characters) and small integers (integers from -5 to +255) are frequently used objects, so reusing them may save memory.
+# To check whether if two variables have the same address, try `is` or `is not` identity statement. If two variables point to the same small string or small integer, they will share the same address. Small strings (strings without spaces and have less than 20 characters) and small integers (integers from -5 to +255) are frequently used objects, so reusing them may save memory.
 
 # In[9]:
 
@@ -163,7 +164,7 @@ y is x
 x = 7
 
 
-# Mathematical operators can combine with the equal sign <code style='font-size:13px;'>=</code> to form a new assignment operator.
+# Mathematical operators can combine with the equal sign `=` to form a new assignment operator.
 
 # In[20]:
 
@@ -207,7 +208,7 @@ print(x, y, z)
 
 
 # ### 2.3. Comparison operators
-# Comparison operators check if the two values are equal or not; returns <code style='font-size:13px;'>True</code> or <code style='font-size:13px;'>False</code>.
+# Comparison operators check if the two values are equal or not; returns `True` or `False`.
 
 # In[25]:
 
@@ -245,7 +246,7 @@ print(x, y, z)
 4 <= 0
 
 
-# Python also supports multiple comparison operators in a single statement. It only returns <code style='font-size:13px;'>True</code> when all operators are <code style='font-size:13px;'>True</code>. For example, these two statements are equivalent:
+# Python also supports multiple comparison operators in a single statement. It only returns `True` when all operators are `True`. For example, these two statements are equivalent:
 
 # In[31]:
 
@@ -259,8 +260,15 @@ print(x, y, z)
 (1 < 5) and (5 < 10) and (10 != 11)
 
 
-# <b style='color:navy'><i class="fa fa-info-circle"></i>&nbsp; Note</b><br>
+# ```{note}
 # Comparison operators are very similar to identity operators, but they check the values instead of addresses.
+# ```
+
+# In[1]:
+
+
+0.8**10
+
 
 # ## 3. Other concepts
 
@@ -272,7 +280,7 @@ print(x, y, z)
 print('Hello world')
 
 
-# <code style='font-size:13px;'>print()</code> is a Python function. It takes the argument <code style='font-size:13px;'>'Hello world'</code> as input.
+# `print()` is a Python function. It takes the argument `'Hello world'` as input.
 
 # In[34]:
 
@@ -280,7 +288,7 @@ print('Hello world')
 get_ipython().run_line_magic('pinfo', 'print')
 
 
-# The <code style='font-size:13px;'>?</code> command shows a function's docstrings (documentation string). <code style='font-size:13px;'>value</code>, <code style='font-size:13px;'>sep</code> and <code style='font-size:13px;'>end</code> are the parameters of the <code style='font-size:13px;'>print()</code> function. Parameters work as the names of arguments.
+# The `?` command shows a function's docstrings (documentation string). `value`, `sep` and `end` are the parameters of the `print()` function. Parameters work as the names of arguments.
 
 # In[35]:
 
@@ -289,9 +297,9 @@ print('Anaconda', 'Python', 'Jupyter', sep='\n')
 
 
 # ### 3.2. Pipe
-# The idea of <code style='font-size:13px;'>sspipe</code> is inspired by the *pipe operator* <code style='font-size:13px;'>%>%</code> from <code style='font-size:13px;'>magrittr</code>, a library of R. It has the ability to transform a complicated expression with nested parentheses to a sequence of simple expressions, which improves the human readability.
+# The idea of `sspipe` is inspired by the *pipe operator* `%>%` from `magrittr`, a library of R. It has the ability to transform a complicated expression with nested parentheses to a sequence of simple expressions, which improves the human readability.
 # 
-# The whole functionality of this library is exposed by two objects, <code style='font-size:13px;'>p</code> (as a *wrapper* for functions to be called on the piped object) and <code style='font-size:13px;'>px</code> (as a *placeholder* for piped object). By default, the function will take the piped object as its first argument.
+# The whole functionality of this library is exposed by two objects, `p` (as a *wrapper* for functions to be called on the piped object) and `px` (as a *placeholder* for piped object). By default, the function will take the piped object as its first argument.
 
 # In[1]:
 
@@ -326,9 +334,9 @@ pi | p(ceil) | p(abs) | p(sqrt) | p(int) | p(print)
 
 # ### 3.3. Special punctuations
 # This section introduces three punctuations having special functionality in Python
-# - The hash <code style='font-size:13px;'>#</code> indicates the rest of the line is commented content and will not be executed. Comments can be used to explain thinking process and mark some code lines for late execution.
-# - The backslash <code style='font-size:13px;'>\\</code> works as a continuation character, it tells Python that the line should continue.
-# - The semicolon <code style='font-size:13px;'>;</code> allows writing multiple statements on a single line.
+# - The hash `#` indicates the rest of the line is commented content and will not be executed. Comments can be used to explain thinking process and mark some code lines for late execution.
+# - The backslash `\` works as a continuation character, it tells Python that the line should continue.
+# - The semicolon `;` allows writing multiple statements on a single line.
 
 # In[39]:
 
@@ -380,11 +388,11 @@ get_ipython().run_line_magic('whos', '')
 
 
 # ## 4. Libraries
-# A library (also known as library or module) is a <code style='font-size:13px;'>.py</code> suffix file containing a set of functions and objects used for specific purposes.
+# A library (also known as library or module) is a `.py` suffix file containing a set of functions and objects used for specific purposes.
 
 # ### 4.1. Accessing a library
 
-# The examples below give access to the <code style='font-size:13px;'>pi</code> constant and the <code style='font-size:13px;'>degrees()</code> function of the <code style='font-size:13px;'>math</code> module, then convert the angle $\pi$ from radian to degree.
+# The examples below give access to the `pi` constant and the `degrees()` function of the `math` module, then convert the angle $\pi$ from radian to degree.
 
 # In[46]:
 
@@ -466,7 +474,7 @@ radian_to_degree(pi_number)
 # In Python, indentation is a requirement, not just to make the code look pretty.
 
 # ### 5.1. The if statement
-# If the condition is <code style='font-size:13px;'>True</code>, then the body of <code style='font-size:13px;'>if</code> (recognized by indentation) gets executed. If the condition is <code style='font-size:13px;'>False</code>, then the body of <code style='font-size:13px;'>else</code> gets executed instead.
+# If the condition is `True`, then the body of `if` (recognized by indentation) gets executed. If the condition is `False`, then the body of `else` gets executed instead.
 
 # In[51]:
 
@@ -478,7 +486,7 @@ else:
     print('x is at most 0')
 
 
-# Nested <code style='font-size:13px;'>if... else...</code> statements allow adding more branches.
+# Nested `if... else...` statements allow adding more branches.
 
 # In[52]:
 
@@ -493,7 +501,7 @@ else:
         print('x is negative')
 
 
-# Or use <code style='font-size:13px;'>elif</code> instead.
+# Or use `elif` instead.
 
 # In[53]:
 
@@ -507,7 +515,7 @@ else:
     print('x is negative')
 
 
-# Python also supports short-hand <code style='font-size:13px;'>if... else...</code> statement.
+# Python also supports short-hand `if... else...` statement.
 
 # In[54]:
 
@@ -517,7 +525,7 @@ print('x is positive') if x > 0 else print('x is at most 0')
 
 
 # ### 5.2. The for loop
-# A <code style='font-size:13px;'>for</code> loop runs through every item of an iterable and executes its body part with that value.
+# A `for` loop runs through every item of an iterable and executes its body part with that value.
 
 # In[55]:
 
@@ -526,7 +534,7 @@ for i in [1, 2, 3, None, 5]:
     print(i)
 
 
-# The <code style='font-size:13px;'>break</code> statement terminates the current loop.
+# The `break` statement terminates the current loop.
 
 # In[56]:
 
@@ -537,7 +545,7 @@ for i in [1, 2, 3, 4, 5]:
     print(i)
 
 
-# The <code style='font-size:13px;'>continue</code> statement skips the remaining of the current iteration and continues to the next one.
+# The `continue` statement skips the remaining of the current iteration and continues to the next one.
 
 # In[57]:
 
@@ -551,7 +559,7 @@ total
 
 
 # ### 5.3. The while loop
-# A <code style='font-size:13px;'>while</code> loop statement repeatedly executes its body as long as the condition is <code style='font-size:13px;'>True</code>.
+# A `while` loop statement repeatedly executes its body as long as the condition is `True`.
 
 # In[2]:
 
@@ -573,7 +581,7 @@ while x < 10 and x != 5:
     x += 1
 
 
-# The <code style='font-size:13px;'>break</code> and <code style='font-size:13px;'>continue</code> statements also work with the <code style='font-size:13px;'>while</code> loop.
+# The `break` and `continue` statements also work with the `while` loop.
 
 # In[4]:
 
@@ -623,7 +631,7 @@ print(no_name)
 
 
 # #### Exceptions handling
-# While syntax errors are mostly done by beginners, experienced Data Scientist would always want to handle exceptions in practice. A code block which can raise exception is placed inside the <code style='font-size:13px;'>try</code> clause. The code that handles the exception is written in the <code style='font-size:13px;'>except</code> clause.
+# While syntax errors are mostly done by beginners, experienced Data Scientist would always want to handle exceptions in practice. A code block which can raise exception is placed inside the `try` clause. The code that handles the exception is written in the `except` clause.
 
 # In[65]:
 
@@ -634,7 +642,7 @@ except:
     print('Cannot execute')
 
 
-# Use <code style='font-size:13px;'>sys.exc_info()</code> to get the type of exception. This function only works with <code style='font-size:13px;'>try</code> and <code style='font-size:13px;'>except</code>.
+# Use `sys.exc_info()` to get the type of exception. This function only works with `try` and `except`.
 
 # In[66]:
 

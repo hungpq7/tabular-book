@@ -1,10 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # 1. Introduction
+# # Plotly: Interactive Visualization
+
+# ## 1. Introduction
 # [Plotly](https://plotly.com/python/) is an Python library interactive, open-source plotting library that supports over 40 unique chart types covering a wide range of statistical, financial, geographic, scientific, and 3-dimensional use-cases.
 # 
 # Plotly has two important submodules, <code style='font-size:13px;'>plotly.express</code> and <code style='font-size:13px;'>plotly.graph_objects</code>, but this topic focuses on <code style='font-size:13px;'>plotly.express</code> only. It allows quickly creating more than 30 types of charts, each made only in a single function call.
+
+# ## 1. Introduction
+# [Plotly](https://plotly.com/python/) is an Python library interactive, open-source plotting library that supports over 40 unique chart types covering a wide range of statistical, financial, geographic, scientific, and 3-dimensional use-cases.
+# 
+# Plotly has two important submodules, `plotly.express` and `plotly.graph_objects`, but this topic focuses on `plotly.express` only. It allows quickly creating more than 30 types of charts, each made only in a single function call.
 
 # ### Useful scripts
 # 
@@ -19,9 +26,9 @@
 # plotly.offline.plot(fig, filename='My interactive figure.html')
 # ```
 
-# # 2. Basic charts
+# ## 2. Basic charts
 
-# ## 2.1. Pie Chart
+# ### 2.1. Pie Chart
 
 # In[1]:
 
@@ -46,7 +53,7 @@ fig = px.pie(dfTip, names='day', values='tip', template='plotly')
 fig.show()
 
 
-# ### Donut Chart
+# #### Donut Chart
 
 # In[4]:
 
@@ -62,7 +69,7 @@ fig = px.pie(dfTip, names='day', values='tip', hole=.5)
 fig.show()
 
 
-# ## 2.2. Bar Chart
+# ### 2.2. Bar Chart
 
 # In[6]:
 
@@ -73,7 +80,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-# ### Grouped and Stacked Bar Chart
+# #### Grouping and stacking
 
 # In[7]:
 
@@ -110,7 +117,7 @@ fig = px.bar(
 fig.show()
 
 
-# ### Facet Grid of Bar Charts
+# #### Facet grid
 
 # In[10]:
 
@@ -151,7 +158,7 @@ fig = px.bar(
 fig.show()
 
 
-# ### Bar Chart with slider
+# #### Bar Chart with slider
 
 # In[13]:
 
@@ -177,7 +184,7 @@ fig = px.bar(
 fig.show()
 
 
-# ### Dot Plot
+# #### Dot Plot
 
 # In[15]:
 
@@ -192,7 +199,7 @@ fig = px.scatter(
 fig.show()
 
 
-# ## 2.3. Line Chart
+# ### 2.3. Line Chart
 
 # In[16]:
 
@@ -223,7 +230,7 @@ fig = px.line(
 fig.show()
 
 
-# ### Line Chart with slider
+# #### Line Chart with slider
 
 # In[19]:
 
@@ -260,7 +267,7 @@ fig.update_layout(
 fig.show()
 
 
-# ## 2.4. Scatter Plot
+# ### 2.4. Scatter Plot
 
 # In[21]:
 
@@ -271,7 +278,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-# ### Dot Plot
+# #### Dot Plot
 
 # In[22]:
 
@@ -292,7 +299,7 @@ fig = px.scatter(
 fig.show()
 
 
-# ### 3D Scatter Plot
+# #### 3D Scatter Plot
 
 # In[24]:
 
@@ -316,7 +323,7 @@ fig.update_layout(margin=dict(l=0, r=0, b=0, t=0))
 fig.show()
 
 
-# ### Scatter Plot with slider
+# #### Scatter Plot with slider
 
 # In[26]:
 
@@ -337,7 +344,7 @@ fig = px.scatter(
 fig.show()
 
 
-# ## 2.5. Radar Chart
+# ### 2.5. Radar Chart
 
 # In[27]:
 
@@ -385,7 +392,7 @@ fig.update_traces(fill='toself')
 fig.show()
 
 
-# ## 2.6. Gantt Chart
+# ### 2.6. Gantt Chart
 
 # In[2]:
 
@@ -436,7 +443,7 @@ fig.update_yaxes(autorange='reversed')
 fig.show()
 
 
-# ## 2.7. Violin Plot
+# ### 2.7. Violin Plot
 
 # In[33]:
 
@@ -469,9 +476,9 @@ fig = px.violin(
 fig.show()
 
 
-# # 3. Advanced charts
+# ## 3. Advanced charts
 
-# ## 3.1. Sunburst Chart
+# ### 3.1. Sunburst Chart
 
 # In[36]:
 
@@ -496,7 +503,7 @@ fig = px.sunburst(dfTip, path=['day', 'time', 'sex'], values='total_bill')
 fig.show()
 
 
-# ## 3.2. Tree Map
+# ### 3.2. Tree Map
 
 # In[39]:
 
@@ -553,7 +560,7 @@ fig = px.treemap(
 fig.show()
 
 
-# ## 3.3. Parallel Set Diagram
+# ### 3.3. Parallel Set Diagram
 
 # In[44]:
 
@@ -583,7 +590,7 @@ fig = px.parallel_categories(
 fig.show()
 
 
-# ## 3.4. Parallel Coordinates Plot
+# ### 3.4. Parallel Coordinates Plot
 
 # In[47]:
 
@@ -613,7 +620,7 @@ fig = px.parallel_coordinates(
 fig
 
 
-# # 4. Maps
+# ## 4. Maps
 # Useful map styles that can be controlled using the
 # <code style='font-size:13px;'><a href='https://plotly.com/python/mapbox-layers/'>mapbox_style</a></code>
 # parameter:
@@ -635,7 +642,7 @@ fig
 # <code style='font-size:13px;'>satellite-streets</code>,
 # but they require a Mapbox access token.
 
-# ## 4.1. Density Heat Map
+# ### 4.1. Density Heat Map
 # [Density Heat Maps](https://plotly.com/python/mapbox-density-heatmaps/) show the magnitude of a phenomenon and where it is located. The
 # <code style='font-size:13px;'><a href='https://plotly.com/python-api-reference/generated/plotly.express.density_mapbox'>px.density_mapbox()</a></code>
 # function has the notable parameters as follows:
@@ -676,7 +683,7 @@ fig = px.density_mapbox(
 fig.show()
 
 
-# ## 4.2. Bubble Map
+# ### 4.2. Bubble Map
 # [Bubble Maps](https://plotly.com/python/bubble-maps/), implemented via
 # <code style='font-size:13px;'><a href='https://plotly.github.io/plotly.py-docs/generated/plotly.express.scatter_mapbox.html'>px.scatter_mapbox()</a></code>,
 # takes the same input as Density Heat Map.
@@ -711,7 +718,7 @@ fig = px.scatter_mapbox(
 fig.show()
 
 
-# ## 4.3. Choropleth Map
+# ### 4.3. Choropleth Map
 # [Choropleth Maps](https://plotly.com/python/choropleth-maps/) visualize a quantitative variable using colored polygons. The
 # <code style='font-size:13px;'><a href='https://plotly.github.io/plotly.py-docs/generated/plotly.express.choropleth_mapbox.html'>px.choropleth_mapbox()</a></code>
 # function has the notable parameters as follows:
