@@ -1,0 +1,11 @@
+.ipynb_checkpoints
+.virtual_documents
+derby.log
+metastore_db
+spark-warehouse
+catboost_info
+houses_experiment.log
+structured_data_classifier
+__pycache__/
+.env
+_build
