@@ -388,6 +388,16 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#gradient-descent-variants">
    1. Gradient Descent variants
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   1. Gradient Descent variants
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   1. Gradient Descent variants
+  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#bgd">
@@ -417,7 +427,7 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id1">
+      <a class="reference internal nav-link" href="#id4">
        Algorithm
       </a>
      </li>
@@ -526,6 +536,16 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#gradient-descent-variants">
    1. Gradient Descent variants
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   1. Gradient Descent variants
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   1. Gradient Descent variants
+  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#bgd">
@@ -555,7 +575,7 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id1">
+      <a class="reference internal nav-link" href="#id4">
        Algorithm
       </a>
      </li>
@@ -659,8 +679,24 @@ title="Print to PDF"
 <p>There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
 Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.</p>
 <img alt="../_images/gradient_descent_evolutionary.png" src="../_images/gradient_descent_evolutionary.png" />
-<a class="reference internal image-reference" href="../_images/gradient_descent_evolutionary.png"><img alt="../_images/gradient_descent_evolutionary.png" src="../_images/gradient_descent_evolutionary.png" style="height: 10px;" /></a>
-<a class="reference internal image-reference" href="https://jupyterbook.org/en/stable/_images/fun-fish.png"><img alt="the fun fish!" src="https://jupyterbook.org/en/stable/_images/fun-fish.png" style="width: 200px;" /></a>
+</section>
+<section id="id1">
+<h2>1. Gradient Descent variants<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p>In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a> (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a <a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a> function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, <span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{w})\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> represents model parameters. The gradient of this function is denoted <span class="math notranslate nohighlight">\(\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})\)</span>.</p>
+<figure class="align-default" id="image-gradient-descent-evolutionary-png">
+<a class="reference internal image-reference" href="../_images/gradient_descent_evolutionary.png"><img alt="../_images/gradient_descent_evolutionary.png" src="../_images/gradient_descent_evolutionary.png" style="height: 350px;" /></a>
+</figure>
+<p>There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
+Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.</p>
+</section>
+<section id="id2">
+<h2>1. Gradient Descent variants<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a> (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a <a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a> function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, <span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{w})\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> represents model parameters. The gradient of this function is denoted <span class="math notranslate nohighlight">\(\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})\)</span>.</p>
+<p>There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
+Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.</p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/gradient_descent_evolutionary.png"><img alt="../_images/gradient_descent_evolutionary.png" src="../_images/gradient_descent_evolutionary.png" style="height: 350px;" /></a>
+</figure>
 <section id="bgd">
 <h3>1.1. BGD<a class="headerlink" href="#bgd" title="Permalink to this headline">#</a></h3>
 <p>This section is about the most basic idea of the family, Full-Batch Gradient Descent (BGD). Also known as Vanilla GD.</p>
@@ -849,7 +885,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_12_0.png" src="../_images/36-numpy-gradient-descent_12_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_13_0.png" src="../_images/36-numpy-gradient-descent_13_0.png" />
 </div>
 </div>
 </section>
@@ -867,8 +903,8 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </ul>
 <p>As steps in SGD are very noisy, we need to update more frequently than BGD to reach <em>long-term</em> state. This leads to the idea of using more than one epoch (an epoch is a pass over all data samples), which will be described in the next part. Nowadays, the SGD algorithm using the epoch concept is implemented in many modern ML/DL frameworks. Later improved techniques are also developed based on this implementation; however, I still use BGD to make things as simple as possible.</p>
 </section>
-<section id="id1">
-<h4>Algorithm<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
+<section id="id4">
+<h4>Algorithm<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
 <p><em>Input</em></p>
 <ul class="simple">
 <li><p>A dataset <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> having <span class="math notranslate nohighlight">\(N\)</span> samples</p></li>
@@ -1078,7 +1114,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_25_0.png" src="../_images/36-numpy-gradient-descent_25_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_26_0.png" src="../_images/36-numpy-gradient-descent_26_0.png" />
 </div>
 </div>
 </section>
@@ -1159,7 +1195,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_30_0.png" src="../_images/36-numpy-gradient-descent_30_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_31_0.png" src="../_images/36-numpy-gradient-descent_31_0.png" />
 </div>
 </div>
 </section>
@@ -1241,7 +1277,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_34_0.png" src="../_images/36-numpy-gradient-descent_34_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_35_0.png" src="../_images/36-numpy-gradient-descent_35_0.png" />
 </div>
 </div>
 </section>
@@ -1327,7 +1363,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_38_0.png" src="../_images/36-numpy-gradient-descent_38_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_39_0.png" src="../_images/36-numpy-gradient-descent_39_0.png" />
 </div>
 </div>
 </section>
