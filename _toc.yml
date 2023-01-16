@@ -4,7 +4,6 @@
 format: jb-book
 root: content/intro
 parts:
-
 - caption: Python Programming
   chapters:
   - file: content/01-python-basic-concepts
@@ -14,6 +13,6 @@ parts:
   - file: content/09-matplotlib-graph-construction
   - file: content/27-plotly-interactive-visualization
 
-- caption: Optimization
+- caption: Deep Learning
   chapters:
   - file: content/36-numpy-gradient-descent

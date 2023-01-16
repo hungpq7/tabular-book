@@ -6,13 +6,12 @@
 # ## 1. Gradient Descent variants
 # In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where [Gradient Descent] (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a [differentiable] function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, $\mathcal{L}(\mathbf{w})$, where $\mathbf{w}$ represents model parameters. The gradient of this function is denoted $\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})$.
 # 
-# There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
-# Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
+# There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function. Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
 # 
-# ```{figure} image/gradient_descent_evolutionary.png
-# ---
-# height: 350px
-# name: image/gradient_descent_evolutionary.png
+# ```{image} image/gradient-descent-evolutionary.png
+# :height: 350px
+# :align: center
+# :name: image/gradient-descent-evolutionary.png
 # ```
 # 
 # [Gradient Descent]: https://en.wikipedia.org/wiki/Gradient_descent
@@ -36,10 +35,12 @@ get_ipython().run_line_magic('config', "InlineBackend.figure_format = 'retina'")
 # 
 # $$y=\frac{1}{128}(x^4-8x^3)$$
 # 
-# :::{figure} <img src='output/directional_derivative.png' style='height:300px; margin:0px auto 20px;'>
-# height: 300px
-# name: output/directional_derivative.png
-# :::
+# ```{image} output/directional-derivative.png
+# :height: 300px
+# :align: center
+# :name: output/directional-derivative.png
+# ```
+# <br>
 # 
 # In this function, there are two [critical points] at $x=0$ and $x=6$, in which the first one is a [saddle point] and the second one is a [local minimum]. A very important conclusion can be drawn from this graph is that directional derivatives always *point away* from the steepest path downwards. In other words, if we move the point in the *opposite direction* of the derivative, we will end up approach a local minimum or a saddle point. Unfortunately, from the perspective of a single point on the graph and using only gradient, there is no way to regconize if there comes a saddle point.
 # 
@@ -78,7 +79,7 @@ ax.quiver(xRed, yRed, uRed, vRed, color='indianred', units='xy', scale=1/2)
 ax.plot(xBlue, yBlue, 'o', c='cornflowerblue')
 ax.quiver(xBlue, yBlue, uBlue, vBlue, color='cornflowerblue', units='xy', scale=1/2)
 ax.set_xlim(left, right)
-fig.savefig('output/directional_derivative.png', dpi=500, bbox_inches='tight')
+fig.savefig('output/directional-derivative.png', dpi=500, bbox_inches='tight')
 plt.close(fig)
 
 
@@ -92,9 +93,16 @@ plt.close(fig)
 # 
 # Using this design, the (magnitude of) the gradient gets smaller and smaller and finally approach 0, thus the name of the algorithm. The whole process can be thought as a ball rolling down the hill. There is a coefficient named the *learning rate* (denoted $\eta$) attached to the gradient, controls how large each step is. The value of this hyperparameter should not be either too large (making the convergence not happening) or too small (taking too long to converge). The effect of learning rate is illustrated in the following example, in which we build the algorithm from scratch to find the minimum of the function $y=x^2+5\sin(x)$ for different values of $\eta$.
 # 
-# <img src='output/batch_gradient_descent.gif' style='height:250px; margin:20px auto 20px;'>
+# ```{image} output/batch-gradient-descent.gif
+# :height: 250px
+# :align: center
+# :name: output/batch-gradient-descent.gif
+# ```
+# <br>
 # 
-# The updating process can also be summarized as [learning curves](<https://en.wikipedia.org/wiki/Learning_curve_(machine_learning)>). A couple of stopping conditions are also used such as tolerance (maximum magnitude of gradient) or maximum number of iterations. In the example, I use 50 iterations and set the value of tolerance to 0 to make sure all iterations are used.
+# The updating process can also be summarized a [learning curve]. A couple of stopping conditions are also used such as tolerance (maximum magnitude of gradient) or maximum number of iterations. In the example, I use 50 iterations and set the value of tolerance to 0 to make sure all iterations are used.
+# 
+# [learning curve]: https://en.wikipedia.org/wiki/Learning_curve_(machine_learning)
 
 # In[4]:
 
@@ -167,7 +175,7 @@ def animate(frame):
 gif = FuncAnimation(fig, animate, frames, interval=200, blit=False, repeat=True)
 plt.close(fig)
 
-path = 'output/batch_gradient_descent.gif'
+path = 'output/batch-gradient-descent.gif'
 gif.save(path, dpi=300, writer=PillowWriter())
 
 
@@ -248,7 +256,7 @@ compare_gd(listAlgo, listLabel)
 # ### 2.1. Adaptive gradient
 
 # #### Momentum
-# As far as we know, GD works as a ball rolling down the hill and stops in a valley bottom. However, our ball will stuck in local minima most of the time, then we need some [acceleration](https://en.wikipedia.org/wiki/Acceleration) to helps it cross these traps. A Momentum term (in red) has been introduced to extend the GD's update rule as follows:
+# As far as we know, GD works as a ball rolling down the hill and stops in a valley bottom. However, our ball will stuck in local minima most of the time, then we need some [acceleration] to helps it cross these traps. A Momentum term (in red) has been introduced to extend the GD's update rule as follows:
 # 
 # $$\begin{aligned}
 # m_t &= \color{indianred}{\gamma m_{t-1}}-\eta g_t \\
@@ -256,18 +264,27 @@ compare_gd(listAlgo, listLabel)
 # x_{t+1} &= x_t+\Delta x_t
 # \end{aligned}$$
 # 
-# In each step, the ball not only moves downwards as normal GD, but also accumulates [momentum](https://en.wikipedia.org/wiki/Momentum) from all previous steps:
+# In each step, the ball not only moves downwards as normal GD, but also accumulates [momentum] from all previous steps:
 # 
 # $$m_T=-\eta\sum_{t=1}^{T}{\gamma^t g_{T-t}}$$
 # 
-# The amount of information memorized from the previous step is controled by a coefficient, $\gamma$. The value of this hyperparameter is set $0<\gamma<1$, typically $0.9$, forcing earlier steps to have less effect. Visually, the motion of the ball is now more realistic, as it seems to carry [inertia](https://en.wikipedia.org/wiki/Inertia).
+# The amount of information memorized from the previous step is controled by a coefficient, $\gamma$. The value of this hyperparameter is set $0<\gamma<1$, typically $0.9$, forcing earlier steps to have less effect. Visually, the motion of the ball is now more realistic, as it seems to carry [inertia].
 # 
-# <img src='output/momentum_gradient_descent.gif' style='height:250px; margin:20px auto 20px;'>
+# ```{image} output/momentum-gradient-descent.gif
+# :height: 250px
+# :align: center
+# :name: output/momentum-gradient-descent.gif
+# ```
+# <br>
 # 
 # The benefits of using Momentum includes:
 # - Momentum can help escaping local minima and saddle points
 # - Momentum accelerates the ball so that it moves faster towards the minima
 # - When implemented in SGD, Momentum dampens the *oscillations*
+# 
+# [acceleration]: https://en.wikipedia.org/wiki/Acceleration
+# [momentum]: https://en.wikipedia.org/wiki/Momentum
+# [inertia]: https://en.wikipedia.org/wiki/Inertia
 
 # In[2]:
 
@@ -343,7 +360,7 @@ def animate(frame):
 gif = FuncAnimation(fig, animate, frames, interval=200, blit=False, repeat=True)
 plt.close(fig)
 
-path = 'output/momentum_gradient_descent.gif'
+path = 'output/momentum-gradient-descent.gif'
 gif.save(path, dpi=300, writer=PillowWriter())
 
 
@@ -497,7 +514,7 @@ compare_gd(listAlgo, listLabel)
 
 
 # #### RMSprop
-# RMSprop (Root Mean Squared Propagation) has been developed in attemp to resolve AdaGrad's radically diminishing learning rates. It defines $v_t$, an [exponentially moving average](https://en.wikipedia.org/wiki/Exponential_smoothing) which is calculated using $v_{t-1}$ and the last squared gradient $g_t^2$.
+# RMSprop (Root Mean Squared Propagation) has been developed in attemp to resolve AdaGrad's radically diminishing learning rates. It defines $v_t$, an [exponentially moving average] which is calculated using $v_{t-1}$ and the last squared gradient $g_t^2$.
 # 
 # $$\begin{aligned}
 # v_t &= \color{indianred}{\rho v_{t-1}+(1-\rho)g_t^2} \\
@@ -511,6 +528,8 @@ compare_gd(listAlgo, listLabel)
 # $$v_T=(1-\rho)\sum_{t=1}^{T}{\rho^t g_{T-t}^2}$$
 # 
 # It's easy to see that the further a gradient $g_t$ is from the current step ($T$), the lower multiplier attached to it. For this reason, we actually accumulate past gradients over a restricted time window, in which gradients significantly contribute to $v_t$. The number of effective gradients is approximately $(1-\rho)^{-1}$, thus $\rho$ is usually choosen between $0.9$ and $0.98$. For example, $\rho=0.9$ implies that only last 10 $g_t$ are effective. Being an extension of AdaGrad, RMSprop also requires $\eta$ to be high enough, usually in the interval $(0.1,0.5)$.
+# 
+# [exponentially moving average]: https://en.wikipedia.org/wiki/Exponential_smoothing
 
 # In[43]:
 
@@ -816,6 +835,3 @@ gif.save(path, dpi=300, writer=PillowWriter())
 # - *compphysics.github.io - [Optimization and Gradient Methods](https://compphysics.github.io/MachineLearningMSU/doc/pub/GradientOptim/html/._GradientOptim-bs000.html)*
 # - *towardsdatascience.com - [Stochastic Gradient Descent with momentum](https://towardsdatascience.com/stochastic-gradient-descent-with-momentum-a84097641a5d)*
 # - *blog.paperspace.com - [Intro to optimization in deep learning: Momentum, RMSProp and Adam](https://blog.paperspace.com/intro-to-optimization-momentum-rmsprop-adam/)*
-
-# ---
-# *&#9829; By Quang Hung x Thuy Linh &#9829;*

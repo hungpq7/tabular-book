@@ -8,4 +8,4 @@ houses_experiment.log
 structured_data_classifier
 __pycache__/
 .env
-_build
+_build/*
