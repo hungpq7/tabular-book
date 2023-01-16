@@ -4,12 +4,43 @@
 # # Python: Gradient Descent
 
 # ## 1. Gradient Descent variants
-# In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where [Gradient Descent](https://en.wikipedia.org/wiki/Gradient_descent) (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a [differentiable](https://en.wikipedia.org/wiki/Differentiable_function) function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, $\mathcal{L}(\mathbf{w})$, where $\mathbf{w}$ represents model parameters. The gradient of this function is denoted $\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})$.
+# In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where [Gradient Descent] (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a [differentiable] function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, $\mathcal{L}(\mathbf{w})$, where $\mathbf{w}$ represents model parameters. The gradient of this function is denoted $\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})$.
 # 
 # There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
 # Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
 # 
-# <img src='./image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
+# <img src='image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
+# 
+# [Gradient Descent]: https://en.wikipedia.org/wiki/Gradient_descent
+# [differentiable]: https://en.wikipedia.org/wiki/Differentiable_function
+
+# ## 1. Gradient Descent variants
+# In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where [Gradient Descent] (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a [differentiable] function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, $\mathcal{L}(\mathbf{w})$, where $\mathbf{w}$ represents model parameters. The gradient of this function is denoted $\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})$.
+# 
+# ```{figure} image/gradient_descent_evolutionary.png
+# ---
+# height: 350px
+# name: image/gradient_descent_evolutionary.png
+# ```
+# 
+# There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
+# Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
+# 
+# [Gradient Descent]: https://en.wikipedia.org/wiki/Gradient_descent
+# [differentiable]: https://en.wikipedia.org/wiki/Differentiable_function
+
+# ## 1. Gradient Descent variants
+# In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where [Gradient Descent] (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a [differentiable] function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, $\mathcal{L}(\mathbf{w})$, where $\mathbf{w}$ represents model parameters. The gradient of this function is denoted $\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})$.
+# 
+# :::{figure-md} markdown-fig
+# <img src="image/gradient_descent_evolutionary.png" width="350px">
+# :::
+# 
+# There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
+# Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
+# 
+# [Gradient Descent]: https://en.wikipedia.org/wiki/Gradient_descent
+# [differentiable]: https://en.wikipedia.org/wiki/Differentiable_function
 
 # ### 1.1. BGD
 # This section is about the most basic idea of the family, Full-Batch Gradient Descent (BGD). Also known as Vanilla GD.
