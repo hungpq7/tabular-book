@@ -17,9 +17,3 @@ parts:
 - caption: Optimization
   chapters:
   - file: content/36-numpy-gradient-descent
-
-- caption: Jupyter Book tutorial
-  chapters:
-  - file: content/sample/markdown-notebooks.md
-  - file: content/sample/markdown.md
-  - file: content/sample/notebooks.ipynb

@@ -9,37 +9,11 @@
 # There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
 # Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
 # 
-# <img src='image/gradient_descent_evolutionary.png' style='height:350px; margin:20px auto 20px;'>
-# 
-# [Gradient Descent]: https://en.wikipedia.org/wiki/Gradient_descent
-# [differentiable]: https://en.wikipedia.org/wiki/Differentiable_function
-
-# ## 1. Gradient Descent variants
-# In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where [Gradient Descent] (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a [differentiable] function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, $\mathcal{L}(\mathbf{w})$, where $\mathbf{w}$ represents model parameters. The gradient of this function is denoted $\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})$.
-# 
 # ```{figure} image/gradient_descent_evolutionary.png
 # ---
 # height: 350px
 # name: image/gradient_descent_evolutionary.png
 # ```
-# 
-# There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
-# Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
-# 
-# [Gradient Descent]: https://en.wikipedia.org/wiki/Gradient_descent
-# [differentiable]: https://en.wikipedia.org/wiki/Differentiable_function
-
-# ## 1. Gradient Descent variants
-# In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where [Gradient Descent] (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a [differentiable] function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, $\mathcal{L}(\mathbf{w})$, where $\mathbf{w}$ represents model parameters. The gradient of this function is denoted $\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})$.
-# 
-# :::{figure-md} markdown-fig
-# <img src="image/gradient_descent_evolutionary.png" width="350px">
-# 
-# This is a caption in **Markdown**!
-# :::
-# 
-# There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
-# Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.
 # 
 # [Gradient Descent]: https://en.wikipedia.org/wiki/Gradient_descent
 # [differentiable]: https://en.wikipedia.org/wiki/Differentiable_function
@@ -62,7 +36,10 @@ get_ipython().run_line_magic('config', "InlineBackend.figure_format = 'retina'")
 # 
 # $$y=\frac{1}{128}(x^4-8x^3)$$
 # 
-# <img src='output/directional_derivative.png' style='height:300px; margin:0px auto 20px;'>
+# :::{figure} <img src='output/directional_derivative.png' style='height:300px; margin:0px auto 20px;'>
+# height: 300px
+# name: output/directional_derivative.png
+# :::
 # 
 # In this function, there are two [critical points] at $x=0$ and $x=6$, in which the first one is a [saddle point] and the second one is a [local minimum]. A very important conclusion can be drawn from this graph is that directional derivatives always *point away* from the steepest path downwards. In other words, if we move the point in the *opposite direction* of the derivative, we will end up approach a local minimum or a saddle point. Unfortunately, from the perspective of a single point on the graph and using only gradient, there is no way to regconize if there comes a saddle point.
 # 

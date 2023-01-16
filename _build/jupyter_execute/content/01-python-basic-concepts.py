@@ -354,8 +354,7 @@ print(1); print(2)
 # In[41]:
 
 
-print('Hello, \
-world!')
+print('Hello, world!')
 
 
 # ### 3.4. Magic commands
@@ -676,6 +675,3 @@ for entry in ['a', '5', 0, 2.5, 10]:
         print('The reciprocal: infinity')
     print('')
 
-
-# ---
-# *&#9829; By Quang Hung x Thuy Linh &#9829;*

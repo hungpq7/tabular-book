@@ -941,6 +941,3 @@ ax.set_ylim(-4, 4)
 ax.legend()
 plt.show()
 
-
-# ---
-# *&#9829; By Quang Hung x Thuy Linh &#9829;*

@@ -55,7 +55,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Notebooks with MyST Markdown" href="sample/markdown-notebooks.html" />
     <link rel="prev" title="Plotly: Interactive Visualization" href="27-plotly-interactive-visualization.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -116,7 +115,7 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
+        <p class="caption">
  <span class="caption-text">
   Python Programming
  </span>
@@ -128,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
+<p class="caption">
  <span class="caption-text">
   Data Visualization
  </span>
@@ -145,7 +144,7 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
+<p class="caption">
  <span class="caption-text">
   Optimization
  </span>
@@ -154,28 +153,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Python: Gradient Descent
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Jupyter Book tutorial
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="sample/markdown-notebooks.html">
-   Notebooks with MyST Markdown
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="sample/markdown.html">
-   Markdown Files
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="sample/notebooks.html">
-   Content with notebooks
   </a>
  </li>
 </ul>
@@ -237,7 +214,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/content/36-numpy-gradient-descent.ipynb"
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/content/36-numpy-gradient-descent.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -251,6 +228,42 @@ title="Launch on Binder"
   </span>
 <span class="headerbtn__text-container">Binder</span>
 </a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/content/36-numpy-gradient-descent.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
 
       </li>
       
@@ -271,19 +284,10 @@ title="Fullscreen mode"
   </span>
 
 </button>
-
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/executablebooks/jupyter-book"
+<a href="https://github.com/hungpq7/tabular-book"
    class="headerbtn"
    data-toggle="tooltip"
-data-placement="left"
+data-placement="bottom"
 title="Source repository"
 >
   
@@ -291,31 +295,8 @@ title="Source repository"
 <span class="headerbtn__icon-container">
   <i class="fab fa-github"></i>
   </span>
-<span class="headerbtn__text-container">repository</span>
+
 </a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/36-numpy-gradient-descent.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -388,16 +369,6 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#gradient-descent-variants">
    1. Gradient Descent variants
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   1. Gradient Descent variants
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   1. Gradient Descent variants
-  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#bgd">
@@ -427,7 +398,7 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id3">
+      <a class="reference internal nav-link" href="#id1">
        Algorithm
       </a>
      </li>
@@ -536,16 +507,6 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#gradient-descent-variants">
    1. Gradient Descent variants
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   1. Gradient Descent variants
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   1. Gradient Descent variants
-  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#bgd">
@@ -575,7 +536,7 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id3">
+      <a class="reference internal nav-link" href="#id1">
        Algorithm
       </a>
      </li>
@@ -678,28 +639,9 @@ title="Print to PDF"
 <p>In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a> (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a <a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a> function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, <span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{w})\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> represents model parameters. The gradient of this function is denoted <span class="math notranslate nohighlight">\(\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})\)</span>.</p>
 <p>There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
 Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.</p>
-<img alt="../_images/gradient_descent_evolutionary.png" src="../_images/gradient_descent_evolutionary.png" />
-</section>
-<section id="id1">
-<h2>1. Gradient Descent variants<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
-<p>In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a> (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a <a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a> function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, <span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{w})\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> represents model parameters. The gradient of this function is denoted <span class="math notranslate nohighlight">\(\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})\)</span>.</p>
 <figure class="align-default" id="image-gradient-descent-evolutionary-png">
 <a class="reference internal image-reference" href="../_images/gradient_descent_evolutionary.png"><img alt="../_images/gradient_descent_evolutionary.png" src="../_images/gradient_descent_evolutionary.png" style="height: 350px;" /></a>
 </figure>
-<p>There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
-Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.</p>
-</section>
-<section id="id2">
-<h2>1. Gradient Descent variants<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
-<p>In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a> (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a <a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a> function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, <span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{w})\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> represents model parameters. The gradient of this function is denoted <span class="math notranslate nohighlight">\(\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})\)</span>.</p>
-<figure class="align-default" id="markdown-fig">
-<a class="reference internal image-reference" href="../_images/gradient_descent_evolutionary.png"><img alt="../_images/gradient_descent_evolutionary.png" src="../_images/gradient_descent_evolutionary.png" style="width: 350px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">This is a caption in <strong>Markdown</strong>!</span><a class="headerlink" href="#markdown-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
-Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.</p>
 <section id="bgd">
 <h3>1.1. BGD<a class="headerlink" href="#bgd" title="Permalink to this headline">#</a></h3>
 <p>This section is about the most basic idea of the family, Full-Batch Gradient Descent (BGD). Also known as Vanilla GD.</p>
@@ -719,7 +661,13 @@ Gradient Descent itself is a simple method, and there has been a lot of works pr
 <p>To understand the smart idea behind Gradient Descent, we first analyze the relative position between a random point to its <em>closest</em> local minimum. We have already known derivarive at a point is the representation of <em>instantaneous velocity</em>, but how about its direction? To illustrate this, let’s plot the derivatives at some points of a 1-dimensional function as vectors along the <span class="math notranslate nohighlight">\(x\)</span>-axis.</p>
 <div class="math notranslate nohighlight">
 \[y=\frac{1}{128}(x^4-8x^3)\]</div>
-<img alt="../_images/directional_derivative.png" src="../_images/directional_derivative.png" />
+<figure class="align-default" id="id2">
+<img alt="content/&lt;imgsrc='output/directional_derivative.png'style='height:300px;margin:0pxauto20px;'&gt;" src="content/&lt;imgsrc='output/directional_derivative.png'style='height:300px;margin:0pxauto20px;'&gt;" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">height: 300px
+name: output/directional_derivative.png</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>In this function, there are two <a class="reference external" href="https://en.wikipedia.org/wiki/Critical_point_(mathematics)">critical points</a> at <span class="math notranslate nohighlight">\(x=0\)</span> and <span class="math notranslate nohighlight">\(x=6\)</span>, in which the first one is a <a class="reference external" href="https://en.wikipedia.org/wiki/Saddle_point">saddle point</a> and the second one is a <a class="reference external" href="https://en.wikipedia.org/wiki/Maxima_and_minima">local minimum</a>. A very important conclusion can be drawn from this graph is that directional derivatives always <em>point away</em> from the steepest path downwards. In other words, if we move the point in the <em>opposite direction</em> of the derivative, we will end up approach a local minimum or a saddle point. Unfortunately, from the perspective of a single point on the graph and using only gradient, there is no way to regconize if there comes a saddle point.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -888,7 +836,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_12_0.png" src="../_images/36-numpy-gradient-descent_12_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_10_0.png" src="../_images/36-numpy-gradient-descent_10_0.png" />
 </div>
 </div>
 </section>
@@ -906,8 +854,8 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </ul>
 <p>As steps in SGD are very noisy, we need to update more frequently than BGD to reach <em>long-term</em> state. This leads to the idea of using more than one epoch (an epoch is a pass over all data samples), which will be described in the next part. Nowadays, the SGD algorithm using the epoch concept is implemented in many modern ML/DL frameworks. Later improved techniques are also developed based on this implementation; however, I still use BGD to make things as simple as possible.</p>
 </section>
-<section id="id3">
-<h4>Algorithm<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h4>
+<section id="id1">
+<h4>Algorithm<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <p><em>Input</em></p>
 <ul class="simple">
 <li><p>A dataset <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> having <span class="math notranslate nohighlight">\(N\)</span> samples</p></li>
@@ -1106,7 +1054,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_25_0.png" src="../_images/36-numpy-gradient-descent_25_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_23_0.png" src="../_images/36-numpy-gradient-descent_23_0.png" />
 </div>
 </div>
 </section>
@@ -1176,7 +1124,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_30_0.png" src="../_images/36-numpy-gradient-descent_30_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_28_0.png" src="../_images/36-numpy-gradient-descent_28_0.png" />
 </div>
 </div>
 </section>
@@ -1246,7 +1194,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_34_0.png" src="../_images/36-numpy-gradient-descent_34_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_32_0.png" src="../_images/36-numpy-gradient-descent_32_0.png" />
 </div>
 </div>
 </section>
@@ -1321,7 +1269,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/36-numpy-gradient-descent_38_0.png" src="../_images/36-numpy-gradient-descent_38_0.png" />
+<img alt="../_images/36-numpy-gradient-descent_36_0.png" src="../_images/36-numpy-gradient-descent_36_0.png" />
 </div>
 </div>
 </section>
@@ -1374,12 +1322,12 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <span class="n">nIter</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">xInit</span> <span class="o">=</span> <span class="mi">5</span>
 
-<span class="n">eta1</span> <span class="o">=</span> <span class="mf">.1</span>
-<span class="n">eta2</span> <span class="o">=</span> <span class="mf">.3</span>
-<span class="n">eta3</span> <span class="o">=</span> <span class="mf">.5</span>
+<span class="n">eta1</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span>
+<span class="n">eta2</span> <span class="o">=</span> <span class="o">.</span><span class="mi">3</span>
+<span class="n">eta3</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>
 <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-8</span>
-<span class="n">beta1</span> <span class="o">=</span> <span class="mf">.9</span>
-<span class="n">beta2</span> <span class="o">=</span> <span class="mf">.999</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="o">.</span><span class="mi">9</span>
+<span class="n">beta2</span> <span class="o">=</span> <span class="o">.</span><span class="mi">999</span>
 </pre></div>
 </div>
 </div>
@@ -1498,7 +1446,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
     {
         requestKernel: true,
         binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
+            repo: "hungpq7/tabular-book",
             ref: "master",
         },
         codeMirrorConfig: {
@@ -1528,13 +1476,6 @@ x_{t+1} &amp;= x_t+\Delta x_t
             <p class="prev-next-title">Plotly: Interactive Visualization</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="sample/markdown-notebooks.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Notebooks with MyST Markdown</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
 </div>
             </footer>
         </div>
@@ -1542,7 +1483,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By Hung Pham & Linh Pham<br/>
+    By &#9829; Quang Hung x Thuy Linh &#9829;<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

@@ -71,22 +71,29 @@ fig.show()
 
 # ### 2.2. Bar Chart
 
-# In[6]:
+# In[1]:
 
 
 import pandas as pd
 import numpy as np
+import janitor
 import plotly.express as px
 import plotly.graph_objects as go
 
 
 # #### Grouping and stacking
 
-# In[7]:
+# In[ ]:
+
+
+dfSales.sele
+
+
+# In[9]:
 
 
 dfSales = pd.read_csv('data/supermarket_sales.csv')
-dfSales.head()
+dfSales.head().style.set_table_attributes('style="font-size: 10px"')
 
 
 # In[8]:
