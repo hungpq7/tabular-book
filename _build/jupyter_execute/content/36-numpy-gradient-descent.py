@@ -34,6 +34,8 @@
 # 
 # :::{figure-md} markdown-fig
 # <img src="image/gradient_descent_evolutionary.png" width="350px">
+# 
+# This is a caption in **Markdown**!
 # :::
 # 
 # There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function.
@@ -62,7 +64,11 @@ get_ipython().run_line_magic('config', "InlineBackend.figure_format = 'retina'")
 # 
 # <img src='output/directional_derivative.png' style='height:300px; margin:0px auto 20px;'>
 # 
-# In this function, there are two [critical points](<https://en.wikipedia.org/wiki/Critical_point_(mathematics)>) at $x=0$ and $x=6$, in which the first one is a [saddle point](https://en.wikipedia.org/wiki/Saddle_point) and the second one is a [local minimum](https://en.wikipedia.org/wiki/Maxima_and_minima). A very important conclusion can be drawn from this graph is that directional derivatives always *point away* from the steepest path downwards. In other words, if we move the point in the *opposite direction* of the derivative, we will end up approach a local minimum or a saddle point. Unfortunately, from the perspective of a single point on the graph and using only gradient, there is no way to regconize if there comes a saddle point.
+# In this function, there are two [critical points] at $x=0$ and $x=6$, in which the first one is a [saddle point] and the second one is a [local minimum]. A very important conclusion can be drawn from this graph is that directional derivatives always *point away* from the steepest path downwards. In other words, if we move the point in the *opposite direction* of the derivative, we will end up approach a local minimum or a saddle point. Unfortunately, from the perspective of a single point on the graph and using only gradient, there is no way to regconize if there comes a saddle point.
+# 
+# [critical points]: https://en.wikipedia.org/wiki/Critical_point_(mathematics)
+# [saddle point]: https://en.wikipedia.org/wiki/Saddle_point
+# [local minimum]: https://en.wikipedia.org/wiki/Maxima_and_minima
 
 # In[2]:
 
