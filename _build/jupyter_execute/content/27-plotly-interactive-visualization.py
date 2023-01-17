@@ -293,10 +293,11 @@ import plotly.graph_objects as go
 
 # #### Dot plot
 
-# In[22]:
+# In[2]:
 
 
 dfSales = pd.read_csv('data/supermarket_sales.csv')
+dfSales = dfSales[['invoice_id', 'payment', 'product_line', 'gender', 'profit', 'customer_type', 'city']]
 dfSales.head()
 
 
@@ -445,6 +446,10 @@ data = [
 ]
 
 columns = ['phase', 'task', 'start', 'end']
+
+
+# In[8]:
+
 
 dfTimeline = pd.DataFrame(data=data, columns=columns)
 dfTimeline.head(3)
@@ -806,6 +811,8 @@ fig = px.choropleth_mapbox(
 
 fig.show()
 
+
+# ## Install
 
 # In[ ]:
 

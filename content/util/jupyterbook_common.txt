@@ -1,8 +1,26 @@
-List of directives: admonitions, tableofcontents
-Usage:
+DIRECTIVES: admonitions, tableofcontents, `tab-set, tab-item
 
-List of admonitions: dropdown, note, seealso, (tip, hint, important), (attention, caution), (warning, danger, error)
-
+ADMONITIONS: dropdown, note, seealso, (tip, hint, important), (attention, caution), (warning, danger, error)
 ```{admonition}
 :class: note
+Some text
 ```
+
+IMGAE:
+```{image} image/gradient-descent-evolutionary.png
+:height: 350px
+:align: center
+:name: image/gradient-descent-evolutionary.png
+```
+
+CELL TAGS: output_scroll, {action}-{item}, action = remove/hide, item = cell/input/output
+
+IMAGE METADATA:
+{
+    "render": {
+        "image": {
+            "align": "center",
+            "scale": "50%"
+        }
+    },
+}

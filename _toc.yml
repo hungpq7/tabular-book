@@ -12,6 +12,10 @@ parts:
   chapters:
   - file: content/09-matplotlib-graph-construction
   - file: content/27-plotly-interactive-visualization
+  
+- caption: Tabular Learning
+  chapters:
+  - file: content/34-xgboost-tree-boosting
 
 - caption: Deep Learning
   chapters:
