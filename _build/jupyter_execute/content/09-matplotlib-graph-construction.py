@@ -172,8 +172,7 @@ get_ipython().run_line_magic('config', "InlineBackend.figure_format = 'retina'")
 
 
 # #### Graphs
-# Matplotlib does not really have a way to make graphs, but this can be achieved indirectly by using the [`axes.plot()`]
-# method. The original functionality of this function is to plot a polyline connects data points.
+# Matplotlib does not really have a way to make graphs, but this can be achieved indirectly by using the [`axes.plot()`] method. The original functionality of this function is to plot a polyline connects data points.
 # 
 # It has an optional parameter, `fmt` that defines basic formatting following the syntax: `{marker}{linestyle}{color}`. The formatting string must not strictly follow the order in the syntax, but note that the parsing may be ambiguous. The table below summarizes some useful formatting strings:
 # 
@@ -193,7 +192,7 @@ get_ipython().run_line_magic('config', "InlineBackend.figure_format = 'retina'")
 # 
 # With different combinations of formatting strings, `axes.plot()` can result in graphs (indirectly) and points (directly). In order to make graphs, the input for x-axis needs to be a dense set of values.
 # 
-# [`axes.plot()`]: matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html
+# [`axes.plot()`]: https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html
 
 # In[12]:
 

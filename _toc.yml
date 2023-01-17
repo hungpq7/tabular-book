@@ -3,20 +3,22 @@
 
 format: jb-book
 root: content/intro
-parts:
-- caption: Python Programming
-  chapters:
-  - file: content/01-python-basic-concepts
+chapters:
 
-- caption: Data Visualization
-  chapters:
+- file: content/chapter/01-python-programming
+  sections:
+  - file: content/01-01-python-basic-concepts
+  - file: 
+
+- file: content/chapter/04-data-visualization
+  sections:
   - file: content/09-matplotlib-graph-construction
   - file: content/27-plotly-interactive-visualization
   
-- caption: Tabular Learning
-  chapters:
+- file: content/chapter/05-tabular-learning
+  sections:
   - file: content/34-xgboost-tree-boosting
 
-- caption: Deep Learning
-  chapters:
+- file: content/chapter/09-deep-learning
+  sections:
   - file: content/36-numpy-gradient-descent
