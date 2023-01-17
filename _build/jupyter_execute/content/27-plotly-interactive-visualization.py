@@ -3,38 +3,35 @@
 
 # # Plotly: Interactive Visualization
 
-# ## 1. Introduction
-# [Plotly](https://plotly.com/python/) is an Python library interactive, open-source plotting library that supports over 40 unique chart types covering a wide range of statistical, financial, geographic, scientific, and 3-dimensional use-cases.
-# 
-# Plotly has two important submodules, <code style='font-size:13px;'>plotly.express</code> and <code style='font-size:13px;'>plotly.graph_objects</code>, but this topic focuses on <code style='font-size:13px;'>plotly.express</code> only. It allows quickly creating more than 30 types of charts, each made only in a single function call.
+# In[20]:
+
+
+import numpy as np
+import pandas as pd
+import janitor
+import plotly
+import plotly.express as px
+import plotly.graph_objects as go
+
 
 # ## 1. Introduction
 # [Plotly](https://plotly.com/python/) is an Python library interactive, open-source plotting library that supports over 40 unique chart types covering a wide range of statistical, financial, geographic, scientific, and 3-dimensional use-cases.
 # 
 # Plotly has two important submodules, `plotly.express` and `plotly.graph_objects`, but this topic focuses on `plotly.express` only. It allows quickly creating more than 30 types of charts, each made only in a single function call.
 
-# ### Useful scripts
-# 
-# To display interactive Plotly charts in Jupyter Lab, it is required to install an extension.
-# ```python
-# jupyter labextension install jupyterlab-plotly@4.12.0
-# ```
-# 
-# To export a chart to a <code style='font-size:13px;'>.html</code> file, use the script below in which <code style='font-size:13px;'>fig</code> is the name of the graph object.
-# ```python
-# import plotly
-# plotly.offline.plot(fig, filename='My interactive figure.html')
-# ```
-
 # ## 2. Basic charts
 
-# ### 2.1. Pie Chart
+# ### 2.1. Pie chart
+# Plotly provides [pie charts] via the function [`px.pie()`].
+# 
+# [`px.pie()`]: https://plotly.com/python-api-reference/generated/plotly.express.pie.html
+# [pie charts]: https://plotly.com/python/pie-charts/
 
 # In[1]:
 
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -53,29 +50,34 @@ fig = px.pie(dfTip, names='day', values='tip', template='plotly')
 fig.show()
 
 
-# #### Donut Chart
+# #### Donut chart
 
-# In[4]:
+# In[15]:
 
 
 dfTip = px.data.tips()
 dfTip.head()
 
 
-# In[5]:
+# In[19]:
 
 
 fig = px.pie(dfTip, names='day', values='tip', hole=.5)
+plotly.offline.plot(fig, filename='output/donut-chart.html')
 fig.show()
 
 
-# ### 2.2. Bar Chart
+# ### 2.2. Bar chart
+# Plotly provides [bar charts] via the function [`px.bar()`].
+# 
+# [`px.bar()`]: https://plotly.com/python-api-reference/generated/plotly.express.bar.html
+# [bar charts]: https://plotly.com/python/bar-charts/
 
 # In[1]:
 
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import janitor
 import plotly.express as px
 import plotly.graph_objects as go
@@ -83,20 +85,15 @@ import plotly.graph_objects as go
 
 # #### Grouping and stacking
 
-# In[ ]:
-
-
-dfSales.sele
-
-
-# In[9]:
+# In[2]:
 
 
 dfSales = pd.read_csv('data/supermarket_sales.csv')
-dfSales.head().style.set_table_attributes('style="font-size: 10px"')
+dfSales = dfSales[['invoice_id', 'payment', 'product_line', 'gender', 'profit', 'customer_type', 'city']]
+dfSales.head()
 
 
-# In[8]:
+# In[3]:
 
 
 fig = px.bar(
@@ -110,7 +107,7 @@ fig = px.bar(
 fig.show()
 
 
-# In[9]:
+# In[4]:
 
 
 fig = px.bar(
@@ -126,14 +123,15 @@ fig.show()
 
 # #### Facet grid
 
-# In[10]:
+# In[2]:
 
 
 dfSales = pd.read_csv('data/supermarket_sales.csv')
+dfSales = dfSales[['invoice_id', 'payment', 'product_line', 'gender', 'profit', 'customer_type', 'city']]
 dfSales.head()
 
 
-# In[11]:
+# In[5]:
 
 
 fig = px.bar(
@@ -149,7 +147,7 @@ fig = px.bar(
 fig.show()
 
 
-# In[12]:
+# In[6]:
 
 
 fig = px.bar(
@@ -165,7 +163,7 @@ fig = px.bar(
 fig.show()
 
 
-# #### Bar Chart with slider
+# #### Slider
 
 # In[13]:
 
@@ -191,7 +189,7 @@ fig = px.bar(
 fig.show()
 
 
-# #### Dot Plot
+# #### Dot plot
 
 # In[15]:
 
@@ -206,7 +204,11 @@ fig = px.scatter(
 fig.show()
 
 
-# ### 2.3. Line Chart
+# ### 2.3. Line chart
+# Plotly provides [line charts] via the function [`px.line()`].
+# 
+# [`px.line()`]: https://plotly.com/python-api-reference/generated/plotly.express.line
+# [line charts]: https://plotly.com/python/line-charts/
 
 # In[16]:
 
@@ -237,14 +239,14 @@ fig = px.line(
 fig.show()
 
 
-# #### Line Chart with slider
+# #### Slider
 
-# In[19]:
+# In[14]:
 
 
 dfApple = pd.read_csv('data/finance_charts_apple.csv')
 dfApple.columns = [col.replace("AAPL.", '') for col in dfApple.columns]
-dfApple.head()
+dfApple.head().round(2)
 
 
 # In[20]:
@@ -274,7 +276,11 @@ fig.update_layout(
 fig.show()
 
 
-# ### 2.4. Scatter Plot
+# ### 2.4. Scatter plot
+# Plotly provides [scatter plots] via the function [`px.scatter()`].
+# 
+# [`px.scatter()`]: https://plotly.com/python-api-reference/generated/plotly.express.scatter.html
+# [scatter plots]: https://plotly.com/python/line-and-scatter/
 
 # In[21]:
 
@@ -285,7 +291,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-# #### Dot Plot
+# #### Dot plot
 
 # In[22]:
 
@@ -306,7 +312,7 @@ fig = px.scatter(
 fig.show()
 
 
-# #### 3D Scatter Plot
+# #### 3D scatter plot
 
 # In[24]:
 
@@ -330,7 +336,7 @@ fig.update_layout(margin=dict(l=0, r=0, b=0, t=0))
 fig.show()
 
 
-# #### Scatter Plot with slider
+# #### Slider
 
 # In[26]:
 
@@ -351,13 +357,17 @@ fig = px.scatter(
 fig.show()
 
 
-# ### 2.5. Radar Chart
+# ### 2.5. Radar chart
+# Plotly provides [radar charts] via the function [`px.line_polar()`].
+# 
+# [radar charts]: https://plotly.com/python/polar-chart/
+# [`px.line_polar()`]: https://plotly.com/python-api-reference/generated/plotly.express.line_polar.html
 
 # In[27]:
 
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -399,7 +409,11 @@ fig.update_traces(fill='toself')
 fig.show()
 
 
-# ### 2.6. Gantt Chart
+# ### 2.6. Gantt chart
+# Plotly provides [gantt charts] via the function [`px.timeline()`].
+# 
+# [`px.timeline()`]: https://plotly.com/python-api-reference/generated/plotly.express.timeline.html
+# [gantt charts]: https://plotly.com/python/gantt/
 
 # In[2]:
 
@@ -450,7 +464,11 @@ fig.update_yaxes(autorange='reversed')
 fig.show()
 
 
-# ### 2.7. Violin Plot
+# ### 2.7. Violin plot
+# Plotly provides the [violin plots] via the function [`px.violin()`].
+# 
+# [`px.violin()`]: https://plotly.com/python-api-reference/generated/plotly.express.violin.html
+# [violin plots]: https://plotly.com/python/violin/
 
 # In[33]:
 
@@ -485,7 +503,11 @@ fig.show()
 
 # ## 3. Advanced charts
 
-# ### 3.1. Sunburst Chart
+# ### 3.1. Sunburst chart
+# Plotly provides [sunbursts charts] via the function [`px.sunburst()`].
+# 
+# [`px.sunburst()`]: https://plotly.com/python-api-reference/generated/plotly.express.sunburst.html
+# [sunbursts charts]: https://plotly.com/python/sunburst-charts/
 
 # In[36]:
 
@@ -510,7 +532,11 @@ fig = px.sunburst(dfTip, path=['day', 'time', 'sex'], values='total_bill')
 fig.show()
 
 
-# ### 3.2. Tree Map
+# ### 3.2. Tree map
+# Plotly provides [tree maps] via the function [`px.treemap()`].
+# 
+# [`px.treemap()`]: https://plotly.com/python-api-reference/generated/plotly.express.treemap.html
+# [tree maps]: https://plotly.com/python/treemaps/
 
 # In[39]:
 
@@ -567,7 +593,11 @@ fig = px.treemap(
 fig.show()
 
 
-# ### 3.3. Parallel Set Diagram
+# ### 3.3. Parallel set
+# Plotly provides [parallel sets] via the function [`px.parallel_categories()`].
+# 
+# [parallel sets]: https://plotly.com/python/parallel-categories-diagram/
+# [`px.parallel_categories()`]: https://plotly.com/python-api-reference/generated/plotly.express.parallel_categories.html
 
 # In[44]:
 
@@ -597,7 +627,11 @@ fig = px.parallel_categories(
 fig.show()
 
 
-# ### 3.4. Parallel Coordinates Plot
+# ### 3.4. Parallel coordinates
+# Plotly provides [parallel coordinates] via the function [`px.parallel_coordinates()`].
+# 
+# [parallel coordinates]: https://plotly.com/python/parallel-coordinates-plot/
+# [`px.parallel_coordinates()`]: https://plotly.com/python-api-reference/generated/plotly.express.parallel_coordinates.html
 
 # In[47]:
 
@@ -628,34 +662,27 @@ fig
 
 
 # ## 4. Maps
-# Useful map styles that can be controlled using the
-# <code style='font-size:13px;'><a href='https://plotly.com/python/mapbox-layers/'>mapbox_style</a></code>
-# parameter:
-# - <code style='font-size:13px;'>white-bg</code>
-# - <code style='font-size:13px;'>open-street-map</code>
-# - <code style='font-size:13px;'>carto-positron</code>
-# - <code style='font-size:13px;'>carto-darkmatter</code>
-# - <code style='font-size:13px;'>stamen-terrain</code>
-# - <code style='font-size:13px;'>stamen-toner</code>
-# - <code style='font-size:13px;'>stamen-watercolor</code>
+# Useful map styles that can be controlled using the [`mapbox_style`] parameter:
+# - `white-bg`
+# - `open-street-map`
+# - `carto-positron`
+# - `carto-darkmatter`
+# - `stamen-terrain`
+# - `stamen-toner`
+# - `stamen-watercolor`
 # 
-# Plotly support other style as well:
-# <code style='font-size:13px;'>basic</code>
-# <code style='font-size:13px;'>streets</code>
-# <code style='font-size:13px;'>outdoors</code>
-# <code style='font-size:13px;'>light</code>
-# <code style='font-size:13px;'>dark</code>
-# <code style='font-size:13px;'>satellite</code>
-# <code style='font-size:13px;'>satellite-streets</code>,
-# but they require a Mapbox access token.
+# Plotly also supports other style as well: `basic`, `streets`, `outdoors`, `light`, `dark`, `satellite`, `satellite-streets`, but they require a Mapbox access token.
+# 
+# [`mapbox_style`]: https://plotly.com/python/mapbox-layers/
 
-# ### 4.1. Density Heat Map
-# [Density Heat Maps](https://plotly.com/python/mapbox-density-heatmaps/) show the magnitude of a phenomenon and where it is located. The
-# <code style='font-size:13px;'><a href='https://plotly.com/python-api-reference/generated/plotly.express.density_mapbox'>px.density_mapbox()</a></code>
-# function has the notable parameters as follows:
-# - <code style='font-size:13px;'>lat</code>: the latitude
-# - <code style='font-size:13px;'>lon</code>: the longitude
-# - <code style='font-size:13px;'>z</code>: the magnitude or the size
+# ### 4.1. Density heat map
+# Plotly's [density heat maps] show the magnitude of phenomenons and where they locate. The [`px.density_mapbox()`] function has the notable parameters as follows:
+# - `lat`: the latitude
+# - `lon`: the longitude
+# - `z`: the magnitude or the size
+# 
+# [density heat maps]: https://plotly.com/python/mapbox-density-heatmaps/
+# [`px.density_mapbox()`]: https://plotly.com/python-api-reference/generated/plotly.express.density_mapbox
 
 # In[50]:
 
@@ -691,9 +718,10 @@ fig.show()
 
 
 # ### 4.2. Bubble Map
-# [Bubble Maps](https://plotly.com/python/bubble-maps/), implemented via
-# <code style='font-size:13px;'><a href='https://plotly.github.io/plotly.py-docs/generated/plotly.express.scatter_mapbox.html'>px.scatter_mapbox()</a></code>,
-# takes the same input as Density Heat Map.
+# [Bubble maps], implemented via [`px.scatter_mapbox()`] takes the same input as Density Heat Map.
+# 
+# [Bubble maps]: https://plotly.com/python/bubble-maps/
+# [`px.scatter_mapbox()`]: https://plotly.github.io/plotly.py-docs/generated/plotly.express.scatter_mapbox.html
 
 # In[53]:
 
@@ -725,13 +753,14 @@ fig = px.scatter_mapbox(
 fig.show()
 
 
-# ### 4.3. Choropleth Map
-# [Choropleth Maps](https://plotly.com/python/choropleth-maps/) visualize a quantitative variable using colored polygons. The
-# <code style='font-size:13px;'><a href='https://plotly.github.io/plotly.py-docs/generated/plotly.express.choropleth_mapbox.html'>px.choropleth_mapbox()</a></code>
-# function has the notable parameters as follows:
-# - <code style='font-size:13px;'>geojson</code>: dictionary-styled geometry information that must contain the latitudes and the longitudes of polygon vertexes.
-# - <code style='font-size:13px;'>locations</code>: names of colored regions from <code style='font-size:13px;'>data_frame</code>.
-# - <code style='font-size:13px;'>featureidkey</code>: to specify the path used in <code style='font-size:13px;'>geojson</code> that match the value of <code style='font-size:13px;'>locations</code>.
+# ### 4.3. Choropleth map
+# [Choropleth maps] visualize a quantitative variable using colored polygons. The [`px.choropleth_mapbox()`] function has the notable parameters as follows:
+# - `geojson`: dictionary-styled geometry information that must contain the latitudes and the longitudes of polygon vertexes.
+# - `locations`: names of colored regions from `data_frame`.
+# - `featureidkey`: to specify the path used in `geojson` that match the value of `locations`.
+# 
+# [Choropleth maps]: https://plotly.com/python/choropleth-maps/
+# [`px.choropleth_mapbox()`]: https://plotly.github.io/plotly.py-docs/generated/plotly.express.choropleth_mapbox.html
 
 # In[56]:
 
@@ -778,5 +807,8 @@ fig = px.choropleth_mapbox(
 fig.show()
 
 
-# ---
-# *&#9829; By Quang Hung x Thuy Linh &#9829;*
+# In[ ]:
+
+
+jupyter labextension install jupyterlab-plotly@4.12.0
+
