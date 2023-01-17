@@ -2,23 +2,27 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: content/intro
+root: util/intro
 chapters:
 
-- file: content/chapter/01-python-programming
+# Python Programming
+- file: chapter-01/_intro
   sections:
-  - file: content/01-01-python-basic-concepts
-  - file: 
+  - file: chapter-01/python-basic-concepts
+  # - file: chapter-01/selenium-web-scraping
 
-- file: content/chapter/04-data-visualization
+# Data Visualization
+- file: chapter-04/_intro
   sections:
-  - file: content/09-matplotlib-graph-construction
-  - file: content/27-plotly-interactive-visualization
-  
-- file: content/chapter/05-tabular-learning
-  sections:
-  - file: content/34-xgboost-tree-boosting
+  - file: chapter-04/matplotlib-graph-construction
+  - file: chapter-04/plotly-interactive-visualization
 
-- file: content/chapter/09-deep-learning
+# Tabular Learning
+- file: chapter-05/_intro
   sections:
-  - file: content/36-numpy-gradient-descent
+  - file: chapter-05/xgboost-tree-boosting
+
+# Deep Learning
+- file: chapter-09/_intro
+  sections:
+  - file: chapter-09/numpy-gradient-descent
