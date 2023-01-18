@@ -9,7 +9,17 @@ chapters:
 - file: chapter-01/_intro
   sections:
   - file: chapter-01/python-basic-concepts
-  # - file: chapter-01/selenium-web-scraping
+  - file: chapter-01/python-data-types
+  - file: chapter-01/python-data-containers
+  - file: chapter-01/python-objects-functions
+  - file: chapter-01/python-external-sources
+  - file: chapter-01/selenium-web-scraping
+
+# Mathematics
+- file: chapter-02/_intro
+  sections:
+  - file: chapter-02/numpy-linear-algebra
+  - file: chapter-02/sympy-calculus
 
 # Data Visualization
 - file: chapter-04/_intro

@@ -1,3 +1,3 @@
-# IX. Deep Learning
+# 9. Deep Learning
 ```{tableofcontents}
 ```

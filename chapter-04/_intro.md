@@ -1,3 +1,3 @@
-# IV. Data Visualization
+# 4. Data Visualization
 ```{tableofcontents}
 ```

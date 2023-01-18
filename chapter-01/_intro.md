@@ -1,3 +1,3 @@
-# I. Python Programming
+# 1. Python Programming
 ```{tableofcontents}
 ```
