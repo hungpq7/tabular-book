@@ -1,3 +1,3 @@
-# V. Tabular Learning
+# 5. Tabular Learning
 ```{tableofcontents}
 ```

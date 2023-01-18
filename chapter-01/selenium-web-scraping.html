@@ -1,0 +1,1804 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Selenium: Web Scraping &#8212; Data Science with Python</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Mathematics" href="../chapter-02/_intro.html" />
+    <link rel="prev" title="Python: External Sources" href="python-external-sources.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Data Science with Python</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   1. Python Programming
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python-objects-functions.html">
+     Python: Objects and Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   2. Mathematics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     Numpy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     Sympy: Calculus
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-04/_intro.html">
+   4. Data Visualization
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-05/_intro.html">
+   5. Tabular Learning
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-09/_intro.html">
+   9. Deep Learning
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/chapter-01/selenium-web-scraping.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/chapter-01/selenium-web-scraping.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter-01/selenium-web-scraping.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   1. Overview
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requests">
+     1.1. Requests
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#apis-crawling">
+     1.2. APIs crawling
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#documented-apis">
+       Documented APIs
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hidden-apis">
+       Hidden APIs
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#html-parser">
+   2. HTML parser
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#html-concepts">
+     2.1. HTML concepts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#parsing">
+     2.2. Parsing
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tree-navigation">
+       Tree navigation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#element-searching">
+       Element searching
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#web-driver">
+   3. Web driver
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#driver-initialization">
+     3.1. Driver initialization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#element-locating">
+     3.2. Element locating
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#xpath">
+       XPath
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#css-selector">
+       CSS selector
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#implementation">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#actions">
+     3.3. Actions
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#send-keys">
+       Send keys
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hover">
+       Hover
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Selenium: Web Scraping</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   1. Overview
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requests">
+     1.1. Requests
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#apis-crawling">
+     1.2. APIs crawling
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#documented-apis">
+       Documented APIs
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hidden-apis">
+       Hidden APIs
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#html-parser">
+   2. HTML parser
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#html-concepts">
+     2.1. HTML concepts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#parsing">
+     2.2. Parsing
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tree-navigation">
+       Tree navigation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#element-searching">
+       Element searching
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#web-driver">
+   3. Web driver
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#driver-initialization">
+     3.1. Driver initialization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#element-locating">
+     3.2. Element locating
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#xpath">
+       XPath
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#css-selector">
+       CSS selector
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#implementation">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#actions">
+     3.3. Actions
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#send-keys">
+       Send keys
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hover">
+       Hover
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="selenium-web-scraping">
+<h1>Selenium: Web Scraping<a class="headerlink" href="#selenium-web-scraping" title="Permalink to this headline">#</a></h1>
+<section id="overview">
+<h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<p>There are basically two ways to scrape data from websites, one is via HTML responses (server-side) and the other is via JSON responses (client-side).</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="081134fb-6971-4a5b-871d-6f2e1fc55469" name="296ae0fa-b65a-49b7-b237-7f2d3b161a25" type="radio">
+</input><label class="sd-tab-label" for="081134fb-6971-4a5b-871d-6f2e1fc55469">
+Server-side</label><div class="sd-tab-content docutils">
+<p>We extract <em>unstructured</em> data from user interface, which is friendly for human eyes but not for computers. Data is availale most of the time except for cases when website owners protect their data intentionally. This crawling approach requires some basic knowledge of HTML.</p>
+</div>
+<input id="505a27e9-5807-4c51-aed3-1f3d796d2a2d" name="296ae0fa-b65a-49b7-b237-7f2d3b161a25" type="radio">
+</input><label class="sd-tab-label" for="505a27e9-5807-4c51-aed3-1f3d796d2a2d">
+Client-side</label><div class="sd-tab-content docutils">
+<p>We try to crawl <em>structured</em> REST API responses, which is only available in specific website that use this protocol. The advantage is that the returned data is in JSON format, so they can be easily extracted and processed. Crawling data this way is much easier, so we are going to start with it.</p>
+</div>
+</div>
+<section id="requests">
+<h3>1.1. Requests<a class="headerlink" href="#requests" title="Permalink to this headline">#</a></h3>
+<p>Instead of accessing websites using a browser such as Google Chrome, we can use the <a class="reference external" href="https://github.com/psf/requests">Requests</a> library to download the raw content of that page and interact with it. Most of the time, we are going to use the <code class="docutils literal notranslate"><span class="pre">get()</span></code> function followed by the <code class="docutils literal notranslate"><span class="pre">text()</span></code> attribute.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://books.toscrape.com/index.html&#39;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">response</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Response [200]&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;&lt;!DOCTYPE html&gt;\n&lt;!--[if lt IE 7]&gt;      &lt;html lang=&quot;en-us&quot; class=&quot;no-js lt-ie9 lt-ie8 lt-ie7&quot;&gt; &lt;![endif]--&gt;\n&lt;!--[if IE 7]&gt;         &lt;html lang=&quot;en-us&quot; class=&quot;no-js lt-ie9 lt-ie8&quot;&gt; &lt;![endif]--&gt;\n&lt;!--[if IE 8]&gt;         &lt;html lang=&quot;en-us&quot; class=&quot;no-js lt-ie9&quot;&gt; &lt;![endif]--&gt;\n&lt;!--[if gt IE 8]&gt;&lt;!--&gt; &lt;html lang=&quot;en-us&quot; class=&quot;no-js&quot;&gt; &lt;!--&lt;![endif]--&gt;\n    &lt;head&gt;\n        &lt;title&gt;\n    All products | Books to Scrape - Sandbox\n&lt;/title&gt;\n\n        &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;\n        &lt;meta name=&quot;created&quot; content=&quot;24th Jun 2016 09:29&quot; /&gt;\n        &lt;meta name=&quot;description&quot; content=&quot;&quot; /&gt;\n        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot; /&gt;\n        &lt;meta name=&quot;robots&quot; content=&quot;NOARCHIVE,NOCACHE&quot; /&gt;\n\n        &lt;!-- Le HTML5 shim, for IE6-8 support of HTML elements --&gt;\n        &lt;!--[if lt IE 9]&gt;\n        &lt;script src=&quot;//html5shim.googlecode.com/svn/trunk/html5.js&quot;&gt;&lt;/script&gt;\n        &lt;![endif]--&gt;\n\n        \n            &lt;link rel=&quot;shortcut icon&quot; href=&quot;static/oscar/favicon.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">response</span><span class="o">.</span><span class="n">headers</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Date&#39;: &#39;Fri, 06 Jan 2023 02:51:21 GMT&#39;, &#39;Content-Type&#39;: &#39;text/html&#39;, &#39;Transfer-Encoding&#39;: &#39;chunked&#39;, &#39;Connection&#39;: &#39;keep-alive&#39;, &#39;Last-Modified&#39;: &#39;Thu, 26 May 2022 21:15:15 GMT&#39;, &#39;ETag&#39;: &#39;W/&quot;628fede3-c85e&quot;&#39;, &#39;Strict-Transport-Security&#39;: &#39;max-age=0; includeSubDomains; preload&#39;, &#39;Content-Encoding&#39;: &#39;br&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="apis-crawling">
+<h3>1.2. APIs crawling<a class="headerlink" href="#apis-crawling" title="Permalink to this headline">#</a></h3>
+<p>Not all URLs point to an HTML page, for example, the URL <a class="reference external" href="https://api.github.com/repos/dmlc/xgboost">https://api.github.com/repos/dmlc/xgboost</a> points to a raw document in JSON format. Such an URL is called a REST API endpoint and can be easily converted into Python dictionaries using the  <code class="docutils literal notranslate"><span class="pre">json()</span></code> method. But APIs in practice are not always that simple, they can go with concepts such as headers and payloads. So, learning real-world API structures and how to find them will be our goal in this section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="documented-apis">
+<h4>Documented APIs<a class="headerlink" href="#documented-apis" title="Permalink to this headline">#</a></h4>
+<p>Many organizations officially support REST APIs for data accessing, such as <a class="reference external" href="https://docs.github.com/en/rest">GitHub</a>, <a class="reference external" href="https://developers.facebook.com/docs/groups-api/reference">Facebook</a>, <a class="reference external" href="https://developer.twitter.com/en/docs/twitter-api">Twitter</a>, <a class="reference external" href="https://www.reddit.com/dev/api/">Reddit</a> and <a class="reference external" href="https://developer.clashroyale.com/">Clash Royale</a>. To start using APIs provided this way, developers usually need to register an account and generate an API key, but some of them don’t require any authenication. Either way, the instructions for requesting data can be found in their documentation sites.</p>
+<p>Now let’s hand on an example by requesting GitHub’s <a class="reference external" href="https://docs.github.com/en/rest/repos/repos#list-repository-languages">list-repository-languages</a> endpoint to show the size (in bytes) of code written in each language.</p>
+<ul class="simple">
+<li><p>The main component of a request is the URL which follows a pre-defined syntax. In this case, the URL has two placeholders for <code class="docutils literal notranslate"><span class="pre">OWNER</span></code> and <code class="docutils literal notranslate"><span class="pre">REPO</span></code> they can be handled nicely using Python formatted strings. We can use this URL to access data of any public repository.</p></li>
+<li><p>For private repositories, we must provide an authenication key with appropriae permissions. These additional information are called the headers, you can think of them as metadata of the API call.</p></li>
+<li><p>We might notice that there are different requesting methods available such as GET, POST, PUT and DELETE that serve different purposes. As we only want to collect data, we only need to care about GET, and sometimes, POST.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">OWNER</span> <span class="o">=</span> <span class="s1">&#39;dmlc&#39;</span>
+<span class="n">REPO</span> <span class="o">=</span> <span class="s1">&#39;xgboost&#39;</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://api.github.com/repos/</span><span class="si">{</span><span class="n">OWNER</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">REPO</span><span class="si">}</span><span class="s1">/languages&#39;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;C++&#39;: 2215388,
+ &#39;Python&#39;: 1203192,
+ &#39;Cuda&#39;: 863316,
+ &#39;Scala&#39;: 470919,
+ &#39;R&#39;: 343950,
+ &#39;Java&#39;: 206895,
+ &#39;CMake&#39;: 52369,
+ &#39;Shell&#39;: 45902,
+ &#39;C&#39;: 22503,
+ &#39;Makefile&#39;: 8179,
+ &#39;PowerShell&#39;: 4308,
+ &#39;CSS&#39;: 3812,
+ &#39;Dockerfile&#39;: 2364,
+ &#39;M4&#39;: 2131,
+ &#39;Batchfile&#39;: 1383,
+ &#39;Groovy&#39;: 1251,
+ &#39;TeX&#39;: 913}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">OWNER</span> <span class="o">=</span> <span class="s1">&#39;hungpq7&#39;</span>
+<span class="n">REPO</span> <span class="o">=</span> <span class="s1">&#39;courses&#39;</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://api.github.com/repos/</span><span class="si">{</span><span class="n">OWNER</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">REPO</span><span class="si">}</span><span class="s1">/languages&#39;</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/vnd.github+json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer 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&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;X-GitHub-Api-Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-11-28&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Jupyter Notebook&#39;: 8166118, &#39;Perl&#39;: 1432, &#39;Shell&#39;: 1286}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We can make API calls with command line too, using the <a class="reference external" href="https://en.wikipedia.org/wiki/CURL">cURL</a> command.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!curl https://api.github.com/repos/hungpq7/courses/languages \
+    -H &quot;Accept: application/vnd.github+json&quot; \
+    -H &quot;Authorization: Bearer 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&quot; \
+    -H &quot;X-GitHub-Api-Version: 2022-11-28&quot;
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{
+  &quot;Jupyter Notebook&quot;: 8166118,
+  &quot;Perl&quot;: 1432,
+  &quot;Shell&quot;: 1286
+}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="hidden-apis">
+<h4>Hidden APIs<a class="headerlink" href="#hidden-apis" title="Permalink to this headline">#</a></h4>
+<p>The increasing popularity of JavaScript-based frameworks such as React, Angular and Vue encourages websites to be rendered <em>client-side</em>. This means, more websites use REST APIs to send and receive data to fill HTML templates, then render the page on user’s computers. Of course, such APIs are not documented, so benefiting them requires some tricks including finding them and understanding their structures. In this section, we are going to inspect a page’s network activities to locate scrapable APIs.</p>
+<div class="seealso admonition">
+<p class="admonition-title">Case study</p>
+<p>We will be crawling all articles in the home page of <a class="reference external" href="https://techcrunch.com/">https://techcrunch.com/</a> with the following steps:</p>
+<ul class="simple">
+<li><p>Go to the target page and open the browser’s developer tool. The shortcut in Google Chrome is <code class="docutils literal notranslate"><span class="pre">F12</span></code> or <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">Shift</span> <span class="pre">+</span> <span class="pre">I</span></code>. However, the tool will not record activities before it was opened, so we need to press <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">R</span></code> to reload the target page.</p></li>
+<li><p>Navigate to the Network tab to show all requests the page has made and filter Fetch/XHR requests. This filter leaves only requests that fetch JSON data, separating them from other types of response that we don’t need such as image, media and CSS. These buttons are yellow circled in the image below.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/rest_api_response.png" id="image-rest-api-response-png"><img alt="../_images/rest_api_response.png" class="align-center" id="image-rest-api-response-png" src="../_images/rest_api_response.png" style="height: 300px;" /></a>
+<ul class="simple">
+<li><p>At this point, one of the displaying requests returns the data we are looking for. We will need to explore a bit to determine that API, start with names. In the example of TechCrunch, the API “magazine” sounds promising. Indeed, when we click this API and preview its response, we see a list of items storing articles in the website.</p></li>
+<li><p>Now we have found the API, let’s learn how to use it. Switching to the Header tab reveals to us the URL and the request method of this API. Other APIs may require headers as well as payload, but this one is not the case.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/rest_api_url.png" id="image-rest-api-url-png"><img alt="../_images/rest_api_url.png" class="align-center" id="image-rest-api-url-png" src="../_images/rest_api_url.png" style="height: 250px;" /></a>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://techcrunch.com/wp-json/tc/v1/magazine?page=1&amp;_embed=true&amp;cachePrevention=0&#39;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">response</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Response [200]&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">():</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;primary_category&#39;</span><span class="p">][</span><span class="s1">&#39;slug&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;author&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;parselyMeta&#39;</span><span class="p">][</span><span class="s1">&#39;parsely-author&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;parselyMeta&#39;</span><span class="p">][</span><span class="s1">&#39;parsely-title&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;canonical_url&#39;</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>category</th>
+      <th>author</th>
+      <th>title</th>
+      <th>url</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2466319</td>
+      <td>fintech</td>
+      <td>Mary Ann Azevedo</td>
+      <td>Does everyone want to be a landlord, or what?</td>
+      <td>https://techcrunch.com/2023/01/08/does-everyon...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2465989</td>
+      <td>climate</td>
+      <td>Tim De Chant</td>
+      <td>Plant-based foods investor says her focus is m...</td>
+      <td>https://techcrunch.com/2023/01/08/plant-based-...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2466520</td>
+      <td>hardware</td>
+      <td>Haje Jan Kamps</td>
+      <td>Urine luck: these CES startups want to take a ...</td>
+      <td>https://techcrunch.com/2023/01/07/ces-urine/</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2465453</td>
+      <td>hardware</td>
+      <td>Haje Jan Kamps</td>
+      <td>A big CES 2023 trend: all battery power, every...</td>
+      <td>https://techcrunch.com/2023/01/07/batteries-ba...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2466468</td>
+      <td>gadgets</td>
+      <td>Haje Jan Kamps</td>
+      <td>Did you hear? AnkerWork is going after the wir...</td>
+      <td>https://techcrunch.com/2023/01/07/ankerwork-m6...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="seealso admonition">
+<p class="admonition-title">Case study</p>
+<p>Sometimes, websites block connections from non-browser clients. For example, when inspecting the website <a class="reference external" href="https://tiki.vn/nha-sach-tiki/c8322">https://tiki.vn/nha-sach-tiki/c8322</a>, I found an API named “listing” which contains all products shown in the page. With the naked URL, we can access its response using Chrome but will get blocked using Requests. This can be easily bypassed by we overwriting the <em>user agent</em> header as follows.</p>
+<a class="reference internal image-reference" href="../_images/rest_api_payload.png" id="image-rest-api-payload-png"><img alt="../_images/rest_api_payload.png" class="align-center" id="image-rest-api-payload-png" src="../_images/rest_api_payload.png" style="height: 300px;" /></a>
+<p>Now, if switch to the Payload tab, we can observe that the parameters here match exactly the components in the URL. With this insight, we can rewrite the request with URL and payload separatedly, which is far more readable.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">default_headers</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;User-Agent&#39;: &#39;python-requests/2.25.1&#39;, &#39;Accept-Encoding&#39;: &#39;gzip, deflate&#39;, &#39;Accept&#39;: &#39;*/*&#39;, &#39;Connection&#39;: &#39;keep-alive&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://tiki.vn/api/personalish/v1/blocks/listings?limit=40&amp;category=8322&amp;page=1&amp;urlKey=nha-sach-tiki&#39;</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user-agent&#39;</span><span class="p">:</span> <span class="s1">&#39;Mozilla/5.0 Chrome/108.0.0.0 Safari/537.36&#39;</span><span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">response</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Response [200]&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://tiki.vn/api/personalish/v1/blocks/listings&#39;</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user-agent&#39;</span><span class="p">:</span> <span class="s1">&#39;Mozilla/5.0 Chrome/108.0.0.0 Safari/537.36&#39;</span><span class="p">}</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;limit&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="mi">8322</span><span class="p">,</span>
+    <span class="s1">&#39;page&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;urlKey&#39;</span><span class="p">:</span> <span class="s1">&#39;nha-sach-tiki&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">response</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Response [200]&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;data&#39;</span><span class="p">][:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">product</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cây Cam Ngọt Của Tôi
+Hành Tinh Của Một Kẻ Nghĩ Nhiều
+Không Phải Sói Nhưng Cũng Đừng Là Cừu -Tặng kèm bookmark 2 mặt
+Thao Túng Tâm Lý
+Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="html-parser">
+<h2>2. HTML parser<a class="headerlink" href="#html-parser" title="Permalink to this headline">#</a></h2>
+<section id="html-concepts">
+<h3>2.1. HTML concepts<a class="headerlink" href="#html-concepts" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/HTML">HTML</a> is a language for creating web pages. The easiest way to think about HTML, is a language with the same purpose with Markdown, with less readability but more expressivity. A HTML document is constructed by <em>elements</em>, organized in a hierarchical structure. For example, here are the components of an element:</p>
+<ul class="simple">
+<li><p>The <em>tag</em> <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> usually pairs with a closing one <code class="docutils literal notranslate"><span class="pre">&lt;/span&gt;</span></code>. Some tags can stands alone such as <code class="docutils literal notranslate"><span class="pre">&lt;br&gt;</span></code>. We also refer to tag as element name.</p></li>
+<li><p>The text between two tags <code class="docutils literal notranslate"><span class="pre">computer</span></code> is the <em>content</em> of that element.</p></li>
+<li><p>An element can have a number of <em>attributes</em> such as <code class="docutils literal notranslate"><span class="pre">class</span></code>, <code class="docutils literal notranslate"><span class="pre">style</span></code> and their corresponding <em>values</em> placed after the equal sign <code class="docutils literal notranslate"><span class="pre">=</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
+<span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#39;breadcrumb content&#39;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#39;color:indianred&#39;</span><span class="p">&gt;</span>computer<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><span class='breadcrumb content' style='color:indianred'>computer</span>
+</div></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some global attributes occur everywhere in HTML documents. Keeping an eye on them will help you a lot in scraping data:</p>
+<ul class="simple">
+<li><p>The attribute <code class="docutils literal notranslate"><span class="pre">id</span></code> is the identifier of an element, must be unique across the document. Useful in locating a specific element.</p></li>
+<li><p>The attribute <code class="docutils literal notranslate"><span class="pre">class</span></code> makes reference to custom CSS styles. Useful in matching a list of items with the same style. An element can have multiple classes, for example <em>breadcrumb</em> and <em>content</em>.</p></li>
+</ul>
+</div>
+</section>
+<section id="parsing">
+<h3>2.2. Parsing<a class="headerlink" href="#parsing" title="Permalink to this headline">#</a></h3>
+<p>There is a powerful library, <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a>, that helps us navigating HTML documents and finding the desired elements. All we need to do is passing the HTML document to it (to get an object called the <em>soup</em>), then uses its methods and attributes to extract what we want. We are going to demonstrate the main features of Beautiful Soup using a small document.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bs4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;html&gt;</span>
+<span class="s2">    &lt;head&gt;</span>
+<span class="s2">        &lt;title&gt;The Dormouse&#39;s story&lt;/title&gt;</span>
+<span class="s2">    &lt;/head&gt;</span>
+<span class="s2">    &lt;body&gt;</span>
+<span class="s2">        &lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their names were</span>
+<span class="s2">            &lt;a href=&quot;https://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span>
+<span class="s2">            &lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt; and</span>
+<span class="s2">            &lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;;</span>
+<span class="s2">            and they lived at the bottom of a well.</span>
+<span class="s2">        &lt;/p&gt;</span>
+<span class="s2">        &lt;time class=&quot;story&quot;&gt;2000-01-01 06:00:00&lt;/time&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="o">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="tree-navigation">
+<h4>Tree navigation<a class="headerlink" href="#tree-navigation" title="Permalink to this headline">#</a></h4>
+<p>We can easily navigate a HTML document as BS has registered child tags and attributes to the <em>soup</em>. This syntax is simple, but the downside is that it cannot handle multiple children (only the first child is returned).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">a</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tag</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Elsie&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tag</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;http://example.com/elsie&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="element-searching">
+<h4>Element searching<a class="headerlink" href="#element-searching" title="Permalink to this headline">#</a></h4>
+<p>BS supports a more reliable way for finding exactly the element we want, via the <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/#find-all"><code class="docutils literal notranslate"><span class="pre">find_all()</span></code></a> method. This function searchs for HTML tags and attributes:</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/#kinds-of-filters">first argument</a> is the tag you want to find. It can be a string or list of strings, a regex pattern or a function.</p></li>
+<li><p>Other arguments are named after HTML attributes. But if some of them make conflicts to Python built-in names such as <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">class</span></code> and <code class="docutils literal notranslate"><span class="pre">custom-attribute</span></code>, we can pass them as a dictionary to the <code class="docutils literal notranslate"><span class="pre">attrs</span></code> argument.</p></li>
+</ul>
+<p>The ideal case in searching is when you know the ID of an element, thanks to its uniqueness. In this case, we can safely use the <code class="docutils literal notranslate"><span class="pre">find()</span></code> method instead, which returns only the first result. Otherwise, combinations of tags and attributes will help you finding the element you want very quickly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">bs4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;link2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^t&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;title&gt;The Dormouse&#39;s story&lt;/title&gt;,
+ &lt;time class=&quot;story&quot;&gt;2000-01-01 06:00:00&lt;/time&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;sister&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;a class=&quot;sister&quot; href=&quot;https://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,
+ &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;,
+ &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;sister&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;href&#39;</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;https\S+&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;a class=&quot;sister&quot; href=&quot;https://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="seealso admonition">
+<p class="admonition-title">Case study</p>
+<p>Let’s use Beautiful Soup to crawl all fiction books in the page <a class="reference external" href="https://books.toscrape.com/catalogue/category/books/fiction_10/index.html">https://books.toscrape.com/catalogue/category/books/fiction_10/index.html</a>. This website does not use REST APIs, so the only way is parsing its HTML souce. Our crawler contains two phases, (1) gathering book URLs and (2) actually crawling book information.</p>
+<p><em>Phase 1</em></p>
+<ul class="simple">
+<li><p>First, examine the URL structure to find that we can replace “index” with “page-n” to access pages. The index of page will be set incrementally, as we will get an 404 error message when it exceeds the maximum number.</p></li>
+<li><p>In the first page, use the <em>inspect</em> tool of Chrome to find book containers (each contains image, title, ratings and price). We observe that each container has 4 classes <code class="docutils literal notranslate"><span class="pre">col-xs-6</span></code>, <code class="docutils literal notranslate"><span class="pre">col-sm-4</span></code>, <code class="docutils literal notranslate"><span class="pre">col-md-3</span></code> and <code class="docutils literal notranslate"><span class="pre">col-lg-3</span></code>. You can re-check this information by searching and counting the number of elements that use all 4 classes. There are 20 of them, which matches the number of books the page shows.</p></li>
+<li><p>All the information in the containers also appear in book pages. So, the only data we get here is book URLs. Note that URLs here are relative, we can easily convert in into full path using the function <a class="reference external" href="https://docs.python.org/3/library/urllib.parse.html#urllib.parse.urljoin"><code class="docutils literal notranslate"><span class="pre">urljoin()</span></code></a>.</p></li>
+</ul>
+<p><em>Phase 2</em></p>
+<ul class="simple">
+<li><p>Access each URL collected in the first phase. Locate the content container.</p></li>
+<li><p>Extract the important fields and add them to a Pandas dataframe. There is no new technique in this phase.</p></li>
+</ul>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">bs4</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">crawl_book_url</span><span class="p">(</span><span class="n">urlBase</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="n">listUrlBook</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">nPage</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># access crawl page and check if it loads successfully (status 200)</span>
+        <span class="n">urlPage</span> <span class="o">=</span> <span class="n">urlBase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;page-</span><span class="si">{</span><span class="n">nPage</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">urlPage</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">break</span>
+        
+        <span class="c1"># create soup</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="o">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># get book containers</span>
+        <span class="n">listContainer</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;col-xs-6 col-sm-4 col-md-3 col-lg-3&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># get book urls</span>
+        <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="n">listContainer</span><span class="p">:</span>
+            <span class="n">href</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">article</span><span class="o">.</span><span class="n">h3</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+            <span class="n">urlBook</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">urlBase</span><span class="p">,</span> <span class="n">href</span><span class="p">)</span>
+            <span class="n">listUrlBook</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">urlBook</span><span class="p">)</span>
+        
+        <span class="c1"># advance to the next page</span>
+        <span class="n">nPage</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">listUrlBook</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">crawl_book_info</span><span class="p">(</span><span class="n">listUrlBook</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">urlBook</span> <span class="ow">in</span> <span class="n">listUrlBook</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">urlBook</span><span class="p">)</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="o">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+        
+        <span class="n">container</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;article&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;product_page&#39;</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;product_main&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">h1</span><span class="o">.</span><span class="n">text</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+        
+        <span class="n">table</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;table-striped&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">prettify</span><span class="p">()</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="n">upc</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;UPC&#39;</span><span class="p">]</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;Price (excl. tax)&#39;</span><span class="p">]</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;\d+\.\d+&#39;</span><span class="p">,</span> <span class="n">price</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">tax</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;Tax&#39;</span><span class="p">]</span>
+        <span class="n">tax</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;\d+\.\d+&#39;</span><span class="p">,</span> <span class="n">tax</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        
+        <span class="n">sample</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;upc&#39;</span><span class="p">:</span> <span class="n">upc</span><span class="p">,</span>
+            <span class="s1">&#39;urlBook&#39;</span><span class="p">:</span> <span class="n">urlBook</span><span class="p">,</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
+            <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="n">price</span><span class="p">,</span>
+            <span class="s1">&#39;tax&#39;</span><span class="p">:</span> <span class="n">tax</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">urlBase</span> <span class="o">=</span> <span class="s1">&#39;https://books.toscrape.com/catalogue/category/books/fiction_10/index.html&#39;</span>
+<span class="n">listUrlBook</span> <span class="o">=</span> <span class="n">crawl_book_url</span><span class="p">(</span><span class="n">urlBase</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">listUrlBook</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>65
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">crawl_book_info</span><span class="p">(</span><span class="n">listUrlBook</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>upc</th>
+      <th>urlBook</th>
+      <th>title</th>
+      <th>price</th>
+      <th>tax</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6957f44c3847a760</td>
+      <td>https://books.toscrape.com/catalogue/soumissio...</td>
+      <td>Soumission</td>
+      <td>50.10</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>b12b89017878a60d</td>
+      <td>https://books.toscrape.com/catalogue/private-p...</td>
+      <td>Private Paris (Private #10)</td>
+      <td>47.61</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8d455c7539795d2a</td>
+      <td>https://books.toscrape.com/catalogue/we-love-y...</td>
+      <td>We Love You, Charlie Freeman</td>
+      <td>50.27</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>709822d0b5bcb7f4</td>
+      <td>https://books.toscrape.com/catalogue/thirst_94...</td>
+      <td>Thirst</td>
+      <td>17.27</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>d01ac97e2b8947c2</td>
+      <td>https://books.toscrape.com/catalogue/the-murde...</td>
+      <td>The Murder That Never Was (Forensic Instincts #5)</td>
+      <td>54.11</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="web-driver">
+<h2>3. Web driver<a class="headerlink" href="#web-driver" title="Permalink to this headline">#</a></h2>
+<p>In many scenarios, a website may require users to perform some actions to reveal data, which Beautiful Soup cannot handle. In such cases, we need a <em>web driver</em> that can emulate user interation with browsers. <a class="reference external" href="https://github.com/SeleniumHQ/selenium">Selenium</a> is a library born to serve this purpose; it is designed for automation test but can also be used for web scraping.</p>
+<section id="driver-initialization">
+<h3>3.1. Driver initialization<a class="headerlink" href="#driver-initialization" title="Permalink to this headline">#</a></h3>
+<p>In order to use Selenium, we must first set up a web driver (Chrome is recommended). This is done by downloading <a class="reference external" href="https://chromedriver.chromium.org/home">Chrome Driver</a> manually and giving the path to Selenium. But thanks to <a class="reference external" href="https://github.com/SergeyPirogov/webdriver_manager">Webdriver Manager</a>, drivers for different browsers will be automatically detected and downloaded for us. After intializing, Selenium will open a driver window for us, so we can monitor how actions being performed. We can configure the web driver indifferent ways:</p>
+<ul class="simple">
+<li><p>Add some <a class="reference external" href="https://www.selenium.dev/documentation/webdriver/drivers/options/">options</a>, such as <em>headless</em> and <em>start-maximized</em></p></li>
+<li><p>Use a custom <a class="reference external" href="https://www.selenium.dev/documentation/webdriver/drivers/options/#pageloadstrategy">page load strategy</a></p></li>
+<li><p>Quit the driver to free up memory</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">webdriver_manager.chrome</span> <span class="kn">import</span> <span class="n">ChromeDriverManager</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.service</span> <span class="kn">import</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="kn">import</span> <span class="n">Options</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">ChromeDriverManager</span><span class="p">()</span><span class="o">.</span><span class="n">install</span><span class="p">())</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<span class="c1"># options.add_argument(&#39;--headless&#39;)</span>
+<span class="c1"># options.add_argument(&#39;--window-size=1920,1080&#39;)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;start-maximized&#39;</span><span class="p">)</span>
+
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">service</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="element-locating">
+<h3>3.2. Element locating<a class="headerlink" href="#element-locating" title="Permalink to this headline">#</a></h3>
+<p>In Selenium, we find an element using the <a class="reference external" href="https://www.selenium.dev/documentation/webdriver/elements/finders"><code class="docutils literal notranslate"><span class="pre">find_elements()</span></code></a> method with the first argument being a <a class="reference external" href="https://selenium-python.readthedocs.io/locating-elements.html"><code class="docutils literal notranslate"><span class="pre">By</span></code></a> locator. Besides basic element locating strategies using tags and attributes, Selenium provides two convinient locators, XPath and CSS selector. You can simply use them by right-click an element and copy its XPath/selector, but they worth being learned carefully.</p>
+<section id="xpath">
+<h4>XPath<a class="headerlink" href="#xpath" title="Permalink to this headline">#</a></h4>
+<p>The general syntax of XPath is <code class="docutils literal notranslate"><span class="pre">/element/element/...</span></code>, starts from root. You can leave the first element blank <code class="docutils literal notranslate"><span class="pre">//element/element/...</span></code> to turn the absolute path into relative. The basic syntaxes for searching elements are <code class="docutils literal notranslate"><span class="pre">tag[&#64;attr='value']</span></code> and <code class="docutils literal notranslate"><span class="pre">tag[ordinal]</span></code>. For example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*[&#64;id='promotion']</span></code> matches any tag that has <code class="docutils literal notranslate"><span class="pre">id='promotion'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">div[&#64;class='breadcrumb']</span></code> matches elements that have <code class="docutils literal notranslate"><span class="pre">&lt;div</span> <span class="pre">class='breadcrumb'&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">span[7]</span></code> matches any <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> element that is the seventh child of its parent.</p></li>
+</ul>
+</section>
+<section id="css-selector">
+<h4>CSS selector<a class="headerlink" href="#css-selector" title="Permalink to this headline">#</a></h4>
+<p>The general syntax of CSS selector is <code class="docutils literal notranslate"><span class="pre">element</span> <span class="pre">&gt;</span> <span class="pre">element</span> <span class="pre">&gt;</span> <span class="pre">...</span></code>, being relative by nature. The basic syntaxes for searching elements are <code class="docutils literal notranslate"><span class="pre">tag.class</span></code>, <code class="docutils literal notranslate"><span class="pre">tag#id</span></code>, <code class="docutils literal notranslate"><span class="pre">tag[attr=value]</span></code>, <code class="docutils literal notranslate"><span class="pre">tag:func(args)</span></code>. For example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#promotion</span></code> matches any tag that has <code class="docutils literal notranslate"><span class="pre">id='promotion'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">div.breadcrumb</span></code> matches elements that have <code class="docutils literal notranslate"><span class="pre">&lt;div</span> <span class="pre">class='breadcrumb'&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">span[role=alert]</span></code> matches elements that have <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">role='alert'&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">span:nth-child(7)</span></code> matches any <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> element that is the seventh child of its parent.</p></li>
+</ul>
+</section>
+<section id="implementation">
+<h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
+<p>In this section, we attemp to crawl first 20 books in the fiction category. We try traditional way first, using tags and classes, only to know that Selenium does not support this style very well. Next, we try to use XPath and CSS selector by copying those of a single book from Chrome and then tweaking them to match all 20.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">webdriver_manager.chrome</span> <span class="kn">import</span> <span class="n">ChromeDriverManager</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.service</span> <span class="kn">import</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="kn">import</span> <span class="n">Options</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">ChromeDriverManager</span><span class="p">()</span><span class="o">.</span><span class="n">install</span><span class="p">())</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;start-maximized&#39;</span><span class="p">)</span>
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">service</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[WDM] - Downloading:  97%|█████████▋| 8.34M/8.61M [00:02&lt;00:00, 5.49MB/s]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://books.toscrape.com/catalogue/category/books/fiction_10/index.html&#39;</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">listBook</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s1">&#39;col-xs-6&#39;</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">listBook</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xpath</span> <span class="o">=</span> <span class="s1">&#39;//*[@id=&quot;default&quot;]/div/div/div/div/section/div[2]/ol/li&#39;</span>
+<span class="n">listBook</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">xpath</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">listBook</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="s1">&#39;#default &gt; div &gt; div &gt; div &gt; div &gt; section &gt; div:nth-child(2) &gt; ol &gt; li&#39;</span>
+<span class="n">listBook</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">,</span> <span class="n">selector</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">listBook</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="actions">
+<h3>3.3. Actions<a class="headerlink" href="#actions" title="Permalink to this headline">#</a></h3>
+<p>In this section we use Selenium to perform basic <a class="reference external" href="https://selenium-python.readthedocs.io/navigating.html">actions</a> on a website: clicking, typing keys and hovering.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">webdriver_manager.chrome</span> <span class="kn">import</span> <span class="n">ChromeDriverManager</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.service</span> <span class="kn">import</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="kn">import</span> <span class="n">Options</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="kn">import</span> <span class="n">Keys</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.action_chains</span> <span class="kn">import</span> <span class="n">ActionChains</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">ChromeDriverManager</span><span class="p">()</span><span class="o">.</span><span class="n">install</span><span class="p">())</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;start-maximized&#39;</span><span class="p">)</span>
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">service</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://www.tensorflow.org/&#39;</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="send-keys">
+<h4>Send keys<a class="headerlink" href="#send-keys" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/html/body/section/devsite-header/div/div[1]/div/div/div[2]/devsite-search/form/div[1]/div/input&#39;</span>
+<span class="n">element</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s1">&#39;lstm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONTROL</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONTROL</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">DOWN</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">element</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="hover">
+<h4>Hover<a class="headerlink" href="#hover" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chains</span> <span class="o">=</span> <span class="n">ActionChains</span><span class="p">(</span><span class="n">driver</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/html/body/section/devsite-header/div/div[1]/div/div/div[2]/div[1]/devsite-tabs/nav/tab[6]/a[1]&#39;</span>
+<span class="n">element</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+<span class="n">chains</span><span class="o">.</span><span class="n">move_to_element</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/html/body/section/devsite-header/div/div[1]/div/div/div[2]/div[1]/devsite-tabs/nav/tab[5]/a[1]&#39;</span>
+<span class="n">element</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+<span class="n">chains</span><span class="o">.</span><span class="n">move_to_element</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">element</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><em><a class="reference external" href="http://gregreda.com">gregreda.com</a> - <a class="reference external" href="http://www.gregreda.com/2015/02/15/web-scraping-finding-the-api/">Web Scraping 201: finding the API</a></em></p></li>
+<li><p><em><a class="reference external" href="http://jovian.ai">jovian.ai</a> - <a class="reference external" href="https://jovian.ai/aakashns/python-web-scraping-and-rest-api">Introduction to Web Scraping and REST APIs</a></em></p></li>
+<li><p><em><a class="reference external" href="http://blog.devgenius.io">blog.devgenius.io</a> - <a class="reference external" href="https://blog.devgenius.io/scrape-data-without-selenium-by-exposing-hidden-apis-946b23850d47">Scrape Data without Selenium by Exposing Hidden APIs</a></em></p></li>
+<li><p><em><a class="reference external" href="http://medium.com">medium.com</a> - <a class="reference external" href="https://medium.com/&#64;geneng/web-crawling-made-easy-with-scrapy-and-rest-api-ed993e84abd3">Web Crawling Made Easy with Scrapy and REST API</a></em></p></li>
+<li><p><em><a class="reference external" href="http://w3schools.com">w3schools.com</a> - <a class="reference external" href="https://www.w3schools.com/xml/xpath_syntax.asp">XPath syntax</a></em></p></li>
+<li><p><em><a class="reference external" href="http://w3schools.com">w3schools.com</a> - <a class="reference external" href="https://www.w3schools.com/cssref/css_selectors.php">CSS selector reference</a></em></p></li>
+</ul>
+</section>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">selenium</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">webdriver</span><span class="o">-</span><span class="n">manager</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter-01"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="python-external-sources.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Python: External Sources</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../chapter-02/_intro.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2. Mathematics</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By &#9829; Quang Hung x Thuy Linh &#9829;<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

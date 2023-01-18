@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="IX. Deep Learning" href="_intro.html" />
+    <link rel="prev" title="9. Deep Learning" href="_intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -111,14 +111,14 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../util/intro.html">
-                    <no title>
+                    Data Science
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-01/_intro.html">
-   I. Python Programming
+   1. Python Programming
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -131,14 +131,61 @@ const thebe_selector_output = ".output, .cell_output"
      Python: Basic Concepts
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-objects-functions.html">
+     Python: Objects and Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   2. Mathematics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     Numpy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     Sympy: Calculus
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-04/_intro.html">
-   IV. Data Visualization
+   4. Data Visualization
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -157,10 +204,10 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-05/_intro.html">
-   V. Tabular Learning
+   5. Tabular Learning
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -174,10 +221,10 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="_intro.html">
-   IX. Deep Learning
+   9. Deep Learning
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-  <label for="toctree-checkbox-4">
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -672,7 +719,7 @@ title="Print to PDF"
 <h2>1. Gradient Descent variants<a class="headerlink" href="#gradient-descent-variants" title="Permalink to this headline">#</a></h2>
 <p>In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a> (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a <a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a> function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, <span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{w})\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> represents model parameters. The gradient of this function is denoted <span class="math notranslate nohighlight">\(\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})\)</span>.</p>
 <p>There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function. Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.</p>
-<a class="reference internal image-reference" href="../_images/gradient-descent-evolutionary.png" id="image-gradient-descent-evolutionary-png"><img alt="../_images/gradient-descent-evolutionary.png" class="align-center" id="image-gradient-descent-evolutionary-png" src="../_images/gradient-descent-evolutionary.png" style="height: 350px;" /></a>
+<a class="reference internal image-reference" href="../_images/gradient_descent_evolutionary.png" id="image-gradient-descent-evolutionary-png"><img alt="../_images/gradient_descent_evolutionary.png" class="align-center" id="image-gradient-descent-evolutionary-png" src="../_images/gradient_descent_evolutionary.png" style="height: 350px;" /></a>
 <section id="bgd">
 <h3>1.1. BGD<a class="headerlink" href="#bgd" title="Permalink to this headline">#</a></h3>
 <p>This section is about the most basic idea of the family, Full-Batch Gradient Descent (BGD). Also known as Vanilla GD.</p>
@@ -692,7 +739,7 @@ title="Print to PDF"
 <p>To understand the smart idea behind Gradient Descent, we first analyze the relative position between a random point to its <em>closest</em> local minimum. We have already known derivarive at a point is the representation of <em>instantaneous velocity</em>, but how about its direction? To illustrate this, let’s plot the derivatives at some points of a 1-dimensional function as vectors along the <span class="math notranslate nohighlight">\(x\)</span>-axis.</p>
 <div class="math notranslate nohighlight">
 \[y=\frac{1}{128}(x^4-8x^3)\]</div>
-<a class="reference internal image-reference" href="../_images/directional-derivative.png" id="output-directional-derivative-png"><img alt="../_images/directional-derivative.png" class="align-center" id="output-directional-derivative-png" src="../_images/directional-derivative.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/directional_derivative.png" id="output-directional-derivative-png"><img alt="../_images/directional_derivative.png" class="align-center" id="output-directional-derivative-png" src="../_images/directional_derivative.png" style="height: 300px;" /></a>
 <br>
 <p>In this function, there are two <a class="reference external" href="https://en.wikipedia.org/wiki/Critical_point_(mathematics)">critical points</a> at <span class="math notranslate nohighlight">\(x=0\)</span> and <span class="math notranslate nohighlight">\(x=6\)</span>, in which the first one is a <a class="reference external" href="https://en.wikipedia.org/wiki/Saddle_point">saddle point</a> and the second one is a <a class="reference external" href="https://en.wikipedia.org/wiki/Maxima_and_minima">local minimum</a>. A very important conclusion can be drawn from this graph is that directional derivatives always <em>point away</em> from the steepest path downwards. In other words, if we move the point in the <em>opposite direction</em> of the derivative, we will end up approach a local minimum or a saddle point. Unfortunately, from the perspective of a single point on the graph and using only gradient, there is no way to regconize if there comes a saddle point.</p>
 <div class="cell tag_hide-input docutils container">
@@ -725,7 +772,7 @@ title="Print to PDF"
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xBlue</span><span class="p">,</span> <span class="n">yBlue</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;cornflowerblue&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">xBlue</span><span class="p">,</span> <span class="n">yBlue</span><span class="p">,</span> <span class="n">uBlue</span><span class="p">,</span> <span class="n">vBlue</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cornflowerblue&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;../output/directional-derivative.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;../output/directional_derivative.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -741,7 +788,7 @@ title="Print to PDF"
 x_{t+1} &amp;= x_t+\Delta x_t
 \end{aligned}\end{split}\]</div>
 <p>Using this design, the (magnitude of) the gradient gets smaller and smaller and finally approach 0, thus the name of the algorithm. The whole process can be thought as a ball rolling down the hill. There is a coefficient named the <em>learning rate</em> (denoted <span class="math notranslate nohighlight">\(\eta\)</span>) attached to the gradient, controls how large each step is. The value of this hyperparameter should not be either too large (making the convergence not happening) or too small (taking too long to converge). The effect of learning rate is illustrated in the following example, in which we build the algorithm from scratch to find the minimum of the function <span class="math notranslate nohighlight">\(y=x^2+5\sin(x)\)</span> for different values of <span class="math notranslate nohighlight">\(\eta\)</span>.</p>
-<a class="reference internal image-reference" href="../_images/batch-gradient-descent.gif" id="output-batch-gradient-descent-gif"><img alt="../_images/batch-gradient-descent.gif" class="align-center" id="output-batch-gradient-descent-gif" src="../_images/batch-gradient-descent.gif" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../_images/batch_gradient_descent.gif" id="output-batch-gradient-descent-gif"><img alt="../_images/batch_gradient_descent.gif" class="align-center" id="output-batch-gradient-descent-gif" src="../_images/batch_gradient_descent.gif" style="height: 250px;" /></a>
 <br>
 <p>The updating process can also be summarized a <a class="reference external" href="https://en.wikipedia.org/wiki/Learning_curve_(machine_learning)">learning curve</a>. A couple of stopping conditions are also used such as tolerance (maximum magnitude of gradient) or maximum number of iterations. In the example, I use 50 iterations and set the value of tolerance to 0 to make sure all iterations are used.</p>
 <div class="cell docutils container">
@@ -815,7 +862,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <span class="n">gif</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 
-<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;../output/batch-gradient-descent.gif&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;../output/batch_gradient_descent.gif&#39;</span>
 <span class="n">gif</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="n">PillowWriter</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -926,7 +973,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <div class="math notranslate nohighlight">
 \[m_T=-\eta\sum_{t=1}^{T}{\gamma^t g_{T-t}}\]</div>
 <p>The amount of information memorized from the previous step is controled by a coefficient, <span class="math notranslate nohighlight">\(\gamma\)</span>. The value of this hyperparameter is set <span class="math notranslate nohighlight">\(0&lt;\gamma&lt;1\)</span>, typically <span class="math notranslate nohighlight">\(0.9\)</span>, forcing earlier steps to have less effect. Visually, the motion of the ball is now more realistic, as it seems to carry <a class="reference external" href="https://en.wikipedia.org/wiki/Inertia">inertia</a>.</p>
-<a class="reference internal image-reference" href="../_images/momentum-gradient-descent.gif" id="output-momentum-gradient-descent-gif"><img alt="../_images/momentum-gradient-descent.gif" class="align-center" id="output-momentum-gradient-descent-gif" src="../_images/momentum-gradient-descent.gif" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../_images/momentum_gradient_descent.gif" id="output-momentum-gradient-descent-gif"><img alt="../_images/momentum_gradient_descent.gif" class="align-center" id="output-momentum-gradient-descent-gif" src="../_images/momentum_gradient_descent.gif" style="height: 250px;" /></a>
 <br>
 <p>The benefits of using Momentum includes:</p>
 <ul class="simple">
@@ -1009,7 +1056,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <span class="n">gif</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 
-<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;../output/momentum-gradient-descent.gif&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;../output/momentum_gradient_descent.gif&#39;</span>
 <span class="n">gif</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="n">PillowWriter</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -1350,12 +1397,12 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <span class="n">nIter</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">xInit</span> <span class="o">=</span> <span class="mi">5</span>
 
-<span class="n">eta1</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span>
-<span class="n">eta2</span> <span class="o">=</span> <span class="o">.</span><span class="mi">3</span>
-<span class="n">eta3</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>
+<span class="n">eta1</span> <span class="o">=</span> <span class="mf">.1</span>
+<span class="n">eta2</span> <span class="o">=</span> <span class="mf">.3</span>
+<span class="n">eta3</span> <span class="o">=</span> <span class="mf">.5</span>
 <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-8</span>
-<span class="n">beta1</span> <span class="o">=</span> <span class="o">.</span><span class="mi">9</span>
-<span class="n">beta2</span> <span class="o">=</span> <span class="o">.</span><span class="mi">999</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="mf">.9</span>
+<span class="n">beta2</span> <span class="o">=</span> <span class="mf">.999</span>
 </pre></div>
 </div>
 </div>
@@ -1499,7 +1546,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">IX. Deep Learning</p>
+            <p class="prev-next-title">9. Deep Learning</p>
         </div>
     </a>
 </div>
