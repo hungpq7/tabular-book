@@ -20,6 +20,8 @@ chapters:
   sections:
   - file: chapter-02/numpy-linear-algebra
   - file: chapter-02/sympy-calculus
+  - file: chapter-02/numpy-probability
+  - file: chapter-02/numpy-statistics
 
 # Data Visualization
 - file: chapter-04/_intro

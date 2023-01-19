@@ -15,14 +15,7 @@ IMGAE:
 CELL TAGS: output_scroll, {action}-{item}, action = remove/hide, item = cell/input/output
 
 IMAGE METADATA:
-{
-    "render": {
-        "image": {
-            "align": "center",
-            "scale": "50%"
-        }
-    }
-}
+{"render": {"image": {"align": "center", "scale": "50%"}}}
 
 PUBLISH BOOK
 jupyter-book build .
