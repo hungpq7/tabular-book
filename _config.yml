@@ -1,7 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: Data Science with Python
+title: ''
 author: "&#9829; Quang Hung x Thuy Linh &#9829;"
 logo: image/logo.png
 exclude_patterns: [README.md, _build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
