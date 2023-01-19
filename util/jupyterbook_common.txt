@@ -3,8 +3,7 @@ DIRECTIVES: admonitions, tableofcontents, tab-set, tab-item
 ADMONITIONS: dropdown, note, seealso, (tip, hint, important), (attention, caution), (warning, danger, error)
 ```{admonition} Case study
 :class: seealso
-Some text
-```
+
 
 IMGAE:
 ```{image} ../image/gradient-descent-evolutionary.png
@@ -24,3 +23,7 @@ IMAGE METADATA:
         }
     }
 }
+
+PUBLISH BOOK
+jupyter-book build .
+ghp-import -n -p -f _build/html
