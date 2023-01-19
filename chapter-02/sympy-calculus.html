@@ -1593,8 +1593,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 <h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
 <div class="seealso admonition">
 <p class="admonition-title">Case study</p>
-<p>Some text
-Given the function <span class="math notranslate nohighlight">\(y=\log(x^2)\)</span> . Find the derivative of <span class="math notranslate nohighlight">\(y\)</span> at <span class="math notranslate nohighlight">\(x=1\)</span> using derivative rules and check it again with SymPy.</p>
+<p>Given the function <span class="math notranslate nohighlight">\(y=\log(x^2)\)</span> . Find the derivative of <span class="math notranslate nohighlight">\(y\)</span> at <span class="math notranslate nohighlight">\(x=1\)</span> using derivative rules and check it again with SymPy.</p>
 <p>Let <span class="math notranslate nohighlight">\(y=f(u)=\log(u)\)</span> and <span class="math notranslate nohighlight">\(u=g(x)=x^2\)</span>. Using the chain rule:</p>
 <div class="math notranslate nohighlight">
 \[\frac{dy}{dx} = \frac{dy}{du}\cdot\frac{du}{dx} = \frac{1}{u}\cdot2x = \frac{2x}{x^2} = \frac{2}{x}\]</div>
@@ -2052,6 +2051,8 @@ Given the function <span class="math notranslate nohighlight">\(y=\log(x^2)\)</s
 <li><p>Weak duality theorem, states that the property <span class="math notranslate nohighlight">\(y\leq z\)</span> is always true at any <em>feasible solution</em> to the the two problems</p></li>
 <li><p>Strong duality theorem, states that the optimal values of the two problems are the same, written formally as <span class="math notranslate nohighlight">\(\max{y}=\min{z}\)</span></p></li>
 </ul>
+<div class="seealso admonition">
+<p class="admonition-title">Case study</p>
 <p>A rancher is preparing for a flea market sale in which he intends to sell three types of clothing that are all comprised of wool from his sheep: peacoats, hats, and scarves. As the market is in high demand, the rancher is likely to sell out all of his products. With the limited materials and time, the rancher needs to determine how he should use his resources to maximize the profit. The following table show the rancher’s total resources and how much resources each product requires.</p>
 <table class="colwidths-auto table">
 <thead>
@@ -2105,8 +2106,6 @@ Given the function <span class="math notranslate nohighlight">\(y=\log(x^2)\)</s
                   &amp; t_1,t_2\geq0 \\
 \end{array}\end{split}\]</div>
 <p>Here is a summarization of economical interpretation of duality. In the primal problem, we are a manufacturing company dealing with quantities to maximize revenue, constrained by limited resources. In the dual problem, we are a retail company dealing with prices to minimize costs, constrained by price floors.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
 </div>
 </section>
 <section id="lagrangean-duality">
