@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Selenium: Web Scraping &#8212; Data Science with Python</title>
+    <title>Selenium: Web Scraping</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -98,8 +98,6 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Data Science with Python</h1>
-      
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
@@ -175,6 +173,16 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-02/sympy-calculus.html">
      Sympy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-probability.html">
+     Numpy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-statistics.html">
+     Numpy: Statistics
     </a>
    </li>
   </ul>
@@ -718,13 +726,13 @@ title="Print to PDF"
 <h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <p>There are basically two ways to scrape data from websites, one is via HTML responses (server-side) and the other is via JSON responses (client-side).</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="c184ea4c-8bef-494e-ac51-625d2bd37fc7" name="8c509463-ad1f-44ea-9bab-d058ebb07392" type="radio">
-</input><label class="sd-tab-label" for="c184ea4c-8bef-494e-ac51-625d2bd37fc7">
+<input checked="checked" id="8d9ab0d9-20e9-496c-9c30-897eef24a6a5" name="3b260086-b70d-4054-90fd-34b24e153918" type="radio">
+</input><label class="sd-tab-label" for="8d9ab0d9-20e9-496c-9c30-897eef24a6a5">
 Server-side</label><div class="sd-tab-content docutils">
 <p>We extract <em>unstructured</em> data from user interface, which is friendly for human eyes but not for computers. Data is availale most of the time except for cases when website owners protect their data intentionally. This crawling approach requires some basic knowledge of HTML.</p>
 </div>
-<input id="9f8ec48f-4a8d-42ee-b981-5449c00a9f40" name="8c509463-ad1f-44ea-9bab-d058ebb07392" type="radio">
-</input><label class="sd-tab-label" for="9f8ec48f-4a8d-42ee-b981-5449c00a9f40">
+<input id="d6f23a94-984b-4171-b976-0a807979aacf" name="3b260086-b70d-4054-90fd-34b24e153918" type="radio">
+</input><label class="sd-tab-label" for="d6f23a94-984b-4171-b976-0a807979aacf">
 Client-side</label><div class="sd-tab-content docutils">
 <p>We try to crawl <em>structured</em> REST API responses, which is only available in specific website that use this protocol. The advantage is that the returned data is in JSON format, so they can be easily extracted and processed. Crawling data this way is much easier, so we are going to start with it.</p>
 </div>

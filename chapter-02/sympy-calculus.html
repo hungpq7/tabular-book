@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Sympy: Calculus &#8212; Data Science with Python</title>
+    <title>Sympy: Calculus</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="4. Data Visualization" href="../chapter-04/_intro.html" />
+    <link rel="next" title="Numpy: Probability" href="numpy-probability.html" />
     <link rel="prev" title="Numpy: Linear Algebra" href="numpy-linear-algebra.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -99,8 +99,6 @@ const thebe_selector_output = ".output, .cell_output"
       
       <img src="../_static/logo.png" class="logo" alt="logo">
       
-      
-      <h1 class="site-logo" id="site-title">Data Science with Python</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -177,6 +175,16 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      Sympy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-probability.html">
+     Numpy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-statistics.html">
+     Numpy: Statistics
     </a>
    </li>
   </ul>
@@ -1026,14 +1034,6 @@ title="Print to PDF"
 <p>Expression is the most basic concept in Mathematics. We are going to use SymPy to create symbolic variables (distiguish them with Python variables), write expressions and substitute numbers to make ealuation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create some variables</span>
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x,y,z&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1082,14 +1082,6 @@ title="Print to PDF"
 <h3>1.2. Simplification<a class="headerlink" href="#simplification" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html">Simplification</a> is one of the most interesting parts in Mathematics. SymPy provides
 <code class="docutils literal notranslate"><span class="pre">simplify()</span></code>, a general but slow simplifier and a number of faster simplifiers dedicated to specific cases.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
@@ -1231,14 +1223,6 @@ title="Print to PDF"
 <p>A quick review of number sets in Mathematics: <span class="math notranslate nohighlight">\(\mathbb{N}\)</span> (naturals), <span class="math notranslate nohighlight">\(\mathbb{Z}\)</span> (integers), <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span> (rationals), <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> (reals) and <span class="math notranslate nohighlight">\(\mathbb{C}\)</span> (complexes). They serve an important role of defining scope of the input.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1350,7 +1334,8 @@ title="Print to PDF"
 <section id="the-velocity-problem">
 <h4>The velocity problem<a class="headerlink" href="#the-velocity-problem" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Time_derivative">Rate of change</a> or instantaneous <a class="reference external" href="https://en.wikipedia.org/wiki/Velocity">velocity</a> is an important concept in Data Science and Machine Learning. It is expressed as the <a class="reference external" href="https://en.wikipedia.org/wiki/Slope">slope</a> <span class="math notranslate nohighlight">\(m\)</span> of a line <span class="math notranslate nohighlight">\(y=mx+c\)</span>. However, in a non-linear function (which is very popular), the velocity changes as <span class="math notranslate nohighlight">\(x\)</span> changes. To measure the instantaneous velocity at any given point, an visual approach is trying to draw a <a class="reference external" href="https://en.wikipedia.org/wiki/Tangent">tangent</a> then find its slope by computing <span class="math notranslate nohighlight">\(\Delta{y}/\Delta{x}\)</span>.</p>
-<a class="reference internal image-reference" href="../_images/velocity_problem.png" id="image-velocity-problem-png"><img alt="../_images/velocity_problem.png" class="align-center" id="image-velocity-problem-png" src="../_images/velocity_problem.png" style="height: 200px;" /></a>
+<a class="reference internal image-reference" href="../_images/velocity_problem.png" id="image-velocity-problem-png"><img alt="../_images/velocity_problem.png" class="align-center" id="image-velocity-problem-png" src="../_images/velocity_problem.png" style="height: 180px;" /></a>
+<br>
 <p>Let’s an this example, we want to draw the tangent of the parabola at the blue point, <span class="math notranslate nohighlight">\(a\)</span>. It is the blue line, but we will have a hard time finding it. It would be more reasonable for us to approximate the tangent by drawing a <a class="reference external" href="https://en.wikipedia.org/wiki/Secant_line">secant</a>, like the red one.</p>
 <div class="math notranslate nohighlight">
 \[m_a\approx\frac{f(x)-f(a)}{x-a}\]</div>
@@ -1361,7 +1346,8 @@ title="Print to PDF"
 <section id="the-area-problem">
 <h4>The area problem<a class="headerlink" href="#the-area-problem" title="Permalink to this headline">#</a></h4>
 <p>Another popular problem in Calculus is evaluating the area under a curve over an interval. Same as the velocity problem, we cannot compute it exactly, but can try to approximate it.</p>
-<a class="reference internal image-reference" href="../_images/area_problem.png" id="image-area-problem-png"><img alt="../_images/area_problem.png" class="align-center" id="image-area-problem-png" src="../_images/area_problem.png" style="height: 350px;" /></a>
+<a class="reference internal image-reference" href="../_images/area_problem.png" id="image-area-problem-png"><img alt="../_images/area_problem.png" class="align-center" id="image-area-problem-png" src="../_images/area_problem.png" style="height: 300px;" /></a>
+<br>
 <p>One way to do this is dividing up the interval <span class="math notranslate nohighlight">\([a,b]\)</span> into <span class="math notranslate nohighlight">\(N\)</span> small bins, each has a width of <span class="math notranslate nohighlight">\(h\)</span> and is represented by a point <span class="math notranslate nohighlight">\(x_n\)</span>. This point is usually placed at the center or at one of the two boundaries of a bin. For each bin <span class="math notranslate nohighlight">\(n\)</span>, draw a rectangular having width of <span class="math notranslate nohighlight">\(h\)</span> and height of <span class="math notranslate nohighlight">\(f(x_n)\)</span>. The area can be approximated by summing up the areas of all rectangulars:</p>
 <div class="math notranslate nohighlight">
 \[S\approx\sum_{n=1}^{N}{hf(x_n)}\]</div>
@@ -1376,6 +1362,7 @@ title="Print to PDF"
 <section id="cases-of-limit">
 <h4>Cases of limit<a class="headerlink" href="#cases-of-limit" title="Permalink to this headline">#</a></h4>
 <a class="reference internal image-reference" href="../_images/limit_types.png" id="image-limit-types-png"><img alt="../_images/limit_types.png" class="align-center" id="image-limit-types-png" src="../_images/limit_types.png" style="height: 250px;" /></a>
+<br>
 <p>The images above show the behaviours of different functions around <span class="math notranslate nohighlight">\(x=2\)</span>. It summrizes most popular cases you may face when finding a limit:</p>
 <ul class="simple">
 <li><p><em>Constant limits</em>. This is the easiest one to understand, shown in the first image. Even the function is not defined at <span class="math notranslate nohighlight">\(x=2\)</span>, it still has a limit:</p></li>
@@ -1406,14 +1393,6 @@ title="Print to PDF"
 <li><p>The value which the variable tends towards</p></li>
 <li><p>The direction of the limit</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
@@ -1505,15 +1484,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-white&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-
-<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x,y,z&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x,y,z&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1528,7 +1499,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/sympy-calculus_53_0.png"><img alt="../_images/sympy-calculus_53_0.png" class="align-center" src="../_images/sympy-calculus_53_0.png" style="width: 356.0px; height: 215.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/sympy-calculus_54_0.png"><img alt="../_images/sympy-calculus_54_0.png" class="align-center" src="../_images/sympy-calculus_54_0.png" style="width: 356.0px; height: 215.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1541,7 +1512,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/sympy-calculus_54_0.png"><img alt="../_images/sympy-calculus_54_0.png" class="align-center" src="../_images/sympy-calculus_54_0.png" style="width: 353.0px; height: 242.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/sympy-calculus_55_0.png"><img alt="../_images/sympy-calculus_55_0.png" class="align-center" src="../_images/sympy-calculus_55_0.png" style="width: 353.0px; height: 242.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1554,7 +1525,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/sympy-calculus_55_0.png"><img alt="../_images/sympy-calculus_55_0.png" class="align-center" src="../_images/sympy-calculus_55_0.png" style="width: 356.0px; height: 192.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/sympy-calculus_56_0.png"><img alt="../_images/sympy-calculus_56_0.png" class="align-center" src="../_images/sympy-calculus_56_0.png" style="width: 356.0px; height: 192.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1601,10 +1572,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-
-<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1699,10 +1667,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 <h3>4.3. Implementation<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-
-<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1748,19 +1713,6 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 <p>Combined together, the two tests enable the capacity of finding <em>local minima</em> and <em>local maxima</em>. In this section, we are going to analyze the results of derivative tests of the function:</p>
 <div class="math notranslate nohighlight">
 \[y=(2x^5-x^4-10x^3)/16\]</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.125</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span> <span class="o">-</span> <span class="mf">0.0625</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mf">0.625</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span>
@@ -1813,9 +1765,10 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </tr>
 </tbody>
 </table>
-<a class="reference internal image-reference" href="../_images/function_monotonicity.png" id="output-function-monotonicity-png"><img alt="../_images/function_monotonicity.png" class="align-center" id="output-function-monotonicity-png" src="../_images/function_monotonicity.png" style="height: 400px;" /></a>
+<a class="reference internal image-reference" href="../_images/function_monotonicity.png" id="output-function-monotonicity-png"><img alt="../_images/function_monotonicity.png" class="align-center" id="output-function-monotonicity-png" src="../_images/function_monotonicity.png" style="height: 300px;" /></a>
+<br>
 <p>The black points are where the derivative is zero, we generally call them <em>stationary points</em>. However, the behaviours of the function around them are quite different. The first stationary point, <span class="math notranslate nohighlight">\(x\approx-1.544\)</span>, we witness that <span class="math notranslate nohighlight">\(y\)</span> is switching from increasing to decreasing when going through it. This indicates <span class="math notranslate nohighlight">\(x\approx-1.544\)</span> is a <em>relative</em>, or <em>local</em> maximum. Likewise, <span class="math notranslate nohighlight">\(x\approx-1.944\)</span> is a local minimum. But <span class="math notranslate nohighlight">\(x=0\)</span> is different, the function does not change its monotonicity after going through this point, so it is not a maximum neither a minimum. Points like this are called <em>saddle points</em>.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">listStationary</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">solveset</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="nb">sorted</span><span class="p">)]</span>
 <span class="n">listInterval</span> <span class="o">=</span> <span class="p">[</span>
@@ -1828,7 +1781,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
@@ -1888,7 +1841,8 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </tr>
 </tbody>
 </table>
-<a class="reference internal image-reference" href="../_images/function_concavity.png" id="output-function-concavity-png"><img alt="../_images/function_concavity.png" class="align-center" id="output-function-concavity-png" src="../_images/function_concavity.png" style="height: 400px;" /></a>
+<a class="reference internal image-reference" href="../_images/function_concavity.png" id="output-function-concavity-png"><img alt="../_images/function_concavity.png" class="align-center" id="output-function-concavity-png" src="../_images/function_concavity.png" style="height: 300px;" /></a>
+<br>
 <p>When the second derivative is negative (red sections), which means the velocity is decreasing, we witness that the function is <em>concave</em>. In contrast, the function is <em>convex</em> in blue sections. This is the main result of the second derivative test, it pairs with first-derivative test to conclude if a stationary point is whether a local minimum, a local maxium or a saddle point:</p>
 <ul class="simple">
 <li><p>If <span class="math notranslate nohighlight">\(f'(a)=0\)</span> and <span class="math notranslate nohighlight">\(f''(a)&gt;0\)</span> then <span class="math notranslate nohighlight">\(x=a\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f(x)\)</span></p></li>
@@ -1896,7 +1850,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 <li><p>If <span class="math notranslate nohighlight">\(f'(a)=f''(a)=0\)</span> then <span class="math notranslate nohighlight">\(x=a\)</span> is a saddle point</p></li>
 </ul>
 <p>We also observe that at black points, the function <em>switches</em> between concave and convex. Such a point is called an <em>inflection point</em>. This is another benefit of second-derivative test. Also note that some resources refer to concave/convex as concave down/up.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">listInflection</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">solveset</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="nb">sorted</span><span class="p">)]</span>
 <span class="n">listInterval</span> <span class="o">=</span> <span class="p">[</span>
@@ -1909,7 +1863,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xPlot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">boundLeft</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">boundRight</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 
@@ -2020,7 +1974,8 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </section>
 <section id="interpretation">
 <h4>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this headline">#</a></h4>
-<a class="reference internal image-reference" href="../_images/lagrange_multiplier.png" id="image-lagrange-multiplier-png"><img alt="../_images/lagrange_multiplier.png" class="align-center" id="image-lagrange-multiplier-png" src="../_images/lagrange_multiplier.png" style="height: 350px;" /></a>
+<a class="reference internal image-reference" href="../_images/lagrange_multiplier.png" id="image-lagrange-multiplier-png"><img alt="../_images/lagrange_multiplier.png" class="align-center" id="image-lagrange-multiplier-png" src="../_images/lagrange_multiplier.png" style="height: 300px;" /></a>
+<br>
 <p>The image above shows the geometric meaning of Lagrange multiplier: at the optimal point, <span class="math notranslate nohighlight">\(\nabla f\)</span> and <span class="math notranslate nohighlight">\(\nabla g\)</span> are two parallel vectors. Imagine we know the function <span class="math notranslate nohighlight">\(f\)</span> measuring the <em>distance</em> (<span class="math notranslate nohighlight">\(y\)</span>) to the <em>treasure</em> (<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>) with respect to the <em>location</em> (<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>). We also have a <em>compass</em> always points to the treasure, shown in black arrows, which is a casual way to talk about the gradient. The treasure is in the forest, so we must follow a <em>trail</em> (red line, representing the constraint <span class="math notranslate nohighlight">\(g=0\)</span>). The red arrows represent the gradient of <span class="math notranslate nohighlight">\(g\)</span>.</p>
 <p>The optimization problem in this example is: which point on the trail is closest to the treasure? Lagrange multiplier gives us the solution for this problem: it is the point at which the black arrow is parallel to the red arrow, or in other words, the compass points perpendicularly to the trail. The ratio between two arrows, <span class="math notranslate nohighlight">\(\lambda\)</span> can be interpreted as the <em>rate of change</em> of the objective function with respect to the constraint at the optimal solution:</p>
 <div class="math notranslate nohighlight">
@@ -2182,10 +2137,10 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
             <p class="prev-next-title">Numpy: Linear Algebra</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../chapter-04/_intro.html" title="next page">
+    <a class='right-next' id="next-link" href="numpy-probability.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">4. Data Visualization</p>
+        <p class="prev-next-title">Numpy: Probability</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

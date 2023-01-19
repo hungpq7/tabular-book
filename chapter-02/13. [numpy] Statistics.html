@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>1. Descriptive statisics &#8212; Data Science with Python</title>
+    <title>Numpy: Statistics</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -98,8 +98,6 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Data Science with Python</h1>
-      
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
@@ -175,6 +173,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="sympy-calculus.html">
      Sympy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-probability.html">
+     Numpy: Probability
     </a>
    </li>
   </ul>
@@ -445,98 +448,98 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#descriptive-statisics">
    1. Descriptive statisics
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#basic-statistics">
      1.1. Basic statistics
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#variance">
      1.2. Variance
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#unbiased-variance">
        Unbiased variance
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#variance-and-mean">
        Variance and mean
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#visualization-of-variance">
        Visualization of variance
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#skewness">
      1.3. Skewness
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#kurtosis">
      1.4. Kurtosis
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#quantiles">
      1.5. Quantiles
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#median">
        Median
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#quartiles">
        Quartiles
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#popular-quantiles">
        Popular quantiles
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#correlation-coefficient">
      1.6. Correlation coefficient
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#covariance">
        Covariance
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id1">
        Correlation coefficient
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#probability-plots">
      1.7. Probability plots
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#p-p-plot">
        P-P plot
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#q-q-plot">
        Q-Q plot
       </a>
@@ -545,44 +548,44 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#estimation">
    2. Estimation
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#point-estimation">
      2.1. Point estimation
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#method-of-moments">
        Method of moments
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#maximum-likelihood">
        Maximum likelihood
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#interval-estimation">
      2.2. Interval estimation
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#mean-estimation">
        Mean estimation
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#proportion-estimation">
        Proportion estimation
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#variance-estimation">
        Variance estimation
       </a>
@@ -591,39 +594,39 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#statistical-models">
    3. Statistical models
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#binary-dependent-regression">
      3.1. Binary dependent regression
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#logit-model">
        Logit model
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#probit-model">
        Probit model
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#panel-data-regression">
      3.2. Panel data regression
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#fixed-effects-model">
        Fixed effects model
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#random-effects-model">
        Random effects model
       </a>
@@ -632,7 +635,7 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -646,7 +649,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>1. Descriptive statisics</h1>
+                <h1>Numpy: Statistics</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -656,98 +659,98 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#descriptive-statisics">
    1. Descriptive statisics
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#basic-statistics">
      1.1. Basic statistics
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#variance">
      1.2. Variance
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#unbiased-variance">
        Unbiased variance
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#variance-and-mean">
        Variance and mean
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#visualization-of-variance">
        Visualization of variance
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#skewness">
      1.3. Skewness
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#kurtosis">
      1.4. Kurtosis
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#quantiles">
      1.5. Quantiles
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#median">
        Median
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#quartiles">
        Quartiles
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#popular-quantiles">
        Popular quantiles
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#correlation-coefficient">
      1.6. Correlation coefficient
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#covariance">
        Covariance
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id1">
        Correlation coefficient
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#probability-plots">
      1.7. Probability plots
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#p-p-plot">
        P-P plot
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#q-q-plot">
        Q-Q plot
       </a>
@@ -756,44 +759,44 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#estimation">
    2. Estimation
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#point-estimation">
      2.1. Point estimation
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#method-of-moments">
        Method of moments
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#maximum-likelihood">
        Maximum likelihood
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#interval-estimation">
      2.2. Interval estimation
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#mean-estimation">
        Mean estimation
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#proportion-estimation">
        Proportion estimation
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#variance-estimation">
        Variance estimation
       </a>
@@ -802,39 +805,39 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#statistical-models">
    3. Statistical models
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#binary-dependent-regression">
      3.1. Binary dependent regression
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#logit-model">
        Logit model
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#probit-model">
        Probit model
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#panel-data-regression">
      3.2. Panel data regression
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#fixed-effects-model">
        Fixed effects model
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#random-effects-model">
        Random effects model
       </a>
@@ -843,7 +846,7 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -858,10 +861,12 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="descriptive-statisics">
-<h1>1. Descriptive statisics<a class="headerlink" href="#descriptive-statisics" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="numpy-statistics">
+<h1>Numpy: Statistics<a class="headerlink" href="#numpy-statistics" title="Permalink to this headline">#</a></h1>
+<section id="descriptive-statisics">
+<h2>1. Descriptive statisics<a class="headerlink" href="#descriptive-statisics" title="Permalink to this headline">#</a></h2>
 <section id="basic-statistics">
-<h2>1.1. Basic statistics<a class="headerlink" href="#basic-statistics" title="Permalink to this headline">#</a></h2>
+<h3>1.1. Basic statistics<a class="headerlink" href="#basic-statistics" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -917,6 +922,7 @@ title="Print to PDF"
 <p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Arithmetic_mean">mean</a> (denoted <span class="math notranslate nohighlight">\(\mu\)</span>) or the <a class="reference external" href="https://en.wikipedia.org/wiki/Expected_value">expected value</a> (denoted <span class="math notranslate nohighlight">\(\mathbb{E}[\mathbf{x}]\)</span>) of a variable <span class="math notranslate nohighlight">\(\mathbf{x}=(x_1,x_2,\dots,x_N)\)</span> is calculated by the formula:</p>
 <div class="math notranslate nohighlight">
 \[\mu = \frac{1}{N} \sum_{n=1}^{N}{x_n}\]</div>
+<p>[expected value]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -943,7 +949,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="variance">
-<h2>1.2. Variance<a class="headerlink" href="#variance" title="Permalink to this headline">#</a></h2>
+<h3>1.2. Variance<a class="headerlink" href="#variance" title="Permalink to this headline">#</a></h3>
 <p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Variance">variance</a> of a random variable <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is defined as:
 $<span class="math notranslate nohighlight">\(\sigma^2 = \frac{1}{N}\sum_{n=1}^N{(x_n - \mu)}^2\)</span>$
 where:</p>
@@ -1009,7 +1015,7 @@ where:</p>
 </div>
 </div>
 <section id="unbiased-variance">
-<h3>Unbiased variance<a class="headerlink" href="#unbiased-variance" title="Permalink to this headline">#</a></h3>
+<h4>Unbiased variance<a class="headerlink" href="#unbiased-variance" title="Permalink to this headline">#</a></h4>
 <p>In many practical situations, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is just a sample and the true variance of the whole population is unknown. <span class="math notranslate nohighlight">\(\sigma_{\mathbf{x}}^2\)</span> in this case is an <a class="reference external" href="https://en.wikipedia.org/wiki/Bias_of_an_estimator">biased estimator</a>, it usually underestimates the population variance. Correting for this bias yields:</p>
 <div class="math notranslate nohighlight">
 \[\hat{\sigma}^2 = \frac{1}{N-1}\sum_{n=1}^N{(x_n - \mu)}^2\]</div>
@@ -1028,7 +1034,7 @@ where:</p>
 </div>
 </section>
 <section id="variance-and-mean">
-<h3>Variance and mean<a class="headerlink" href="#variance-and-mean" title="Permalink to this headline">#</a></h3>
+<h4>Variance and mean<a class="headerlink" href="#variance-and-mean" title="Permalink to this headline">#</a></h4>
 <p>The following formula demonstrates the relationship between the mean and the variance:</p>
 <div class="math notranslate nohighlight">
 \[\sigma^2 = E\left[(\mathbf{x} - E[\mathbf{x}])^2\right] = E[\mathbf{x}^2] - E[\mathbf{x}]^2\]</div>
@@ -1046,7 +1052,7 @@ where:</p>
 </div>
 </section>
 <section id="visualization-of-variance">
-<h3>Visualization of variance<a class="headerlink" href="#visualization-of-variance" title="Permalink to this headline">#</a></h3>
+<h4>Visualization of variance<a class="headerlink" href="#visualization-of-variance" title="Permalink to this headline">#</a></h4>
 <p>Standard deviation and variance show how spread out numbers are.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1073,13 +1079,13 @@ where:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13. [numpy] Statistics_19_0.png" src="../_images/13. [numpy] Statistics_19_0.png" />
+<img alt="../_images/13. [numpy] Statistics_20_0.png" src="../_images/13. [numpy] Statistics_20_0.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="skewness">
-<h2>1.3. Skewness<a class="headerlink" href="#skewness" title="Permalink to this headline">#</a></h2>
+<h3>1.3. Skewness<a class="headerlink" href="#skewness" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Skewness">Skewness</a> is a measure of the asymmetry of a random variable about its mean. A skewness of <span class="math notranslate nohighlight">\(0\)</span> indicates that the variable is symmetrically distributed. There are several approaches for calculating skewness (denoted <span class="math notranslate nohighlight">\(\gamma\)</span>); however, the Fisher’s coefficient is the go-to one:</p>
 <div class="math notranslate nohighlight">
 \[\gamma=\frac{m_3}{m_2^{3/2}}\]</div>
@@ -1118,7 +1124,7 @@ where:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13. [numpy] Statistics_22_0.png" src="../_images/13. [numpy] Statistics_22_0.png" />
+<img alt="../_images/13. [numpy] Statistics_23_0.png" src="../_images/13. [numpy] Statistics_23_0.png" />
 </div>
 </div>
 <p>Note that the side of the skewness refers to the side of the longer tail. In the graph above, the red sample is said to be right skewed since the mass of its distribution is concentrated to the left, leading to a longer right tail.</p>
@@ -1139,7 +1145,7 @@ where:</p>
 </div>
 </section>
 <section id="kurtosis">
-<h2>1.4. Kurtosis<a class="headerlink" href="#kurtosis" title="Permalink to this headline">#</a></h2>
+<h3>1.4. Kurtosis<a class="headerlink" href="#kurtosis" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Kurtosis">Kurtosis</a> is a measure of peakedness of a distribution. The calculation of kurtosis (denoted <span class="math notranslate nohighlight">\(\kappa\)</span>) is given by Fisher’s definition:</p>
 <div class="math notranslate nohighlight">
 \[\kappa=\frac{m_4}{m_2^2}-3\]</div>
@@ -1175,12 +1181,12 @@ where:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13. [numpy] Statistics_27_0.png" src="../_images/13. [numpy] Statistics_27_0.png" />
+<img alt="../_images/13. [numpy] Statistics_28_0.png" src="../_images/13. [numpy] Statistics_28_0.png" />
 </div>
 </div>
 </section>
 <section id="quantiles">
-<h2>1.5. Quantiles<a class="headerlink" href="#quantiles" title="Permalink to this headline">#</a></h2>
+<h3>1.5. Quantiles<a class="headerlink" href="#quantiles" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Quantile">Quantiles</a> are the <span class="math notranslate nohighlight">\(q-1\)</span> cut points dividing a set of values into <span class="math notranslate nohighlight">\(q\)</span> subsets of equal probability. Some common <span class="math notranslate nohighlight">\(q\)</span>-quantiles are <a class="reference external" href="https://en.wikipedia.org/wiki/Median">median</a> (<span class="math notranslate nohighlight">\(2\)</span>-quantile), <a class="reference external" href="https://en.wikipedia.org/wiki/Quartile">quartiles</a> (<span class="math notranslate nohighlight">\(4\)</span>-quantiles), deciles (<span class="math notranslate nohighlight">\(10\)</span>-quantiles) and <a class="reference external" href="https://en.wikipedia.org/wiki/Percentile">percentiles</a> (<span class="math notranslate nohighlight">\(100\)</span>-quantiles).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1211,7 +1217,7 @@ where:</p>
 </div>
 </div>
 <section id="median">
-<h3>Median<a class="headerlink" href="#median" title="Permalink to this headline">#</a></h3>
+<h4>Median<a class="headerlink" href="#median" title="Permalink to this headline">#</a></h4>
 <p>There are 50% of data points smaller than the median and 50% of data points greater than the median.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1227,7 +1233,7 @@ where:</p>
 </div>
 </section>
 <section id="quartiles">
-<h3>Quartiles<a class="headerlink" href="#quartiles" title="Permalink to this headline">#</a></h3>
+<h4>Quartiles<a class="headerlink" href="#quartiles" title="Permalink to this headline">#</a></h4>
 <p><span class="math notranslate nohighlight">\(Q_1\)</span>, <span class="math notranslate nohighlight">\(Q_2\)</span>, <span class="math notranslate nohighlight">\(Q_3\)</span> are the 3 quartiles that split our sample into 4 equal parts. There 25% of data points smaller than <span class="math notranslate nohighlight">\(Q_1\)</span>, 50% of the points smaller than <span class="math notranslate nohighlight">\(Q_2\)</span> and 75% points smaller than <span class="math notranslate nohighlight">\(Q_3\)</span>. Notice that <span class="math notranslate nohighlight">\(Q_2\)</span> is also known as the median.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1268,12 +1274,12 @@ where:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13. [numpy] Statistics_37_0.png" src="../_images/13. [numpy] Statistics_37_0.png" />
+<img alt="../_images/13. [numpy] Statistics_38_0.png" src="../_images/13. [numpy] Statistics_38_0.png" />
 </div>
 </div>
 </section>
 <section id="popular-quantiles">
-<h3>Popular quantiles<a class="headerlink" href="#popular-quantiles" title="Permalink to this headline">#</a></h3>
+<h4>Popular quantiles<a class="headerlink" href="#popular-quantiles" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
@@ -1289,9 +1295,9 @@ where:</p>
 </section>
 </section>
 <section id="correlation-coefficient">
-<h2>1.6. Correlation coefficient<a class="headerlink" href="#correlation-coefficient" title="Permalink to this headline">#</a></h2>
+<h3>1.6. Correlation coefficient<a class="headerlink" href="#correlation-coefficient" title="Permalink to this headline">#</a></h3>
 <section id="covariance">
-<h3>Covariance<a class="headerlink" href="#covariance" title="Permalink to this headline">#</a></h3>
+<h4>Covariance<a class="headerlink" href="#covariance" title="Permalink to this headline">#</a></h4>
 <p>First, we calculate the <a class="reference external" href="https://en.wikipedia.org/wiki/Covariance">covariance</a> (denoted <span class="math notranslate nohighlight">\(\sigma_{\mathbf{x},\mathbf{y}}\)</span>) of bivariate data, which is a measure of joint variability.</p>
 <div class="math notranslate nohighlight">
 \[\sigma_{\mathbf{x},\mathbf{y}} =
@@ -1333,7 +1339,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </section>
 <section id="id1">
-<h3>Correlation coefficient<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<h4>Correlation coefficient<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">Correlation coefficient</a> (denoted <span class="math notranslate nohighlight">\(\rho_{\mathbf{x},\mathbf{y}}\)</span>) is the normalized version of covariance. By using the <a class="reference external" href="https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality">Cauchy-Schwarz inequality</a>, it’s easy to proof that <span class="math notranslate nohighlight">\(\rho_{\mathbf{x},\mathbf{y}} \in [-1; 1]\)</span>. The closer the coefficient is to either -1 or 1, the stronger the correlation between the two variables.</p>
 <div class="math notranslate nohighlight">
 \[\rho_{\mathbf{x},\mathbf{y}} = \frac{\sigma_{\mathbf{x},\mathbf{y}}}{\sigma_\mathbf{x} \sigma_\mathbf{y}}\]</div>
@@ -1365,7 +1371,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </section>
 </section>
 <section id="probability-plots">
-<h2>1.7. Probability plots<a class="headerlink" href="#probability-plots" title="Permalink to this headline">#</a></h2>
+<h3>1.7. Probability plots<a class="headerlink" href="#probability-plots" title="Permalink to this headline">#</a></h3>
 <p>Probability plots are used to compare the distributions of two datasets. The possible comparing scenarios using probability plots are:</p>
 <ul class="simple">
 <li><p>Comparing two empirical sets</p></li>
@@ -1387,7 +1393,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <section id="p-p-plot">
-<h3>P-P plot<a class="headerlink" href="#p-p-plot" title="Permalink to this headline">#</a></h3>
+<h4>P-P plot<a class="headerlink" href="#p-p-plot" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/P%E2%80%93P_plot">P-P plot</a> (probability-probability plot) is a visualization that plots CDFs of two distributions against each other. If points are on the line (<span class="math notranslate nohighlight">\(x=y\)</span>) then 2 CDF are the same and observed values is under expected distribution. P-P plot is suitable for comparing probability distributions that have a nearby location because it requires the loc and scale parameters of theoretical distribution.</p>
 <ul class="simple">
 <li><p>In <span class="math notranslate nohighlight">\(x\)</span> axis: Estimated cummulative proportions of empirical distribution, given <span class="math notranslate nohighlight">\(r_n\)</span> is the rank of observed values</p></li>
@@ -1432,7 +1438,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13. [numpy] Statistics_52_0.png" src="../_images/13. [numpy] Statistics_52_0.png" />
+<img alt="../_images/13. [numpy] Statistics_53_0.png" src="../_images/13. [numpy] Statistics_53_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1444,7 +1450,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13. [numpy] Statistics_53_0.png" src="../_images/13. [numpy] Statistics_53_0.png" />
+<img alt="../_images/13. [numpy] Statistics_54_0.png" src="../_images/13. [numpy] Statistics_54_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1456,12 +1462,12 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13. [numpy] Statistics_54_0.png" src="../_images/13. [numpy] Statistics_54_0.png" />
+<img alt="../_images/13. [numpy] Statistics_55_0.png" src="../_images/13. [numpy] Statistics_55_0.png" />
 </div>
 </div>
 </section>
 <section id="q-q-plot">
-<h3>Q-Q plot<a class="headerlink" href="#q-q-plot" title="Permalink to this headline">#</a></h3>
+<h4>Q-Q plot<a class="headerlink" href="#q-q-plot" title="Permalink to this headline">#</a></h4>
 <p>Similarity to P-P plot, Q-Q plot (quantile-quantile) is used to compare distribution by plotting their quantile agains each other. But Q-Q plot doesn’t require loc and scale parameter and the reference line is based on location and scale of theoretical distribution. QQ plot is suitable for tails of distribution (when probabilty density is low)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1499,7 +1505,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13. [numpy] Statistics_57_0.png" src="../_images/13. [numpy] Statistics_57_0.png" />
+<img alt="../_images/13. [numpy] Statistics_58_0.png" src="../_images/13. [numpy] Statistics_58_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1511,20 +1517,20 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13. [numpy] Statistics_58_0.png" src="../_images/13. [numpy] Statistics_58_0.png" />
+<img alt="../_images/13. [numpy] Statistics_59_0.png" src="../_images/13. [numpy] Statistics_59_0.png" />
 </div>
 </div>
 </section>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="estimation">
-<h1>2. Estimation<a class="headerlink" href="#estimation" title="Permalink to this headline">#</a></h1>
+<section id="estimation">
+<h2>2. Estimation<a class="headerlink" href="#estimation" title="Permalink to this headline">#</a></h2>
 <p>In statistic, estimation is the process which calculates approximately the unknown parameters of population based on information of a sample. Population means and propotions are two common parameters in estimations</p>
 <section id="point-estimation">
-<h2>2.1. Point estimation<a class="headerlink" href="#point-estimation" title="Permalink to this headline">#</a></h2>
+<h3>2.1. Point estimation<a class="headerlink" href="#point-estimation" title="Permalink to this headline">#</a></h3>
 <p>A point estimate of a population parameter is a single value of a statistic</p>
 <section id="method-of-moments">
-<h3>Method of moments<a class="headerlink" href="#method-of-moments" title="Permalink to this headline">#</a></h3>
+<h4>Method of moments<a class="headerlink" href="#method-of-moments" title="Permalink to this headline">#</a></h4>
 <p>Simple idea of moments method is let the population moments are equal to expected sample moments.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Bias_of_an_estimator">Biased/unbiased estimation</a>: the bias of an estimator is the difference between this estimator’s expected value and the true value of the parameter being estimated. An estimator with zero bias is called unbiased. Statistic <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> of sample is called unbiased of parameter <span class="math notranslate nohighlight">\(\theta\)</span> of population if: <span class="math notranslate nohighlight">\(E(\hat{\theta})=\theta\)</span></p></li>
@@ -1533,7 +1539,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </ul>
 </section>
 <section id="maximum-likelihood">
-<h3>Maximum likelihood<a class="headerlink" href="#maximum-likelihood" title="Permalink to this headline">#</a></h3>
+<h4>Maximum likelihood<a class="headerlink" href="#maximum-likelihood" title="Permalink to this headline">#</a></h4>
 <p>The idea of this method is estimating the unknown parameters which made the distribution best fit with the observed data.</p>
 <p>Assume we have <span class="math notranslate nohighlight">\(N\)</span> observations <span class="math notranslate nohighlight">\(\mathbf{x} = (x_1, x_2, \dots ,x_N)\)</span> that come with distribution <span class="math notranslate nohighlight">\(f\)</span> and the vector of parameters <span class="math notranslate nohighlight">\(\mathbf{w}=(w_1, w_2,\dots, w_N)\)</span>. We have to find vector <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> to maximize the likelihood function <span class="math notranslate nohighlight">\(\hat{\mathbf{w}} = \arg\max L(\mathbf{w})\)</span>. The likelihood function is:</p>
 <div class="math notranslate nohighlight">
@@ -1640,7 +1646,7 @@ Having the spending data of 100 customers in the table below. Assume that money 
 </section>
 </section>
 <section id="interval-estimation">
-<h2>2.2. Interval estimation<a class="headerlink" href="#interval-estimation" title="Permalink to this headline">#</a></h2>
+<h3>2.2. Interval estimation<a class="headerlink" href="#interval-estimation" title="Permalink to this headline">#</a></h3>
 <p>An interval estimate is defined by two numbers, which the statistic lies between. The interval estimation of a statistic <span class="math notranslate nohighlight">\(\theta\)</span> is found in the <a class="reference external" href="https://en.wikipedia.org/wiki/Confidence_interval">confidence interval</a> <span class="math notranslate nohighlight">\((\theta_1,\theta_2)\)</span> where the probability that the statistic lies within the that interval is large enough to trust the result.</p>
 <div class="math notranslate nohighlight">
 \[P(\theta_1&lt;\theta&lt;\theta_2)=1-\alpha\]</div>
@@ -1658,7 +1664,7 @@ Having the spending data of 100 customers in the table below. Assume that money 
 </div>
 </div>
 <section id="mean-estimation">
-<h3>Mean estimation<a class="headerlink" href="#mean-estimation" title="Permalink to this headline">#</a></h3>
+<h4>Mean estimation<a class="headerlink" href="#mean-estimation" title="Permalink to this headline">#</a></h4>
 <p>When estimating the mean of a large sample, the critical value follows a standard normal distribution: <span class="math notranslate nohighlight">\(c\sim\mathcal{N}(0,1)\)</span>. However when the the sample size is too small (<span class="math notranslate nohighlight">\(N\leq30\)</span>), a  t-distribution with <span class="math notranslate nohighlight">\(N-1\)</span> degree of freedom is used instead to make sample variance closer to population variance: <span class="math notranslate nohighlight">\(c\sim\text{t}(N-1)\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1724,7 +1730,7 @@ A random sample of <span class="math notranslate nohighlight">\(120\)</span> stu
 </div>
 </section>
 <section id="proportion-estimation">
-<h3>Proportion estimation<a class="headerlink" href="#proportion-estimation" title="Permalink to this headline">#</a></h3>
+<h4>Proportion estimation<a class="headerlink" href="#proportion-estimation" title="Permalink to this headline">#</a></h4>
 <p>When estimating the proportion of a population given sample proportion (<span class="math notranslate nohighlight">\(\hat{p}\)</span>), we use a critical value follows a standard normal distribution: <span class="math notranslate nohighlight">\(c\sim\mathcal{N}(0,1)\)</span></p>
 <div class="math notranslate nohighlight">
 \[
@@ -1766,7 +1772,7 @@ To estimate the proportion of students at a large college who are female, a rand
 </div>
 </section>
 <section id="variance-estimation">
-<h3>Variance estimation<a class="headerlink" href="#variance-estimation" title="Permalink to this headline">#</a></h3>
+<h4>Variance estimation<a class="headerlink" href="#variance-estimation" title="Permalink to this headline">#</a></h4>
 <p>When estimating population variance, the critical value follows a chi-squared distribution with <span class="math notranslate nohighlight">\(N-1\)</span> degrees of freedom: <span class="math notranslate nohighlight">\(c\sim\chi^2(N-1)\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1833,13 +1839,13 @@ Two spider species, deinopis and menneus, coexist in eastern Australia. Collect 
 </section>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="statistical-models">
-<h1>3. Statistical models<a class="headerlink" href="#statistical-models" title="Permalink to this headline">#</a></h1>
+<section id="statistical-models">
+<h2>3. Statistical models<a class="headerlink" href="#statistical-models" title="Permalink to this headline">#</a></h2>
 <section id="binary-dependent-regression">
-<h2>3.1. Binary dependent regression<a class="headerlink" href="#binary-dependent-regression" title="Permalink to this headline">#</a></h2>
+<h3>3.1. Binary dependent regression<a class="headerlink" href="#binary-dependent-regression" title="Permalink to this headline">#</a></h3>
 <p>If we use linear function with probability is dependent variable, this will not restrict <span class="math notranslate nohighlight">\(P\)</span> to lie between 0 and 1. Then we need to use a <em>nonlinear function</em> to model the conditional probability function of a binary dependent variable. Commonly used methods are Probit and Logit regression.</p>
 <section id="logit-model">
-<h3>Logit model<a class="headerlink" href="#logit-model" title="Permalink to this headline">#</a></h3>
+<h4>Logit model<a class="headerlink" href="#logit-model" title="Permalink to this headline">#</a></h4>
 <p>Logistic model is used to describe the probability of a certain class such as true/false, good/bad,… The difference between logistic and linear regression is the output of logistic is limited in <span class="math notranslate nohighlight">\((0,1)\)</span>. Logistic function is the CDF of logistically distribution:</p>
 <div class="math notranslate nohighlight">
 \[p = \frac{1}{1+\exp{(-(\beta_0+\beta_1x))}}\]</div>
@@ -1852,7 +1858,7 @@ $<span class="math notranslate nohighlight">\(\log\left(\frac{p}{1-p}\right) = \
 <p>where <span class="math notranslate nohighlight">\(\dfrac{p}{1-p}\)</span> is called the odds ratio. Logit model in statistic doesn’t show the effect of independent variable <span class="math notranslate nohighlight">\(x\)</span> on <span class="math notranslate nohighlight">\(y\)</span>, it considers the influence of <span class="math notranslate nohighlight">\(x\)</span> on the probability to <span class="math notranslate nohighlight">\(y\)</span> get the values 1 (expected value of <span class="math notranslate nohighlight">\(y\)</span>).</p>
 </section>
 <section id="probit-model">
-<h3>Probit model<a class="headerlink" href="#probit-model" title="Permalink to this headline">#</a></h3>
+<h4>Probit model<a class="headerlink" href="#probit-model" title="Permalink to this headline">#</a></h4>
 <p>In probit model, the CDF of standard normal distribution is used to model the regression:</p>
 <div class="math notranslate nohighlight">
 \[P(Y=1\vert X) = \Phi(\beta_0 + \beta_1 X_1 + \dots + \beta_k X_k)\]</div>
@@ -2064,7 +2070,7 @@ $<span class="math notranslate nohighlight">\(\log\left(\frac{p}{1-p}\right) = \
          Iterations 6
 </pre></div>
 </div>
-<img alt="../_images/13. [numpy] Statistics_90_1.png" src="../_images/13. [numpy] Statistics_90_1.png" />
+<img alt="../_images/13. [numpy] Statistics_91_1.png" src="../_images/13. [numpy] Statistics_91_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2165,10 +2171,10 @@ Length: 753, dtype: float64
 </section>
 </section>
 <section id="panel-data-regression">
-<h2>3.2. Panel data regression<a class="headerlink" href="#panel-data-regression" title="Permalink to this headline">#</a></h2>
+<h3>3.2. Panel data regression<a class="headerlink" href="#panel-data-regression" title="Permalink to this headline">#</a></h3>
 <p>Panel data is the combination of time-series and cross-section data. Panel data is required when we want to analyse the unobserved variables which effects to dependent variable. There are 2 models to analyse panel data: <em>fixed effects regression</em> and <em>random effects regression</em></p>
 <section id="fixed-effects-model">
-<h3>Fixed effects model<a class="headerlink" href="#fixed-effects-model" title="Permalink to this headline">#</a></h3>
+<h4>Fixed effects model<a class="headerlink" href="#fixed-effects-model" title="Permalink to this headline">#</a></h4>
 <p>Fix effects regression:</p>
 <div class="math notranslate nohighlight">
 \[Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2 Z_i +  u_{it}\]</div>
@@ -2182,7 +2188,7 @@ Length: 753, dtype: float64
 \[Y_{it} = \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \alpha_i + u_{it}\]</div>
 </section>
 <section id="random-effects-model">
-<h3>Random effects model<a class="headerlink" href="#random-effects-model" title="Permalink to this headline">#</a></h3>
+<h4>Random effects model<a class="headerlink" href="#random-effects-model" title="Permalink to this headline">#</a></h4>
 <p>Random effects model is a special case of fixed effects model. The function is the same as fixed effects model but the unobserved variable is difference.</p>
 <div class="math notranslate nohighlight">
 \[Y_{it} = \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \alpha_i + u_{it}\]</div>
@@ -2190,13 +2196,12 @@ Length: 753, dtype: float64
 </section>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><em><a class="reference external" href="http://online.stat.psu.edu">online.stat.psu.edu</a> - <a class="reference external" href="https://online.stat.psu.edu/stat415/section/6">Introduction to Mathematical Statistics</a></em></p></li>
 </ul>
-<hr class="docutils" />
-<p><em>♥ By Quang Hung x Thuy Linh ♥</em></p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
