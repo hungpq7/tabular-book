@@ -11,28 +11,31 @@ chapters:
   - file: chapter-01/python-basic-concepts
   - file: chapter-01/python-data-types
   - file: chapter-01/python-data-containers
-  - file: chapter-01/python-objects-functions
+  - file: chapter-01/python-functions-objects
   - file: chapter-01/python-external-sources
   - file: chapter-01/selenium-web-scraping
 
 # Mathematics
 - file: chapter-02/_intro
   sections:
+  - file: chapter-02/numpy-arrays
   - file: chapter-02/numpy-linear-algebra
   - file: chapter-02/sympy-calculus
   - file: chapter-02/numpy-probability
   - file: chapter-02/numpy-statistics
+  - file: chapter-02/scipy-hypothesis-testing
 
 # Data Visualization
 - file: chapter-04/_intro
   sections:
   - file: chapter-04/matplotlib-graph-construction
+  - file: chapter-04/seaborn-statistical-visualization
   - file: chapter-04/plotly-interactive-visualization
 
 # Tabular Learning
-- file: chapter-05/_intro
+- file: chapter-06/_intro
   sections:
-  - file: chapter-05/xgboost-tree-boosting
+  - file: chapter-06/xgboost-tree-boosting
 
 # Deep Learning
 - file: chapter-09/_intro

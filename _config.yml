@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: ''
-author: "&#9829; Quang Hung x Thuy Linh &#9829;"
+author: "Quang Hung &#9829; Thuy Linh"
 logo: image/logo.png
 exclude_patterns: [README.md, _build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
 only_build_toc_files: true

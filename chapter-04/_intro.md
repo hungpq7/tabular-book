@@ -1,3 +1,3 @@
-# 4. Data Visualization
+# <b>4. Data Visualization</b>
 ```{tableofcontents}
 ```
