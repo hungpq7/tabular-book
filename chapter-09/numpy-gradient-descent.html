@@ -116,7 +116,9 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-01/_intro.html">
-   1. Python Programming
+   <b>
+    1. Python Programming
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -140,8 +142,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-01/python-objects-functions.html">
-     Python: Objects and Functions
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
     </a>
    </li>
    <li class="toctree-l2">
@@ -158,7 +160,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-02/_intro.html">
-   2. Mathematics
+   <b>
+    2. Mathematics
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
@@ -166,6 +170,11 @@ const thebe_selector_output = ".output, .cell_output"
    </i>
   </label>
   <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
      Numpy: Linear Algebra
@@ -186,11 +195,18 @@ const thebe_selector_output = ".output, .cell_output"
      Numpy: Statistics
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-04/_intro.html">
-   4. Data Visualization
+   <b>
+    4. Data Visualization
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
@@ -211,8 +227,10 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../chapter-05/_intro.html">
-   5. Tabular Learning
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Tabular Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
   <label for="toctree-checkbox-4">
@@ -221,7 +239,7 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-05/xgboost-tree-boosting.html">
+    <a class="reference internal" href="../chapter-06/xgboost-tree-boosting.html">
      XGBoost: Tree Boosting
     </a>
    </li>
@@ -229,7 +247,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="_intro.html">
-   9. Deep Learning
+   <b>
+    9. Deep Learning
+   </b>
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
   <label for="toctree-checkbox-5">
@@ -723,31 +743,32 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="python-gradient-descent">
 <h1>Python: Gradient Descent<a class="headerlink" href="#python-gradient-descent" title="Permalink to this headline">#</a></h1>
-<section id="gradient-descent-variants">
-<h2>1. Gradient Descent variants<a class="headerlink" href="#gradient-descent-variants" title="Permalink to this headline">#</a></h2>
-<p>In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a> (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a <a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a> function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, <span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{w})\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> represents model parameters. The gradient of this function is denoted <span class="math notranslate nohighlight">\(\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})\)</span>.</p>
-<p>There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function. Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.</p>
-<a class="reference internal image-reference" href="../_images/gradient_descent_evolutionary.png" id="image-gradient-descent-evolutionary-png"><img alt="../_images/gradient_descent_evolutionary.png" class="align-center" id="image-gradient-descent-evolutionary-png" src="../_images/gradient_descent_evolutionary.png" style="height: 350px;" /></a>
-<section id="bgd">
-<h3>1.1. BGD<a class="headerlink" href="#bgd" title="Permalink to this headline">#</a></h3>
-<p>This section is about the most basic idea of the family, Full-Batch Gradient Descent (BGD). Also known as Vanilla GD.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span><span class="p">,</span> <span class="n">ArtistAnimation</span><span class="p">,</span> <span class="n">PillowWriter</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
 <span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
 </pre></div>
 </div>
 </div>
 </div>
+<section id="gradient-descent-variants">
+<h2>1. Gradient Descent variants<a class="headerlink" href="#gradient-descent-variants" title="Permalink to this headline">#</a></h2>
+<p>In real life, especially when the gradient gets very complicated or is very large, mathematical methods on solving for global minimum are shown to be impossible. There are a number of computational methods have been developed in order to find extrema of a function, where <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a> (GD) is one of the most pupular and is widely used in Machine Learning. This is an iterative method trying to minimize a <a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a> function; in the context of Machine Learning, the function to be minimized is nothing but the loss function, <span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{w})\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> represents model parameters. The gradient of this function is denoted <span class="math notranslate nohighlight">\(\mathbf{g}=g(\mathbf{w})=\nabla \mathcal{L}(\mathbf{w})\)</span>.</p>
+<p>There is a drawback of GD is that it is designed to find a local minimum, while we need the global minimum of the loss function. Gradient Descent itself is a simple method, and there has been a lot of works proposed to tackle this problem, described in a evolutionary chart as below.</p>
+<a class="reference internal image-reference" href="../_images/gradient_descent_evolutionary.png"><img alt="../_images/gradient_descent_evolutionary.png" class="align-center" src="../_images/gradient_descent_evolutionary.png" style="height: 350px;" /></a>
+<section id="bgd">
+<h3>1.1. BGD<a class="headerlink" href="#bgd" title="Permalink to this headline">#</a></h3>
+<p>This section is about the most basic idea of the family, Full-Batch Gradient Descent (BGD). Also known as Vanilla GD.</p>
 <section id="analysis-of-derivative">
 <h4>Analysis of derivative<a class="headerlink" href="#analysis-of-derivative" title="Permalink to this headline">#</a></h4>
 <p>To understand the smart idea behind Gradient Descent, we first analyze the relative position between a random point to its <em>closest</em> local minimum. We have already known derivarive at a point is the representation of <em>instantaneous velocity</em>, but how about its direction? To illustrate this, let’s plot the derivatives at some points of a 1-dimensional function as vectors along the <span class="math notranslate nohighlight">\(x\)</span>-axis.</p>
 <div class="math notranslate nohighlight">
 \[y=\frac{1}{128}(x^4-8x^3)\]</div>
-<a class="reference internal image-reference" href="../_images/directional_derivative.png" id="output-directional-derivative-png"><img alt="../_images/directional_derivative.png" class="align-center" id="output-directional-derivative-png" src="../_images/directional_derivative.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/directional_derivative.png"><img alt="../_images/directional_derivative.png" class="align-center" src="../_images/directional_derivative.png" style="height: 300px;" /></a>
 <br>
 <p>In this function, there are two <a class="reference external" href="https://en.wikipedia.org/wiki/Critical_point_(mathematics)">critical points</a> at <span class="math notranslate nohighlight">\(x=0\)</span> and <span class="math notranslate nohighlight">\(x=6\)</span>, in which the first one is a <a class="reference external" href="https://en.wikipedia.org/wiki/Saddle_point">saddle point</a> and the second one is a <a class="reference external" href="https://en.wikipedia.org/wiki/Maxima_and_minima">local minimum</a>. A very important conclusion can be drawn from this graph is that directional derivatives always <em>point away</em> from the steepest path downwards. In other words, if we move the point in the <em>opposite direction</em> of the derivative, we will end up approach a local minimum or a saddle point. Unfortunately, from the perspective of a single point on the graph and using only gradient, there is no way to regconize if there comes a saddle point.</p>
 <div class="cell tag_hide-input docutils container">
@@ -796,7 +817,7 @@ title="Print to PDF"
 x_{t+1} &amp;= x_t+\Delta x_t
 \end{aligned}\end{split}\]</div>
 <p>Using this design, the (magnitude of) the gradient gets smaller and smaller and finally approach 0, thus the name of the algorithm. The whole process can be thought as a ball rolling down the hill. There is a coefficient named the <em>learning rate</em> (denoted <span class="math notranslate nohighlight">\(\eta\)</span>) attached to the gradient, controls how large each step is. The value of this hyperparameter should not be either too large (making the convergence not happening) or too small (taking too long to converge). The effect of learning rate is illustrated in the following example, in which we build the algorithm from scratch to find the minimum of the function <span class="math notranslate nohighlight">\(y=x^2+5\sin(x)\)</span> for different values of <span class="math notranslate nohighlight">\(\eta\)</span>.</p>
-<a class="reference internal image-reference" href="../_images/batch_gradient_descent.gif" id="output-batch-gradient-descent-gif"><img alt="../_images/batch_gradient_descent.gif" class="align-center" id="output-batch-gradient-descent-gif" src="../_images/batch_gradient_descent.gif" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../_images/batch_gradient_descent.gif"><img alt="../_images/batch_gradient_descent.gif" class="align-center" src="../_images/batch_gradient_descent.gif" style="height: 250px;" /></a>
 <br>
 <p>The updating process can also be summarized a <a class="reference external" href="https://en.wikipedia.org/wiki/Learning_curve_(machine_learning)">learning curve</a>. A couple of stopping conditions are also used such as tolerance (maximum magnitude of gradient) or maximum number of iterations. In the example, I use 50 iterations and set the value of tolerance to 0 to make sure all iterations are used.</p>
 <div class="cell docutils container">
@@ -918,7 +939,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_10_0.png"><img alt="../_images/numpy-gradient-descent_10_0.png" class="align-center" src="../_images/numpy-gradient-descent_10_0.png" style="width: 492.5px; height: 358.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_11_0.png"><img alt="../_images/numpy-gradient-descent_11_0.png" class="align-center" src="../_images/numpy-gradient-descent_11_0.png" style="width: 492.5px; height: 358.5px;" /></a>
 </div>
 </div>
 </section>
@@ -981,7 +1002,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <div class="math notranslate nohighlight">
 \[m_T=-\eta\sum_{t=1}^{T}{\gamma^t g_{T-t}}\]</div>
 <p>The amount of information memorized from the previous step is controled by a coefficient, <span class="math notranslate nohighlight">\(\gamma\)</span>. The value of this hyperparameter is set <span class="math notranslate nohighlight">\(0&lt;\gamma&lt;1\)</span>, typically <span class="math notranslate nohighlight">\(0.9\)</span>, forcing earlier steps to have less effect. Visually, the motion of the ball is now more realistic, as it seems to carry <a class="reference external" href="https://en.wikipedia.org/wiki/Inertia">inertia</a>.</p>
-<a class="reference internal image-reference" href="../_images/momentum_gradient_descent.gif" id="output-momentum-gradient-descent-gif"><img alt="../_images/momentum_gradient_descent.gif" class="align-center" id="output-momentum-gradient-descent-gif" src="../_images/momentum_gradient_descent.gif" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../_images/momentum_gradient_descent.gif"><img alt="../_images/momentum_gradient_descent.gif" class="align-center" src="../_images/momentum_gradient_descent.gif" style="height: 250px;" /></a>
 <br>
 <p>The benefits of using Momentum includes:</p>
 <ul class="simple">
@@ -989,17 +1010,6 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <li><p>Momentum accelerates the ball so that it moves faster towards the minima</p></li>
 <li><p>When implemented in SGD, Momentum dampens the <em>oscillations</em></p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span><span class="p">,</span> <span class="n">ArtistAnimation</span><span class="p">,</span> <span class="n">PillowWriter</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MomentumGD</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">nIter</span><span class="p">,</span> <span class="n">xInit</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -1137,7 +1147,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_23_0.png"><img alt="../_images/numpy-gradient-descent_23_0.png" class="align-center" src="../_images/numpy-gradient-descent_23_0.png" style="width: 493.0px; height: 358.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_24_0.png"><img alt="../_images/numpy-gradient-descent_24_0.png" class="align-center" src="../_images/numpy-gradient-descent_24_0.png" style="width: 493.0px; height: 358.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1207,7 +1217,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_28_0.png"><img alt="../_images/numpy-gradient-descent_28_0.png" class="align-center" src="../_images/numpy-gradient-descent_28_0.png" style="width: 492.5px; height: 358.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_29_0.png"><img alt="../_images/numpy-gradient-descent_29_0.png" class="align-center" src="../_images/numpy-gradient-descent_29_0.png" style="width: 492.5px; height: 358.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1277,7 +1287,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_32_0.png"><img alt="../_images/numpy-gradient-descent_32_0.png" class="align-center" src="../_images/numpy-gradient-descent_32_0.png" style="width: 492.5px; height: 358.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_33_0.png"><img alt="../_images/numpy-gradient-descent_33_0.png" class="align-center" src="../_images/numpy-gradient-descent_33_0.png" style="width: 492.5px; height: 358.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1352,7 +1362,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_36_0.png"><img alt="../_images/numpy-gradient-descent_36_0.png" class="align-center" src="../_images/numpy-gradient-descent_36_0.png" style="width: 493.0px; height: 358.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-gradient-descent_37_0.png"><img alt="../_images/numpy-gradient-descent_37_0.png" class="align-center" src="../_images/numpy-gradient-descent_37_0.png" style="width: 493.0px; height: 358.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1554,7 +1564,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">9. Deep Learning</p>
+            <p class="prev-next-title"><b>9. Deep Learning</b></p>
         </div>
     </a>
 </div>
@@ -1564,7 +1574,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By &#9829; Quang Hung x Thuy Linh &#9829;<br/>
+    By Quang Hung &#9829; Thuy Linh<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

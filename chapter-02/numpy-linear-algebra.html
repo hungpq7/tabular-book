@@ -56,7 +56,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Sympy: Calculus" href="sympy-calculus.html" />
-    <link rel="prev" title="2. Mathematics" href="_intro.html" />
+    <link rel="prev" title="Numpy: Arrays" href="numpy-arrays.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -117,7 +117,9 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-01/_intro.html">
-   1. Python Programming
+   <b>
+    1. Python Programming
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -141,8 +143,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-01/python-objects-functions.html">
-     Python: Objects and Functions
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
     </a>
    </li>
    <li class="toctree-l2">
@@ -159,7 +161,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="_intro.html">
-   2. Mathematics
+   <b>
+    2. Mathematics
+   </b>
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
@@ -167,6 +171,11 @@ const thebe_selector_output = ".output, .cell_output"
    </i>
   </label>
   <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      Numpy: Linear Algebra
@@ -187,11 +196,18 @@ const thebe_selector_output = ".output, .cell_output"
      Numpy: Statistics
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-04/_intro.html">
-   4. Data Visualization
+   <b>
+    4. Data Visualization
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
@@ -212,8 +228,10 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../chapter-05/_intro.html">
-   5. Tabular Learning
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Tabular Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
   <label for="toctree-checkbox-4">
@@ -222,7 +240,7 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-05/xgboost-tree-boosting.html">
+    <a class="reference internal" href="../chapter-06/xgboost-tree-boosting.html">
      XGBoost: Tree Boosting
     </a>
    </li>
@@ -230,7 +248,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-09/_intro.html">
-   9. Deep Learning
+   <b>
+    9. Deep Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
   <label for="toctree-checkbox-5">
@@ -1659,8 +1679,8 @@ $<span class="math notranslate nohighlight">\(\mathbf{C}_{m,p} = \sum_{n=1}^N {\
 <h4>Determinant<a class="headerlink" href="#determinant" title="Permalink to this headline">#</a></h4>
 <p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Determinant">determinant</a> of a <span class="math notranslate nohighlight">\(2\times 2\)</span> matrix is:
 $</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b9581b44-1cd5-44f8-9824-23dffd9088b4">
-<span class="eqno">(1)<a class="headerlink" href="#equation-b9581b44-1cd5-44f8-9824-23dffd9088b4" title="Permalink to this equation">#</a></span>\[\begin{vmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-b744b900-6055-407d-9a91-eedd6194d900">
+<span class="eqno">(1)<a class="headerlink" href="#equation-b744b900-6055-407d-9a91-eedd6194d900" title="Permalink to this equation">#</a></span>\[\begin{vmatrix}
 a_{1,1} &amp; a_{1,2}\\
 a_{2,1} &amp; a_{2,2}
 \end{vmatrix}\]</div>
@@ -2206,11 +2226,11 @@ For a specific case of <span class="math notranslate nohighlight">\(N=2\)</span>
 <p>The determinant of a matrix
 <span class="math notranslate nohighlight">\(\mathbf{M}_{2\times 2}=\begin{bmatrix}\begin{array}{r} a&amp;c \\ b&amp;d \end{array}\end{bmatrix}\)</span>
 is the area of the <a class="reference external" href="https://en.wikipedia.org/wiki/Parallelogram">parallellogram</a> formed by new basis vectors.</p>
-<a class="reference internal image-reference" href="../_images/parallellogram.png" id="image-parallellogram-png"><img alt="../_images/parallellogram.png" class="align-center" id="image-parallellogram-png" src="../_images/parallellogram.png" style="height: 270px;" /></a>
+<a class="reference internal image-reference" href="../_images/parallellogram.png"><img alt="../_images/parallellogram.png" class="align-center" src="../_images/parallellogram.png" style="height: 270px;" /></a>
 <p>For the matrix
 <span class="math notranslate nohighlight">\(\mathbf{R}_{3\times 3}=\left[\begin{array}{c|c|c|c}\mathbf{r}_1 &amp; \mathbf{r}_2 &amp; \mathbf{r}_3\end{array}\right]\)</span>,
 its determinant is the volume of the <a class="reference external" href="https://en.wikipedia.org/wiki/Parallelepiped">parallelepiped</a> formed by 3 new basis vectors.</p>
-<a class="reference internal image-reference" href="../_images/parallelepiped.png" id="image-parallelepiped-png"><img alt="../_images/parallelepiped.png" class="align-center" id="image-parallelepiped-png" src="../_images/parallelepiped.png" style="height: 270px;" /></a>
+<a class="reference internal image-reference" href="../_images/parallelepiped.png"><img alt="../_images/parallelepiped.png" class="align-center" src="../_images/parallelepiped.png" style="height: 270px;" /></a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A square matrix has the determinant of <span class="math notranslate nohighlight">\(0\)</span> only when there is at least one of its vectors is <em>linear dependent</em> on the others. Assume the matrix <span class="math notranslate nohighlight">\(\mathbf{R}_{3\times 3}\)</span> above has the determinant of <span class="math notranslate nohighlight">\(0\)</span>, then it can be one of the following situations:</p>
@@ -2257,11 +2277,11 @@ its determinant is the volume of the <a class="reference external" href="https:/
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="_intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="numpy-arrays.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">2. Mathematics</p>
+            <p class="prev-next-title">Numpy: Arrays</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="sympy-calculus.html" title="next page">
@@ -2278,7 +2298,7 @@ its determinant is the volume of the <a class="reference external" href="https:/
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By &#9829; Quang Hung x Thuy Linh &#9829;<br/>
+    By Quang Hung &#9829; Thuy Linh<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

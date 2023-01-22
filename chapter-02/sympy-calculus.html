@@ -117,7 +117,9 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-01/_intro.html">
-   1. Python Programming
+   <b>
+    1. Python Programming
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -141,8 +143,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-01/python-objects-functions.html">
-     Python: Objects and Functions
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
     </a>
    </li>
    <li class="toctree-l2">
@@ -159,7 +161,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="_intro.html">
-   2. Mathematics
+   <b>
+    2. Mathematics
+   </b>
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
@@ -167,6 +171,11 @@ const thebe_selector_output = ".output, .cell_output"
    </i>
   </label>
   <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="numpy-linear-algebra.html">
      Numpy: Linear Algebra
@@ -187,11 +196,18 @@ const thebe_selector_output = ".output, .cell_output"
      Numpy: Statistics
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-04/_intro.html">
-   4. Data Visualization
+   <b>
+    4. Data Visualization
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
@@ -212,8 +228,10 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../chapter-05/_intro.html">
-   5. Tabular Learning
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Tabular Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
   <label for="toctree-checkbox-4">
@@ -222,7 +240,7 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-05/xgboost-tree-boosting.html">
+    <a class="reference internal" href="../chapter-06/xgboost-tree-boosting.html">
      XGBoost: Tree Boosting
     </a>
    </li>
@@ -230,7 +248,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-09/_intro.html">
-   9. Deep Learning
+   <b>
+    9. Deep Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
   <label for="toctree-checkbox-5">
@@ -1026,6 +1046,19 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="sympy-calculus">
 <h1>Sympy: Calculus<a class="headerlink" href="#sympy-calculus" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
 <section id="sympy">
 <h2>1. SymPy<a class="headerlink" href="#sympy" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://github.com/sympy/sympy">SymPy</a> is a exclusive and native library to Python, designed for <a class="reference external" href="https://docs.sympy.org/latest/tutorials/intro-tutorial/intro.html#what-is-symbolic-computation">symbolic computation</a>. This mean mathematical expressions will be left in their symbolic forms and represented exactly, not approximately. SymPy can do this for all kinds of computations such as simplication, limits, derivatives and solving equations.</p>
@@ -1334,7 +1367,7 @@ title="Print to PDF"
 <section id="the-velocity-problem">
 <h4>The velocity problem<a class="headerlink" href="#the-velocity-problem" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Time_derivative">Rate of change</a> or instantaneous <a class="reference external" href="https://en.wikipedia.org/wiki/Velocity">velocity</a> is an important concept in Data Science and Machine Learning. It is expressed as the <a class="reference external" href="https://en.wikipedia.org/wiki/Slope">slope</a> <span class="math notranslate nohighlight">\(m\)</span> of a line <span class="math notranslate nohighlight">\(y=mx+c\)</span>. However, in a non-linear function (which is very popular), the velocity changes as <span class="math notranslate nohighlight">\(x\)</span> changes. To measure the instantaneous velocity at any given point, an visual approach is trying to draw a <a class="reference external" href="https://en.wikipedia.org/wiki/Tangent">tangent</a> then find its slope by computing <span class="math notranslate nohighlight">\(\Delta{y}/\Delta{x}\)</span>.</p>
-<a class="reference internal image-reference" href="../_images/velocity_problem.png" id="image-velocity-problem-png"><img alt="../_images/velocity_problem.png" class="align-center" id="image-velocity-problem-png" src="../_images/velocity_problem.png" style="height: 180px;" /></a>
+<a class="reference internal image-reference" href="../_images/velocity_problem.png"><img alt="../_images/velocity_problem.png" class="align-center" src="../_images/velocity_problem.png" style="height: 180px;" /></a>
 <br>
 <p>Let’s an this example, we want to draw the tangent of the parabola at the blue point, <span class="math notranslate nohighlight">\(a\)</span>. It is the blue line, but we will have a hard time finding it. It would be more reasonable for us to approximate the tangent by drawing a <a class="reference external" href="https://en.wikipedia.org/wiki/Secant_line">secant</a>, like the red one.</p>
 <div class="math notranslate nohighlight">
@@ -1346,7 +1379,7 @@ title="Print to PDF"
 <section id="the-area-problem">
 <h4>The area problem<a class="headerlink" href="#the-area-problem" title="Permalink to this headline">#</a></h4>
 <p>Another popular problem in Calculus is evaluating the area under a curve over an interval. Same as the velocity problem, we cannot compute it exactly, but can try to approximate it.</p>
-<a class="reference internal image-reference" href="../_images/area_problem.png" id="image-area-problem-png"><img alt="../_images/area_problem.png" class="align-center" id="image-area-problem-png" src="../_images/area_problem.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/area_problem.png"><img alt="../_images/area_problem.png" class="align-center" src="../_images/area_problem.png" style="height: 300px;" /></a>
 <br>
 <p>One way to do this is dividing up the interval <span class="math notranslate nohighlight">\([a,b]\)</span> into <span class="math notranslate nohighlight">\(N\)</span> small bins, each has a width of <span class="math notranslate nohighlight">\(h\)</span> and is represented by a point <span class="math notranslate nohighlight">\(x_n\)</span>. This point is usually placed at the center or at one of the two boundaries of a bin. For each bin <span class="math notranslate nohighlight">\(n\)</span>, draw a rectangular having width of <span class="math notranslate nohighlight">\(h\)</span> and height of <span class="math notranslate nohighlight">\(f(x_n)\)</span>. The area can be approximated by summing up the areas of all rectangulars:</p>
 <div class="math notranslate nohighlight">
@@ -1361,7 +1394,7 @@ title="Print to PDF"
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Limit_of_a_function">Limit</a> (of a function) is an essential building block in Calculus. This section will takes a deeper look at function limits to explain what limits are, but avoid the Mathematical definition. We also discuss of how to estimate them using SymPy instead of Mathematical approaches.</p>
 <section id="cases-of-limit">
 <h4>Cases of limit<a class="headerlink" href="#cases-of-limit" title="Permalink to this headline">#</a></h4>
-<a class="reference internal image-reference" href="../_images/limit_types.png" id="image-limit-types-png"><img alt="../_images/limit_types.png" class="align-center" id="image-limit-types-png" src="../_images/limit_types.png" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../_images/limit_types.png"><img alt="../_images/limit_types.png" class="align-center" src="../_images/limit_types.png" style="height: 250px;" /></a>
 <br>
 <p>The images above show the behaviours of different functions around <span class="math notranslate nohighlight">\(x=2\)</span>. It summrizes most popular cases you may face when finding a limit:</p>
 <ul class="simple">
@@ -1499,7 +1532,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/sympy-calculus_54_0.png"><img alt="../_images/sympy-calculus_54_0.png" class="align-center" src="../_images/sympy-calculus_54_0.png" style="width: 356.0px; height: 215.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/sympy-calculus_55_0.png"><img alt="../_images/sympy-calculus_55_0.png" class="align-center" src="../_images/sympy-calculus_55_0.png" style="width: 356.0px; height: 215.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1512,7 +1545,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/sympy-calculus_55_0.png"><img alt="../_images/sympy-calculus_55_0.png" class="align-center" src="../_images/sympy-calculus_55_0.png" style="width: 353.0px; height: 242.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/sympy-calculus_56_0.png"><img alt="../_images/sympy-calculus_56_0.png" class="align-center" src="../_images/sympy-calculus_56_0.png" style="width: 353.0px; height: 242.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1525,7 +1558,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/sympy-calculus_56_0.png"><img alt="../_images/sympy-calculus_56_0.png" class="align-center" src="../_images/sympy-calculus_56_0.png" style="width: 356.0px; height: 192.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/sympy-calculus_57_0.png"><img alt="../_images/sympy-calculus_57_0.png" class="align-center" src="../_images/sympy-calculus_57_0.png" style="width: 356.0px; height: 192.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1765,7 +1798,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </tr>
 </tbody>
 </table>
-<a class="reference internal image-reference" href="../_images/function_monotonicity.png" id="output-function-monotonicity-png"><img alt="../_images/function_monotonicity.png" class="align-center" id="output-function-monotonicity-png" src="../_images/function_monotonicity.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/function_monotonicity.png"><img alt="../_images/function_monotonicity.png" class="align-center" src="../_images/function_monotonicity.png" style="height: 300px;" /></a>
 <br>
 <p>The black points are where the derivative is zero, we generally call them <em>stationary points</em>. However, the behaviours of the function around them are quite different. The first stationary point, <span class="math notranslate nohighlight">\(x\approx-1.544\)</span>, we witness that <span class="math notranslate nohighlight">\(y\)</span> is switching from increasing to decreasing when going through it. This indicates <span class="math notranslate nohighlight">\(x\approx-1.544\)</span> is a <em>relative</em>, or <em>local</em> maximum. Likewise, <span class="math notranslate nohighlight">\(x\approx-1.944\)</span> is a local minimum. But <span class="math notranslate nohighlight">\(x=0\)</span> is different, the function does not change its monotonicity after going through this point, so it is not a maximum neither a minimum. Points like this are called <em>saddle points</em>.</p>
 <div class="cell tag_hide-cell docutils container">
@@ -1841,7 +1874,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </tr>
 </tbody>
 </table>
-<a class="reference internal image-reference" href="../_images/function_concavity.png" id="output-function-concavity-png"><img alt="../_images/function_concavity.png" class="align-center" id="output-function-concavity-png" src="../_images/function_concavity.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/function_concavity.png"><img alt="../_images/function_concavity.png" class="align-center" src="../_images/function_concavity.png" style="height: 300px;" /></a>
 <br>
 <p>When the second derivative is negative (red sections), which means the velocity is decreasing, we witness that the function is <em>concave</em>. In contrast, the function is <em>convex</em> in blue sections. This is the main result of the second derivative test, it pairs with first-derivative test to conclude if a stationary point is whether a local minimum, a local maxium or a saddle point:</p>
 <ul class="simple">
@@ -1974,7 +2007,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 </section>
 <section id="interpretation">
 <h4>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this headline">#</a></h4>
-<a class="reference internal image-reference" href="../_images/lagrange_multiplier.png" id="image-lagrange-multiplier-png"><img alt="../_images/lagrange_multiplier.png" class="align-center" id="image-lagrange-multiplier-png" src="../_images/lagrange_multiplier.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/lagrange_multiplier.png"><img alt="../_images/lagrange_multiplier.png" class="align-center" src="../_images/lagrange_multiplier.png" style="height: 300px;" /></a>
 <br>
 <p>The image above shows the geometric meaning of Lagrange multiplier: at the optimal point, <span class="math notranslate nohighlight">\(\nabla f\)</span> and <span class="math notranslate nohighlight">\(\nabla g\)</span> are two parallel vectors. Imagine we know the function <span class="math notranslate nohighlight">\(f\)</span> measuring the <em>distance</em> (<span class="math notranslate nohighlight">\(y\)</span>) to the <em>treasure</em> (<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>) with respect to the <em>location</em> (<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>). We also have a <em>compass</em> always points to the treasure, shown in black arrows, which is a casual way to talk about the gradient. The treasure is in the forest, so we must follow a <em>trail</em> (red line, representing the constraint <span class="math notranslate nohighlight">\(g=0\)</span>). The red arrows represent the gradient of <span class="math notranslate nohighlight">\(g\)</span>.</p>
 <p>The optimization problem in this example is: which point on the trail is closest to the treasure? Lagrange multiplier gives us the solution for this problem: it is the point at which the black arrow is parallel to the red arrow, or in other words, the compass points perpendicularly to the trail. The ratio between two arrows, <span class="math notranslate nohighlight">\(\lambda\)</span> can be interpreted as the <em>rate of change</em> of the objective function with respect to the constraint at the optimal solution:</p>
@@ -2151,7 +2184,7 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By &#9829; Quang Hung x Thuy Linh &#9829;<br/>
+    By Quang Hung &#9829; Thuy Linh<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

@@ -117,7 +117,9 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-01/_intro.html">
-   1. Python Programming
+   <b>
+    1. Python Programming
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -141,8 +143,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-01/python-objects-functions.html">
-     Python: Objects and Functions
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
     </a>
    </li>
    <li class="toctree-l2">
@@ -159,7 +161,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-02/_intro.html">
-   2. Mathematics
+   <b>
+    2. Mathematics
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
@@ -167,6 +171,11 @@ const thebe_selector_output = ".output, .cell_output"
    </i>
   </label>
   <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
      Numpy: Linear Algebra
@@ -187,11 +196,18 @@ const thebe_selector_output = ".output, .cell_output"
      Numpy: Statistics
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="_intro.html">
-   4. Data Visualization
+   <b>
+    4. Data Visualization
+   </b>
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
@@ -212,8 +228,10 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../chapter-05/_intro.html">
-   5. Tabular Learning
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Tabular Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
   <label for="toctree-checkbox-4">
@@ -222,7 +240,7 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-05/xgboost-tree-boosting.html">
+    <a class="reference internal" href="../chapter-06/xgboost-tree-boosting.html">
      XGBoost: Tree Boosting
     </a>
    </li>
@@ -230,7 +248,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-09/_intro.html">
-   9. Deep Learning
+   <b>
+    9. Deep Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
   <label for="toctree-checkbox-5">
@@ -872,12 +892,6 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="matplotlib-graph-construction">
 <h1>Matplotlib: Graph Construction<a class="headerlink" href="#matplotlib-graph-construction" title="Permalink to this headline">#</a></h1>
-<section id="matplotlib-api">
-<h2>1. Matplotlib API<a class="headerlink" href="#matplotlib-api" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://matplotlib.org/stable/api/index.html">Matplotlib</a> is a famous visualization library in Python, is the foundation for many other visualization libraries. Matplotlib along with NumPy can be considered equivalent to Matlab.</p>
-<p>This topic focuses only on Pyplot - the most essential sub-module of Matplotlib and how to use it to build graphs of mathematical functions. For data visualization plots such as bar chart, histogram or pie chart, there are other libraries that do a better job than Matplotlib, and they will be discussed on later topics.</p>
-<section id="plotting-interfaces">
-<h3>1.1. Plotting interfaces<a class="headerlink" href="#plotting-interfaces" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -888,6 +902,12 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+<section id="matplotlib-api">
+<h2>1. Matplotlib API<a class="headerlink" href="#matplotlib-api" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://matplotlib.org/stable/api/index.html">Matplotlib</a> is a famous visualization library in Python, is the foundation for many other visualization libraries. Matplotlib along with NumPy can be considered equivalent to Matlab.</p>
+<p>This topic focuses only on Pyplot - the most essential sub-module of Matplotlib and how to use it to build graphs of mathematical functions. For data visualization plots such as bar chart, histogram or pie chart, there are other libraries that do a better job than Matplotlib, and they will be discussed on later topics.</p>
+<section id="plotting-interfaces">
+<h3>1.1. Plotting interfaces<a class="headerlink" href="#plotting-interfaces" title="Permalink to this headline">#</a></h3>
 <section id="object-oriented-interface">
 <h4>Object-oriented interface<a class="headerlink" href="#object-oriented-interface" title="Permalink to this headline">#</a></h4>
 <p>Every plot created by Matplotlib is under the control of two objects, <a class="reference external" href="https://matplotlib.org/stable/api/figure_api.html"><code class="docutils literal notranslate"><span class="pre">figure</span></code></a> and <a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html"><code class="docutils literal notranslate"><span class="pre">axes</span></code></a>.</p>
@@ -909,7 +929,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_5_0.png"><img alt="../_images/matplotlib-graph-construction_5_0.png" class="align-center" src="../_images/matplotlib-graph-construction_5_0.png" style="width: 265.5px; height: 197.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_6_0.png"><img alt="../_images/matplotlib-graph-construction_6_0.png" class="align-center" src="../_images/matplotlib-graph-construction_6_0.png" style="width: 265.5px; height: 197.5px;" /></a>
 </div>
 </div>
 <p>Instead of creating <code class="docutils literal notranslate"><span class="pre">figure</span></code> and <code class="docutils literal notranslate"><span class="pre">axes</span></code> independently, Matplotlib provides a single function <code class="docutils literal notranslate"><span class="pre">subplots()</span></code> creates the two objects at once. This function is highly recommended in practice, and the introduction to the previous method is to clarify how <code class="docutils literal notranslate"><span class="pre">figure</span></code> and <code class="docutils literal notranslate"><span class="pre">axes</span></code> work and how they are related.</p>
@@ -922,7 +942,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_7_0.png"><img alt="../_images/matplotlib-graph-construction_7_0.png" class="align-center" src="../_images/matplotlib-graph-construction_7_0.png" style="width: 265.5px; height: 197.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_8_0.png"><img alt="../_images/matplotlib-graph-construction_8_0.png" class="align-center" src="../_images/matplotlib-graph-construction_8_0.png" style="width: 265.5px; height: 197.5px;" /></a>
 </div>
 </div>
 <p>When there are more than one <em>axes</em>, Matplotlib arranges them in a matrix of <code class="docutils literal notranslate"><span class="pre">axes</span></code> objects. Accessing each <em>axes</em> can be done using NumPy’s array slicing.</p>
@@ -936,7 +956,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/matplotlib-graph-construction_9_0.png" src="../_images/matplotlib-graph-construction_9_0.png" />
+<img alt="../_images/matplotlib-graph-construction_10_0.png" src="../_images/matplotlib-graph-construction_10_0.png" />
 </div>
 </div>
 </section>
@@ -955,7 +975,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_11_0.png"><img alt="../_images/matplotlib-graph-construction_11_0.png" class="align-center" src="../_images/matplotlib-graph-construction_11_0.png" style="width: 488.5px; height: 344.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_12_0.png"><img alt="../_images/matplotlib-graph-construction_12_0.png" class="align-center" src="../_images/matplotlib-graph-construction_12_0.png" style="width: 488.5px; height: 344.5px;" /></a>
 </div>
 </div>
 </section>
@@ -981,7 +1001,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_15_0.png"><img alt="../_images/matplotlib-graph-construction_15_0.png" class="align-center" src="../_images/matplotlib-graph-construction_15_0.png" style="width: 345.5px; height: 329.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_16_0.png"><img alt="../_images/matplotlib-graph-construction_16_0.png" class="align-center" src="../_images/matplotlib-graph-construction_16_0.png" style="width: 345.5px; height: 329.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1002,7 +1022,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_17_0.png"><img alt="../_images/matplotlib-graph-construction_17_0.png" class="align-center" src="../_images/matplotlib-graph-construction_17_0.png" style="width: 488.5px; height: 257.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_18_0.png"><img alt="../_images/matplotlib-graph-construction_18_0.png" class="align-center" src="../_images/matplotlib-graph-construction_18_0.png" style="width: 488.5px; height: 257.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1047,7 +1067,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_20_0.png"><img alt="../_images/matplotlib-graph-construction_20_0.png" class="align-center" src="../_images/matplotlib-graph-construction_20_0.png" style="width: 590.5px; height: 205.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_21_0.png"><img alt="../_images/matplotlib-graph-construction_21_0.png" class="align-center" src="../_images/matplotlib-graph-construction_21_0.png" style="width: 590.5px; height: 205.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1130,7 +1150,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_24_0.png"><img alt="../_images/matplotlib-graph-construction_24_0.png" class="align-center" src="../_images/matplotlib-graph-construction_24_0.png" style="width: 590.5px; height: 179.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_25_0.png"><img alt="../_images/matplotlib-graph-construction_25_0.png" class="align-center" src="../_images/matplotlib-graph-construction_25_0.png" style="width: 590.5px; height: 179.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1159,7 +1179,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_26_0.png"><img alt="../_images/matplotlib-graph-construction_26_0.png" class="align-center" src="../_images/matplotlib-graph-construction_26_0.png" style="width: 702.0px; height: 188.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_27_0.png"><img alt="../_images/matplotlib-graph-construction_27_0.png" class="align-center" src="../_images/matplotlib-graph-construction_27_0.png" style="width: 702.0px; height: 188.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1196,7 +1216,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_28_0.png"><img alt="../_images/matplotlib-graph-construction_28_0.png" class="align-center" src="../_images/matplotlib-graph-construction_28_0.png" style="width: 334.5px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_29_0.png"><img alt="../_images/matplotlib-graph-construction_29_0.png" class="align-center" src="../_images/matplotlib-graph-construction_29_0.png" style="width: 334.5px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1227,7 +1247,7 @@ specify the relative position of the coordinates to the text box. Possible value
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_32_0.png"><img alt="../_images/matplotlib-graph-construction_32_0.png" class="align-center" src="../_images/matplotlib-graph-construction_32_0.png" style="width: 286.0px; height: 286.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_33_0.png"><img alt="../_images/matplotlib-graph-construction_33_0.png" class="align-center" src="../_images/matplotlib-graph-construction_33_0.png" style="width: 286.0px; height: 286.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1257,7 +1277,7 @@ specify the relative position of the coordinates to the text box. Possible value
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_34_0.png"><img alt="../_images/matplotlib-graph-construction_34_0.png" class="align-center" src="../_images/matplotlib-graph-construction_34_0.png" style="width: 352.5px; height: 464.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_35_0.png"><img alt="../_images/matplotlib-graph-construction_35_0.png" class="align-center" src="../_images/matplotlib-graph-construction_35_0.png" style="width: 352.5px; height: 464.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1282,7 +1302,7 @@ specify the relative position of the coordinates to the text box. Possible value
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_36_0.png"><img alt="../_images/matplotlib-graph-construction_36_0.png" class="align-center" src="../_images/matplotlib-graph-construction_36_0.png" style="width: 480.5px; height: 343.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_37_0.png"><img alt="../_images/matplotlib-graph-construction_37_0.png" class="align-center" src="../_images/matplotlib-graph-construction_37_0.png" style="width: 480.5px; height: 343.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1315,7 +1335,7 @@ This can be achieved using <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_38_0.png"><img alt="../_images/matplotlib-graph-construction_38_0.png" class="align-center" src="../_images/matplotlib-graph-construction_38_0.png" style="width: 595.0px; height: 227.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_39_0.png"><img alt="../_images/matplotlib-graph-construction_39_0.png" class="align-center" src="../_images/matplotlib-graph-construction_39_0.png" style="width: 595.0px; height: 227.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1338,7 +1358,7 @@ This can be achieved using <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_39_0.png"><img alt="../_images/matplotlib-graph-construction_39_0.png" class="align-center" src="../_images/matplotlib-graph-construction_39_0.png" style="width: 479.0px; height: 265.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_40_0.png"><img alt="../_images/matplotlib-graph-construction_40_0.png" class="align-center" src="../_images/matplotlib-graph-construction_40_0.png" style="width: 479.0px; height: 265.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1371,7 +1391,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_43_0.png"><img alt="../_images/matplotlib-graph-construction_43_0.png" class="align-center" src="../_images/matplotlib-graph-construction_43_0.png" style="width: 595.0px; height: 227.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_44_0.png"><img alt="../_images/matplotlib-graph-construction_44_0.png" class="align-center" src="../_images/matplotlib-graph-construction_44_0.png" style="width: 595.0px; height: 227.0px;" /></a>
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -1396,7 +1416,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_44_0.png"><img alt="../_images/matplotlib-graph-construction_44_0.png" class="align-center" src="../_images/matplotlib-graph-construction_44_0.png" style="width: 595.0px; height: 227.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_45_0.png"><img alt="../_images/matplotlib-graph-construction_45_0.png" class="align-center" src="../_images/matplotlib-graph-construction_45_0.png" style="width: 595.0px; height: 227.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1457,7 +1477,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_50_0.png"><img alt="../_images/matplotlib-graph-construction_50_0.png" class="align-center" src="../_images/matplotlib-graph-construction_50_0.png" style="width: 361.5px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_51_0.png"><img alt="../_images/matplotlib-graph-construction_51_0.png" class="align-center" src="../_images/matplotlib-graph-construction_51_0.png" style="width: 361.5px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1500,7 +1520,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_52_0.png"><img alt="../_images/matplotlib-graph-construction_52_0.png" class="align-center" src="../_images/matplotlib-graph-construction_52_0.png" style="width: 412.0px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_53_0.png"><img alt="../_images/matplotlib-graph-construction_53_0.png" class="align-center" src="../_images/matplotlib-graph-construction_53_0.png" style="width: 412.0px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1540,7 +1560,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_54_0.png"><img alt="../_images/matplotlib-graph-construction_54_0.png" class="align-center" src="../_images/matplotlib-graph-construction_54_0.png" style="width: 481.5px; height: 332.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_55_0.png"><img alt="../_images/matplotlib-graph-construction_55_0.png" class="align-center" src="../_images/matplotlib-graph-construction_55_0.png" style="width: 481.5px; height: 332.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1577,7 +1597,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_56_0.png"><img alt="../_images/matplotlib-graph-construction_56_0.png" class="align-center" src="../_images/matplotlib-graph-construction_56_0.png" style="width: 259.5px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_57_0.png"><img alt="../_images/matplotlib-graph-construction_57_0.png" class="align-center" src="../_images/matplotlib-graph-construction_57_0.png" style="width: 259.5px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1614,7 +1634,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_58_0.png"><img alt="../_images/matplotlib-graph-construction_58_0.png" class="align-center" src="../_images/matplotlib-graph-construction_58_0.png" style="width: 481.5px; height: 254.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_59_0.png"><img alt="../_images/matplotlib-graph-construction_59_0.png" class="align-center" src="../_images/matplotlib-graph-construction_59_0.png" style="width: 481.5px; height: 254.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1644,7 +1664,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_60_0.png"><img alt="../_images/matplotlib-graph-construction_60_0.png" class="align-center" src="../_images/matplotlib-graph-construction_60_0.png" style="width: 334.5px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_61_0.png"><img alt="../_images/matplotlib-graph-construction_61_0.png" class="align-center" src="../_images/matplotlib-graph-construction_61_0.png" style="width: 334.5px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1673,7 +1693,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_62_0.png"><img alt="../_images/matplotlib-graph-construction_62_0.png" class="align-center" src="../_images/matplotlib-graph-construction_62_0.png" style="width: 569.0px; height: 137.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_63_0.png"><img alt="../_images/matplotlib-graph-construction_63_0.png" class="align-center" src="../_images/matplotlib-graph-construction_63_0.png" style="width: 569.0px; height: 137.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1709,7 +1729,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_64_0.png"><img alt="../_images/matplotlib-graph-construction_64_0.png" class="align-center" src="../_images/matplotlib-graph-construction_64_0.png" style="width: 334.5px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_65_0.png"><img alt="../_images/matplotlib-graph-construction_65_0.png" class="align-center" src="../_images/matplotlib-graph-construction_65_0.png" style="width: 334.5px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1766,7 +1786,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_68_0.png"><img alt="../_images/matplotlib-graph-construction_68_0.png" class="align-center" src="../_images/matplotlib-graph-construction_68_0.png" style="width: 394.0px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_69_0.png"><img alt="../_images/matplotlib-graph-construction_69_0.png" class="align-center" src="../_images/matplotlib-graph-construction_69_0.png" style="width: 394.0px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1821,7 +1841,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_70_0.png"><img alt="../_images/matplotlib-graph-construction_70_0.png" class="align-center" src="../_images/matplotlib-graph-construction_70_0.png" style="width: 367.5px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_71_0.png"><img alt="../_images/matplotlib-graph-construction_71_0.png" class="align-center" src="../_images/matplotlib-graph-construction_71_0.png" style="width: 367.5px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1867,7 +1887,7 @@ inspired by other popular visualization tools. However, since drawing graphs req
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_72_0.png"><img alt="../_images/matplotlib-graph-construction_72_0.png" class="align-center" src="../_images/matplotlib-graph-construction_72_0.png" style="width: 334.5px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_73_0.png"><img alt="../_images/matplotlib-graph-construction_73_0.png" class="align-center" src="../_images/matplotlib-graph-construction_73_0.png" style="width: 334.5px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1923,7 +1943,7 @@ x'+iy'
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_74_0.png"><img alt="../_images/matplotlib-graph-construction_74_0.png" class="align-center" src="../_images/matplotlib-graph-construction_74_0.png" style="width: 334.5px; height: 333.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/matplotlib-graph-construction_75_0.png"><img alt="../_images/matplotlib-graph-construction_75_0.png" class="align-center" src="../_images/matplotlib-graph-construction_75_0.png" style="width: 334.5px; height: 333.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1962,7 +1982,7 @@ x'+iy'
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">4. Data Visualization</p>
+            <p class="prev-next-title"><b>4. Data Visualization</b></p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="plotly-interactive-visualization.html" title="next page">
@@ -1979,7 +1999,7 @@ x'+iy'
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By &#9829; Quang Hung x Thuy Linh &#9829;<br/>
+    By Quang Hung &#9829; Thuy Linh<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

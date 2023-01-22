@@ -1,3 +1,3 @@
-# 1. Python Programming
+# <b>1. Python Programming</b>
 ```{tableofcontents}
 ```

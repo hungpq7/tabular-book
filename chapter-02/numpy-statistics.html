@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="4. Data Visualization" href="../chapter-04/_intro.html" />
+    <link rel="next" title="Scipy: Hypothesis Testing" href="scipy-hypothesis-testing.html" />
     <link rel="prev" title="Numpy: Probability" href="numpy-probability.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -117,7 +117,9 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-01/_intro.html">
-   1. Python Programming
+   <b>
+    1. Python Programming
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -141,8 +143,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-01/python-objects-functions.html">
-     Python: Objects and Functions
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
     </a>
    </li>
    <li class="toctree-l2">
@@ -159,7 +161,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="_intro.html">
-   2. Mathematics
+   <b>
+    2. Mathematics
+   </b>
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
@@ -167,6 +171,11 @@ const thebe_selector_output = ".output, .cell_output"
    </i>
   </label>
   <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="numpy-linear-algebra.html">
      Numpy: Linear Algebra
@@ -187,11 +196,18 @@ const thebe_selector_output = ".output, .cell_output"
      Numpy: Statistics
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-04/_intro.html">
-   4. Data Visualization
+   <b>
+    4. Data Visualization
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
@@ -212,8 +228,10 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../chapter-05/_intro.html">
-   5. Tabular Learning
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Tabular Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
   <label for="toctree-checkbox-4">
@@ -222,7 +240,7 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-05/xgboost-tree-boosting.html">
+    <a class="reference internal" href="../chapter-06/xgboost-tree-boosting.html">
      XGBoost: Tree Boosting
     </a>
    </li>
@@ -230,7 +248,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-09/_intro.html">
-   9. Deep Learning
+   <b>
+    9. Deep Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
   <label for="toctree-checkbox-5">
@@ -1755,8 +1775,9 @@ c_{\alpha/2}\frac{\hat{\sigma}_1^2}{\hat{\sigma}_2^2}
 <li><p><span class="math notranslate nohighlight">\(p\)</span>: probability of 1 class</p></li>
 <li><p><span class="math notranslate nohighlight">\(\beta_0, \beta_1,\dots\)</span>: model parameters</p></li>
 </ul>
-<p>Logistic function can be rewritten to <em>logit function</em>:
-$<span class="math notranslate nohighlight">\(\log\left(\frac{p}{1-p}\right) = \beta_0+\beta_1x\)</span>$</p>
+<p>Logistic function can be rewritten to <em>logit function</em>:</p>
+<div class="math notranslate nohighlight">
+\[\log\left(\frac{p}{1-p}\right) = \beta_0+\beta_1x\]</div>
 <p>where <span class="math notranslate nohighlight">\(\dfrac{p}{1-p}\)</span> is called the odds ratio. Logit model in statistic doesn’t show the effect of independent variable <span class="math notranslate nohighlight">\(x\)</span> on <span class="math notranslate nohighlight">\(y\)</span>, it considers the influence of <span class="math notranslate nohighlight">\(x\)</span> on the probability to <span class="math notranslate nohighlight">\(y\)</span> get the values 1 (expected value of <span class="math notranslate nohighlight">\(y\)</span>).</p>
 </section>
 <section id="probit-model">
@@ -2126,10 +2147,10 @@ Length: 753, dtype: float64
             <p class="prev-next-title">Numpy: Probability</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../chapter-04/_intro.html" title="next page">
+    <a class='right-next' id="next-link" href="scipy-hypothesis-testing.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">4. Data Visualization</p>
+        <p class="prev-next-title">Scipy: Hypothesis Testing</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -2140,7 +2161,7 @@ Length: 753, dtype: float64
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By &#9829; Quang Hung x Thuy Linh &#9829;<br/>
+    By Quang Hung &#9829; Thuy Linh<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

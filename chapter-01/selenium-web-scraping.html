@@ -115,7 +115,9 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="_intro.html">
-   1. Python Programming
+   <b>
+    1. Python Programming
+   </b>
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -139,8 +141,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="python-objects-functions.html">
-     Python: Objects and Functions
+    <a class="reference internal" href="python-functions-objects.html">
+     Python: Functions and Objects
     </a>
    </li>
    <li class="toctree-l2">
@@ -157,7 +159,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-02/_intro.html">
-   2. Mathematics
+   <b>
+    2. Mathematics
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
@@ -165,6 +169,11 @@ const thebe_selector_output = ".output, .cell_output"
    </i>
   </label>
   <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
      Numpy: Linear Algebra
@@ -185,11 +194,18 @@ const thebe_selector_output = ".output, .cell_output"
      Numpy: Statistics
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-04/_intro.html">
-   4. Data Visualization
+   <b>
+    4. Data Visualization
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
@@ -210,8 +226,10 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../chapter-05/_intro.html">
-   5. Tabular Learning
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Tabular Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
   <label for="toctree-checkbox-4">
@@ -220,7 +238,7 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-05/xgboost-tree-boosting.html">
+    <a class="reference internal" href="../chapter-06/xgboost-tree-boosting.html">
      XGBoost: Tree Boosting
     </a>
    </li>
@@ -228,7 +246,9 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../chapter-09/_intro.html">
-   9. Deep Learning
+   <b>
+    9. Deep Learning
+   </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
   <label for="toctree-checkbox-5">
@@ -722,17 +742,37 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="selenium-web-scraping">
 <h1>Selenium: Web Scraping<a class="headerlink" href="#selenium-web-scraping" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">import</span> <span class="nn">bs4</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">webdriver_manager.chrome</span> <span class="kn">import</span> <span class="n">ChromeDriverManager</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.service</span> <span class="kn">import</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="kn">import</span> <span class="n">Options</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.action_chains</span> <span class="kn">import</span> <span class="n">ActionChains</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="overview">
 <h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <p>There are basically two ways to scrape data from websites, one is via HTML responses (server-side) and the other is via JSON responses (client-side).</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="8d9ab0d9-20e9-496c-9c30-897eef24a6a5" name="3b260086-b70d-4054-90fd-34b24e153918" type="radio">
-</input><label class="sd-tab-label" for="8d9ab0d9-20e9-496c-9c30-897eef24a6a5">
+<input checked="checked" id="5a7d2532-3fe5-4dcb-851d-16f1551a3a7b" name="95f08c07-e48c-4156-b568-fb87f179e8ef" type="radio">
+</input><label class="sd-tab-label" for="5a7d2532-3fe5-4dcb-851d-16f1551a3a7b">
 Server-side</label><div class="sd-tab-content docutils">
 <p>We extract <em>unstructured</em> data from user interface, which is friendly for human eyes but not for computers. Data is availale most of the time except for cases when website owners protect their data intentionally. This crawling approach requires some basic knowledge of HTML.</p>
 </div>
-<input id="d6f23a94-984b-4171-b976-0a807979aacf" name="3b260086-b70d-4054-90fd-34b24e153918" type="radio">
-</input><label class="sd-tab-label" for="d6f23a94-984b-4171-b976-0a807979aacf">
+<input id="fdbe94d3-90f3-4d6f-97ad-dd94074e42bf" name="95f08c07-e48c-4156-b568-fb87f179e8ef" type="radio">
+</input><label class="sd-tab-label" for="fdbe94d3-90f3-4d6f-97ad-dd94074e42bf">
 Client-side</label><div class="sd-tab-content docutils">
 <p>We try to crawl <em>structured</em> REST API responses, which is only available in specific website that use this protocol. The advantage is that the returned data is in JSON format, so they can be easily extracted and processed. Crawling data this way is much easier, so we are going to start with it.</p>
 </div>
@@ -740,13 +780,6 @@ Client-side</label><div class="sd-tab-content docutils">
 <section id="requests">
 <h3>1.1. Requests<a class="headerlink" href="#requests" title="Permalink to this headline">#</a></h3>
 <p>Instead of accessing websites using a browser such as Google Chrome, we can use the <a class="reference external" href="https://github.com/psf/requests">Requests</a> library to download the raw content of that page and interact with it. Most of the time, we are going to use the <code class="docutils literal notranslate"><span class="pre">get()</span></code> function followed by the <code class="docutils literal notranslate"><span class="pre">text()</span></code> attribute.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://books.toscrape.com/index.html&#39;</span>
@@ -789,14 +822,6 @@ Client-side</label><div class="sd-tab-content docutils">
 <section id="apis-crawling">
 <h3>1.2. APIs crawling<a class="headerlink" href="#apis-crawling" title="Permalink to this headline">#</a></h3>
 <p>Not all URLs point to an HTML page, for example, the URL <a class="reference external" href="https://api.github.com/repos/dmlc/xgboost">https://api.github.com/repos/dmlc/xgboost</a> points to a raw document in JSON format. Such an URL is called a REST API endpoint and can be easily converted into Python dictionaries using the  <code class="docutils literal notranslate"><span class="pre">json()</span></code> method. But APIs in practice are not always that simple, they can go with concepts such as headers and payloads. So, learning real-world API structures and how to find them will be our goal in this section.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="documented-apis">
 <h4>Documented APIs<a class="headerlink" href="#documented-apis" title="Permalink to this headline">#</a></h4>
 <p>Many organizations officially support REST APIs for data accessing, such as <a class="reference external" href="https://docs.github.com/en/rest">GitHub</a>, <a class="reference external" href="https://developers.facebook.com/docs/groups-api/reference">Facebook</a>, <a class="reference external" href="https://developer.twitter.com/en/docs/twitter-api">Twitter</a>, <a class="reference external" href="https://www.reddit.com/dev/api/">Reddit</a> and <a class="reference external" href="https://developer.clashroyale.com/">Clash Royale</a>. To start using APIs provided this way, developers usually need to register an account and generate an API key, but some of them don’t require any authenication. Either way, the instructions for requesting data can be found in their documentation sites.</p>
@@ -895,12 +920,12 @@ Client-side</label><div class="sd-tab-content docutils">
 <li><p>Go to the target page and open the browser’s developer tool. The shortcut in Google Chrome is <code class="docutils literal notranslate"><span class="pre">F12</span></code> or <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">Shift</span> <span class="pre">+</span> <span class="pre">I</span></code>. However, the tool will not record activities before it was opened, so we need to press <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">R</span></code> to reload the target page.</p></li>
 <li><p>Navigate to the Network tab to show all requests the page has made and filter Fetch/XHR requests. This filter leaves only requests that fetch JSON data, separating them from other types of response that we don’t need such as image, media and CSS. These buttons are yellow circled in the image below.</p></li>
 </ul>
-<a class="reference internal image-reference" href="../_images/rest_api_response.png" id="image-rest-api-response-png"><img alt="../_images/rest_api_response.png" class="align-center" id="image-rest-api-response-png" src="../_images/rest_api_response.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/rest_api_response.png"><img alt="../_images/rest_api_response.png" class="align-center" src="../_images/rest_api_response.png" style="height: 300px;" /></a>
 <ul class="simple">
 <li><p>At this point, one of the displaying requests returns the data we are looking for. We will need to explore a bit to determine that API, start with names. In the example of TechCrunch, the API “magazine” sounds promising. Indeed, when we click this API and preview its response, we see a list of items storing articles in the website.</p></li>
 <li><p>Now we have found the API, let’s learn how to use it. Switching to the Header tab reveals to us the URL and the request method of this API. Other APIs may require headers as well as payload, but this one is not the case.</p></li>
 </ul>
-<a class="reference internal image-reference" href="../_images/rest_api_url.png" id="image-rest-api-url-png"><img alt="../_images/rest_api_url.png" class="align-center" id="image-rest-api-url-png" src="../_images/rest_api_url.png" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../_images/rest_api_url.png"><img alt="../_images/rest_api_url.png" class="align-center" src="../_images/rest_api_url.png" style="height: 250px;" /></a>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -925,7 +950,6 @@ Client-side</label><div class="sd-tab-content docutils">
         <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;primary_category&#39;</span><span class="p">][</span><span class="s1">&#39;slug&#39;</span><span class="p">],</span>
         <span class="s1">&#39;author&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;parselyMeta&#39;</span><span class="p">][</span><span class="s1">&#39;parsely-author&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
         <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;parselyMeta&#39;</span><span class="p">][</span><span class="s1">&#39;parsely-title&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;canonical_url&#39;</span><span class="p">],</span>
     <span class="p">}</span>
     <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
 
@@ -956,49 +980,43 @@ Client-side</label><div class="sd-tab-content docutils">
       <th>category</th>
       <th>author</th>
       <th>title</th>
-      <th>url</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2466319</td>
-      <td>fintech</td>
-      <td>Mary Ann Azevedo</td>
-      <td>Does everyone want to be a landlord, or what?</td>
-      <td>https://techcrunch.com/2023/01/08/does-everyon...</td>
+      <td>2473566</td>
+      <td>social</td>
+      <td>Taylor Hatmaker</td>
+      <td>Microsoft is sunsetting social VR pioneer Alts...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2465989</td>
-      <td>climate</td>
-      <td>Tim De Chant</td>
-      <td>Plant-based foods investor says her focus is m...</td>
-      <td>https://techcrunch.com/2023/01/08/plant-based-...</td>
+      <td>2472783</td>
+      <td>security</td>
+      <td>Zack Whittaker</td>
+      <td>A hack at ODIN Intelligence exposes a huge tro...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2466520</td>
-      <td>hardware</td>
-      <td>Haje Jan Kamps</td>
-      <td>Urine luck: these CES startups want to take a ...</td>
-      <td>https://techcrunch.com/2023/01/07/ces-urine/</td>
+      <td>2472976</td>
+      <td>startups</td>
+      <td>Kyle Wiggers</td>
+      <td>Alphabet makes cuts, Twitter bans third-party ...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2465453</td>
-      <td>hardware</td>
-      <td>Haje Jan Kamps</td>
-      <td>A big CES 2023 trend: all battery power, every...</td>
-      <td>https://techcrunch.com/2023/01/07/batteries-ba...</td>
+      <td>2472885</td>
+      <td>startups</td>
+      <td>Natasha Mascarenhas</td>
+      <td>Tech forgot its umbrella</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2466468</td>
-      <td>gadgets</td>
-      <td>Haje Jan Kamps</td>
-      <td>Did you hear? AnkerWork is going after the wir...</td>
-      <td>https://techcrunch.com/2023/01/07/ankerwork-m6...</td>
+      <td>2472793</td>
+      <td>apps</td>
+      <td>Sarah Perez</td>
+      <td>This Week in Apps: Twitter kills third-party a...</td>
     </tr>
   </tbody>
 </table>
@@ -1007,7 +1025,7 @@ Client-side</label><div class="sd-tab-content docutils">
 <div class="seealso admonition">
 <p class="admonition-title">Case study</p>
 <p>Sometimes, websites block connections from non-browser clients. For example, when inspecting the website <a class="reference external" href="https://tiki.vn/nha-sach-tiki/c8322">https://tiki.vn/nha-sach-tiki/c8322</a>, I found an API named “listing” which contains all products shown in the page. With the naked URL, we can access its response using Chrome but will get blocked using Requests. This can be easily bypassed by we overwriting the <em>user agent</em> header as follows.</p>
-<a class="reference internal image-reference" href="../_images/rest_api_payload.png" id="image-rest-api-payload-png"><img alt="../_images/rest_api_payload.png" class="align-center" id="image-rest-api-payload-png" src="../_images/rest_api_payload.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/rest_api_payload.png"><img alt="../_images/rest_api_payload.png" class="align-center" src="../_images/rest_api_payload.png" style="height: 300px;" /></a>
 <p>Now, if switch to the Payload tab, we can observe that the parameters here match exactly the components in the URL. With this insight, we can rewrite the request with URL and payload separatedly, which is far more readable.</p>
 </div>
 <div class="cell docutils container">
@@ -1114,13 +1132,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
 <p>There is a powerful library, <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a>, that helps us navigating HTML documents and finding the desired elements. All we need to do is passing the HTML document to it (to get an object called the <em>soup</em>), then uses its methods and attributes to extract what we want. We are going to demonstrate the main features of Beautiful Soup using a small document.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bs4</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">&lt;html&gt;</span>
 <span class="s2">    &lt;head&gt;</span>
@@ -1189,14 +1200,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
 <li><p>Other arguments are named after HTML attributes. But if some of them make conflicts to Python built-in names such as <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">class</span></code> and <code class="docutils literal notranslate"><span class="pre">custom-attribute</span></code>, we can pass them as a dictionary to the <code class="docutils literal notranslate"><span class="pre">attrs</span></code> argument.</p></li>
 </ul>
 <p>The ideal case in searching is when you know the ID of an element, thanks to its uniqueness. In this case, we can safely use the <code class="docutils literal notranslate"><span class="pre">find()</span></code> method instead, which returns only the first result. Otherwise, combinations of tags and attributes will help you finding the element you want very quickly.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">bs4</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;link2&#39;</span><span class="p">)</span>
@@ -1268,18 +1271,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
 <li><p>Extract the important fields and add them to a Pandas dataframe. There is no new technique in this phase.</p></li>
 </ul>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">bs4</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">crawl_book_url</span><span class="p">(</span><span class="n">urlBase</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -1339,7 +1330,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
         
         <span class="n">sample</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;upc&#39;</span><span class="p">:</span> <span class="n">upc</span><span class="p">,</span>
-            <span class="s1">&#39;urlBook&#39;</span><span class="p">:</span> <span class="n">urlBook</span><span class="p">,</span>
             <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
             <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="n">price</span><span class="p">,</span>
             <span class="s1">&#39;tax&#39;</span><span class="p">:</span> <span class="n">tax</span><span class="p">,</span>
@@ -1392,7 +1382,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
     <tr style="text-align: right;">
       <th></th>
       <th>upc</th>
-      <th>urlBook</th>
       <th>title</th>
       <th>price</th>
       <th>tax</th>
@@ -1402,7 +1391,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
     <tr>
       <th>0</th>
       <td>6957f44c3847a760</td>
-      <td>https://books.toscrape.com/catalogue/soumissio...</td>
       <td>Soumission</td>
       <td>50.10</td>
       <td>0.0</td>
@@ -1410,7 +1398,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
     <tr>
       <th>1</th>
       <td>b12b89017878a60d</td>
-      <td>https://books.toscrape.com/catalogue/private-p...</td>
       <td>Private Paris (Private #10)</td>
       <td>47.61</td>
       <td>0.0</td>
@@ -1418,7 +1405,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
     <tr>
       <th>2</th>
       <td>8d455c7539795d2a</td>
-      <td>https://books.toscrape.com/catalogue/we-love-y...</td>
       <td>We Love You, Charlie Freeman</td>
       <td>50.27</td>
       <td>0.0</td>
@@ -1426,7 +1412,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
     <tr>
       <th>3</th>
       <td>709822d0b5bcb7f4</td>
-      <td>https://books.toscrape.com/catalogue/thirst_94...</td>
       <td>Thirst</td>
       <td>17.27</td>
       <td>0.0</td>
@@ -1434,7 +1419,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
     <tr>
       <th>4</th>
       <td>d01ac97e2b8947c2</td>
-      <td>https://books.toscrape.com/catalogue/the-murde...</td>
       <td>The Murder That Never Was (Forensic Instincts #5)</td>
       <td>54.11</td>
       <td>0.0</td>
@@ -1457,17 +1441,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
 <li><p>Use a custom <a class="reference external" href="https://www.selenium.dev/documentation/webdriver/drivers/options/#pageloadstrategy">page load strategy</a></p></li>
 <li><p>Quit the driver to free up memory</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">webdriver_manager.chrome</span> <span class="kn">import</span> <span class="n">ChromeDriverManager</span>
-<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.service</span> <span class="kn">import</span> <span class="n">Service</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="kn">import</span> <span class="n">Options</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">ChromeDriverManager</span><span class="p">()</span><span class="o">.</span><span class="n">install</span><span class="p">())</span>
@@ -1510,18 +1483,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
 <section id="implementation">
 <h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
 <p>In this section, we attemp to crawl first 20 books in the fiction category. We try traditional way first, using tags and classes, only to know that Selenium does not support this style very well. Next, we try to use XPath and CSS selector by copying those of a single book from Chrome and then tweaking them to match all 20.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">webdriver_manager.chrome</span> <span class="kn">import</span> <span class="n">ChromeDriverManager</span>
-<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.service</span> <span class="kn">import</span> <span class="n">Service</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="kn">import</span> <span class="n">Options</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">ChromeDriverManager</span><span class="p">()</span><span class="o">.</span><span class="n">install</span><span class="p">())</span>
@@ -1598,20 +1559,6 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
 <section id="actions">
 <h3>3.3. Actions<a class="headerlink" href="#actions" title="Permalink to this headline">#</a></h3>
 <p>In this section we use Selenium to perform basic <a class="reference external" href="https://selenium-python.readthedocs.io/navigating.html">actions</a> on a website: clicking, typing keys and hovering.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">webdriver_manager.chrome</span> <span class="kn">import</span> <span class="n">ChromeDriverManager</span>
-<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.service</span> <span class="kn">import</span> <span class="n">Service</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="kn">import</span> <span class="n">Options</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="kn">import</span> <span class="n">Keys</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.common.action_chains</span> <span class="kn">import</span> <span class="n">ActionChains</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">ChromeDriverManager</span><span class="p">()</span><span class="o">.</span><span class="n">install</span><span class="p">())</span>
@@ -1780,7 +1727,7 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
     <a class='right-next' id="next-link" href="../chapter-02/_intro.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">2. Mathematics</p>
+        <p class="prev-next-title"><b>2. Mathematics</b></p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -1791,7 +1738,7 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By &#9829; Quang Hung x Thuy Linh &#9829;<br/>
+    By Quang Hung &#9829; Thuy Linh<br/>
   
       &copy; Copyright 2022.<br/>
 </p>
