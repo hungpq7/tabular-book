@@ -18,12 +18,19 @@ chapters:
 # Mathematics
 - file: chapter-02/_intro
   sections:
-  - file: chapter-02/numpy-arrays
   - file: chapter-02/numpy-linear-algebra
   - file: chapter-02/sympy-calculus
   - file: chapter-02/numpy-probability
   - file: chapter-02/numpy-statistics
   - file: chapter-02/scipy-hypothesis-testing
+
+- file: chapter-03/_intro
+  sections:
+  - file: chapter-03/numpy-arrays
+  - file: chapter-03/pandas-data-exploratory
+  - file: chapter-03/pandas-data-cleaning
+  - file: chapter-03/pandas-data-transformation
+  - file: chapter-03/janitor-pandas-extensions
 
 # Data Visualization
 - file: chapter-05/_intro
