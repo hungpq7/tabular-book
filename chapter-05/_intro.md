@@ -1,3 +1,4 @@
-# <b>5. Machine Learning</b>
+# <b>5. Data Visualization</b>
+
 ```{tableofcontents}
 ```

@@ -1,3 +1,4 @@
-# <b>9. Deep Learning</b>
+# <b>9. Unsupervised Learning</b>
+
 ```{tableofcontents}
 ```

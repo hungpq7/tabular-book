@@ -1,3 +1,4 @@
-# <b>6. Tabular Learning</b>
+# <b>6. Machine Learning</b>
+
 ```{tableofcontents}
 ```

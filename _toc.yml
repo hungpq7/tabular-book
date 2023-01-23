@@ -26,18 +26,18 @@ chapters:
   - file: chapter-02/scipy-hypothesis-testing
 
 # Data Visualization
-- file: chapter-04/_intro
+- file: chapter-05/_intro
   sections:
-  - file: chapter-04/matplotlib-graph-construction
-  - file: chapter-04/seaborn-statistical-visualization
-  - file: chapter-04/plotly-interactive-visualization
+  - file: chapter-05/matplotlib-graph-construction
+  - file: chapter-05/seaborn-statistical-visualization
+  - file: chapter-05/plotly-interactive-visualization
 
 # Tabular Learning
-- file: chapter-06/_intro
+- file: chapter-07/_intro
   sections:
-  - file: chapter-06/xgboost-tree-boosting
+  - file: chapter-07/xgboost-tree-boosting
 
 # Deep Learning
-- file: chapter-09/_intro
+- file: chapter-10/_intro
   sections:
-  - file: chapter-09/numpy-gradient-descent
+  - file: chapter-10/numpy-gradient-descent
