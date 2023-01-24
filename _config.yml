@@ -3,7 +3,7 @@
 
 title: ''
 author: "Quang Hung &#9829; Thuy Linh"
-logo: image/logo.png
+logo: image/book/logo.svg
 exclude_patterns: [README.md, _build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
 only_build_toc_files: true
 
@@ -32,6 +32,7 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
+  favicon: image/book/favicon.ico
   use_issues_button: false
   use_repository_button: true
 

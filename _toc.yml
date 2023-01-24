@@ -51,7 +51,11 @@ chapters:
 # Tabular Learning
 - file: chapter-07/_intro
   sections:
+  - file: chapter-07/sklearn-ensemble-learning
   - file: chapter-07/xgboost-tree-boosting
+  - file: chapter-07/ray-hyperparameter-optimization
+  - file: chapter-07/shap-model-interpretation
+  - file: chapter-07/imblearn-targeted-modeling
 
 # Deep Learning
 - file: chapter-10/_intro
