@@ -32,6 +32,15 @@ chapters:
   - file: chapter-03/pandas-data-transformation
   - file: chapter-03/janitor-pandas-extensions
 
+# Big Data
+- file: chapter-04/_intro
+  sections:
+  - file: chapter-04/hiveql-data-manipulation
+  - file: chapter-04/pyspark-data-exploratory
+  - file: chapter-04/pyspark-data-cleaning
+  - file: chapter-04/pyspark-data-transformation
+  - file: chapter-04/dask-parallelized-pandas
+
 # Data Visualization
 - file: chapter-05/_intro
   sections:
