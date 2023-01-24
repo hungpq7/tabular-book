@@ -1,0 +1,4143 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Pandas: Data Exploratory</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pandas: Data Cleaning" href="pandas-data-cleaning.html" />
+    <link rel="prev" title="Numpy: Arrays" href="numpy-arrays.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-01/_intro.html">
+   <b>
+    1. Python Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     Numpy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     Sympy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-probability.html">
+     Numpy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-statistics.html">
+     Numpy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-04/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-05/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-07/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-10/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/chapter-03/pandas-data-exploratory.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/chapter-03/pandas-data-exploratory.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter-03/pandas-data-exploratory.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-to-pandas">
+   1. Introduction to Pandas
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#series">
+     1.1. Series
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-types">
+     1.2. Data types
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#string">
+       String
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#numeric">
+       Numeric
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#date-and-time">
+       Date and time
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#boolean">
+       Boolean
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#categorical">
+       Categorical
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataframe">
+     1.3. Dataframe
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#initialization">
+       Initialization
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-files">
+       Reading files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-csv-files">
+       Reading CSV files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-json-files">
+       Reading JSON files
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#useful-pandas-settings">
+     1.4. Useful Pandas settings
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-exploratory">
+   2. Data exploratory
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#overview">
+     2.1. Overview
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rows-observing">
+       Rows observing
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#features-analysis">
+       Features analysis
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#statistical-summary">
+       Statistical summary
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#missing-values">
+       Missing values
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#in-depth-exploring">
+     2.2. In-depth exploring
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-selection">
+       Data selection
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filtering">
+       Filtering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sorting">
+       Sorting
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#unique-values">
+       Unique values
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-aggregation">
+       Data aggregation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Pandas: Data Exploratory</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-to-pandas">
+   1. Introduction to Pandas
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#series">
+     1.1. Series
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-types">
+     1.2. Data types
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#string">
+       String
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#numeric">
+       Numeric
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#date-and-time">
+       Date and time
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#boolean">
+       Boolean
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#categorical">
+       Categorical
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataframe">
+     1.3. Dataframe
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#initialization">
+       Initialization
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-files">
+       Reading files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-csv-files">
+       Reading CSV files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-json-files">
+       Reading JSON files
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#useful-pandas-settings">
+     1.4. Useful Pandas settings
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-exploratory">
+   2. Data exploratory
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#overview">
+     2.1. Overview
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rows-observing">
+       Rows observing
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#features-analysis">
+       Features analysis
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#statistical-summary">
+       Statistical summary
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#missing-values">
+       Missing values
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#in-depth-exploring">
+     2.2. In-depth exploring
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-selection">
+       Data selection
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filtering">
+       Filtering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sorting">
+       Sorting
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#unique-values">
+       Unique values
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-aggregation">
+       Data aggregation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="pandas-data-exploratory">
+<h1>Pandas: Data Exploratory<a class="headerlink" href="#pandas-data-exploratory" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="nt">th</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">td</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">p</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">div</span><span class="p">.</span><span class="nc">highlight</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+th {font-size:12px}
+td {font-size:12px}
+p {font-size:14px}
+div.highlight {font-size:14px}
+</style>
+</div></div>
+</div>
+<section id="introduction-to-pandas">
+<h2>1. Introduction to Pandas<a class="headerlink" href="#introduction-to-pandas" title="Permalink to this headline">#</a></h2>
+<p>Pandas is a library specializing in data manipulation and analysis, using two powerful data structures: series and dataframe. Pandas is always used with NumPy.</p>
+<section id="series">
+<h3>1.1. Series<a class="headerlink" href="#series" title="Permalink to this headline">#</a></h3>
+<p>Series can be thought as 1-dimensional arrays with index.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    a
+1    b
+2    c
+3    d
+4    e
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;digits&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0
+1    1
+2    2
+3    3
+4    4
+5    5
+6    6
+7    7
+8    8
+9    9
+Name: digits, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-types">
+<h3>1.2. Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">#</a></h3>
+<p>Like array, series contains elements of homogeneous data types.</p>
+<section id="string">
+<h4>String<a class="headerlink" href="#string" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    a
+1    b
+2    c
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1
+1    2
+2    3
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="numeric">
+<h4>Numeric<a class="headerlink" href="#numeric" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">,</span> <span class="s1">&#39;03&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1
+1    2
+2    3
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">,</span> <span class="s1">&#39;03&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1.0
+1    2.0
+2    3.0
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="date-and-time">
+<h4>Date and time<a class="headerlink" href="#date-and-time" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;2020/01/01&#39;</span><span class="p">,</span> <span class="s1">&#39;2020/01/02&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2020-01-01
+1   2020-01-02
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Jan.01-2020&#39;</span><span class="p">,</span> <span class="s1">&#39;20200102&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2020-01-01
+1   2020-01-02
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="boolean">
+<h4>Boolean<a class="headerlink" href="#boolean" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     True
+1    False
+2    False
+3     True
+4     True
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="categorical">
+<h4>Categorical<a class="headerlink" href="#categorical" title="Permalink to this headline">#</a></h4>
+<p>The categorical data type contains ordered items.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">medal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Gold&#39;</span><span class="p">,</span> <span class="s1">&#39;Bronze&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">,</span> <span class="s1">&#39;Bronze&#39;</span><span class="p">,</span> <span class="s1">&#39;Gold&#39;</span><span class="p">,</span> <span class="s1">&#39;Gold&#39;</span><span class="p">,</span> <span class="s1">&#39;Bronze&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">],</span>
+    <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Bronze&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">,</span> <span class="s1">&#39;Gold&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">medal</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Bronze&#39;, &#39;Bronze&#39;, &#39;Bronze&#39;, &#39;Silver&#39;, &#39;Silver&#39;, &#39;Gold&#39;, &#39;Gold&#39;, &#39;Gold&#39;]
+Categories (3, object): [&#39;Bronze&#39;, &#39;Silver&#39;, &#39;Gold&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="dataframe">
+<h3>1.3. Dataframe<a class="headerlink" href="#dataframe" title="Permalink to this headline">#</a></h3>
+<p>Dataframe is a tabular data type, containing series placed side by side. A dataframe can be thought as a labeled matrix. Here is the dataframe axes convention:</p>
+<ul class="simple">
+<li><p>Axis 0 is the vertical axis, contains row names; each row is called a record or an observation</p></li>
+<li><p>Axis 1 is the horizontal axis, contains column names; each column is called an attribute, a field, a variable or a dimension.</p></li>
+</ul>
+<section id="initialization">
+<h4>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;product&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Laptop&#39;</span><span class="p">,</span> <span class="s1">&#39;Mouse&#39;</span><span class="p">,</span> <span class="s1">&#39;Headphone&#39;</span><span class="p">,</span> <span class="s1">&#39;USB&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;$1000&#39;</span><span class="p">,</span> <span class="s1">&#39;$20&#39;</span><span class="p">,</span> <span class="s1">&#39;$50&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;stock&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+<span class="p">}</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dfTemp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>product</th>
+      <th>price</th>
+      <th>stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Laptop</td>
+      <td>$1000</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mouse</td>
+      <td>$20</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Headphone</td>
+      <td>$50</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>USB</td>
+      <td>NaN</td>
+      <td>100</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="reading-files">
+<h4>Reading files<a class="headerlink" href="#reading-files" title="Permalink to this headline">#</a></h4>
+</section>
+<section id="reading-csv-files">
+<h4>Reading CSV files<a class="headerlink" href="#reading-csv-files" title="Permalink to this headline">#</a></h4>
+<p>CSV (Comma-Separated Values) is a common type file format for storing tabular data.</p>
+</section>
+<section id="reading-json-files">
+<h4>Reading JSON files<a class="headerlink" href="#reading-json-files" title="Permalink to this headline">#</a></h4>
+<p>JSON (JavaScript Object Notation) files have the same structure as Python dictionaries. In Pandas, the <code class="docutils literal notranslate"><span class="pre">read_json()</span></code> function reads JSON files and the <code class="docutils literal notranslate"><span class="pre">DataFrame.from_dict()</span></code> function reads dictionaries.</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL.Open&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL.High&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL.Low&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL.Close&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL.Volume&#39;</span><span class="p">]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/finance_charts_apple.csv&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>AAPL.Open</th>
+      <th>AAPL.High</th>
+      <th>AAPL.Low</th>
+      <th>AAPL.Close</th>
+      <th>AAPL.Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2015-02-17</td>
+      <td>127.489998</td>
+      <td>128.880005</td>
+      <td>126.919998</td>
+      <td>127.830002</td>
+      <td>63152400</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2015-02-18</td>
+      <td>127.629997</td>
+      <td>128.779999</td>
+      <td>127.449997</td>
+      <td>128.720001</td>
+      <td>44891700</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2015-02-19</td>
+      <td>128.479996</td>
+      <td>129.029999</td>
+      <td>128.330002</td>
+      <td>128.449997</td>
+      <td>37362400</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2015-02-20</td>
+      <td>128.619995</td>
+      <td>129.500000</td>
+      <td>128.050003</td>
+      <td>129.500000</td>
+      <td>48948400</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2015-02-23</td>
+      <td>130.020004</td>
+      <td>133.000000</td>
+      <td>129.660004</td>
+      <td>133.000000</td>
+      <td>70974100</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;0&#39;</span><span class="p">:</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">:</span><span class="s1">&#39;Jupyter&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">:</span><span class="s1">&#39;Anaconda&#39;</span><span class="p">},</span>
+    <span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;0&#39;</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">:</span><span class="mi">8</span><span class="p">}</span>
+<span class="p">}</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">dfTemp</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Python</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Jupyter</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Anaconda</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;0&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;word&#39;</span><span class="p">:</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">:</span><span class="mi">6</span><span class="p">},</span>
+    <span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;word&#39;</span><span class="p">:</span><span class="s1">&#39;Jupyter&#39;</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">:</span><span class="mi">7</span><span class="p">},</span>
+    <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;word&#39;</span><span class="p">:</span><span class="s1">&#39;Anaconda&#39;</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">:</span><span class="mi">8</span><span class="p">}</span>
+<span class="p">}</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">dfTemp</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Python</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Jupyter</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Anaconda</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="useful-pandas-settings">
+<h3>1.4. Useful Pandas settings<a class="headerlink" href="#useful-pandas-settings" title="Permalink to this headline">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># float display of 2 decimal places</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:,.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
+
+<span class="c1"># display up to 100 characters each cell</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="c1"># display up to 500 columns</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_columns</span> <span class="o">=</span> <span class="mi">500</span>
+
+<span class="c1"># display up to 1000 rows</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_rows</span> <span class="o">=</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="data-exploratory">
+<h2>2. Data exploratory<a class="headerlink" href="#data-exploratory" title="Permalink to this headline">#</a></h2>
+<p>Data exploratory is an initial analysis step that summarizes the main characteristics to understand what is in the dataset. Data wrangling and data visualization are used for exploratory; however, this topic mentions only data wrangling using Pandas.</p>
+<section id="overview">
+<h3>2.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;video_id&#39;</span><span class="p">,</span> <span class="s1">&#39;trending_date&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_title&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="s1">&#39;dislikes&#39;</span><span class="p">,</span> <span class="s1">&#39;ratings_disabled&#39;</span><span class="p">]</span>
+<span class="n">dfYoutube</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/youtube_trending.csv&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="rows-observing">
+<h4>Rows observing<a class="headerlink" href="#rows-observing" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2kyS6SvSYSE</td>
+      <td>2017-11-14</td>
+      <td>CaseyNeistat</td>
+      <td>22</td>
+      <td>748374</td>
+      <td>57527</td>
+      <td>2966</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1ZAPwfrtAFY</td>
+      <td>2017-11-14</td>
+      <td>LastWeekTonight</td>
+      <td>24</td>
+      <td>2418783</td>
+      <td>97185</td>
+      <td>6146</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5qpjK5DgCt4</td>
+      <td>2017-11-14</td>
+      <td>Rudy Mancuso</td>
+      <td>23</td>
+      <td>3191434</td>
+      <td>146033</td>
+      <td>5339</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>puqaWrEC7tY</td>
+      <td>2017-11-14</td>
+      <td>Good Mythical Morning</td>
+      <td>24</td>
+      <td>343168</td>
+      <td>10172</td>
+      <td>666</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>d380meD0W0M</td>
+      <td>2017-11-14</td>
+      <td>nigahiga</td>
+      <td>24</td>
+      <td>2095731</td>
+      <td>132235</td>
+      <td>1989</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9878</th>
+      <td>NEmFS50lsTw</td>
+      <td>2018-02-01</td>
+      <td>SKITTLESbrand</td>
+      <td>24</td>
+      <td>483127</td>
+      <td>3924</td>
+      <td>362</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9879</th>
+      <td>NZ0ImXT1FZk</td>
+      <td>2018-02-01</td>
+      <td>Brave Wilderness</td>
+      <td>15</td>
+      <td>1417253</td>
+      <td>44358</td>
+      <td>893</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9880</th>
+      <td>t3z_pdr6z8w</td>
+      <td>2018-02-01</td>
+      <td>Jackie Aina</td>
+      <td>26</td>
+      <td>877585</td>
+      <td>115391</td>
+      <td>1621</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;views&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6103</th>
+      <td>FlsCjmMhFmw</td>
+      <td>2017-12-14</td>
+      <td>YouTube Spotlight</td>
+      <td>24</td>
+      <td>149376127</td>
+      <td>3093544</td>
+      <td>1643059</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5860</th>
+      <td>FlsCjmMhFmw</td>
+      <td>2017-12-13</td>
+      <td>YouTube Spotlight</td>
+      <td>24</td>
+      <td>137843120</td>
+      <td>3014471</td>
+      <td>1602383</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5629</th>
+      <td>FlsCjmMhFmw</td>
+      <td>2017-12-12</td>
+      <td>YouTube Spotlight</td>
+      <td>24</td>
+      <td>125432237</td>
+      <td>2912702</td>
+      <td>1545015</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5386</th>
+      <td>FlsCjmMhFmw</td>
+      <td>2017-12-11</td>
+      <td>YouTube Spotlight</td>
+      <td>24</td>
+      <td>113874632</td>
+      <td>2811215</td>
+      <td>1470383</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2558</th>
+      <td>TyHvyGVs42U</td>
+      <td>2017-11-26</td>
+      <td>LuisFonsiVEVO</td>
+      <td>10</td>
+      <td>102012605</td>
+      <td>2376636</td>
+      <td>117196</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;category_id&#39;</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1416</th>
+      <td>Kn5UgGQukYQ</td>
+      <td>2017-11-21</td>
+      <td>hudsonunionsociety</td>
+      <td>1</td>
+      <td>15058</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1645</th>
+      <td>Kn5UgGQukYQ</td>
+      <td>2017-11-22</td>
+      <td>hudsonunionsociety</td>
+      <td>1</td>
+      <td>34207</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1890</th>
+      <td>Kn5UgGQukYQ</td>
+      <td>2017-11-23</td>
+      <td>hudsonunionsociety</td>
+      <td>1</td>
+      <td>36137</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2093</th>
+      <td>Kn5UgGQukYQ</td>
+      <td>2017-11-24</td>
+      <td>hudsonunionsociety</td>
+      <td>1</td>
+      <td>36579</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2306</th>
+      <td>Kn5UgGQukYQ</td>
+      <td>2017-11-25</td>
+      <td>hudsonunionsociety</td>
+      <td>1</td>
+      <td>36931</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="features-analysis">
+<h4>Features analysis<a class="headerlink" href="#features-analysis" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(9881, 8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;video_id&#39;, &#39;trending_date&#39;, &#39;channel_title&#39;, &#39;category_id&#39;, &#39;views&#39;,
+       &#39;likes&#39;, &#39;dislikes&#39;, &#39;ratings_disabled&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pandas automatically detects the data type for each column.</span>
+<span class="n">dfYoutube</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>video_id            object
+trending_date       object
+channel_title       object
+category_id          int64
+views                int64
+likes                int64
+dislikes             int64
+ratings_disabled      bool
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="statistical-summary">
+<h4>Statistical summary<a class="headerlink" href="#statistical-summary" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>9881.000000</td>
+      <td>9.881000e+03</td>
+      <td>9.881000e+03</td>
+      <td>9.881000e+03</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>19.970347</td>
+      <td>1.288900e+06</td>
+      <td>4.746089e+04</td>
+      <td>3.066993e+03</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>7.544083</td>
+      <td>5.110157e+06</td>
+      <td>1.705132e+05</td>
+      <td>3.889208e+04</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.000000</td>
+      <td>6.870000e+02</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>17.000000</td>
+      <td>8.960900e+04</td>
+      <td>2.031000e+03</td>
+      <td>8.500000e+01</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>24.000000</td>
+      <td>3.116210e+05</td>
+      <td>9.003000e+03</td>
+      <td>3.250000e+02</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>25.000000</td>
+      <td>1.001367e+06</td>
+      <td>2.942500e+04</td>
+      <td>1.131000e+03</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>43.000000</td>
+      <td>1.493761e+08</td>
+      <td>3.093544e+06</td>
+      <td>1.643059e+06</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># correlation matrix</span>
+<span class="n">dfYoutube</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>category_id</th>
+      <td>1.000000</td>
+      <td>-0.068531</td>
+      <td>-0.092913</td>
+      <td>0.002402</td>
+      <td>-0.052243</td>
+    </tr>
+    <tr>
+      <th>views</th>
+      <td>-0.068531</td>
+      <td>1.000000</td>
+      <td>0.880433</td>
+      <td>0.673456</td>
+      <td>-0.010271</td>
+    </tr>
+    <tr>
+      <th>likes</th>
+      <td>-0.092913</td>
+      <td>0.880433</td>
+      <td>1.000000</td>
+      <td>0.530022</td>
+      <td>-0.019651</td>
+    </tr>
+    <tr>
+      <th>dislikes</th>
+      <td>0.002402</td>
+      <td>0.673456</td>
+      <td>0.530022</td>
+      <td>1.000000</td>
+      <td>-0.005567</td>
+    </tr>
+    <tr>
+      <th>ratings_disabled</th>
+      <td>-0.052243</td>
+      <td>-0.010271</td>
+      <td>-0.019651</td>
+      <td>-0.005567</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="missing-values">
+<h4>Missing values<a class="headerlink" href="#missing-values" title="Permalink to this headline">#</a></h4>
+<p>Our approach is to calculate the rate of missing values in each column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>video_id            90
+trending_date        0
+channel_title        0
+category_id          0
+views                0
+likes                0
+dislikes             0
+ratings_disabled     0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.0%}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>video_id            1%
+trending_date       0%
+channel_title       0%
+category_id         0%
+views               0%
+likes               0%
+dislikes            0%
+ratings_disabled    0%
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="in-depth-exploring">
+<h3>2.2. In-depth exploring<a class="headerlink" href="#in-depth-exploring" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;video_id&#39;</span><span class="p">,</span> <span class="s1">&#39;trending_date&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_title&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="s1">&#39;dislikes&#39;</span><span class="p">,</span> <span class="s1">&#39;ratings_disabled&#39;</span><span class="p">]</span>
+<span class="n">dfYoutube</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/youtube_trending.csv&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">dfYoutube</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2kyS6SvSYSE</td>
+      <td>2017-11-14</td>
+      <td>CaseyNeistat</td>
+      <td>22</td>
+      <td>748374</td>
+      <td>57527</td>
+      <td>2966</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1ZAPwfrtAFY</td>
+      <td>2017-11-14</td>
+      <td>LastWeekTonight</td>
+      <td>24</td>
+      <td>2418783</td>
+      <td>97185</td>
+      <td>6146</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5qpjK5DgCt4</td>
+      <td>2017-11-14</td>
+      <td>Rudy Mancuso</td>
+      <td>23</td>
+      <td>3191434</td>
+      <td>146033</td>
+      <td>5339</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>puqaWrEC7tY</td>
+      <td>2017-11-14</td>
+      <td>Good Mythical Morning</td>
+      <td>24</td>
+      <td>343168</td>
+      <td>10172</td>
+      <td>666</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>d380meD0W0M</td>
+      <td>2017-11-14</td>
+      <td>nigahiga</td>
+      <td>24</td>
+      <td>2095731</td>
+      <td>132235</td>
+      <td>1989</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="data-selection">
+<h4>Data selection<a class="headerlink" href="#data-selection" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">video_id</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       2kyS6SvSYSE
+1       1ZAPwfrtAFY
+2       5qpjK5DgCt4
+3       puqaWrEC7tY
+4       d380meD0W0M
+           ...     
+9876    OVnxBcS5qWo
+9877    ltzy5vRmN8Q
+9878    NEmFS50lsTw
+9879    NZ0ImXT1FZk
+9880    t3z_pdr6z8w
+Name: video_id, Length: 9881, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="p">[</span><span class="s1">&#39;trending_date&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       2017-11-14
+1       2017-11-14
+2       2017-11-14
+3       2017-11-14
+4       2017-11-14
+           ...    
+9876    2018-02-01
+9877    2018-02-01
+9878    2018-02-01
+9879    2018-02-01
+9880    2018-02-01
+Name: trending_date, Length: 9881, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># selecting multiple columns as a new dataframe</span>
+<span class="n">dfYoutube</span><span class="p">[[</span><span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="s1">&#39;dislikes&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>748374</td>
+      <td>57527</td>
+      <td>2966</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2418783</td>
+      <td>97185</td>
+      <td>6146</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3191434</td>
+      <td>146033</td>
+      <td>5339</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>343168</td>
+      <td>10172</td>
+      <td>666</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2095731</td>
+      <td>132235</td>
+      <td>1989</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">iloc</span></code> and <code class="docutils literal notranslate"><span class="pre">loc</span></code> attributes turn a dataframe into a slicable object with 2 dimensions, like Numpy array. While <code class="docutils literal notranslate"><span class="pre">iloc</span></code> uses index, <code class="docutils literal notranslate"><span class="pre">loc</span></code> uses label on slicing. Notice that <code class="docutils literal notranslate"><span class="pre">loc</span></code> does not exclude the endpoint.</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>5qpjK5DgCt4</td>
+      <td>2017-11-14</td>
+      <td>Rudy Mancuso</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>puqaWrEC7tY</td>
+      <td>2017-11-14</td>
+      <td>Good Mythical Morning</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>d380meD0W0M</td>
+      <td>2017-11-14</td>
+      <td>nigahiga</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>gHZ1Qz0KiKM</td>
+      <td>2017-11-14</td>
+      <td>iJustine</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>39idVpFF7NQ</td>
+      <td>2017-11-14</td>
+      <td>Saturday Night Live</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;category_id&#39;</span><span class="p">,</span> <span class="s1">&#39;trending_date&#39;</span><span class="p">]</span>
+<span class="n">dfYoutube</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="n">subset</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>category_id</th>
+      <th>trending_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>22</td>
+      <td>2017-11-14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>24</td>
+      <td>2017-11-14</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>23</td>
+      <td>2017-11-14</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>24</td>
+      <td>2017-11-14</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>24</td>
+      <td>2017-11-14</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>28</td>
+      <td>2017-11-14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="filtering">
+<h4>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="p">[</span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">views</span> <span class="o">&gt;=</span> <span class="mf">100e6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2558</th>
+      <td>TyHvyGVs42U</td>
+      <td>2017-11-26</td>
+      <td>LuisFonsiVEVO</td>
+      <td>10</td>
+      <td>102012605</td>
+      <td>2376636</td>
+      <td>117196</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5174</th>
+      <td>FlsCjmMhFmw</td>
+      <td>2017-12-10</td>
+      <td>YouTube Spotlight</td>
+      <td>24</td>
+      <td>100911567</td>
+      <td>2656659</td>
+      <td>1353647</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5386</th>
+      <td>FlsCjmMhFmw</td>
+      <td>2017-12-11</td>
+      <td>YouTube Spotlight</td>
+      <td>24</td>
+      <td>113874632</td>
+      <td>2811215</td>
+      <td>1470383</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5629</th>
+      <td>FlsCjmMhFmw</td>
+      <td>2017-12-12</td>
+      <td>YouTube Spotlight</td>
+      <td>24</td>
+      <td>125432237</td>
+      <td>2912702</td>
+      <td>1545015</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5860</th>
+      <td>FlsCjmMhFmw</td>
+      <td>2017-12-13</td>
+      <td>YouTube Spotlight</td>
+      <td>24</td>
+      <td>137843120</td>
+      <td>3014471</td>
+      <td>1602383</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6103</th>
+      <td>FlsCjmMhFmw</td>
+      <td>2017-12-14</td>
+      <td>YouTube Spotlight</td>
+      <td>24</td>
+      <td>149376127</td>
+      <td>3093544</td>
+      <td>1643059</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="p">[</span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">channel_title</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;VEVO&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>32</th>
+      <td>n1WpP7iowLc</td>
+      <td>2017-11-14</td>
+      <td>EminemVEVO</td>
+      <td>10</td>
+      <td>17158531</td>
+      <td>787419</td>
+      <td>43420</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>PaJCFHXcWmM</td>
+      <td>2017-11-14</td>
+      <td>U2VEVO</td>
+      <td>10</td>
+      <td>60506</td>
+      <td>5389</td>
+      <td>106</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>9t9u_yPEidY</td>
+      <td>2017-11-14</td>
+      <td>JenniferLopezVEVO</td>
+      <td>10</td>
+      <td>9548677</td>
+      <td>190083</td>
+      <td>15015</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>ujyTQNNjjDU</td>
+      <td>2017-11-14</td>
+      <td>GEazyMusicVEVO</td>
+      <td>10</td>
+      <td>2642930</td>
+      <td>115795</td>
+      <td>3055</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>lY_0mkYDZDU</td>
+      <td>2017-11-14</td>
+      <td>fosterthepeopleVEVO</td>
+      <td>10</td>
+      <td>303956</td>
+      <td>18603</td>
+      <td>585</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="p">[(</span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">views</span> <span class="o">&gt;=</span> <span class="mf">1e7</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">likes</span> <span class="o">&gt;=</span> <span class="mf">1e5</span><span class="p">)]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>5qpjK5DgCt4</td>
+      <td>2017-11-14</td>
+      <td>Rudy Mancuso</td>
+      <td>23</td>
+      <td>3191434</td>
+      <td>146033</td>
+      <td>5339</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>d380meD0W0M</td>
+      <td>2017-11-14</td>
+      <td>nigahiga</td>
+      <td>24</td>
+      <td>2095731</td>
+      <td>132235</td>
+      <td>1989</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>5E4ZBSInqUU</td>
+      <td>2017-11-14</td>
+      <td>marshmello</td>
+      <td>10</td>
+      <td>687582</td>
+      <td>114188</td>
+      <td>1333</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>n1WpP7iowLc</td>
+      <td>2017-11-14</td>
+      <td>EminemVEVO</td>
+      <td>10</td>
+      <td>17158531</td>
+      <td>787419</td>
+      <td>43420</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>9t9u_yPEidY</td>
+      <td>2017-11-14</td>
+      <td>JenniferLopezVEVO</td>
+      <td>10</td>
+      <td>9548677</td>
+      <td>190083</td>
+      <td>15015</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="sorting">
+<h4>Sorting<a class="headerlink" href="#sorting" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;trending_date&#39;</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>69</th>
+      <td>2Vv-BfVoq4g</td>
+      <td>2017-11-14</td>
+      <td>Ed Sheeran</td>
+      <td>10</td>
+      <td>33523622</td>
+      <td>1634124</td>
+      <td>21082</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>n1WpP7iowLc</td>
+      <td>2017-11-14</td>
+      <td>EminemVEVO</td>
+      <td>10</td>
+      <td>17158531</td>
+      <td>787419</td>
+      <td>43420</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>9wg3v-01yKQ</td>
+      <td>2017-11-14</td>
+      <td>HarryStylesVEVO</td>
+      <td>10</td>
+      <td>9632678</td>
+      <td>810895</td>
+      <td>16139</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>9t9u_yPEidY</td>
+      <td>2017-11-14</td>
+      <td>JenniferLopezVEVO</td>
+      <td>10</td>
+      <td>9548677</td>
+      <td>190083</td>
+      <td>15015</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>Jw1Y-zhQURU</td>
+      <td>2017-11-14</td>
+      <td>John Lewis</td>
+      <td>26</td>
+      <td>7224515</td>
+      <td>55681</td>
+      <td>10247</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="unique-values">
+<h4>Unique values<a class="headerlink" href="#unique-values" title="Permalink to this headline">#</a></h4>
+<p>Unique/distinct values is the basis for many advanced data manipulation techniques.</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfFish</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/us_fishery_trade.csv&#39;</span><span class="p">)</span>
+<span class="n">dfFish</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Product Name</th>
+      <th>Country Name</th>
+      <th>Month number</th>
+      <th>Value</th>
+      <th>Feature</th>
+      <th>Unit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>SABLEFISH FRESH</td>
+      <td>UNITED ARAB EMIRATES</td>
+      <td>1</td>
+      <td>2297</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>SABLEFISH FRESH</td>
+      <td>JAPAN</td>
+      <td>1</td>
+      <td>16025</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>SABLEFISH FRESH</td>
+      <td>JAPAN</td>
+      <td>1</td>
+      <td>63437</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>MONKFISH FRESH</td>
+      <td>CANADA</td>
+      <td>1</td>
+      <td>579</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>MONKFISH FRESH</td>
+      <td>CANADA</td>
+      <td>1</td>
+      <td>7975</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfFish</span><span class="p">[</span><span class="s1">&#39;Product Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;SABLEFISH FRESH&#39;, &#39;MONKFISH FRESH&#39;, &#39;WHITEFISH FRESH&#39;,
+       &#39;WHITEFISH FROZEN&#39;, &#39;MONKFISH FROZEN&#39;, &#39;BUTTERFISH FROZEN&#39;,
+       &#39;SABLEFISH FROZEN&#39;, &#39;SCORPIONFISH (SCORPAENIDAE) FROZEN&#39;,
+       &#39;WHITEFISH FILLET FRESH&#39;, &#39;WOLFFISH FILLET BLOCKS FROZEN &gt; 4.5KG&#39;,
+       &#39;WOLFFISH FILLET FROZEN&#39;, &#39;CRAWFISH FRESHWATER FROZEN&#39;,
+       &#39;CRAWFISH FRESHWATER PEELED&#39;,
+       &#39;SABLEFISH SCALED WHETHER OR NOT DRESS FRESH NOT &gt; 6.8KG&#39;,
+       &#39;WHITEFISH MEAT FROZEN &gt; 6.8KG&#39;, &#39;SABLEFISH FRESH NOT &gt; 6.8KG&#39;,
+       &#39;WHITEFISH MEAT FRESH&#39;,
+       &#39;JELLYFISH (RHOPILEMA SPP.) LIVE/FRESH/FROZEN/DRIED/SALTED/BRINE/SMOKED&#39;,
+       &#39;JELLYFISH PREPARED/PRESERVED&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfFish</span><span class="p">[[</span><span class="s1">&#39;Feature&#39;</span><span class="p">,</span> <span class="s1">&#39;Unit&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Feature</th>
+      <th>Unit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>IMP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>8737</th>
+      <td>EXP Value</td>
+      <td>USD</td>
+    </tr>
+    <tr>
+      <th>8754</th>
+      <td>IMP Value</td>
+      <td>USD</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="data-aggregation">
+<h4>Data aggregation<a class="headerlink" href="#data-aggregation" title="Permalink to this headline">#</a></h4>
+<p>Data aggregation is the process splitting the dataset into groups and applying an aggregate function (such as sum, mean, count) to each group.</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfFish</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Product Name</th>
+      <th>Country Name</th>
+      <th>Month number</th>
+      <th>Value</th>
+      <th>Feature</th>
+      <th>Unit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>SABLEFISH FRESH</td>
+      <td>UNITED ARAB EMIRATES</td>
+      <td>1</td>
+      <td>2297</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>SABLEFISH FRESH</td>
+      <td>JAPAN</td>
+      <td>1</td>
+      <td>16025</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>SABLEFISH FRESH</td>
+      <td>JAPAN</td>
+      <td>1</td>
+      <td>63437</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>MONKFISH FRESH</td>
+      <td>CANADA</td>
+      <td>1</td>
+      <td>579</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2010</td>
+      <td>January</td>
+      <td>MONKFISH FRESH</td>
+      <td>CANADA</td>
+      <td>1</td>
+      <td>7975</td>
+      <td>EXP Quantity</td>
+      <td>kg</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># number of rows</span>
+<span class="n">dfFish</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Product Name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Product Name
+BUTTERFISH FROZEN                                                         1398
+CRAWFISH FRESHWATER FROZEN                                                1032
+CRAWFISH FRESHWATER PEELED                                                1826
+JELLYFISH (RHOPILEMA SPP.) LIVE/FRESH/FROZEN/DRIED/SALTED/BRINE/SMOKED     932
+JELLYFISH PREPARED/PRESERVED                                               920
+MONKFISH FRESH                                                            1816
+MONKFISH FROZEN                                                           1288
+SABLEFISH FRESH                                                            718
+SABLEFISH FRESH NOT &gt; 6.8KG                                                392
+SABLEFISH FROZEN                                                          2978
+SABLEFISH SCALED WHETHER OR NOT DRESS FRESH NOT &gt; 6.8KG                     44
+SCORPIONFISH (SCORPAENIDAE) FROZEN                                        1674
+WHITEFISH FILLET FRESH                                                     360
+WHITEFISH FRESH                                                            938
+WHITEFISH FROZEN                                                           752
+WHITEFISH MEAT FRESH                                                       288
+WHITEFISH MEAT FROZEN &gt; 6.8KG                                               16
+WOLFFISH FILLET BLOCKS FROZEN &gt; 4.5KG                                       34
+WOLFFISH FILLET FROZEN                                                      68
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># number of not null values</span>
+<span class="n">dfFish</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Product Name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Country Name</th>
+      <th>Month number</th>
+      <th>Value</th>
+      <th>Feature</th>
+      <th>Unit</th>
+    </tr>
+    <tr>
+      <th>Product Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>BUTTERFISH FROZEN</th>
+      <td>1398</td>
+      <td>1398</td>
+      <td>1398</td>
+      <td>1398</td>
+      <td>1398</td>
+      <td>1398</td>
+      <td>1398</td>
+    </tr>
+    <tr>
+      <th>CRAWFISH FRESHWATER FROZEN</th>
+      <td>1032</td>
+      <td>1032</td>
+      <td>1032</td>
+      <td>1032</td>
+      <td>1032</td>
+      <td>1032</td>
+      <td>1032</td>
+    </tr>
+    <tr>
+      <th>CRAWFISH FRESHWATER PEELED</th>
+      <td>1826</td>
+      <td>1826</td>
+      <td>1826</td>
+      <td>1826</td>
+      <td>1826</td>
+      <td>1826</td>
+      <td>1826</td>
+    </tr>
+    <tr>
+      <th>JELLYFISH (RHOPILEMA SPP.) LIVE/FRESH/FROZEN/DRIED/SALTED/BRINE/SMOKED</th>
+      <td>932</td>
+      <td>932</td>
+      <td>932</td>
+      <td>932</td>
+      <td>932</td>
+      <td>932</td>
+      <td>932</td>
+    </tr>
+    <tr>
+      <th>JELLYFISH PREPARED/PRESERVED</th>
+      <td>920</td>
+      <td>920</td>
+      <td>920</td>
+      <td>920</td>
+      <td>920</td>
+      <td>920</td>
+      <td>920</td>
+    </tr>
+    <tr>
+      <th>MONKFISH FRESH</th>
+      <td>1816</td>
+      <td>1816</td>
+      <td>1816</td>
+      <td>1816</td>
+      <td>1816</td>
+      <td>1816</td>
+      <td>1816</td>
+    </tr>
+    <tr>
+      <th>MONKFISH FROZEN</th>
+      <td>1288</td>
+      <td>1288</td>
+      <td>1288</td>
+      <td>1288</td>
+      <td>1288</td>
+      <td>1288</td>
+      <td>1288</td>
+    </tr>
+    <tr>
+      <th>SABLEFISH FRESH</th>
+      <td>718</td>
+      <td>718</td>
+      <td>718</td>
+      <td>718</td>
+      <td>718</td>
+      <td>718</td>
+      <td>718</td>
+    </tr>
+    <tr>
+      <th>SABLEFISH FRESH NOT &gt; 6.8KG</th>
+      <td>392</td>
+      <td>392</td>
+      <td>392</td>
+      <td>392</td>
+      <td>392</td>
+      <td>392</td>
+      <td>392</td>
+    </tr>
+    <tr>
+      <th>SABLEFISH FROZEN</th>
+      <td>2978</td>
+      <td>2978</td>
+      <td>2978</td>
+      <td>2978</td>
+      <td>2978</td>
+      <td>2978</td>
+      <td>2978</td>
+    </tr>
+    <tr>
+      <th>SABLEFISH SCALED WHETHER OR NOT DRESS FRESH NOT &gt; 6.8KG</th>
+      <td>44</td>
+      <td>44</td>
+      <td>44</td>
+      <td>44</td>
+      <td>44</td>
+      <td>44</td>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>SCORPIONFISH (SCORPAENIDAE) FROZEN</th>
+      <td>1674</td>
+      <td>1674</td>
+      <td>1674</td>
+      <td>1674</td>
+      <td>1674</td>
+      <td>1674</td>
+      <td>1674</td>
+    </tr>
+    <tr>
+      <th>WHITEFISH FILLET FRESH</th>
+      <td>360</td>
+      <td>360</td>
+      <td>360</td>
+      <td>360</td>
+      <td>360</td>
+      <td>360</td>
+      <td>360</td>
+    </tr>
+    <tr>
+      <th>WHITEFISH FRESH</th>
+      <td>938</td>
+      <td>938</td>
+      <td>938</td>
+      <td>938</td>
+      <td>938</td>
+      <td>938</td>
+      <td>938</td>
+    </tr>
+    <tr>
+      <th>WHITEFISH FROZEN</th>
+      <td>752</td>
+      <td>752</td>
+      <td>752</td>
+      <td>752</td>
+      <td>752</td>
+      <td>752</td>
+      <td>752</td>
+    </tr>
+    <tr>
+      <th>WHITEFISH MEAT FRESH</th>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <th>WHITEFISH MEAT FROZEN &gt; 6.8KG</th>
+      <td>16</td>
+      <td>16</td>
+      <td>16</td>
+      <td>16</td>
+      <td>16</td>
+      <td>16</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>WOLFFISH FILLET BLOCKS FROZEN &gt; 4.5KG</th>
+      <td>34</td>
+      <td>34</td>
+      <td>34</td>
+      <td>34</td>
+      <td>34</td>
+      <td>34</td>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>WOLFFISH FILLET FROZEN</th>
+      <td>68</td>
+      <td>68</td>
+      <td>68</td>
+      <td>68</td>
+      <td>68</td>
+      <td>68</td>
+      <td>68</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># total export value of each product</span>
+<span class="n">dfFish</span><span class="p">[</span><span class="n">dfFish</span><span class="p">[</span><span class="s1">&#39;Feature&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;EXP Value&#39;</span><span class="p">]</span>\
+    <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Product Name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()[[</span><span class="s1">&#39;Value&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Product Name</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BUTTERFISH FROZEN</td>
+      <td>10604660</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CRAWFISH FRESHWATER FROZEN</td>
+      <td>5393263</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>JELLYFISH (RHOPILEMA SPP.) LIVE/FRESH/FROZEN/DRIED/SALTED/BRINE/SMOKED</td>
+      <td>5489508</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>JELLYFISH PREPARED/PRESERVED</td>
+      <td>8198507</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>MONKFISH FRESH</td>
+      <td>32555268</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>MONKFISH FROZEN</td>
+      <td>93921677</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>SABLEFISH FRESH</td>
+      <td>66094664</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>SABLEFISH FROZEN</td>
+      <td>799896744</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>SCORPIONFISH (SCORPAENIDAE) FROZEN</td>
+      <td>73262535</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># total trade each year</span>
+<span class="n">dfFish</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Feature&#39;</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Unit&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Feature</th>
+      <th>Year</th>
+      <th>Unit</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>EXP Quantity</td>
+      <td>2010</td>
+      <td>kg</td>
+      <td>15578318</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>EXP Quantity</td>
+      <td>2011</td>
+      <td>kg</td>
+      <td>28106436</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>EXP Quantity</td>
+      <td>2012</td>
+      <td>kg</td>
+      <td>15054158</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>EXP Quantity</td>
+      <td>2013</td>
+      <td>kg</td>
+      <td>13856966</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>EXP Quantity</td>
+      <td>2014</td>
+      <td>kg</td>
+      <td>19607838</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>EXP Quantity</td>
+      <td>2015</td>
+      <td>kg</td>
+      <td>17477174</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>EXP Quantity</td>
+      <td>2016</td>
+      <td>kg</td>
+      <td>10759863</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>EXP Quantity</td>
+      <td>2017</td>
+      <td>kg</td>
+      <td>12236928</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>EXP Quantity</td>
+      <td>2018</td>
+      <td>kg</td>
+      <td>9972012</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>EXP Quantity</td>
+      <td>2019</td>
+      <td>kg</td>
+      <td>9990474</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>EXP Value</td>
+      <td>2010</td>
+      <td>USD</td>
+      <td>98236554</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>EXP Value</td>
+      <td>2011</td>
+      <td>USD</td>
+      <td>140983487</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>EXP Value</td>
+      <td>2012</td>
+      <td>USD</td>
+      <td>125953602</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>EXP Value</td>
+      <td>2013</td>
+      <td>USD</td>
+      <td>116650050</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>EXP Value</td>
+      <td>2014</td>
+      <td>USD</td>
+      <td>119094346</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>EXP Value</td>
+      <td>2015</td>
+      <td>USD</td>
+      <td>109798243</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>EXP Value</td>
+      <td>2016</td>
+      <td>USD</td>
+      <td>97552829</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>EXP Value</td>
+      <td>2017</td>
+      <td>USD</td>
+      <td>106999739</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>EXP Value</td>
+      <td>2018</td>
+      <td>USD</td>
+      <td>97991428</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>EXP Value</td>
+      <td>2019</td>
+      <td>USD</td>
+      <td>82156548</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>IMP Quantity</td>
+      <td>2010</td>
+      <td>kg</td>
+      <td>14032723</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>IMP Quantity</td>
+      <td>2011</td>
+      <td>kg</td>
+      <td>8011229</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>IMP Quantity</td>
+      <td>2012</td>
+      <td>kg</td>
+      <td>16405503</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>IMP Quantity</td>
+      <td>2013</td>
+      <td>kg</td>
+      <td>15075456</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>IMP Quantity</td>
+      <td>2014</td>
+      <td>kg</td>
+      <td>14610607</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>IMP Quantity</td>
+      <td>2015</td>
+      <td>kg</td>
+      <td>11491688</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>IMP Quantity</td>
+      <td>2016</td>
+      <td>kg</td>
+      <td>15642463</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>IMP Quantity</td>
+      <td>2017</td>
+      <td>kg</td>
+      <td>13913190</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>IMP Quantity</td>
+      <td>2018</td>
+      <td>kg</td>
+      <td>12914589</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>IMP Quantity</td>
+      <td>2019</td>
+      <td>kg</td>
+      <td>12607424</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>IMP Value</td>
+      <td>2010</td>
+      <td>USD</td>
+      <td>104418740</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>IMP Value</td>
+      <td>2011</td>
+      <td>USD</td>
+      <td>44629635</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>IMP Value</td>
+      <td>2012</td>
+      <td>USD</td>
+      <td>123932304</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>IMP Value</td>
+      <td>2013</td>
+      <td>USD</td>
+      <td>120527354</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>IMP Value</td>
+      <td>2014</td>
+      <td>USD</td>
+      <td>115837518</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>IMP Value</td>
+      <td>2015</td>
+      <td>USD</td>
+      <td>93715779</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>IMP Value</td>
+      <td>2016</td>
+      <td>USD</td>
+      <td>108972260</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>IMP Value</td>
+      <td>2017</td>
+      <td>USD</td>
+      <td>98563992</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>IMP Value</td>
+      <td>2018</td>
+      <td>USD</td>
+      <td>129315579</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>IMP Value</td>
+      <td>2019</td>
+      <td>USD</td>
+      <td>80650686</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfFish</span><span class="p">[</span><span class="n">dfFish</span><span class="o">.</span><span class="n">Feature</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)]</span>\
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Feature&#39;</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Month number&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>\
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Feature&#39;</span><span class="p">,</span> <span class="s1">&#39;Month number&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Feature</th>
+      <th>Month number</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>EXP Value</td>
+      <td>1</td>
+      <td>4210348.9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>EXP Value</td>
+      <td>2</td>
+      <td>3185211.9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>EXP Value</td>
+      <td>3</td>
+      <td>3465167.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>EXP Value</td>
+      <td>4</td>
+      <td>8694505.8</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>EXP Value</td>
+      <td>5</td>
+      <td>14953813.7</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>EXP Value</td>
+      <td>6</td>
+      <td>15216529.7</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>EXP Value</td>
+      <td>7</td>
+      <td>12062280.3</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>EXP Value</td>
+      <td>8</td>
+      <td>9735869.9</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>EXP Value</td>
+      <td>9</td>
+      <td>10347673.5</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>EXP Value</td>
+      <td>10</td>
+      <td>10211269.2</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>EXP Value</td>
+      <td>11</td>
+      <td>9573641.9</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>EXP Value</td>
+      <td>12</td>
+      <td>7885370.6</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>IMP Value</td>
+      <td>1</td>
+      <td>6113069.1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>IMP Value</td>
+      <td>2</td>
+      <td>3873446.4</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>IMP Value</td>
+      <td>3</td>
+      <td>4268467.3</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>IMP Value</td>
+      <td>4</td>
+      <td>2933990.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>IMP Value</td>
+      <td>5</td>
+      <td>3245580.7</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>IMP Value</td>
+      <td>6</td>
+      <td>7536133.3</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>IMP Value</td>
+      <td>7</td>
+      <td>15308588.2</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>IMP Value</td>
+      <td>8</td>
+      <td>18397190.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>IMP Value</td>
+      <td>9</td>
+      <td>15130274.2</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>IMP Value</td>
+      <td>10</td>
+      <td>10958879.7</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>IMP Value</td>
+      <td>11</td>
+      <td>7294507.2</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>IMP Value</td>
+      <td>12</td>
+      <td>6996258.6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># apply multiple aggregate functions at once</span>
+<span class="n">dfFish</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Product Name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="nb">sum</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">])[[</span><span class="s1">&#39;Value&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Product Name</th>
+      <th colspan="3" halign="left">Value</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th>sum</th>
+      <th>mean</th>
+      <th>size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BUTTERFISH FROZEN</td>
+      <td>60432604</td>
+      <td>43,227.90</td>
+      <td>1398</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CRAWFISH FRESHWATER FROZEN</td>
+      <td>136660222</td>
+      <td>132,422.70</td>
+      <td>1032</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CRAWFISH FRESHWATER PEELED</td>
+      <td>677768550</td>
+      <td>371,176.64</td>
+      <td>1826</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>JELLYFISH (RHOPILEMA SPP.) LIVE/FRESH/FROZEN/DRIED/SALTED/BRINE/SMOKED</td>
+      <td>28905543</td>
+      <td>31,014.53</td>
+      <td>932</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>JELLYFISH PREPARED/PRESERVED</td>
+      <td>43337180</td>
+      <td>47,105.63</td>
+      <td>920</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>MONKFISH FRESH</td>
+      <td>38634548</td>
+      <td>21,274.53</td>
+      <td>1816</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>MONKFISH FROZEN</td>
+      <td>120627952</td>
+      <td>93,655.24</td>
+      <td>1288</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>SABLEFISH FRESH</td>
+      <td>84580465</td>
+      <td>117,800.09</td>
+      <td>718</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>SABLEFISH FRESH NOT &gt; 6.8KG</td>
+      <td>5882279</td>
+      <td>15,005.81</td>
+      <td>392</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>SABLEFISH FROZEN</td>
+      <td>895572564</td>
+      <td>300,729.54</td>
+      <td>2978</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>SABLEFISH SCALED WHETHER OR NOT DRESS FRESH NOT &gt; 6.8KG</td>
+      <td>316166</td>
+      <td>7,185.59</td>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>SCORPIONFISH (SCORPAENIDAE) FROZEN</td>
+      <td>110342888</td>
+      <td>65,915.70</td>
+      <td>1674</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>WHITEFISH FILLET FRESH</td>
+      <td>22307013</td>
+      <td>61,963.93</td>
+      <td>360</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>WHITEFISH FRESH</td>
+      <td>115985398</td>
+      <td>123,651.81</td>
+      <td>938</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>WHITEFISH FROZEN</td>
+      <td>39689306</td>
+      <td>52,778.33</td>
+      <td>752</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>WHITEFISH MEAT FRESH</td>
+      <td>18866787</td>
+      <td>65,509.68</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>WHITEFISH MEAT FROZEN &gt; 6.8KG</td>
+      <td>321536</td>
+      <td>20,096.00</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>WOLFFISH FILLET BLOCKS FROZEN &gt; 4.5KG</td>
+      <td>1718291</td>
+      <td>50,537.97</td>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>WOLFFISH FILLET FROZEN</td>
+      <td>1376420</td>
+      <td>20,241.47</td>
+      <td>68</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter-03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="numpy-arrays.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Numpy: Arrays</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="pandas-data-cleaning.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pandas: Data Cleaning</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

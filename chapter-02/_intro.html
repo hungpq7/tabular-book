@@ -53,7 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Numpy: Arrays" href="numpy-arrays.html" />
+    <link rel="next" title="Numpy: Linear Algebra" href="numpy-linear-algebra.html" />
     <link rel="prev" title="Selenium: Web Scraping" href="../chapter-01/selenium-web-scraping.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -170,11 +170,6 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="numpy-arrays.html">
-     Numpy: Arrays
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="numpy-linear-algebra.html">
      Numpy: Linear Algebra
     </a>
@@ -202,9 +197,9 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../chapter-04/_intro.html">
+  <a class="reference internal" href="../chapter-03/_intro.html">
    <b>
-    4. Data Visualization
+    3. Data Manipulation
    </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
@@ -214,21 +209,36 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-04/matplotlib-graph-construction.html">
-     Matplotlib: Graph Construction
+    <a class="reference internal" href="../chapter-03/numpy-arrays.html">
+     Numpy: Arrays
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-04/plotly-interactive-visualization.html">
-     Plotly: Interactive Visualization
+    <a class="reference internal" href="../chapter-03/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../chapter-06/_intro.html">
+  <a class="reference internal" href="../chapter-04/_intro.html">
    <b>
-    6. Tabular Learning
+    4. Big Data
    </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
@@ -238,16 +248,36 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-06/xgboost-tree-boosting.html">
-     XGBoost: Tree Boosting
+    <a class="reference internal" href="../chapter-04/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../chapter-09/_intro.html">
+  <a class="reference internal" href="../chapter-05/_intro.html">
    <b>
-    9. Deep Learning
+    5. Data Visualization
    </b>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
@@ -257,7 +287,55 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../chapter-09/numpy-gradient-descent.html">
+    <a class="reference internal" href="../chapter-05/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-07/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-10/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
      Python: Gradient Descent
     </a>
    </li>
@@ -414,7 +492,6 @@ title="Print to PDF"
 <h1><b>2. Mathematics</b><a class="headerlink" href="#b-2-mathematics-b" title="Permalink to this headline">#</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="numpy-arrays.html">Numpy: Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpy-linear-algebra.html">Numpy: Linear Algebra</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sympy-calculus.html">Sympy: Calculus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpy-probability.html">Numpy: Probability</a></li>
@@ -458,10 +535,10 @@ title="Print to PDF"
             <p class="prev-next-title">Selenium: Web Scraping</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="numpy-arrays.html" title="next page">
+    <a class='right-next' id="next-link" href="numpy-linear-algebra.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Numpy: Arrays</p>
+        <p class="prev-next-title">Numpy: Linear Algebra</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

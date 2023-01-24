@@ -1,0 +1,4649 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Pandas: Data Cleaning</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pandas: Data Transformation" href="pandas-data-transformation.html" />
+    <link rel="prev" title="Pandas: Data Exploratory" href="pandas-data-exploratory.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-01/_intro.html">
+   <b>
+    1. Python Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     Numpy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     Sympy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-probability.html">
+     Numpy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-statistics.html">
+     Numpy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-04/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-05/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-07/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-10/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/chapter-03/pandas-data-cleaning.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/chapter-03/pandas-data-cleaning.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter-03/pandas-data-cleaning.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#methodology">
+   1. Methodology
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-quality">
+     1.1. Data quality
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-workflow">
+     1.2. The workflow
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-data-cleaning">
+   2. Basic data cleaning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#common-techniques">
+     2.1. Common techniques
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#selecting-columns">
+       Selecting columns
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#renaming-columns">
+       Renaming columns
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#correcting-data-types">
+       Correcting data types
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filtering">
+       Filtering
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#text-cleaning">
+     2.2. Text cleaning
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#trimming">
+       Trimming
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#standardization">
+       Standardization
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#padding-numbers">
+       Padding numbers
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#spliting-a-column">
+       Spliting a column
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#concatenating-columns">
+       Concatenating columns
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#low-quality-data">
+   3. Low quality data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#handling-missing-data">
+     3.1. Handling missing data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#columns-removal">
+       Columns removal
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rows-removal">
+       Rows removal
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filling">
+       Filling
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#imputing">
+       Imputing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#handling-duplicated-values">
+     3.2. Handling duplicated values
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#manual-removal">
+       Manual removal
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#conditional-removal">
+       Conditional removal
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#aggregating">
+       Aggregating
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Pandas: Data Cleaning</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#methodology">
+   1. Methodology
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-quality">
+     1.1. Data quality
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-workflow">
+     1.2. The workflow
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-data-cleaning">
+   2. Basic data cleaning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#common-techniques">
+     2.1. Common techniques
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#selecting-columns">
+       Selecting columns
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#renaming-columns">
+       Renaming columns
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#correcting-data-types">
+       Correcting data types
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filtering">
+       Filtering
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#text-cleaning">
+     2.2. Text cleaning
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#trimming">
+       Trimming
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#standardization">
+       Standardization
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#padding-numbers">
+       Padding numbers
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#spliting-a-column">
+       Spliting a column
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#concatenating-columns">
+       Concatenating columns
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#low-quality-data">
+   3. Low quality data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#handling-missing-data">
+     3.1. Handling missing data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#columns-removal">
+       Columns removal
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rows-removal">
+       Rows removal
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filling">
+       Filling
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#imputing">
+       Imputing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#handling-duplicated-values">
+     3.2. Handling duplicated values
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#manual-removal">
+       Manual removal
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#conditional-removal">
+       Conditional removal
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#aggregating">
+       Aggregating
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="pandas-data-cleaning">
+<h1>Pandas: Data Cleaning<a class="headerlink" href="#pandas-data-cleaning" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="nt">th</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">td</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">p</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">div</span><span class="p">.</span><span class="nc">highlight</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+th {font-size:12px}
+td {font-size:12px}
+p {font-size:14px}
+div.highlight {font-size:14px}
+</style>
+</div></div>
+</div>
+<section id="methodology">
+<h2>1. Methodology<a class="headerlink" href="#methodology" title="Permalink to this headline">#</a></h2>
+<section id="data-quality">
+<h3>1.1. Data quality<a class="headerlink" href="#data-quality" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Data_cleansing">Clean data</a> needs to pass some quality criteria. They are logical rules or constraints that are based on business knowledge. These constraints fall into the following categories:</p>
+<ul class="simple">
+<li><p>Data-type constraints: Each column must be of a particular data type such as numeric, date or text.</p></li>
+<li><p>Accuracy: Data Scientists have to verify that the data is close to the true values, sometimes by using external sources.</p></li>
+<li><p>Range constraints: Typically, numbers or dates should fall within a certain range.</p></li>
+<li><p>Set-membership constraints: Values of a column must come from a pre-defined set.</p></li>
+<li><p>Pattern constraints: Certain text fields have to match regular expression patterns.</p></li>
+<li><p>Cross-field validation: For example, in a dataset of sales contracts, the delivery date cannot be earlier than the signature date.</p></li>
+<li><p>Uniqueness: A field or a combination of fields must be unique across the dataset. For example, two customers cannot have the same ID.</p></li>
+<li><p>Consistency: For example, a customer is recorded in two different tables with two different addresses.</p></li>
+<li><p>Completeness: Certain columns cannot be empty.</p></li>
+<li><p>Uniformity: Each field can only have one unit of measure such as kg or lb, USD or EUR.</p></li>
+</ul>
+</section>
+<section id="the-workflow">
+<h3>1.2. The workflow<a class="headerlink" href="#the-workflow" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Inspecting. The inspection can be done in the data exploration step. Here are the two most important methods to inspect the dataset:</p>
+<ul>
+<li><p>Data profiling: Calculating summary statistics is really helpful to give a general idea about the quality of the data. Some questions need to be answered are <em>How many values are missing?</em>, <em>Is this field has a constraint with another?</em> and <em>Which data type should this column be of?</em>.</p></li>
+<li><p>Data visualization: Visualization, especially when combined with statistical methods helps answering <em>How the data is distributed?</em> and <em>Which point is an outlier?</em>.</p></li>
+</ul>
+</li>
+<li><p>Cleaning. In this step, all the criteria mentioned above are taken into account. Overall, incorrect data will be either removed, corrected or imputed.</p></li>
+</ul>
+</section>
+</section>
+<section id="basic-data-cleaning">
+<h2>2. Basic data cleaning<a class="headerlink" href="#basic-data-cleaning" title="Permalink to this headline">#</a></h2>
+<section id="common-techniques">
+<h3>2.1. Common techniques<a class="headerlink" href="#common-techniques" title="Permalink to this headline">#</a></h3>
+<section id="selecting-columns">
+<h4>Selecting columns<a class="headerlink" href="#selecting-columns" title="Permalink to this headline">#</a></h4>
+<p>Two approaches: selecting the necessary columns only or removing unnecessary ones.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAqua</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">]),</span>
+    <span class="s1">&#39;month_name&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Jan&#39;</span><span class="p">,</span> <span class="s1">&#39;Jan&#39;</span><span class="p">,</span> <span class="s1">&#39;Jun&#39;</span><span class="p">,</span> <span class="s1">&#39;Jun&#39;</span><span class="p">,</span> <span class="s1">&#39;Jul&#39;</span><span class="p">,</span> <span class="s1">&#39;Jul&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;month_number&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">]),</span>
+    <span class="s1">&#39;commodity&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Fish&#39;</span><span class="p">,</span> <span class="s1">&#39;Shrimp&#39;</span><span class="p">,</span> <span class="s1">&#39;Fish&#39;</span><span class="p">,</span> <span class="s1">&#39;Shrimp&#39;</span><span class="p">,</span> <span class="s1">&#39;Fish&#39;</span><span class="p">,</span> <span class="s1">&#39;Shrimp&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;profit&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">7415</span><span class="p">,</span> <span class="mi">3239</span><span class="p">,</span> <span class="mi">7280</span><span class="p">,</span> <span class="mi">2007</span><span class="p">,</span> <span class="mi">3574</span><span class="p">,</span> <span class="mi">9285</span><span class="p">]),</span>
+    <span class="s1">&#39;company&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">])</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAqua</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month_name</th>
+      <th>month_number</th>
+      <th>commodity</th>
+      <th>profit</th>
+      <th>company</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Fish</td>
+      <td>7415</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Shrimp</td>
+      <td>3239</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Fish</td>
+      <td>7280</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Shrimp</td>
+      <td>2007</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Fish</td>
+      <td>3574</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Shrimp</td>
+      <td>9285</td>
+      <td>Pandas</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAqua</span><span class="p">[[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;month_number&#39;</span><span class="p">,</span> <span class="s1">&#39;commodity&#39;</span><span class="p">,</span> <span class="s1">&#39;profit&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month_number</th>
+      <th>commodity</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>1</td>
+      <td>Fish</td>
+      <td>7415</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>1</td>
+      <td>Shrimp</td>
+      <td>3239</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>6</td>
+      <td>Fish</td>
+      <td>7280</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>6</td>
+      <td>Shrimp</td>
+      <td>2007</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>7</td>
+      <td>Fish</td>
+      <td>3574</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>7</td>
+      <td>Shrimp</td>
+      <td>9285</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAqua</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;month_name&#39;</span><span class="p">,</span> <span class="s1">&#39;company&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month_number</th>
+      <th>commodity</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>1</td>
+      <td>Fish</td>
+      <td>7415</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>1</td>
+      <td>Shrimp</td>
+      <td>3239</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>6</td>
+      <td>Fish</td>
+      <td>7280</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>6</td>
+      <td>Shrimp</td>
+      <td>2007</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>7</td>
+      <td>Fish</td>
+      <td>3574</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>7</td>
+      <td>Shrimp</td>
+      <td>9285</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="renaming-columns">
+<h4>Renaming columns<a class="headerlink" href="#renaming-columns" title="Permalink to this headline">#</a></h4>
+<p>Column names should follow either <code class="docutils literal notranslate"><span class="pre">PascalCase</span></code>, <code class="docutils literal notranslate"><span class="pre">camelCase</span></code> or <code class="docutils literal notranslate"><span class="pre">snake_case</span></code>, but mostly <code class="docutils literal notranslate"><span class="pre">snake_case</span></code>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAqua</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Year&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">]),</span>
+    <span class="s1">&#39;Month name&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Jan&#39;</span><span class="p">,</span> <span class="s1">&#39;Jan&#39;</span><span class="p">,</span> <span class="s1">&#39;Jun&#39;</span><span class="p">,</span> <span class="s1">&#39;Jun&#39;</span><span class="p">,</span> <span class="s1">&#39;Jul&#39;</span><span class="p">,</span> <span class="s1">&#39;Jul&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;Month number&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">]),</span>
+    <span class="s1">&#39;Product name&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Fish&#39;</span><span class="p">,</span> <span class="s1">&#39;Shrimp&#39;</span><span class="p">,</span> <span class="s1">&#39;Fish&#39;</span><span class="p">,</span> <span class="s1">&#39;Shrimp&#39;</span><span class="p">,</span> <span class="s1">&#39;Fish&#39;</span><span class="p">,</span> <span class="s1">&#39;Shrimp&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;Profit&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">7415</span><span class="p">,</span> <span class="mi">3239</span><span class="p">,</span> <span class="mi">7280</span><span class="p">,</span> <span class="mi">2007</span><span class="p">,</span> <span class="mi">3574</span><span class="p">,</span> <span class="mi">9285</span><span class="p">]),</span>
+    <span class="s1">&#39;Company name&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">])</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAqua</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Month name</th>
+      <th>Month number</th>
+      <th>Product name</th>
+      <th>Profit</th>
+      <th>Company name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Fish</td>
+      <td>7415</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Shrimp</td>
+      <td>3239</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Fish</td>
+      <td>7280</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Shrimp</td>
+      <td>2007</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Fish</td>
+      <td>3574</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Shrimp</td>
+      <td>9285</td>
+      <td>Pandas</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># PascalCase</span>
+<span class="n">dfAquaPascal</span> <span class="o">=</span> <span class="n">dfAqua</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">dfAquaPascal</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">dfAqua</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">dfAquaPascal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>MonthName</th>
+      <th>MonthNumber</th>
+      <th>ProductName</th>
+      <th>Profit</th>
+      <th>CompanyName</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Fish</td>
+      <td>7415</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Shrimp</td>
+      <td>3239</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Fish</td>
+      <td>7280</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Shrimp</td>
+      <td>2007</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Fish</td>
+      <td>3574</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Shrimp</td>
+      <td>9285</td>
+      <td>Pandas</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># snake_case</span>
+<span class="n">dfAquaSnake</span> <span class="o">=</span> <span class="n">dfAqua</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">dfAquaSnake</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">dfAqua</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+<span class="n">dfAquaSnake</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month_name</th>
+      <th>month_number</th>
+      <th>product_name</th>
+      <th>profit</th>
+      <th>company_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Fish</td>
+      <td>7415</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Shrimp</td>
+      <td>3239</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Fish</td>
+      <td>7280</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Shrimp</td>
+      <td>2007</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Fish</td>
+      <td>3574</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Shrimp</td>
+      <td>9285</td>
+      <td>Pandas</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">DataFrame.rename()</span></code> method allows renaming specific columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAquaSnake</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;product_name&#39;</span><span class="p">:</span> <span class="s1">&#39;commodity&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;company_name&#39;</span><span class="p">:</span> <span class="s1">&#39;company&#39;</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>month_name</th>
+      <th>month_number</th>
+      <th>commodity</th>
+      <th>profit</th>
+      <th>company</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Fish</td>
+      <td>7415</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>Jan</td>
+      <td>1</td>
+      <td>Shrimp</td>
+      <td>3239</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Fish</td>
+      <td>7280</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Jun</td>
+      <td>6</td>
+      <td>Shrimp</td>
+      <td>2007</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Fish</td>
+      <td>3574</td>
+      <td>Pandas</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>Jul</td>
+      <td>7</td>
+      <td>Shrimp</td>
+      <td>9285</td>
+      <td>Pandas</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="correcting-data-types">
+<h4>Correcting data types<a class="headerlink" href="#correcting-data-types" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAthletes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">2019</span><span class="p">,</span> <span class="mf">2020.</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">],</span>
+    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;20191103&#39;</span><span class="p">,</span> <span class="s1">&#39;20190812&#39;</span><span class="p">,</span> <span class="s1">&#39;20200125&#39;</span><span class="p">,</span> <span class="s1">&#39;20200129&#39;</span><span class="p">,</span> <span class="s1">&#39;20200412&#39;</span><span class="p">,</span> <span class="s1">&#39;20200220&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;145509&#39;</span><span class="p">,</span> <span class="s1">&#39;135433&#39;</span><span class="p">,</span> <span class="s1">&#39;214412&#39;</span><span class="p">,</span> <span class="s1">&#39;124254&#39;</span><span class="p">,</span> <span class="s1">&#39;123349&#39;</span><span class="p">,</span> <span class="s1">&#39;233517&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;medal&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Gold&#39;</span><span class="p">,</span> <span class="s1">&#39;Bronze&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">,</span> <span class="s1">&#39;Bronze&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Wayne&#39;</span><span class="p">,</span> <span class="s1">&#39;Robert&#39;</span><span class="p">,</span> <span class="s1">&#39;Ashley&#39;</span><span class="p">,</span> <span class="s1">&#39;Jamie&#39;</span><span class="p">,</span> <span class="s1">&#39;Jessie&#39;</span><span class="p">,</span> <span class="s1">&#39;Sergio&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;left_handed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAthletes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>date</th>
+      <th>time</th>
+      <th>medal</th>
+      <th>name</th>
+      <th>left_handed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019.0</td>
+      <td>20191103</td>
+      <td>145509</td>
+      <td>Gold</td>
+      <td>Wayne</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019.0</td>
+      <td>20190812</td>
+      <td>135433</td>
+      <td>Bronze</td>
+      <td>Robert</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020.0</td>
+      <td>20200125</td>
+      <td>214412</td>
+      <td>Silver</td>
+      <td>Ashley</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020.0</td>
+      <td>20200129</td>
+      <td>124254</td>
+      <td>Bronze</td>
+      <td>Jamie</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020.0</td>
+      <td>20200412</td>
+      <td>123349</td>
+      <td>Silver</td>
+      <td>Jessie</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020.0</td>
+      <td>20200220</td>
+      <td>233517</td>
+      <td>Silver</td>
+      <td>Sergio</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAthletes</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>year           float64
+date            object
+time            object
+medal           object
+name            object
+left_handed      int64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Simple data types (string or numeric) can easily be corrected using the <code class="docutils literal notranslate"><span class="pre">DataFrame.astype()</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAthletes</span> <span class="o">=</span> <span class="n">dfAthletes</span><span class="o">.</span><span class="n">astype</span><span class="p">({</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s1">&#39;left_handed&#39;</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="p">})</span>
+<span class="n">dfAthletes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>date</th>
+      <th>time</th>
+      <th>medal</th>
+      <th>name</th>
+      <th>left_handed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019</td>
+      <td>20191103</td>
+      <td>145509</td>
+      <td>Gold</td>
+      <td>Wayne</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019</td>
+      <td>20190812</td>
+      <td>135433</td>
+      <td>Bronze</td>
+      <td>Robert</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>20200125</td>
+      <td>214412</td>
+      <td>Silver</td>
+      <td>Ashley</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>20200129</td>
+      <td>124254</td>
+      <td>Bronze</td>
+      <td>Jamie</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>20200412</td>
+      <td>123349</td>
+      <td>Silver</td>
+      <td>Jessie</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>20200220</td>
+      <td>233517</td>
+      <td>Silver</td>
+      <td>Sergio</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>For more complex data types (date or categorical), the corresponding function has to be used.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dfAthletes</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2019-11-03
+1   2019-08-12
+2   2020-01-25
+3   2020-01-29
+4   2020-04-12
+5   2020-02-20
+Name: date, dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dfAthletes</span><span class="o">.</span><span class="n">date</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">dfAthletes</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1"> %H%M%S&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2019-11-03 14:55:09
+1   2019-08-12 13:54:33
+2   2020-01-25 21:44:12
+3   2020-01-29 12:42:54
+4   2020-04-12 12:33:49
+5   2020-02-20 23:35:17
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">dfAthletes</span><span class="o">.</span><span class="n">medal</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Bronze&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">,</span> <span class="s1">&#39;Gold&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Gold&#39;, &#39;Bronze&#39;, &#39;Silver&#39;, &#39;Bronze&#39;, &#39;Silver&#39;, &#39;Silver&#39;]
+Categories (3, object): [&#39;Bronze&#39;, &#39;Silver&#39;, &#39;Gold&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAthletes</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dfAthletes</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">dfAthletes</span><span class="o">.</span><span class="n">medal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">dfAthletes</span><span class="o">.</span><span class="n">medal</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Bronze&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">,</span> <span class="s1">&#39;Gold&#39;</span><span class="p">])</span>
+<span class="n">dfAthletes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>date</th>
+      <th>time</th>
+      <th>medal</th>
+      <th>name</th>
+      <th>left_handed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019</td>
+      <td>2019-11-03</td>
+      <td>145509</td>
+      <td>Gold</td>
+      <td>Wayne</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019</td>
+      <td>2019-08-12</td>
+      <td>135433</td>
+      <td>Bronze</td>
+      <td>Robert</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>2020-01-25</td>
+      <td>214412</td>
+      <td>Silver</td>
+      <td>Ashley</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>2020-01-29</td>
+      <td>124254</td>
+      <td>Bronze</td>
+      <td>Jamie</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>2020-04-12</td>
+      <td>123349</td>
+      <td>Silver</td>
+      <td>Jessie</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>2020-02-20</td>
+      <td>233517</td>
+      <td>Silver</td>
+      <td>Sergio</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAthletes</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;medal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>date</th>
+      <th>time</th>
+      <th>medal</th>
+      <th>name</th>
+      <th>left_handed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2019</td>
+      <td>2019-08-12</td>
+      <td>135433</td>
+      <td>Bronze</td>
+      <td>Robert</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>2020-01-29</td>
+      <td>124254</td>
+      <td>Bronze</td>
+      <td>Jamie</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>2020-01-25</td>
+      <td>214412</td>
+      <td>Silver</td>
+      <td>Ashley</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>2020-04-12</td>
+      <td>123349</td>
+      <td>Silver</td>
+      <td>Jessie</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>2020-02-20</td>
+      <td>233517</td>
+      <td>Silver</td>
+      <td>Sergio</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>2019</td>
+      <td>2019-11-03</td>
+      <td>145509</td>
+      <td>Gold</td>
+      <td>Wayne</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="filtering">
+<h4>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfJob</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;worker&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Wayne&#39;</span><span class="p">,</span> <span class="s1">&#39;Robert&#39;</span><span class="p">,</span> <span class="s1">&#39;Ashley&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jamie&#39;</span><span class="p">,</span> <span class="s1">&#39;Jessie&#39;</span><span class="p">,</span> <span class="s1">&#39;Sergio&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Harry&#39;</span><span class="p">,</span> <span class="s1">&#39;Johnny&#39;</span><span class="p">,</span> <span class="s1">&#39;Aaron&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span>
+    <span class="s1">&#39;job&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Student&#39;</span><span class="p">,</span> <span class="s1">&#39;Data Scientist&#39;</span><span class="p">,</span> <span class="s1">&#39;DATA ANALYST&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data engineer&#39;</span><span class="p">,</span> <span class="s1">&#39;Retired&#39;</span><span class="p">,</span> <span class="s1">&#39;Business Intelligence&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Student&#39;</span><span class="p">,</span> <span class="s1">&#39;Data Analyst&#39;</span><span class="p">,</span> <span class="s1">&#39;AI Engineer&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;years_on_job&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfJob</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>worker</th>
+      <th>age</th>
+      <th>job</th>
+      <th>years_on_job</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Wayne</td>
+      <td>8</td>
+      <td>Student</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Robert</td>
+      <td>37</td>
+      <td>Data Scientist</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Ashley</td>
+      <td>25</td>
+      <td>DATA ANALYST</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Jamie</td>
+      <td>26</td>
+      <td>data engineer</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Jessie</td>
+      <td>80</td>
+      <td>Retired</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Sergio</td>
+      <td>30</td>
+      <td>Business Intelligence</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Harry</td>
+      <td>20</td>
+      <td>Student</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Johnny</td>
+      <td>31</td>
+      <td>Data Analyst</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Aaron</td>
+      <td>28</td>
+      <td>AI Engineer</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In the dataset above, consider only people who are of legal working age (15 to 60) and are working in the data industry. Notice that <code class="docutils literal notranslate"><span class="pre">age</span></code> minus <code class="docutils literal notranslate"><span class="pre">years_on_job</span></code> (which calculates how old is the worker when he/she starts working) cannot be smaller than 15.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfJob</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">dfJob</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">))</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">dfJob</span><span class="o">.</span><span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">dfJob</span><span class="o">.</span><span class="n">age</span> <span class="o">&lt;=</span> <span class="mi">60</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">dfJob</span><span class="o">.</span><span class="n">age</span> <span class="o">-</span> <span class="n">dfJob</span><span class="o">.</span><span class="n">years_on_job</span> <span class="o">&gt;=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>worker</th>
+      <th>age</th>
+      <th>job</th>
+      <th>years_on_job</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Robert</td>
+      <td>37</td>
+      <td>Data Scientist</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Ashley</td>
+      <td>25</td>
+      <td>DATA ANALYST</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Jamie</td>
+      <td>26</td>
+      <td>data engineer</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Johnny</td>
+      <td>31</td>
+      <td>Data Analyst</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="text-cleaning">
+<h3>2.2. Text cleaning<a class="headerlink" href="#text-cleaning" title="Permalink to this headline">#</a></h3>
+<section id="trimming">
+<h4>Trimming<a class="headerlink" href="#trimming" title="Permalink to this headline">#</a></h4>
+<p>Space and newline characters usually appear in text columns, because of user’s habit.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTrade</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="mi">2019</span><span class="p">,</span> <span class="mi">2020</span><span class="p">]),</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
+        <span class="s1">&#39;United</span><span class="se">\n</span><span class="s1">Kingdom  &#39;</span><span class="p">,</span>
+        <span class="s1">&#39;  United</span><span class="se">\n</span><span class="s1">Kingdom&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;United    Kingdom&#39;</span><span class="p">,</span>
+        <span class="s1">&#39; United Kingdom</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;export&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">5466</span><span class="p">,</span> <span class="mi">8558</span><span class="p">,</span> <span class="mi">8435</span><span class="p">,</span> <span class="mi">8435</span><span class="p">]),</span>
+    <span class="s1">&#39;import&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1546</span><span class="p">,</span> <span class="mi">3546</span><span class="p">,</span> <span class="mi">2007</span><span class="p">,</span> <span class="mi">3574</span><span class="p">])</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTrade</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>country</th>
+      <th>export</th>
+      <th>import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2017</td>
+      <td>United\nKingdom</td>
+      <td>5466</td>
+      <td>1546</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018</td>
+      <td>United\nKingdom</td>
+      <td>8558</td>
+      <td>3546</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019</td>
+      <td>United    Kingdom</td>
+      <td>8435</td>
+      <td>2007</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>United Kingdom\n</td>
+      <td>8435</td>
+      <td>3574</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTrade</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;United\nKingdom  &#39;, &#39;  United\nKingdom&#39;, &#39;United    Kingdom&#39;,
+       &#39; United Kingdom\n&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTrade</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    United Kingdom
+1    United Kingdom
+2    United Kingdom
+3    United Kingdom
+Name: country, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTrade</span><span class="o">.</span><span class="n">country</span> <span class="o">=</span> <span class="n">dfTrade</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="n">dfTrade</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;United Kingdom&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="standardization">
+<h4>Standardization<a class="headerlink" href="#standardization" title="Permalink to this headline">#</a></h4>
+<p>The approach is to translate different naming conventions, abbreviations or formats into one unique value.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfShrimp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2020-01-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2020-01-03&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;commodity&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Shrimp, frozen, chem free&#39;</span><span class="p">,</span> <span class="s1">&#39;Shrimp, frz, chemical-free&#39;</span><span class="p">,</span> <span class="s1">&#39;Prawn, frz, chemical-free&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+    <span class="s1">&#39;unit&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;usd/kg&#39;</span><span class="p">,</span> <span class="s1">&#39;USD/KG&#39;</span><span class="p">,</span> <span class="s1">&#39;USD/kg&#39;</span><span class="p">]</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfShrimp</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>commodity</th>
+      <th>price</th>
+      <th>unit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-01-01</td>
+      <td>Shrimp, frozen, chem free</td>
+      <td>10</td>
+      <td>usd/kg</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-01-02</td>
+      <td>Shrimp, frz, chemical-free</td>
+      <td>13</td>
+      <td>USD/KG</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-01-03</td>
+      <td>Prawn, frz, chemical-free</td>
+      <td>14</td>
+      <td>USD/kg</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfShrimp</span><span class="o">.</span><span class="n">commodity</span> <span class="o">=</span> <span class="n">dfShrimp</span><span class="o">.</span><span class="n">commodity</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Prawn&#39;</span><span class="p">,</span> <span class="s1">&#39;Shrimp&#39;</span><span class="p">)</span>
+<span class="n">dfShrimp</span><span class="o">.</span><span class="n">commodity</span> <span class="o">=</span> <span class="n">dfShrimp</span><span class="o">.</span><span class="n">commodity</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;frz&#39;</span><span class="p">,</span> <span class="s1">&#39;frozen&#39;</span><span class="p">)</span>
+<span class="n">dfShrimp</span><span class="o">.</span><span class="n">commodity</span> <span class="o">=</span> <span class="n">dfShrimp</span><span class="o">.</span><span class="n">commodity</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;chem free&#39;</span><span class="p">,</span> <span class="s1">&#39;chemical-free&#39;</span><span class="p">)</span>
+<span class="n">dfShrimp</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">dfShrimp</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;usd&#39;</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">)</span>
+<span class="n">dfShrimp</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">dfShrimp</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;KG&#39;</span><span class="p">,</span> <span class="s1">&#39;kg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfShrimp</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>commodity</th>
+      <th>price</th>
+      <th>unit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-01-01</td>
+      <td>Shrimp, frozen, chemical-free</td>
+      <td>10</td>
+      <td>USD/kg</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-01-02</td>
+      <td>Shrimp, frozen, chemical-free</td>
+      <td>13</td>
+      <td>USD/kg</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-01-03</td>
+      <td>Shrimp, frozen, chemical-free</td>
+      <td>14</td>
+      <td>USD/kg</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="padding-numbers">
+<h4>Padding numbers<a class="headerlink" href="#padding-numbers" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfInfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">423</span><span class="p">,</span> <span class="mi">5464</span><span class="p">],</span>
+    <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">363334444</span><span class="p">,</span> <span class="mi">913334444</span><span class="p">,</span> <span class="mi">123334444</span><span class="p">],</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">,</span> <span class="s1">&#39;Gabriel&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;information&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;England Male&#39;</span><span class="p">,</span> <span class="s1">&#39;Colombia Male&#39;</span><span class="p">,</span> <span class="s1">&#39;France Female&#39;</span><span class="p">]</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfInfo</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>customer_id</th>
+      <th>phone</th>
+      <th>name</th>
+      <th>information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>363334444</td>
+      <td>Jack</td>
+      <td>England Male</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>423</td>
+      <td>913334444</td>
+      <td>James</td>
+      <td>Colombia Male</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5464</td>
+      <td>123334444</td>
+      <td>Gabriel</td>
+      <td>France Female</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfInfo</span> <span class="o">=</span> <span class="n">dfInfo</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">dfInfo</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>customer_id    object
+phone          object
+name           object
+information    object
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfInfo</span><span class="o">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">dfInfo</span><span class="o">.</span><span class="n">customer_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+<span class="n">dfInfo</span><span class="o">.</span><span class="n">phone</span> <span class="o">=</span> <span class="n">dfInfo</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfInfo</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>customer_id</th>
+      <th>phone</th>
+      <th>name</th>
+      <th>information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0003</td>
+      <td>0363334444</td>
+      <td>Jack</td>
+      <td>England Male</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0423</td>
+      <td>0913334444</td>
+      <td>James</td>
+      <td>Colombia Male</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5464</td>
+      <td>0123334444</td>
+      <td>Gabriel</td>
+      <td>France Female</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="spliting-a-column">
+<h4>Spliting a column<a class="headerlink" href="#spliting-a-column" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfInfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">423</span><span class="p">,</span> <span class="mi">5464</span><span class="p">],</span>
+    <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">363334444</span><span class="p">,</span> <span class="mi">913334444</span><span class="p">,</span> <span class="mi">123334444</span><span class="p">],</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">,</span> <span class="s1">&#39;Gabriel&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;information&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;England Male&#39;</span><span class="p">,</span> <span class="s1">&#39;Colombia Male&#39;</span><span class="p">,</span> <span class="s1">&#39;France Female&#39;</span><span class="p">]</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfInfo</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>customer_id</th>
+      <th>phone</th>
+      <th>name</th>
+      <th>information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>363334444</td>
+      <td>Jack</td>
+      <td>England Male</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>423</td>
+      <td>913334444</td>
+      <td>James</td>
+      <td>Colombia Male</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5464</td>
+      <td>123334444</td>
+      <td>Gabriel</td>
+      <td>France Female</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfInfo</span><span class="p">[</span><span class="s1">&#39;information&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     [England, Male]
+1    [Colombia, Male]
+2    [France, Female]
+Name: information, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># unpacking</span>
+<span class="n">dfInfo</span><span class="p">[</span><span class="s1">&#39;nationality&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfInfo</span><span class="p">[</span><span class="s1">&#39;information&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">dfInfo</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfInfo</span><span class="p">[</span><span class="s1">&#39;information&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">dfInfo</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;information&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>customer_id</th>
+      <th>phone</th>
+      <th>name</th>
+      <th>nationality</th>
+      <th>gender</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>363334444</td>
+      <td>Jack</td>
+      <td>England</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>423</td>
+      <td>913334444</td>
+      <td>James</td>
+      <td>Colombia</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5464</td>
+      <td>123334444</td>
+      <td>Gabriel</td>
+      <td>France</td>
+      <td>Female</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="concatenating-columns">
+<h4>Concatenating columns<a class="headerlink" href="#concatenating-columns" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfFootball</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Wayne&#39;</span><span class="p">,</span> <span class="s1">&#39;Cristiano&#39;</span><span class="p">,</span> <span class="s1">&#39;Lionel&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Rooney&#39;</span><span class="p">,</span> <span class="s1">&#39;Ronaldo&#39;</span><span class="p">,</span> <span class="s1">&#39;Messi&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Second Striker&#39;</span><span class="p">,</span> <span class="s1">&#39;Left Winger&#39;</span><span class="p">,</span> <span class="s1">&#39;Right Winger&#39;</span><span class="p">]</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfFootball</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>position</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Wayne</td>
+      <td>Rooney</td>
+      <td>Second Striker</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cristiano</td>
+      <td>Ronaldo</td>
+      <td>Left Winger</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lionel</td>
+      <td>Messi</td>
+      <td>Right Winger</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfFootball</span><span class="p">[</span><span class="s1">&#39;player&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfFootball</span><span class="o">.</span><span class="n">first_name</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">dfFootball</span><span class="o">.</span><span class="n">last_name</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfFootball</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>position</th>
+      <th>player</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Wayne</td>
+      <td>Rooney</td>
+      <td>Second Striker</td>
+      <td>Wayne Rooney</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cristiano</td>
+      <td>Ronaldo</td>
+      <td>Left Winger</td>
+      <td>Cristiano Ronaldo</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lionel</td>
+      <td>Messi</td>
+      <td>Right Winger</td>
+      <td>Lionel Messi</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="low-quality-data">
+<h2>3. Low quality data<a class="headerlink" href="#low-quality-data" title="Permalink to this headline">#</a></h2>
+<section id="handling-missing-data">
+<h3>3.1. Handling missing data<a class="headerlink" href="#handling-missing-data" title="Permalink to this headline">#</a></h3>
+<p>There are three reasons that cause missing data, illustrated in the example below. This table records the IQ score of 9 people at different ages, and we assume there are 3 missing values caused by each reason.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>Age</p></th>
+<th class="text-align:center head"><p>IQ</p></th>
+<th class="text-align:center head"><p>MCAR</p></th>
+<th class="text-align:center head"><p>MAR</p></th>
+<th class="text-align:center head"><p>MNAR</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><strong>20</strong></p></td>
+<td class="text-align:center"><p><strong>120</strong></p></td>
+<td class="text-align:center"><p>120</p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p>120</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><strong>22</strong></p></td>
+<td class="text-align:center"><p><strong>112</strong></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p>112</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p><strong>24</strong></p></td>
+<td class="text-align:center"><p><strong>127</strong></p></td>
+<td class="text-align:center"><p>127</p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p>127</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><strong>29</strong></p></td>
+<td class="text-align:center"><p><strong>97</strong></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p>97</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p><strong>30</strong></p></td>
+<td class="text-align:center"><p><strong>103</strong></p></td>
+<td class="text-align:center"><p>103</p></td>
+<td class="text-align:center"><p>103</p></td>
+<td class="text-align:center"><p>103</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><strong>40</strong></p></td>
+<td class="text-align:center"><p><strong>95</strong></p></td>
+<td class="text-align:center"><p>95</p></td>
+<td class="text-align:center"><p>95</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p><strong>45</strong></p></td>
+<td class="text-align:center"><p><strong>141</strong></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p>141</p></td>
+<td class="text-align:center"><p>141</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><strong>47</strong></p></td>
+<td class="text-align:center"><p><strong>92</strong></p></td>
+<td class="text-align:center"><p>92</p></td>
+<td class="text-align:center"><p>92</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p><strong>52</strong></p></td>
+<td class="text-align:center"><p><strong>115</strong></p></td>
+<td class="text-align:center"><p>115</p></td>
+<td class="text-align:center"><p>115</p></td>
+<td class="text-align:center"><p>115</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="f0641b1e-891b-4838-ab26-536156820552" name="aa10dfce-a86a-4d59-9591-cd57ca522523" type="radio">
+</input><label class="sd-tab-label" for="f0641b1e-891b-4838-ab26-536156820552">
+MCAR</label><div class="sd-tab-content docutils">
+<p>MCAR (Missing Completely At Random): The name says it all, there’s no actual reason behind the missing values. This type of missing does not lead to bias, therefore <em>deletion</em> and <em>imputation</em> are both suitable solutions.</p>
+</div>
+<input id="bac5b772-bad4-43ed-ad13-743b956d4b95" name="aa10dfce-a86a-4d59-9591-cd57ca522523" type="radio">
+</input><label class="sd-tab-label" for="bac5b772-bad4-43ed-ad13-743b956d4b95">
+MAR</label><div class="sd-tab-content docutils">
+<p>MAR (Missing At Random): The missing values in a feature relate to another feature. In the example above, people under 25 years old miss their IQ score. Deleting these records causes bias, making <em>imputation</em> the best choice.</p>
+</div>
+<input id="a06acb71-18cf-431c-9e90-e26142b6901e" name="aa10dfce-a86a-4d59-9591-cd57ca522523" type="radio">
+</input><label class="sd-tab-label" for="a06acb71-18cf-431c-9e90-e26142b6901e">
+MAR</label><div class="sd-tab-content docutils">
+<p>MNAR (Missing Not At Random): Assume people with IQ score of 100 or less tend to refuse to answer the survey. There is no way missing data can be inferred only by looking at collected data. Either <em>deletion</em> or <em>imputation</em> makes data biased, and Data Scientists may not even realize if they are facing a MNAR case.</p>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># COVID-19 data, complete data</span>
+<span class="n">country</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;South Africa&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;Peru&#39;</span><span class="p">,</span> <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Chile&#39;</span><span class="p">,</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span> <span class="s1">&#39;Italy&#39;</span><span class="p">]</span>
+<span class="n">cases</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4169991</span><span class="p">,</span> <span class="mi">2289951</span><span class="p">,</span> <span class="mi">1288130</span><span class="p">,</span> <span class="mi">795038</span><span class="p">,</span> <span class="mi">408052</span><span class="p">,</span> <span class="mi">371096</span><span class="p">,</span> <span class="mi">370712</span><span class="p">,</span> <span class="mi">338759</span><span class="p">,</span> <span class="mi">284034</span><span class="p">,</span> <span class="mi">245338</span><span class="p">]</span>
+<span class="n">deaths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">147333</span><span class="p">,</span> <span class="mi">84207</span><span class="p">,</span> <span class="mi">30645</span><span class="p">,</span> <span class="mi">12892</span><span class="p">,</span> <span class="mi">6093</span><span class="p">,</span> <span class="mi">17645</span><span class="p">,</span> <span class="mi">41908</span><span class="p">,</span> <span class="mi">8838</span><span class="p">,</span> <span class="mi">15074</span><span class="p">,</span> <span class="mi">35029</span><span class="p">]</span>
+<span class="n">recovered</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1979617</span><span class="p">,</span> <span class="mi">1570237</span><span class="p">,</span> <span class="mi">817593</span><span class="p">,</span> <span class="mi">580330</span><span class="p">,</span> <span class="mi">236260</span><span class="p">,</span> <span class="mi">255945</span><span class="p">,</span> <span class="mi">236209</span><span class="p">,</span> <span class="mi">311431</span><span class="p">,</span> <span class="mi">247230</span><span class="p">,</span> <span class="mi">197842</span><span class="p">]</span>
+<span class="n">area</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;North America&#39;</span><span class="p">,</span> <span class="s1">&#39;South America&#39;</span><span class="p">,</span> <span class="s1">&#39;Asia&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe&#39;</span><span class="p">,</span> <span class="s1">&#39;Africa&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;South America&#39;</span><span class="p">,</span> <span class="s1">&#39;North America&#39;</span><span class="p">,</span> <span class="s1">&#39;South America&#39;</span><span class="p">,</span> <span class="s1">&#39;Asia&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
+    <span class="s1">&#39;cases&#39;</span><span class="p">:</span> <span class="n">cases</span><span class="p">,</span>
+    <span class="s1">&#39;deaths&#39;</span><span class="p">:</span> <span class="n">deaths</span><span class="p">,</span>
+    <span class="s1">&#39;recovered&#39;</span><span class="p">:</span> <span class="n">recovered</span><span class="p">,</span>
+    <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="n">area</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>cases</th>
+      <th>deaths</th>
+      <th>recovered</th>
+      <th>area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>USA</td>
+      <td>4169991</td>
+      <td>147333</td>
+      <td>1979617</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brazil</td>
+      <td>2289951</td>
+      <td>84207</td>
+      <td>1570237</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>India</td>
+      <td>1288130</td>
+      <td>30645</td>
+      <td>817593</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Russia</td>
+      <td>795038</td>
+      <td>12892</td>
+      <td>580330</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Africa</td>
+      <td>408052</td>
+      <td>6093</td>
+      <td>236260</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Peru</td>
+      <td>371096</td>
+      <td>17645</td>
+      <td>255945</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mexico</td>
+      <td>370712</td>
+      <td>41908</td>
+      <td>236209</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Chile</td>
+      <td>338759</td>
+      <td>8838</td>
+      <td>311431</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Iran</td>
+      <td>284034</td>
+      <td>15074</td>
+      <td>247230</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Italy</td>
+      <td>245338</td>
+      <td>35029</td>
+      <td>197842</td>
+      <td>Europe</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="columns-removal">
+<h4>Columns removal<a class="headerlink" href="#columns-removal" title="Permalink to this headline">#</a></h4>
+<p>A column having more than 50% of missing data can be dropped.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;South Africa&#39;</span><span class="p">,</span> <span class="s1">&#39;Peru&#39;</span><span class="p">,</span> <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Chile&#39;</span><span class="p">,</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span> <span class="s1">&#39;Italy&#39;</span><span class="p">]</span>
+<span class="n">cases</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4169991</span><span class="p">,</span> <span class="mi">2289951</span><span class="p">,</span> <span class="mi">1288130</span><span class="p">,</span> <span class="mi">795038</span><span class="p">,</span> <span class="mi">408052</span><span class="p">,</span> <span class="mi">371096</span><span class="p">,</span> <span class="mi">370712</span><span class="p">,</span> <span class="mi">338759</span><span class="p">,</span> <span class="mi">284034</span><span class="p">,</span> <span class="mi">245338</span><span class="p">]</span>
+<span class="n">deaths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">147333</span><span class="p">,</span> <span class="mi">84207</span><span class="p">,</span> <span class="mi">30645</span><span class="p">,</span> <span class="mi">12892</span><span class="p">,</span> <span class="mi">6093</span><span class="p">,</span> <span class="mi">17645</span><span class="p">,</span> <span class="mi">41908</span><span class="p">,</span> <span class="mi">8838</span><span class="p">,</span> <span class="mi">15074</span><span class="p">,</span> <span class="mi">35029</span><span class="p">]</span>
+<span class="n">recovered</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1979617</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">580330</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">236209</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">247230</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+
+<span class="n">dfCovid</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
+    <span class="s1">&#39;cases&#39;</span><span class="p">:</span> <span class="n">cases</span><span class="p">,</span>
+    <span class="s1">&#39;deaths&#39;</span><span class="p">:</span> <span class="n">deaths</span><span class="p">,</span>
+    <span class="s1">&#39;recovered&#39;</span><span class="p">:</span> <span class="n">recovered</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCovid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>cases</th>
+      <th>deaths</th>
+      <th>recovered</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>USA</td>
+      <td>4169991</td>
+      <td>147333</td>
+      <td>1979617.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brazil</td>
+      <td>2289951</td>
+      <td>84207</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>India</td>
+      <td>1288130</td>
+      <td>30645</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Russia</td>
+      <td>795038</td>
+      <td>12892</td>
+      <td>580330.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Africa</td>
+      <td>408052</td>
+      <td>6093</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Peru</td>
+      <td>371096</td>
+      <td>17645</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mexico</td>
+      <td>370712</td>
+      <td>41908</td>
+      <td>236209.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Chile</td>
+      <td>338759</td>
+      <td>8838</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Iran</td>
+      <td>284034</td>
+      <td>15074</td>
+      <td>247230.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Italy</td>
+      <td>245338</td>
+      <td>35029</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCovid</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.0%}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>country       0%
+cases         0%
+deaths        0%
+recovered    60%
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCovid</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;recovered&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>cases</th>
+      <th>deaths</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>USA</td>
+      <td>4169991</td>
+      <td>147333</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brazil</td>
+      <td>2289951</td>
+      <td>84207</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>India</td>
+      <td>1288130</td>
+      <td>30645</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Russia</td>
+      <td>795038</td>
+      <td>12892</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Africa</td>
+      <td>408052</td>
+      <td>6093</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Peru</td>
+      <td>371096</td>
+      <td>17645</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mexico</td>
+      <td>370712</td>
+      <td>41908</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Chile</td>
+      <td>338759</td>
+      <td>8838</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Iran</td>
+      <td>284034</td>
+      <td>15074</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Italy</td>
+      <td>245338</td>
+      <td>35029</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="rows-removal">
+<h4>Rows removal<a class="headerlink" href="#rows-removal" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;South Africa&#39;</span><span class="p">,</span> <span class="s1">&#39;Peru&#39;</span><span class="p">,</span> <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Chile&#39;</span><span class="p">,</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span> <span class="s1">&#39;Italy&#39;</span><span class="p">]</span>
+<span class="n">cases</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4169991</span><span class="p">,</span> <span class="mi">2289951</span><span class="p">,</span> <span class="mi">1288130</span><span class="p">,</span> <span class="mi">795038</span><span class="p">,</span> <span class="mi">408052</span><span class="p">,</span> <span class="mi">371096</span><span class="p">,</span> <span class="mi">370712</span><span class="p">,</span> <span class="mi">338759</span><span class="p">,</span> <span class="mi">284034</span><span class="p">,</span> <span class="mi">245338</span><span class="p">]</span>
+<span class="n">deaths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">147333</span><span class="p">,</span> <span class="mi">84207</span><span class="p">,</span> <span class="mi">30645</span><span class="p">,</span> <span class="mi">12892</span><span class="p">,</span> <span class="mi">6093</span><span class="p">,</span> <span class="mi">17645</span><span class="p">,</span> <span class="mi">41908</span><span class="p">,</span> <span class="mi">8838</span><span class="p">,</span> <span class="mi">15074</span><span class="p">,</span> <span class="mi">35029</span><span class="p">]</span>
+<span class="n">recovered</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1979617</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">817593</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">236260</span><span class="p">,</span> <span class="mi">255945</span><span class="p">,</span> <span class="mi">236209</span><span class="p">,</span> <span class="mi">311431</span><span class="p">,</span> <span class="mi">247230</span><span class="p">,</span> <span class="mi">197842</span><span class="p">]</span>
+
+<span class="n">dfCovid</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
+    <span class="s1">&#39;cases&#39;</span><span class="p">:</span> <span class="n">cases</span><span class="p">,</span>
+    <span class="s1">&#39;deaths&#39;</span><span class="p">:</span> <span class="n">deaths</span><span class="p">,</span>
+    <span class="s1">&#39;recovered&#39;</span><span class="p">:</span> <span class="n">recovered</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCovid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>cases</th>
+      <th>deaths</th>
+      <th>recovered</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>USA</td>
+      <td>4169991</td>
+      <td>147333</td>
+      <td>1979617.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brazil</td>
+      <td>2289951</td>
+      <td>84207</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>India</td>
+      <td>1288130</td>
+      <td>30645</td>
+      <td>817593.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Russia</td>
+      <td>795038</td>
+      <td>12892</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Africa</td>
+      <td>408052</td>
+      <td>6093</td>
+      <td>236260.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Peru</td>
+      <td>371096</td>
+      <td>17645</td>
+      <td>255945.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mexico</td>
+      <td>370712</td>
+      <td>41908</td>
+      <td>236209.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Chile</td>
+      <td>338759</td>
+      <td>8838</td>
+      <td>311431.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Iran</td>
+      <td>284034</td>
+      <td>15074</td>
+      <td>247230.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Italy</td>
+      <td>245338</td>
+      <td>35029</td>
+      <td>197842.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCovid</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;recovered&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>cases</th>
+      <th>deaths</th>
+      <th>recovered</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>USA</td>
+      <td>4169991</td>
+      <td>147333</td>
+      <td>1979617.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>India</td>
+      <td>1288130</td>
+      <td>30645</td>
+      <td>817593.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Africa</td>
+      <td>408052</td>
+      <td>6093</td>
+      <td>236260.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Peru</td>
+      <td>371096</td>
+      <td>17645</td>
+      <td>255945.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mexico</td>
+      <td>370712</td>
+      <td>41908</td>
+      <td>236209.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Chile</td>
+      <td>338759</td>
+      <td>8838</td>
+      <td>311431.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Iran</td>
+      <td>284034</td>
+      <td>15074</td>
+      <td>247230.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Italy</td>
+      <td>245338</td>
+      <td>35029</td>
+      <td>197842.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="filling">
+<h4>Filling<a class="headerlink" href="#filling" title="Permalink to this headline">#</a></h4>
+<p>Some values may be used to fill missing date are mean, median, mode and zero.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;South Africa&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;Peru&#39;</span><span class="p">,</span> <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Chile&#39;</span><span class="p">,</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span> <span class="s1">&#39;Italy&#39;</span><span class="p">]</span>
+<span class="n">cases</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4169991</span><span class="p">,</span> <span class="mi">2289951</span><span class="p">,</span> <span class="mi">1288130</span><span class="p">,</span> <span class="mi">795038</span><span class="p">,</span> <span class="mi">408052</span><span class="p">,</span> <span class="mi">371096</span><span class="p">,</span> <span class="mi">370712</span><span class="p">,</span> <span class="mi">338759</span><span class="p">,</span> <span class="mi">284034</span><span class="p">,</span> <span class="mi">245338</span><span class="p">]</span>
+<span class="n">deaths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">147333</span><span class="p">,</span> <span class="mi">84207</span><span class="p">,</span> <span class="mi">30645</span><span class="p">,</span> <span class="mi">12892</span><span class="p">,</span> <span class="mi">6093</span><span class="p">,</span> <span class="mi">17645</span><span class="p">,</span> <span class="mi">41908</span><span class="p">,</span> <span class="mi">8838</span><span class="p">,</span> <span class="mi">15074</span><span class="p">,</span> <span class="mi">35029</span><span class="p">]</span>
+<span class="n">recovered</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1979617</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">817593</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">236260</span><span class="p">,</span> <span class="mi">255945</span><span class="p">,</span> <span class="mi">236209</span><span class="p">,</span> <span class="mi">311431</span><span class="p">,</span> <span class="mi">247230</span><span class="p">,</span> <span class="mi">197842</span><span class="p">]</span>
+<span class="n">area</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;North America&#39;</span><span class="p">,</span> <span class="s1">&#39;South America&#39;</span><span class="p">,</span> <span class="s1">&#39;Asia&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Africa&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;South America&#39;</span><span class="p">,</span> <span class="s1">&#39;North America&#39;</span><span class="p">,</span> <span class="s1">&#39;South America&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span>
+
+<span class="n">dfCovid</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
+    <span class="s1">&#39;cases&#39;</span><span class="p">:</span> <span class="n">cases</span><span class="p">,</span>
+    <span class="s1">&#39;deaths&#39;</span><span class="p">:</span> <span class="n">deaths</span><span class="p">,</span>
+    <span class="s1">&#39;recovered&#39;</span><span class="p">:</span> <span class="n">recovered</span><span class="p">,</span>
+    <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="n">area</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCovid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>cases</th>
+      <th>deaths</th>
+      <th>recovered</th>
+      <th>area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>USA</td>
+      <td>4169991</td>
+      <td>147333</td>
+      <td>1979617.0</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brazil</td>
+      <td>2289951</td>
+      <td>84207</td>
+      <td>NaN</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>India</td>
+      <td>1288130</td>
+      <td>30645</td>
+      <td>817593.0</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Russia</td>
+      <td>795038</td>
+      <td>12892</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Africa</td>
+      <td>408052</td>
+      <td>6093</td>
+      <td>236260.0</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Peru</td>
+      <td>371096</td>
+      <td>17645</td>
+      <td>255945.0</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mexico</td>
+      <td>370712</td>
+      <td>41908</td>
+      <td>236209.0</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Chile</td>
+      <td>338759</td>
+      <td>8838</td>
+      <td>311431.0</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Iran</td>
+      <td>284034</td>
+      <td>15074</td>
+      <td>247230.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Italy</td>
+      <td>245338</td>
+      <td>35029</td>
+      <td>197842.0</td>
+      <td>Europe</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">recovered_mean</span> <span class="o">=</span> <span class="n">dfCovid</span><span class="o">.</span><span class="n">recovered</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">recovered_mean</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>535265.875
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">area_mode</span> <span class="o">=</span> <span class="n">dfCovid</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">area_mode</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;South America&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCovid</span><span class="o">.</span><span class="n">recovered</span> <span class="o">=</span> <span class="n">dfCovid</span><span class="o">.</span><span class="n">recovered</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">recovered_mean</span><span class="p">)</span>
+<span class="n">dfCovid</span><span class="o">.</span><span class="n">area</span> <span class="o">=</span> <span class="n">dfCovid</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">area_mode</span><span class="p">)</span>
+<span class="n">dfCovid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>cases</th>
+      <th>deaths</th>
+      <th>recovered</th>
+      <th>area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>USA</td>
+      <td>4169991</td>
+      <td>147333</td>
+      <td>1979617.000</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brazil</td>
+      <td>2289951</td>
+      <td>84207</td>
+      <td>535265.875</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>India</td>
+      <td>1288130</td>
+      <td>30645</td>
+      <td>817593.000</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Russia</td>
+      <td>795038</td>
+      <td>12892</td>
+      <td>535265.875</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Africa</td>
+      <td>408052</td>
+      <td>6093</td>
+      <td>236260.000</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Peru</td>
+      <td>371096</td>
+      <td>17645</td>
+      <td>255945.000</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mexico</td>
+      <td>370712</td>
+      <td>41908</td>
+      <td>236209.000</td>
+      <td>North America</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Chile</td>
+      <td>338759</td>
+      <td>8838</td>
+      <td>311431.000</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Iran</td>
+      <td>284034</td>
+      <td>15074</td>
+      <td>247230.000</td>
+      <td>South America</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Italy</td>
+      <td>245338</td>
+      <td>35029</td>
+      <td>197842.000</td>
+      <td>Europe</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="imputing">
+<h4>Imputing<a class="headerlink" href="#imputing" title="Permalink to this headline">#</a></h4>
+<p>k-NN (k-Nearest Neighbors) is one of the Machine Learning algorithms that can be used in imputing missing values. This algorithm considers <span class="math notranslate nohighlight">\(k\)</span> nearest observations (according to some distance metrics) to predict missing values.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;South Africa&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;Peru&#39;</span><span class="p">,</span> <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Chile&#39;</span><span class="p">,</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span> <span class="s1">&#39;Italy&#39;</span><span class="p">]</span>
+<span class="n">cases</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4169991</span><span class="p">,</span> <span class="mi">2289951</span><span class="p">,</span> <span class="mi">1288130</span><span class="p">,</span> <span class="mi">795038</span><span class="p">,</span> <span class="mi">408052</span><span class="p">,</span> <span class="mi">371096</span><span class="p">,</span> <span class="mi">370712</span><span class="p">,</span> <span class="mi">338759</span><span class="p">,</span> <span class="mi">284034</span><span class="p">,</span> <span class="mi">245338</span><span class="p">]</span>
+<span class="n">deaths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">147333</span><span class="p">,</span> <span class="mi">84207</span><span class="p">,</span> <span class="mi">30645</span><span class="p">,</span> <span class="mi">12892</span><span class="p">,</span> <span class="mi">6093</span><span class="p">,</span> <span class="mi">17645</span><span class="p">,</span> <span class="mi">41908</span><span class="p">,</span> <span class="mi">8838</span><span class="p">,</span> <span class="mi">15074</span><span class="p">,</span> <span class="mi">35029</span><span class="p">]</span>
+<span class="n">recovered</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1979617</span><span class="p">,</span> <span class="mi">1570237</span><span class="p">,</span> <span class="mi">817593</span><span class="p">,</span> <span class="mi">580330</span><span class="p">,</span> <span class="mi">236260</span><span class="p">,</span> <span class="mi">255945</span><span class="p">,</span> <span class="mi">236209</span><span class="p">,</span> <span class="mi">311431</span><span class="p">,</span> <span class="mi">247230</span><span class="p">,</span> <span class="mi">197842</span><span class="p">]</span>
+<span class="n">area</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;America&#39;</span><span class="p">,</span> <span class="s1">&#39;America&#39;</span><span class="p">,</span> <span class="s1">&#39;Asia&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Africa&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;America&#39;</span><span class="p">,</span> <span class="s1">&#39;America&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Asia&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span>
+
+<span class="n">dfCovid</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
+    <span class="s1">&#39;cases&#39;</span><span class="p">:</span> <span class="n">cases</span><span class="p">,</span>
+    <span class="s1">&#39;deaths&#39;</span><span class="p">:</span> <span class="n">deaths</span><span class="p">,</span>
+    <span class="s1">&#39;recovered&#39;</span><span class="p">:</span> <span class="n">recovered</span><span class="p">,</span>
+    <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="n">area</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCovid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>cases</th>
+      <th>deaths</th>
+      <th>recovered</th>
+      <th>area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>USA</td>
+      <td>4169991</td>
+      <td>147333</td>
+      <td>1979617</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brazil</td>
+      <td>2289951</td>
+      <td>84207</td>
+      <td>1570237</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>India</td>
+      <td>1288130</td>
+      <td>30645</td>
+      <td>817593</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Russia</td>
+      <td>795038</td>
+      <td>12892</td>
+      <td>580330</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Africa</td>
+      <td>408052</td>
+      <td>6093</td>
+      <td>236260</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Peru</td>
+      <td>371096</td>
+      <td>17645</td>
+      <td>255945</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mexico</td>
+      <td>370712</td>
+      <td>41908</td>
+      <td>236209</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Chile</td>
+      <td>338759</td>
+      <td>8838</td>
+      <td>311431</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Iran</td>
+      <td>284034</td>
+      <td>15074</td>
+      <td>247230</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Italy</td>
+      <td>245338</td>
+      <td>35029</td>
+      <td>197842</td>
+      <td>Europe</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTrain</span> <span class="o">=</span> <span class="n">dfCovid</span><span class="p">[</span><span class="o">~</span><span class="n">dfCovid</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
+<span class="n">xTrain</span> <span class="o">=</span> <span class="n">dfTrain</span><span class="p">[[</span><span class="s1">&#39;cases&#39;</span><span class="p">,</span> <span class="s1">&#39;deaths&#39;</span><span class="p">,</span> <span class="s1">&#39;recovered&#39;</span><span class="p">]]</span>
+<span class="n">yTrain</span> <span class="o">=</span> <span class="n">dfTrain</span><span class="o">.</span><span class="n">area</span>
+
+<span class="n">dfPredict</span> <span class="o">=</span> <span class="n">dfCovid</span><span class="p">[</span><span class="n">dfCovid</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
+<span class="n">xPred</span> <span class="o">=</span> <span class="n">dfPredict</span><span class="p">[[</span><span class="s1">&#39;cases&#39;</span><span class="p">,</span> <span class="s1">&#39;deaths&#39;</span><span class="p">,</span> <span class="s1">&#39;recovered&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span> <span class="k">as</span> <span class="n">knn</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">knn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s1">&#39;distance&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
+<span class="n">yPred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xPred</span><span class="p">)</span>
+<span class="n">yPred</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;America&#39;, &#39;America&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTrain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dfPredict</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">area</span><span class="o">=</span><span class="n">yPred</span><span class="p">))</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;cases&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>cases</th>
+      <th>deaths</th>
+      <th>recovered</th>
+      <th>area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>Italy</td>
+      <td>245338</td>
+      <td>35029</td>
+      <td>197842</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Iran</td>
+      <td>284034</td>
+      <td>15074</td>
+      <td>247230</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Chile</td>
+      <td>338759</td>
+      <td>8838</td>
+      <td>311431</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mexico</td>
+      <td>370712</td>
+      <td>41908</td>
+      <td>236209</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Peru</td>
+      <td>371096</td>
+      <td>17645</td>
+      <td>255945</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Africa</td>
+      <td>408052</td>
+      <td>6093</td>
+      <td>236260</td>
+      <td>Africa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Russia</td>
+      <td>795038</td>
+      <td>12892</td>
+      <td>580330</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>India</td>
+      <td>1288130</td>
+      <td>30645</td>
+      <td>817593</td>
+      <td>Asia</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brazil</td>
+      <td>2289951</td>
+      <td>84207</td>
+      <td>1570237</td>
+      <td>America</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>USA</td>
+      <td>4169991</td>
+      <td>147333</td>
+      <td>1979617</td>
+      <td>America</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="handling-duplicated-values">
+<h3>3.2. Handling duplicated values<a class="headerlink" href="#handling-duplicated-values" title="Permalink to this headline">#</a></h3>
+<p>Duplicated values are usually caused by unique contraints within a column or between a combination of columns. If duplicated values occur, there can only be no more than 1 true value.</p>
+<p>Depend on the context, there are many strategies to handle duplicated values:</p>
+<ul class="simple">
+<li><p>List and sort all duplicated values, then manually remove incorrect records.</p></li>
+<li><p>Remove duplicated values based on specific criteria, such as keeping the greatest value only.</p></li>
+<li><p>Calculate a value such as sum or mean representing all duplicated records.</p></li>
+</ul>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfReport</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">2019</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2020</span><span class="p">]),</span>
+    <span class="s1">&#39;company&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Numpy&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;Numpy&#39;</span><span class="p">,</span> <span class="s1">&#39;Numpy&#39;</span><span class="p">,</span> <span class="s1">&#39;Pandas&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;sales&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">5466</span><span class="p">,</span> <span class="mi">8558</span><span class="p">,</span> <span class="mi">8435</span><span class="p">,</span> <span class="mi">7280</span><span class="p">,</span> <span class="mi">9285</span><span class="p">,</span> <span class="mi">6650</span><span class="p">]),</span>
+    <span class="s1">&#39;profit&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1546</span><span class="p">,</span> <span class="mi">3546</span><span class="p">,</span> <span class="mi">3574</span><span class="p">,</span> <span class="mi">3352</span><span class="p">,</span> <span class="mi">4678</span><span class="p">,</span> <span class="mi">2007</span><span class="p">])</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfReport</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>company</th>
+      <th>sales</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019</td>
+      <td>Pandas</td>
+      <td>5466</td>
+      <td>1546</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019</td>
+      <td>Numpy</td>
+      <td>8558</td>
+      <td>3546</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>Pandas</td>
+      <td>8435</td>
+      <td>3574</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Numpy</td>
+      <td>7280</td>
+      <td>3352</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>Numpy</td>
+      <td>9285</td>
+      <td>4678</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>Pandas</td>
+      <td>6650</td>
+      <td>2007</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In this example, the combination of <code class="docutils literal notranslate"><span class="pre">year</span></code> and <code class="docutils literal notranslate"><span class="pre">company</span></code> creates a unique constraint: in each year, a company cannot have two values of sales and profit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;company&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="manual-removal">
+<h4>Manual removal<a class="headerlink" href="#manual-removal" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfReport</span><span class="p">[</span><span class="n">dfReport</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>company</th>
+      <th>sales</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Numpy</td>
+      <td>7280</td>
+      <td>3352</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>Numpy</td>
+      <td>9285</td>
+      <td>4678</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>Pandas</td>
+      <td>8435</td>
+      <td>3574</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>Pandas</td>
+      <td>6650</td>
+      <td>2007</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfReport</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>company</th>
+      <th>sales</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019</td>
+      <td>Pandas</td>
+      <td>5466</td>
+      <td>1546</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019</td>
+      <td>Numpy</td>
+      <td>8558</td>
+      <td>3546</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Numpy</td>
+      <td>7280</td>
+      <td>3352</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2020</td>
+      <td>Pandas</td>
+      <td>6650</td>
+      <td>2007</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="conditional-removal">
+<h4>Conditional removal<a class="headerlink" href="#conditional-removal" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># keep the biggest sales values only</span>
+<span class="n">dfReport</span>\
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;company&#39;</span><span class="p">,</span> <span class="s1">&#39;sales&#39;</span><span class="p">])</span>\
+    <span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">subset</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>company</th>
+      <th>sales</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2019</td>
+      <td>Numpy</td>
+      <td>8558</td>
+      <td>3546</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>2019</td>
+      <td>Pandas</td>
+      <td>5466</td>
+      <td>1546</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>Numpy</td>
+      <td>9285</td>
+      <td>4678</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>Pandas</td>
+      <td>8435</td>
+      <td>3574</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="aggregating">
+<h4>Aggregating<a class="headerlink" href="#aggregating" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfReport</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;company&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>company</th>
+      <th>sales</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019</td>
+      <td>Numpy</td>
+      <td>8558</td>
+      <td>3546</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019</td>
+      <td>Pandas</td>
+      <td>5466</td>
+      <td>1546</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>Numpy</td>
+      <td>16565</td>
+      <td>8030</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Pandas</td>
+      <td>15085</td>
+      <td>5581</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter-03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="pandas-data-exploratory.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Pandas: Data Exploratory</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="pandas-data-transformation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pandas: Data Transformation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

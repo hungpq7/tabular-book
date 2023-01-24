@@ -1,0 +1,2472 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Dask: Parallelized Pandas</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Data Visualization" href="../chapter-05/_intro.html" />
+    <link rel="prev" title="PySpark: Data Transformation" href="pyspark-data-transformation.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-01/_intro.html">
+   <b>
+    1. Python Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     Numpy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     Sympy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-probability.html">
+     Numpy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-statistics.html">
+     Numpy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-03/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-05/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-07/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-10/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/chapter-04/dask-parallelized-pandas.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/chapter-04/dask-parallelized-pandas.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter-04/dask-parallelized-pandas.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-array">
+   1. Dask array
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-dataframe">
+   2. Dask dataframe
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-delayed">
+   3. Dask Delayed
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-distributed">
+   4. Dask distributed
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-ml">
+   5. Dask - ML
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#joblib-parallel-backend">
+     5.1. Joblib parallel backend
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dask-ml-functions">
+     5.2. Dask-ML functions
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Dask: Parallelized Pandas</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-array">
+   1. Dask array
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-dataframe">
+   2. Dask dataframe
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-delayed">
+   3. Dask Delayed
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-distributed">
+   4. Dask distributed
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-ml">
+   5. Dask - ML
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#joblib-parallel-backend">
+     5.1. Joblib parallel backend
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dask-ml-functions">
+     5.2. Dask-ML functions
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="dask-parallelized-pandas">
+<h1>Dask: Parallelized Pandas<a class="headerlink" href="#dask-parallelized-pandas" title="Permalink to this headline">#</a></h1>
+<p>Dask is a open-source library that provides advanced parallelization for analytics, especially when we need to work with large data. We are more familier with Spark and Hadoop but they are in Apache ecosystem, thus it not works with python packages like Numpy, Sklearn, Seaborn,… Dask is a better version of combination of Pandas and Spark when we can handle large data in parallelization with Python evironments, it also smaller and lighter weight than spark.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="nt">th</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">td</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">p</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">div</span><span class="p">.</span><span class="nc">highlight</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+th {font-size:12px}
+td {font-size:12px}
+p {font-size:14px}
+div.highlight {font-size:14px}
+</style>
+</div></div>
+</div>
+<section id="dask-array">
+<h2>1. Dask array<a class="headerlink" href="#dask-array" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://tutorial.dask.org/02_array.html">Dask Array</a> uses blocked algorithms to cut the large numpy array into many small pieces, then operate these pieces into grid to optimize memory on the computer. Small pieces which dask separates are called chunk. Controlling the chunk arrangement and choosing chunk size is important to optimize the performance of advanced algorithms. Read more about how to choose chunk size <a class="reference external" href="https://docs.dask.org/en/stable/array-chunks.html">here</a> or we can set <code class="docutils literal notranslate"><span class="pre">chunk_size='auto'</span></code> to automatically choose chunk size</p>
+<p>Almost functions and attributes in numpy have been shown in dask, the different is that the data type in dask is <em>dask.array</em> but after computing, the result will be in <em>numpy.ndarray</em> type. Some functions in numpy are not supported in dask such as np.linalg, sort, tolist and topk</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">dask.array</span> <span class="k">as</span> <span class="nn">da</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">C</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">B</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">C</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;dask.array.core.Array&#39;&gt;
+&lt;class &#39;dask.array.core.Array&#39;&gt;
+&lt;class &#39;dask.array.core.Array&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 48 B </td> <td> 16 B </td></tr>
+    <tr><th> Shape </th><td> (2, 3) </td> <td> (2, 1) </td></tr>
+    <tr><th> Count </th><td> 9 Tasks </td><td> 3 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="130" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="80" x2="120" y2="80" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="80" style="stroke-width:2" />
+  <line x1="40" y1="0" x2="40" y2="80" />
+  <line x1="80" y1="0" x2="80" y2="80" />
+  <line x1="120" y1="0" x2="120" y2="80" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,80.0 0.0,80.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="100.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >3</text>
+  <text x="140.000000" y="40.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,40.000000)">2</text>
+</svg>
+</td>
+</tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.56168493, 0.5442219 , 1.14983332],
+       [1.41595155, 1.07498718, 0.99888115]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="o">.</span><span class="n">visualize</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;order&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/dask-parallelized-pandas_6_0.png" src="../_images/dask-parallelized-pandas_6_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 7.81 kiB </td> <td> 0.98 kiB </td></tr>
+    <tr><th> Shape </th><td> (10, 10, 10) </td> <td> (5, 5, 5) </td></tr>
+    <tr><th> Count </th><td> 8 Tasks </td><td> 8 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="250" height="240" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="10" y1="0" x2="80" y2="70" style="stroke-width:2" />
+  <line x1="10" y1="60" x2="80" y2="130" />
+  <line x1="10" y1="120" x2="80" y2="190" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="10" y1="0" x2="10" y2="120" style="stroke-width:2" />
+  <line x1="45" y1="35" x2="45" y2="155" />
+  <line x1="80" y1="70" x2="80" y2="190" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="10.0,0.0 80.58823529411765,70.58823529411765 80.58823529411765,190.58823529411765 10.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="10" y1="0" x2="130" y2="0" style="stroke-width:2" />
+  <line x1="45" y1="35" x2="165" y2="35" />
+  <line x1="80" y1="70" x2="200" y2="70" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="10" y1="0" x2="80" y2="70" style="stroke-width:2" />
+  <line x1="70" y1="0" x2="140" y2="70" />
+  <line x1="130" y1="0" x2="200" y2="70" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="10.0,0.0 130.0,0.0 200.58823529411765,70.58823529411765 80.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="80" y1="70" x2="200" y2="70" style="stroke-width:2" />
+  <line x1="80" y1="130" x2="200" y2="130" />
+  <line x1="80" y1="190" x2="200" y2="190" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="80" y1="70" x2="80" y2="190" style="stroke-width:2" />
+  <line x1="140" y1="70" x2="140" y2="190" />
+  <line x1="200" y1="70" x2="200" y2="190" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="80.58823529411765,70.58823529411765 200.58823529411765,70.58823529411765 200.58823529411765,190.58823529411765 80.58823529411765,190.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="140.588235" y="210.588235" font-size="1.0rem" font-weight="100" text-anchor="middle" >10</text>
+  <text x="220.588235" y="130.588235" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,220.588235,130.588235)">10</text>
+  <text x="35.294118" y="175.294118" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,35.294118,175.294118)">10</text>
+</svg>
+</td>
+</tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix</span><span class="o">.</span><span class="n">chunksize</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5, 5, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix</span><span class="o">.</span><span class="n">chunks</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((5, 5), (5, 5), (5, 5))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix</span><span class="o">.</span><span class="n">rechunk</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 78.12 kiB </td> <td> 19.53 kiB </td></tr>
+    <tr><th> Shape </th><td> (10, 10, 10, 10) </td> <td> (5, 10, 10, 5) </td></tr>
+    <tr><th> Count </th><td> 20 Tasks </td><td> 4 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="620" height="240" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="38" x2="120" y2="38" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="38" style="stroke-width:2" />
+  <line x1="60" y1="0" x2="60" y2="38" />
+  <line x1="120" y1="0" x2="120" y2="38" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,38.596863036086 0.0,38.596863036086" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="58.596863" font-size="1.0rem" font-weight="100" text-anchor="middle" >10</text>
+  <text x="140.000000" y="19.298432" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,19.298432)">1</text>
+
+
+  <!-- Horizontal lines -->
+  <line x1="190" y1="0" x2="260" y2="70" style="stroke-width:2" />
+  <line x1="190" y1="120" x2="260" y2="190" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="190" y1="0" x2="190" y2="120" style="stroke-width:2" />
+  <line x1="260" y1="70" x2="260" y2="190" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="190.0,0.0 260.5882352941177,70.58823529411765 260.5882352941177,190.58823529411765 190.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="190" y1="0" x2="310" y2="0" style="stroke-width:2" />
+  <line x1="260" y1="70" x2="380" y2="70" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="190" y1="0" x2="260" y2="70" style="stroke-width:2" />
+  <line x1="250" y1="0" x2="320" y2="70" />
+  <line x1="310" y1="0" x2="380" y2="70" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="190.0,0.0 310.0,0.0 380.5882352941177,70.58823529411765 260.5882352941177,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="260" y1="70" x2="380" y2="70" style="stroke-width:2" />
+  <line x1="260" y1="190" x2="380" y2="190" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="260" y1="70" x2="260" y2="190" style="stroke-width:2" />
+  <line x1="320" y1="70" x2="320" y2="190" />
+  <line x1="380" y1="70" x2="380" y2="190" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="260.5882352941177,70.58823529411765 380.5882352941177,70.58823529411765 380.5882352941177,190.58823529411765 260.5882352941177,190.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="320.588235" y="210.588235" font-size="1.0rem" font-weight="100" text-anchor="middle" >10</text>
+  <text x="400.588235" y="130.588235" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,400.588235,130.588235)">10</text>
+  <text x="215.294118" y="175.294118" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,215.294118,175.294118)">10</text>
+</svg>
+</td>
+</tr>
+</table></div></div>
+</div>
+</section>
+<section id="dask-dataframe">
+<h2>2. Dask dataframe<a class="headerlink" href="#dask-dataframe" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://tutorial.dask.org/01_dataframe.html">Dask dataframe</a> has the same operation with dask array which split pandas dataframe into small pieces, a dask dataframe is partitioned row-wise, grouping rows by index value for efficiency. Dask dataframe is commonly used when data size is too large to fit the memory. All dask collections uses lazy evaluation like pyspark, which means Dask constructs the logic (called task graph) of the computation immediately but “evaluates” them when using <code class="docutils literal notranslate"><span class="pre">.compute()</span></code>. This task graph can be viewed using <code class="docutils literal notranslate"><span class="pre">.visualize()</span></code></p>
+<p>There are 2 disadvantages of dask dataframe:</p>
+<ol class="simple">
+<li><p>When it load/read a file, it only load a sample of data so the datatype of each column can be wrong. The solution is increase the size of data sample (in bytes) or config the dtype when read the data.</p></li>
+<li><p>It not cover all propertities in pandas because pandas API is huge, and some functions can not work in parrallel like sorting.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/youtube_trending.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>publish_time</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>comment_count</th>
+      <th>comments_disabled</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2kyS6SvSYSE</td>
+      <td>2017-11-14</td>
+      <td>CaseyNeistat</td>
+      <td>22</td>
+      <td>2017-11-13T17:13:01.000Z</td>
+      <td>748374</td>
+      <td>57527</td>
+      <td>2966</td>
+      <td>15954</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1ZAPwfrtAFY</td>
+      <td>2017-11-14</td>
+      <td>LastWeekTonight</td>
+      <td>24</td>
+      <td>2017-11-13T07:30:00.000Z</td>
+      <td>2418783</td>
+      <td>97185</td>
+      <td>6146</td>
+      <td>12703</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5qpjK5DgCt4</td>
+      <td>2017-11-14</td>
+      <td>Rudy Mancuso</td>
+      <td>23</td>
+      <td>2017-11-12T19:05:24.000Z</td>
+      <td>3191434</td>
+      <td>146033</td>
+      <td>5339</td>
+      <td>8181</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>puqaWrEC7tY</td>
+      <td>2017-11-14</td>
+      <td>Good Mythical Morning</td>
+      <td>24</td>
+      <td>2017-11-13T11:00:04.000Z</td>
+      <td>343168</td>
+      <td>10172</td>
+      <td>666</td>
+      <td>2146</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>d380meD0W0M</td>
+      <td>2017-11-14</td>
+      <td>nigahiga</td>
+      <td>24</td>
+      <td>2017-11-12T18:01:41.000Z</td>
+      <td>2095731</td>
+      <td>132235</td>
+      <td>1989</td>
+      <td>17518</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">urlpath</span><span class="o">=</span><span class="s1">&#39;../data/youtube_trending.csv&#39;</span><span class="p">,</span>
+                 <span class="n">sample</span><span class="o">=</span><span class="mi">500000</span><span class="p">,</span>
+                 <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;video_id&#39;</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
+                       <span class="s1">&#39;category_id&#39;</span><span class="p">:</span><span class="nb">int</span><span class="p">})</span>
+<span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>trending_date</th>
+      <th>channel_title</th>
+      <th>category_id</th>
+      <th>publish_time</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>comment_count</th>
+      <th>comments_disabled</th>
+      <th>ratings_disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9876</th>
+      <td>OVnxBcS5qWo</td>
+      <td>2018-02-01</td>
+      <td>Nintendo</td>
+      <td>20</td>
+      <td>2018-01-25T21:25:58.000Z</td>
+      <td>434156</td>
+      <td>14685</td>
+      <td>411</td>
+      <td>2277</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9877</th>
+      <td>ltzy5vRmN8Q</td>
+      <td>2018-02-01</td>
+      <td>BURGER KING</td>
+      <td>24</td>
+      <td>2018-01-24T14:08:29.000Z</td>
+      <td>4003530</td>
+      <td>119341</td>
+      <td>9363</td>
+      <td>20414</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9878</th>
+      <td>NEmFS50lsTw</td>
+      <td>2018-02-01</td>
+      <td>SKITTLESbrand</td>
+      <td>24</td>
+      <td>2018-01-24T15:31:57.000Z</td>
+      <td>483127</td>
+      <td>3924</td>
+      <td>362</td>
+      <td>506</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9879</th>
+      <td>NZ0ImXT1FZk</td>
+      <td>2018-02-01</td>
+      <td>Brave Wilderness</td>
+      <td>15</td>
+      <td>2018-01-24T12:00:02.000Z</td>
+      <td>1417253</td>
+      <td>44358</td>
+      <td>893</td>
+      <td>6858</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9880</th>
+      <td>t3z_pdr6z8w</td>
+      <td>2018-02-01</td>
+      <td>Jackie Aina</td>
+      <td>26</td>
+      <td>2018-01-25T05:05:42.000Z</td>
+      <td>877585</td>
+      <td>115391</td>
+      <td>1621</td>
+      <td>15749</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9881
+&lt;class &#39;dask.dataframe.core.DataFrame&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCategory</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;category_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()[[</span><span class="s1">&#39;video_id&#39;</span><span class="p">]]</span>
+<span class="n">dfCategory</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+    </tr>
+    <tr>
+      <th>category_id</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>532</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>109</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1614</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>195</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>466</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCategory</span><span class="o">.</span><span class="n">visualize</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;order&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/dask-parallelized-pandas_17_0.png" src="../_images/dask-parallelized-pandas_17_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;category_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>24    2409
+10    1614
+23     927
+26     913
+22     798
+25     784
+28     546
+1      540
+17     482
+27     352
+15     199
+2      109
+19      98
+20      85
+29      15
+43      10
+Name: category_id, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>video_id             0.009108
+trending_date        0.000000
+channel_title        0.000000
+category_id          0.000000
+publish_time         0.000000
+views                0.000000
+likes                0.000000
+dislikes             0.000000
+comment_count        0.000000
+comments_disabled    0.000000
+ratings_disabled     0.000000
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dask-delayed">
+<h2>3. Dask Delayed<a class="headerlink" href="#dask-delayed" title="Permalink to this headline">#</a></h2>
+<p>In case in dask numpy and pandas don’t have the function you want to solve the problem, Dask provide a solution which can make a user define function into parallel, it calls Dask Delayed interface. Dask delayed is also a data type in Dask, when you make a object with dask delayed, the output will be called <em>delayed object</em>. Dask delayed is a low-level interface which can be used for general-purpose scalability.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dask</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">double</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="n">total</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>55
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">delayed</span><span class="p">(</span><span class="n">double</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">total</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">delayed</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">total</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;dask.delayed.DelayedLeaf&#39;&gt;
+&lt;class &#39;dask.delayed.Delayed&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total</span><span class="p">(</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>55
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@dask</span><span class="o">.</span><span class="n">delayed</span>
+<span class="k">def</span> <span class="nf">double</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
+    
+<span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">dask</span><span class="o">.</span><span class="n">delayed</span><span class="p">(</span><span class="nb">sum</span><span class="p">)(</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>55
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ADMIN\anaconda3\lib\statistics.py:168: RuntimeWarning: overflow encountered in long_scalars
+  partials[d] = partials_get(d, 0) + n
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dask-distributed">
+<h2>4. Dask distributed<a class="headerlink" href="#dask-distributed" title="Permalink to this headline">#</a></h2>
+<p>Dask is capable of running across machines/workers, it also provides a scheduler to monitor the workflow and task resource. Before begining the task, setup the Client to allocate the memory, drivers and create dashboard to track the process of the task</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">LocalCluster</span><span class="p">,</span> <span class="n">Client</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cluster manager like hadoop</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
+<span class="n">cluster</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ADMIN\anaconda3\lib\site-packages\distributed\node.py:160: UserWarning: Port 8787 is already in use.
+Perhaps you already have a cluster running?
+Hosting the HTTP server on port 63295 instead
+  warnings.warn(
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "9def64bf31f34dc89b307cc6131332a3", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster</span><span class="o">.</span><span class="n">get_logs</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><details>
+<summary style='display:list-item'>Cluster</summary>
+<p style="font-family: monospace; margin: 0;"></p>
+</details>
+<details>
+<summary style='display:list-item'>Scheduler</summary>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO - Clear task state</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO -   Scheduler at:     tcp://127.0.0.1:63100</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO -   dashboard at:            127.0.0.1:8787</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO - Register worker &lt;WorkerState &#x27;tcp://127.0.0.1:63123&#x27;, name: 1, memory: 0, processing: 0&gt;</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO - Starting worker compute stream, tcp://127.0.0.1:63123</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO - Register worker &lt;WorkerState &#x27;tcp://127.0.0.1:63126&#x27;, name: 2, memory: 0, processing: 0&gt;</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO - Starting worker compute stream, tcp://127.0.0.1:63126</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO - Register worker &lt;WorkerState &#x27;tcp://127.0.0.1:63129&#x27;, name: 0, memory: 0, processing: 0&gt;</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO - Starting worker compute stream, tcp://127.0.0.1:63129</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO - Register worker &lt;WorkerState &#x27;tcp://127.0.0.1:63132&#x27;, name: 3, memory: 0, processing: 0&gt;</p>
+<p style="font-family: monospace; margin: 0;">distributed.scheduler - INFO - Starting worker compute stream, tcp://127.0.0.1:63132</p>
+</details>
+<details>
+<summary style='display:list-item'>tcp://127.0.0.1:63123</summary>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -       Start worker at:      tcp://127.0.0.1:63123</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -          Listening to:      tcp://127.0.0.1:63123</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -          dashboard at:            127.0.0.1:63124</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - Waiting to connect to:      tcp://127.0.0.1:63100</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -               Threads:                          3</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -                Memory:                   1.84 GiB</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -       Local Directory: D:\DATA ANALYTICS\data-science\dask-worker-space\worker-a8xy_deu</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -         Registered to:      tcp://127.0.0.1:63100</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+</details>
+<details>
+<summary style='display:list-item'>tcp://127.0.0.1:63126</summary>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -       Start worker at:      tcp://127.0.0.1:63126</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -          Listening to:      tcp://127.0.0.1:63126</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -          dashboard at:            127.0.0.1:63127</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - Waiting to connect to:      tcp://127.0.0.1:63100</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -               Threads:                          3</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -                Memory:                   1.84 GiB</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -       Local Directory: D:\DATA ANALYTICS\data-science\dask-worker-space\worker-pxuz1vil</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -         Registered to:      tcp://127.0.0.1:63100</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+</details>
+<details>
+<summary style='display:list-item'>tcp://127.0.0.1:63129</summary>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -       Start worker at:      tcp://127.0.0.1:63129</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -          Listening to:      tcp://127.0.0.1:63129</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -          dashboard at:            127.0.0.1:63130</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - Waiting to connect to:      tcp://127.0.0.1:63100</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -               Threads:                          3</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -                Memory:                   1.84 GiB</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -       Local Directory: D:\DATA ANALYTICS\data-science\dask-worker-space\worker-morbxpvh</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -         Registered to:      tcp://127.0.0.1:63100</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+</details>
+<details>
+<summary style='display:list-item'>tcp://127.0.0.1:63132</summary>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -       Start worker at:      tcp://127.0.0.1:63132</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -          Listening to:      tcp://127.0.0.1:63132</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -          dashboard at:            127.0.0.1:63133</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - Waiting to connect to:      tcp://127.0.0.1:63100</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -               Threads:                          3</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -                Memory:                   1.84 GiB</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -       Local Directory: D:\DATA ANALYTICS\data-science\dask-worker-space\worker-0bszu_vc</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO -         Registered to:      tcp://127.0.0.1:63100</p>
+<p style="font-family: monospace; margin: 0;">distributed.worker - INFO - -------------------------------------------------</p>
+</details></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># start dask client with cluster config</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">client</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+    <div>
+        <div style="
+            width: 24px;
+            height: 24px;
+            background-color: #e1e1e1;
+            border: 3px solid #9D9D9D;
+            border-radius: 5px;
+            position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+            <h3 style="margin-bottom: 0px;">Client</h3>
+            <p style="color: #9D9D9D; margin-bottom: 0px;">Client-650afd42-2ba3-11ed-8484-8038fbe3a985</p>
+            <table style="width: 100%; text-align: left;">
+
+        <tr>
+            <td style="text-align: left;"><strong>Connection method:</strong> Cluster object</td>
+            <td style="text-align: left;"><strong>Cluster type:</strong> LocalCluster</td>
+        </tr>
+
+        <tr>
+            <td style="text-align: left;">
+                <strong>Dashboard: </strong>
+                <a href="http://127.0.0.1:63295/status">http://127.0.0.1:63295/status</a>
+            </td>
+            <td style="text-align: left;"></td>
+        </tr>
+
+            </table>
+
+        <details>
+        <summary style="margin-bottom: 20px;"><h3 style="display: inline;">Cluster Info</h3></summary>
+
+    <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-mod-trusted jp-OutputArea-output">
+        <div style="
+            width: 24px;
+            height: 24px;
+            background-color: #e1e1e1;
+            border: 3px solid #9D9D9D;
+            border-radius: 5px;
+            position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+            <h3 style="margin-bottom: 0px; margin-top: 0px;">LocalCluster</h3>
+            <p style="color: #9D9D9D; margin-bottom: 0px;">47ce1dc1</p>
+            <table style="width: 100%; text-align: left;">
+
+    <tr>
+        <td style="text-align: left;"><strong>Status:</strong> running</td>
+        <td style="text-align: left;"><strong>Using processes:</strong> True</td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left;">
+            <strong>Dashboard:</strong> <a href="http://127.0.0.1:63295/status">http://127.0.0.1:63295/status</a>
+        </td>
+        <td style="text-align: left;"><strong>Workers:</strong> 4</td>
+    </tr>
+    <tr>
+        <td style="text-align: left;">
+            <strong>Total threads:</strong>
+            12
+        </td>
+        <td style="text-align: left;">
+            <strong>Total memory:</strong>
+            7.35 GiB
+        </td>
+    </tr>
+
+            </table>
+            <details>
+            <summary style="margin-bottom: 20px;"><h3 style="display: inline;">Scheduler Info</h3></summary>
+
+<div style="">
+
+    <div>
+        <div style="
+            width: 24px;
+            height: 24px;
+            background-color: #FFF7E5;
+            border: 3px solid #FF6132;
+            border-radius: 5px;
+            position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+            <h3 style="margin-bottom: 0px;">Scheduler</h3>
+            <p style="color: #9D9D9D; margin-bottom: 0px;">Scheduler-5d6404fe-18aa-4355-ac9e-b0f2049b4884</p>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm:</strong> tcp://127.0.0.1:63296</td>
+                    <td style="text-align: left;"><strong>Workers:</strong> 4</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard:</strong> <a href="http://127.0.0.1:63295/status">http://127.0.0.1:63295/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Total threads:</strong>
+                        12
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Started:</strong>
+                        Just now
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Total memory:</strong>
+                        7.35 GiB
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <details style="margin-left: 48px;">
+    <summary style="margin-bottom: 20px;"><h3 style="display: inline;">Workers</h3></summary>
+
+    <div style="margin-bottom: 20px;">
+        <div style="width: 24px;
+                    height: 24px;
+                    background-color: #DBF5FF;
+                    border: 3px solid #4CC9FF;
+                    border-radius: 5px;
+                    position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+        <details>
+            <summary>
+                <h4 style="margin-bottom: 0px; display: inline;">Worker: 0</h4>
+            </summary>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm: </strong> tcp://127.0.0.1:63319</td>
+                    <td style="text-align: left;"><strong>Total threads: </strong> 3</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard: </strong>
+                        <a href="http://127.0.0.1:63320/status">http://127.0.0.1:63320/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Memory: </strong>
+                        1.84 GiB
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;"><strong>Nanny: </strong> tcp://127.0.0.1:63300</td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <strong>Local directory: </strong>
+                        D:\DATA ANALYTICS\data-science\dask-worker-space\worker-22_x3701
+                    </td>
+                </tr>
+
+
+            </table>
+        </details>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div style="width: 24px;
+                    height: 24px;
+                    background-color: #DBF5FF;
+                    border: 3px solid #4CC9FF;
+                    border-radius: 5px;
+                    position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+        <details>
+            <summary>
+                <h4 style="margin-bottom: 0px; display: inline;">Worker: 1</h4>
+            </summary>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm: </strong> tcp://127.0.0.1:63318</td>
+                    <td style="text-align: left;"><strong>Total threads: </strong> 3</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard: </strong>
+                        <a href="http://127.0.0.1:63321/status">http://127.0.0.1:63321/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Memory: </strong>
+                        1.84 GiB
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;"><strong>Nanny: </strong> tcp://127.0.0.1:63299</td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <strong>Local directory: </strong>
+                        D:\DATA ANALYTICS\data-science\dask-worker-space\worker-epu_hro4
+                    </td>
+                </tr>
+
+
+            </table>
+        </details>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div style="width: 24px;
+                    height: 24px;
+                    background-color: #DBF5FF;
+                    border: 3px solid #4CC9FF;
+                    border-radius: 5px;
+                    position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+        <details>
+            <summary>
+                <h4 style="margin-bottom: 0px; display: inline;">Worker: 2</h4>
+            </summary>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm: </strong> tcp://127.0.0.1:63327</td>
+                    <td style="text-align: left;"><strong>Total threads: </strong> 3</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard: </strong>
+                        <a href="http://127.0.0.1:63328/status">http://127.0.0.1:63328/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Memory: </strong>
+                        1.84 GiB
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;"><strong>Nanny: </strong> tcp://127.0.0.1:63301</td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <strong>Local directory: </strong>
+                        D:\DATA ANALYTICS\data-science\dask-worker-space\worker-y681ncyd
+                    </td>
+                </tr>
+
+
+            </table>
+        </details>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div style="width: 24px;
+                    height: 24px;
+                    background-color: #DBF5FF;
+                    border: 3px solid #4CC9FF;
+                    border-radius: 5px;
+                    position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+        <details>
+            <summary>
+                <h4 style="margin-bottom: 0px; display: inline;">Worker: 3</h4>
+            </summary>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm: </strong> tcp://127.0.0.1:63324</td>
+                    <td style="text-align: left;"><strong>Total threads: </strong> 3</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard: </strong>
+                        <a href="http://127.0.0.1:63325/status">http://127.0.0.1:63325/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Memory: </strong>
+                        1.84 GiB
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;"><strong>Nanny: </strong> tcp://127.0.0.1:63298</td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <strong>Local directory: </strong>
+                        D:\DATA ANALYTICS\data-science\dask-worker-space\worker-4exgm9o7
+                    </td>
+                </tr>
+
+
+            </table>
+        </details>
+        </div>
+    </div>
+
+    </details>
+</div>
+
+            </details>
+        </div>
+    </div>
+
+        </details>
+
+        </div>
+    </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#direclty pass LocalCluster arguments</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Linhpt&#39;</span><span class="p">,</span> <span class="n">n_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">threads_per_worker</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ADMIN\anaconda3\lib\site-packages\distributed\node.py:160: UserWarning: Port 8787 is already in use.
+Perhaps you already have a cluster running?
+Hosting the HTTP server on port 63346 instead
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dask-ml">
+<h2>5. Dask - ML<a class="headerlink" href="#dask-ml" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://ml.dask.org/">Dask-ML</a> provides scalable machine learning in Python with popular library likes sklearn, xgboost,… To parallize the training process in machine learning, Dask uses <a class="reference external" href="https://examples.dask.org/machine-learning/blockwise-ensemble.html">Blockwise Ensemble Method</a> which splits training data into partitions and fits a copy of sklearn estimator on each partition. The importance thing when using Dask-ML is the distribution of data in each partition must be uniform (or no bias). At predictiontion time, Dask combine the result from all partition by averaging or voting.</p>
+<p>For the best performance, Dask separate into situtations based on size of training and testing dataset, but for convience you can use the second way for all situtation:</p>
+<ul class="simple">
+<li><p>With large models (many hyperparameters) fit on a medium-sized dataset, Dask comes with Joblib by providing <a class="reference external" href="https://examples.dask.org/machine-learning/scale-scikit-learn.html">parallel_backend</a> at fit step, that means you can use sklearn collection to preprocess, create estimators,… and fit them using dask backend.</p></li>
+<li><p>With large dataset, using functions in <a class="reference external" href="https://ml.dask.org/modules/api.html">dask-ml</a> instead of sklearn, Dask-ML is a copy of all useful functions in sklearn which cover many types of function such as preprocessing, regression, classification, model selection, gridsearch,…</p></li>
+<li><p>With small training dataset but large predicting dataset, Dask provide <a class="reference external" href="https://ml.dask.org/modules/generated/dask_ml.wrappers.ParallelPostFit.html">ParallelPostFit</a> to parallel the prediction step</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">progress</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">n_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">threads_per_worker</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">memory_limit</span><span class="o">=</span><span class="s1">&#39;2GB&#39;</span><span class="p">)</span>
+<span class="n">client</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+    <div>
+        <div style="
+            width: 24px;
+            height: 24px;
+            background-color: #e1e1e1;
+            border: 3px solid #9D9D9D;
+            border-radius: 5px;
+            position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+            <h3 style="margin-bottom: 0px;">Client</h3>
+            <p style="color: #9D9D9D; margin-bottom: 0px;">Client-0c9c75bc-2d9f-11ed-b7c8-8038fbe3a985</p>
+            <table style="width: 100%; text-align: left;">
+
+        <tr>
+            <td style="text-align: left;"><strong>Connection method:</strong> Cluster object</td>
+            <td style="text-align: left;"><strong>Cluster type:</strong> LocalCluster</td>
+        </tr>
+
+        <tr>
+            <td style="text-align: left;">
+                <strong>Dashboard: </strong>
+                <a href="http://127.0.0.1:8787/status">http://127.0.0.1:8787/status</a>
+            </td>
+            <td style="text-align: left;"></td>
+        </tr>
+
+            </table>
+
+        <details>
+        <summary style="margin-bottom: 20px;"><h3 style="display: inline;">Cluster Info</h3></summary>
+
+    <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-mod-trusted jp-OutputArea-output">
+        <div style="
+            width: 24px;
+            height: 24px;
+            background-color: #e1e1e1;
+            border: 3px solid #9D9D9D;
+            border-radius: 5px;
+            position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+            <h3 style="margin-bottom: 0px; margin-top: 0px;">LocalCluster</h3>
+            <p style="color: #9D9D9D; margin-bottom: 0px;">0cabe45a</p>
+            <table style="width: 100%; text-align: left;">
+
+    <tr>
+        <td style="text-align: left;"><strong>Status:</strong> running</td>
+        <td style="text-align: left;"><strong>Using processes:</strong> True</td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left;">
+            <strong>Dashboard:</strong> <a href="http://127.0.0.1:8787/status">http://127.0.0.1:8787/status</a>
+        </td>
+        <td style="text-align: left;"><strong>Workers:</strong> 4</td>
+    </tr>
+    <tr>
+        <td style="text-align: left;">
+            <strong>Total threads:</strong>
+            4
+        </td>
+        <td style="text-align: left;">
+            <strong>Total memory:</strong>
+            7.45 GiB
+        </td>
+    </tr>
+
+            </table>
+            <details>
+            <summary style="margin-bottom: 20px;"><h3 style="display: inline;">Scheduler Info</h3></summary>
+
+<div style="">
+
+    <div>
+        <div style="
+            width: 24px;
+            height: 24px;
+            background-color: #FFF7E5;
+            border: 3px solid #FF6132;
+            border-radius: 5px;
+            position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+            <h3 style="margin-bottom: 0px;">Scheduler</h3>
+            <p style="color: #9D9D9D; margin-bottom: 0px;">Scheduler-f68cdf37-8f26-49f5-a21b-9fae578a9d11</p>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm:</strong> tcp://127.0.0.1:50123</td>
+                    <td style="text-align: left;"><strong>Workers:</strong> 4</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard:</strong> <a href="http://127.0.0.1:8787/status">http://127.0.0.1:8787/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Total threads:</strong>
+                        4
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Started:</strong>
+                        Just now
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Total memory:</strong>
+                        7.45 GiB
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <details style="margin-left: 48px;">
+    <summary style="margin-bottom: 20px;"><h3 style="display: inline;">Workers</h3></summary>
+
+    <div style="margin-bottom: 20px;">
+        <div style="width: 24px;
+                    height: 24px;
+                    background-color: #DBF5FF;
+                    border: 3px solid #4CC9FF;
+                    border-radius: 5px;
+                    position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+        <details>
+            <summary>
+                <h4 style="margin-bottom: 0px; display: inline;">Worker: 0</h4>
+            </summary>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm: </strong> tcp://127.0.0.1:50153</td>
+                    <td style="text-align: left;"><strong>Total threads: </strong> 1</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard: </strong>
+                        <a href="http://127.0.0.1:50155/status">http://127.0.0.1:50155/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Memory: </strong>
+                        1.86 GiB
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;"><strong>Nanny: </strong> tcp://127.0.0.1:50128</td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <strong>Local directory: </strong>
+                        D:\DATA ANALYTICS\data-science\dask-worker-space\worker-p7pz4ucj
+                    </td>
+                </tr>
+
+
+            </table>
+        </details>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div style="width: 24px;
+                    height: 24px;
+                    background-color: #DBF5FF;
+                    border: 3px solid #4CC9FF;
+                    border-radius: 5px;
+                    position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+        <details>
+            <summary>
+                <h4 style="margin-bottom: 0px; display: inline;">Worker: 1</h4>
+            </summary>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm: </strong> tcp://127.0.0.1:50154</td>
+                    <td style="text-align: left;"><strong>Total threads: </strong> 1</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard: </strong>
+                        <a href="http://127.0.0.1:50156/status">http://127.0.0.1:50156/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Memory: </strong>
+                        1.86 GiB
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;"><strong>Nanny: </strong> tcp://127.0.0.1:50126</td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <strong>Local directory: </strong>
+                        D:\DATA ANALYTICS\data-science\dask-worker-space\worker-wanzrb3o
+                    </td>
+                </tr>
+
+
+            </table>
+        </details>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div style="width: 24px;
+                    height: 24px;
+                    background-color: #DBF5FF;
+                    border: 3px solid #4CC9FF;
+                    border-radius: 5px;
+                    position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+        <details>
+            <summary>
+                <h4 style="margin-bottom: 0px; display: inline;">Worker: 2</h4>
+            </summary>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm: </strong> tcp://127.0.0.1:50146</td>
+                    <td style="text-align: left;"><strong>Total threads: </strong> 1</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard: </strong>
+                        <a href="http://127.0.0.1:50147/status">http://127.0.0.1:50147/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Memory: </strong>
+                        1.86 GiB
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;"><strong>Nanny: </strong> tcp://127.0.0.1:50125</td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <strong>Local directory: </strong>
+                        D:\DATA ANALYTICS\data-science\dask-worker-space\worker-t97cmjd8
+                    </td>
+                </tr>
+
+
+            </table>
+        </details>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div style="width: 24px;
+                    height: 24px;
+                    background-color: #DBF5FF;
+                    border: 3px solid #4CC9FF;
+                    border-radius: 5px;
+                    position: absolute;"> </div>
+        <div style="margin-left: 48px;">
+        <details>
+            <summary>
+                <h4 style="margin-bottom: 0px; display: inline;">Worker: 3</h4>
+            </summary>
+            <table style="width: 100%; text-align: left;">
+                <tr>
+                    <td style="text-align: left;"><strong>Comm: </strong> tcp://127.0.0.1:50149</td>
+                    <td style="text-align: left;"><strong>Total threads: </strong> 1</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <strong>Dashboard: </strong>
+                        <a href="http://127.0.0.1:50150/status">http://127.0.0.1:50150/status</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <strong>Memory: </strong>
+                        1.86 GiB
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;"><strong>Nanny: </strong> tcp://127.0.0.1:50127</td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <strong>Local directory: </strong>
+                        D:\DATA ANALYTICS\data-science\dask-worker-space\worker-6_tybw5_
+                    </td>
+                </tr>
+
+
+            </table>
+        </details>
+        </div>
+    </div>
+
+    </details>
+</div>
+
+            </details>
+        </div>
+    </div>
+
+        </details>
+
+        </div>
+    </div>
+</div></div>
+</div>
+<section id="joblib-parallel-backend">
+<h3>5.1. Joblib parallel backend<a class="headerlink" href="#joblib-parallel-backend" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">fbeta_score</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+    <span class="s1">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="s1">&#39;sigmoid&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="s1">&#39;probability&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">algo</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">()</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># using dask backend at fit step</span>
+<span class="kn">import</span> <span class="nn">joblib</span>
+
+<span class="k">with</span> <span class="n">joblib</span><span class="o">.</span><span class="n">parallel_backend</span><span class="p">(</span><span class="s1">&#39;dask&#39;</span><span class="p">):</span>
+    <span class="n">validator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
+
+<span class="n">validator</span><span class="o">.</span><span class="n">best_params_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;C&#39;: 1, &#39;gamma&#39;: 0.01, &#39;kernel&#39;: &#39;rbf&#39;, &#39;probability&#39;: True}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ADMIN\anaconda3\lib\statistics.py:168: RuntimeWarning: overflow encountered in long_scalars
+  partials[d] = partials_get(d, 0) + n
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dask-ml-functions">
+<h3>5.2. Dask-ML functions<a class="headerlink" href="#dask-ml-functions" title="Permalink to this headline">#</a></h3>
+<p>There are 2 ways to use dask with Xgboost, uses Dask module in Xgboost package or use xgboost module in dask-ml package. But Xgboost module is no longer maintained, using dask directly in XGBoost for best performance</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span><span class="p">,</span> <span class="n">XGBRegressor</span>
+
+<span class="kn">import</span> <span class="nn">dask.array</span> <span class="k">as</span> <span class="nn">da</span>
+<span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+<span class="kn">from</span> <span class="nn">dask_ml.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">dask_ml.metrics</span> <span class="kn">import</span> <span class="n">log_loss</span><span class="p">,</span> <span class="n">accuracy_score</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xValid</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yValid</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">algo</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">dask</span><span class="o">.</span><span class="n">DaskXGBClassifier</span><span class="p">(</span>
+    <span class="c1"># hyperparameters</span>
+    <span class="n">num_leaves</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    
+    <span class="c1"># configurations</span>
+    <span class="n">verbosity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">importance_type</span><span class="o">=</span><span class="s1">&#39;gain&#39;</span><span class="p">,</span>
+    <span class="n">eval_metric</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;logloss&#39;</span><span class="p">,</span> <span class="s1">&#39;auc&#39;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:[xgboost.dask]:Windows is not officially supported for dask/xgboost, contribution are welcomed.
+WARNING:[xgboost.dask]:Windows is not officially supported for dask/xgboost, contribution are welcomed.
+WARNING:[xgboost.dask]:Windows is not officially supported for dask/xgboost, contribution are welcomed.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yTestPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)</span>
+<span class="n">yTestPred</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:[xgboost.dask]:Windows is not officially supported for dask/xgboost, contribution are welcomed.
+WARNING:[xgboost.dask]:Windows is not officially supported for dask/xgboost, contribution are welcomed.
+WARNING:[xgboost.dask]:Windows is not officially supported for dask/xgboost, contribution are welcomed.
+</pre></div>
+</div>
+<div class="output text_html"><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 512 B </td> <td> 512 B </td></tr>
+    <tr><th> Shape </th><td> (128,) </td> <td> (128,) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float32 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >128</text>
+  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
+</svg>
+</td>
+</tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log_loss</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.17385315634646759
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter-04"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="pyspark-data-transformation.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">PySpark: Data Transformation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../chapter-05/_intro.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><b>5. Data Visualization</b></p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

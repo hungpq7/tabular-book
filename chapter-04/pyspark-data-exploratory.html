@@ -1,0 +1,1796 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>PySpark: Data Exploratory</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PySpark: Data Cleaning" href="pyspark-data-cleaning.html" />
+    <link rel="prev" title="HiveQL: Data Manipulation" href="hiveql-data-manipulation.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-01/_intro.html">
+   <b>
+    1. Python Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     Numpy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     Sympy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-probability.html">
+     Numpy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-statistics.html">
+     Numpy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-03/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-05/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-07/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-10/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/chapter-04/pyspark-data-exploratory.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/chapter-04/pyspark-data-exploratory.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter-04/pyspark-data-exploratory.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pyspark-dataframes">
+   1. PySpark dataframes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-dataframes">
+     1.1. Creating dataframes
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#manually">
+       Manually
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-csv-files">
+       Reading CSV files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-excel-files">
+       Reading Excel files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#from-sql-query">
+       From SQL query
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-types">
+     1.2. Data types
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#string">
+       String
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#numeric">
+       Numeric
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#boolean">
+       Boolean
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#date-and-time">
+       Date and time
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-exploratory">
+   2. Data exploratory
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#overview">
+     2.1. Overview
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#features-analysis">
+       Features analysis
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#statistical-summary">
+       Statistical summary
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#missing-values">
+       Missing values
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#in-depth-exploring">
+     2.2. In-depth exploring
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#selection">
+       Selection
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filtering">
+       Filtering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sorting">
+       Sorting
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#unique-values">
+       Unique values
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-aggregation">
+       Data aggregation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>PySpark: Data Exploratory</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pyspark-dataframes">
+   1. PySpark dataframes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-dataframes">
+     1.1. Creating dataframes
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#manually">
+       Manually
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-csv-files">
+       Reading CSV files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-excel-files">
+       Reading Excel files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#from-sql-query">
+       From SQL query
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-types">
+     1.2. Data types
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#string">
+       String
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#numeric">
+       Numeric
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#boolean">
+       Boolean
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#date-and-time">
+       Date and time
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-exploratory">
+   2. Data exploratory
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#overview">
+     2.1. Overview
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#features-analysis">
+       Features analysis
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#statistical-summary">
+       Statistical summary
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#missing-values">
+       Missing values
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#in-depth-exploring">
+     2.2. In-depth exploring
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#selection">
+       Selection
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filtering">
+       Filtering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sorting">
+       Sorting
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#unique-values">
+       Unique values
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-aggregation">
+       Data aggregation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="pyspark-data-exploratory">
+<h1>PySpark: Data Exploratory<a class="headerlink" href="#pyspark-data-exploratory" title="Permalink to this headline">#</a></h1>
+<p>Once a Spark session is created, its running jobs can be monitored at the address: <a class="reference external" href="http://localhost:4040/jobs/">Spark UI</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">findspark</span><span class="p">;</span> <span class="n">findspark</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">enableHiveSupport</span><span class="p">()</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;spark.sql.repl.eagerEval.enabled&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pyspark.sql.functions</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">import</span> <span class="nn">pyspark.sql.types</span> <span class="k">as</span> <span class="nn">T</span>
+<span class="kn">from</span> <span class="nn">pyspark.mllib.stat</span> <span class="kn">import</span> <span class="n">Statistics</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="nt">th</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">td</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">p</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
+<span class="nt">div</span><span class="p">.</span><span class="nc">highlight</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+th {font-size:12px}
+td {font-size:12px}
+p {font-size:14px}
+div.highlight {font-size:14px}
+</style>
+</div></div>
+</div>
+<section id="pyspark-dataframes">
+<h2>1. PySpark dataframes<a class="headerlink" href="#pyspark-dataframes" title="Permalink to this headline">#</a></h2>
+<section id="creating-dataframes">
+<h3>1.1. Creating dataframes<a class="headerlink" href="#creating-dataframes" title="Permalink to this headline">#</a></h3>
+<section id="manually">
+<h4>Manually<a class="headerlink" href="#manually" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Laptop&#39;</span><span class="p">,</span> <span class="s1">&#39;$1000&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Mouse&#39;</span><span class="p">,</span> <span class="s1">&#39;$20&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Headphone&#39;</span><span class="p">,</span> <span class="s1">&#39;$50&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;USB&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;product&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="s1">&#39;stock&#39;</span><span class="p">]</span>
+
+<span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>product</th><th>price</th><th>stock</th></tr>
+<tr><td>Laptop</td><td>$1000</td><td>15</td></tr>
+<tr><td>Mouse</td><td>$20</td><td>100</td></tr>
+<tr><td>Headphone</td><td>$50</td><td>50</td></tr>
+<tr><td>USB</td><td>null</td><td>100</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+<section id="reading-csv-files">
+<h4>Reading CSV files<a class="headerlink" href="#reading-csv-files" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;../data/finance_charts_apple.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>Date</th><th>AAPL.Open</th><th>AAPL.High</th><th>AAPL.Low</th><th>AAPL.Close</th><th>AAPL.Volume</th><th>AAPL.Adjusted</th><th>dn</th><th>mavg</th><th>up</th><th>direction</th></tr>
+<tr><td>2015-02-17</td><td>127.489998</td><td>128.880005</td><td>126.919998</td><td>127.830002</td><td>63152400</td><td>122.905254</td><td>106.7410523</td><td>117.9276669</td><td>129.1142814</td><td>Increasing</td></tr>
+<tr><td>2015-02-18</td><td>127.629997</td><td>128.779999</td><td>127.449997</td><td>128.720001</td><td>44891700</td><td>123.760965</td><td>107.842423</td><td>118.9403335</td><td>130.0382439</td><td>Increasing</td></tr>
+<tr><td>2015-02-19</td><td>128.479996</td><td>129.029999</td><td>128.330002</td><td>128.449997</td><td>37362400</td><td>123.501363</td><td>108.8942449</td><td>119.8891668</td><td>130.8840887</td><td>Decreasing</td></tr>
+<tr><td>2015-02-20</td><td>128.619995</td><td>129.5</td><td>128.050003</td><td>129.5</td><td>48948400</td><td>124.510914</td><td>109.7854494</td><td>120.7635001</td><td>131.7415509</td><td>Increasing</td></tr>
+<tr><td>2015-02-23</td><td>130.020004</td><td>133</td><td>129.660004</td><td>133</td><td>70974100</td><td>127.876074</td><td>110.3725162</td><td>121.7201668</td><td>133.0678174</td><td>Increasing</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+<section id="reading-excel-files">
+<h4>Reading Excel files<a class="headerlink" href="#reading-excel-files" title="Permalink to this headline">#</a></h4>
+<p>PySpark does not support reading Excel files. This can only be done indirectly with some help from Pandas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;../data/world_population.xlsx&#39;</span><span class="p">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>year</th><th>country</th><th>population</th></tr>
+<tr><td>1960</td><td>Afghanistan</td><td>8996351</td></tr>
+<tr><td>1961</td><td>Afghanistan</td><td>9166764</td></tr>
+<tr><td>1962</td><td>Afghanistan</td><td>9345868</td></tr>
+<tr><td>1963</td><td>Afghanistan</td><td>9533954</td></tr>
+<tr><td>1964</td><td>Afghanistan</td><td>9731361</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+<section id="from-sql-query">
+<h4>From SQL query<a class="headerlink" href="#from-sql-query" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;SELECT 7 AS number&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>number</th></tr>
+<tr><td>7</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="data-types">
+<h3>1.2. Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">pyspark.sql.types</span></code> sub-module provides a various number of <a class="reference external" href="https://spark.apache.org/docs/latest/sql-ref-datatypes.html">data types</a>. The table below summarizes the most notable ones.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Alias</p></th>
+<th class="head"><p>Data type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>BooleanType</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p></td>
+<td><p>Boolean</p></td>
+</tr>
+<tr class="row-odd"><td><p>IntegerType</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Integer</p></td>
+</tr>
+<tr class="row-even"><td><p>FloatType</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p>Decimal</p></td>
+</tr>
+<tr class="row-odd"><td><p>LongType</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">long</span></code></p></td>
+<td><p>Big integer</p></td>
+</tr>
+<tr class="row-even"><td><p>DecimalType</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">decimal(10,2)</span></code></p></td>
+<td><p>Big decimal</p></td>
+</tr>
+<tr class="row-odd"><td><p>StringType</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>String</p></td>
+</tr>
+<tr class="row-even"><td><p>DateType</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">date</span></code></p></td>
+<td><p>Date</p></td>
+</tr>
+<tr class="row-odd"><td><p>TimestampType</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">timestamp</span></code></p></td>
+<td><p>Time</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;../data/youtube_trending.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dfYoutube</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>2kyS6SvSYSE</td><td>2017-11-14</td><td>CaseyNeistat</td><td>22</td><td>2017-11-13T17:13:...</td><td>748374</td><td>57527</td><td>2966</td><td>15954</td><td>False</td><td>False</td></tr>
+<tr><td>1ZAPwfrtAFY</td><td>2017-11-14</td><td>LastWeekTonight</td><td>24</td><td>2017-11-13T07:30:...</td><td>2418783</td><td>97185</td><td>6146</td><td>12703</td><td>False</td><td>False</td></tr>
+<tr><td>5qpjK5DgCt4</td><td>2017-11-14</td><td>Rudy Mancuso</td><td>23</td><td>2017-11-12T19:05:...</td><td>3191434</td><td>146033</td><td>5339</td><td>8181</td><td>False</td><td>False</td></tr>
+<tr><td>puqaWrEC7tY</td><td>2017-11-14</td><td>Good Mythical Mor...</td><td>24</td><td>2017-11-13T11:00:...</td><td>343168</td><td>10172</td><td>666</td><td>2146</td><td>False</td><td>False</td></tr>
+<tr><td>d380meD0W0M</td><td>2017-11-14</td><td>nigahiga</td><td>24</td><td>2017-11-12T18:01:...</td><td>2095731</td><td>132235</td><td>1989</td><td>17518</td><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;video_id&#39;, &#39;string&#39;),
+ (&#39;trending_date&#39;, &#39;string&#39;),
+ (&#39;channel_title&#39;, &#39;string&#39;),
+ (&#39;category_id&#39;, &#39;string&#39;),
+ (&#39;publish_time&#39;, &#39;string&#39;),
+ (&#39;views&#39;, &#39;string&#39;),
+ (&#39;likes&#39;, &#39;string&#39;),
+ (&#39;dislikes&#39;, &#39;string&#39;),
+ (&#39;comment_count&#39;, &#39;string&#39;),
+ (&#39;comments_disabled&#39;, &#39;string&#39;),
+ (&#39;ratings_disabled&#39;, &#39;string&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="string">
+<h4>String<a class="headerlink" href="#string" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;video_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;video_id&#39;, &#39;string&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="numeric">
+<h4>Numeric<a class="headerlink" href="#numeric" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;likes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;decimal(10,0)&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>root
+ |-- views: integer (nullable = true)
+ |-- likes: decimal(10,0) (nullable = true)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="boolean">
+<h4>Boolean<a class="headerlink" href="#boolean" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;comments_disabled&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;boolean&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;comments_disabled&#39;, &#39;boolean&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="date-and-time">
+<h4>Date and time<a class="headerlink" href="#date-and-time" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">to_date</span><span class="p">(</span><span class="s1">&#39;trending_date&#39;</span><span class="p">,</span> <span class="s1">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;trending_date&#39;</span><span class="p">),</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">to_timestamp</span><span class="p">(</span><span class="s1">&#39;publish_time&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;publish_time&#39;</span><span class="p">),</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">unix_timestamp</span><span class="p">(</span><span class="s1">&#39;trending_date&#39;</span><span class="p">,</span> <span class="s1">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;unix&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>trending_date</th><th>publish_time</th><th>unix</th></tr>
+<tr><td>2017-11-14</td><td>2017-11-14 00:13:01</td><td>1510592400</td></tr>
+<tr><td>2017-11-14</td><td>2017-11-13 14:30:00</td><td>1510592400</td></tr>
+<tr><td>2017-11-14</td><td>2017-11-13 02:05:24</td><td>1510592400</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="data-exploratory">
+<h2>2. Data exploratory<a class="headerlink" href="#data-exploratory" title="Permalink to this headline">#</a></h2>
+<section id="overview">
+<h3>2.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;../data/youtube_trending.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dfYoutube</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>2kyS6SvSYSE</td><td>2017-11-14</td><td>CaseyNeistat</td><td>22</td><td>2017-11-13T17:13:...</td><td>748374</td><td>57527</td><td>2966</td><td>15954</td><td>False</td><td>False</td></tr>
+<tr><td>1ZAPwfrtAFY</td><td>2017-11-14</td><td>LastWeekTonight</td><td>24</td><td>2017-11-13T07:30:...</td><td>2418783</td><td>97185</td><td>6146</td><td>12703</td><td>False</td><td>False</td></tr>
+<tr><td>5qpjK5DgCt4</td><td>2017-11-14</td><td>Rudy Mancuso</td><td>23</td><td>2017-11-12T19:05:...</td><td>3191434</td><td>146033</td><td>5339</td><td>8181</td><td>False</td><td>False</td></tr>
+<tr><td>puqaWrEC7tY</td><td>2017-11-14</td><td>Good Mythical Mor...</td><td>24</td><td>2017-11-13T11:00:...</td><td>343168</td><td>10172</td><td>666</td><td>2146</td><td>False</td><td>False</td></tr>
+<tr><td>d380meD0W0M</td><td>2017-11-14</td><td>nigahiga</td><td>24</td><td>2017-11-12T18:01:...</td><td>2095731</td><td>132235</td><td>1989</td><td>17518</td><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+<section id="features-analysis">
+<h4>Features analysis<a class="headerlink" href="#features-analysis" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9881
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;video_id&#39;,
+ &#39;trending_date&#39;,
+ &#39;channel_title&#39;,
+ &#39;category_id&#39;,
+ &#39;publish_time&#39;,
+ &#39;views&#39;,
+ &#39;likes&#39;,
+ &#39;dislikes&#39;,
+ &#39;comment_count&#39;,
+ &#39;comments_disabled&#39;,
+ &#39;ratings_disabled&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;video_id&#39;, &#39;string&#39;),
+ (&#39;trending_date&#39;, &#39;string&#39;),
+ (&#39;channel_title&#39;, &#39;string&#39;),
+ (&#39;category_id&#39;, &#39;string&#39;),
+ (&#39;publish_time&#39;, &#39;string&#39;),
+ (&#39;views&#39;, &#39;string&#39;),
+ (&#39;likes&#39;, &#39;string&#39;),
+ (&#39;dislikes&#39;, &#39;string&#39;),
+ (&#39;comment_count&#39;, &#39;string&#39;),
+ (&#39;comments_disabled&#39;, &#39;string&#39;),
+ (&#39;ratings_disabled&#39;, &#39;string&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="statistical-summary">
+<h4>Statistical summary<a class="headerlink" href="#statistical-summary" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>summary</th><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>count</td><td>9791</td><td>9881</td><td>9881</td><td>9881</td><td>9881</td><td>9881</td><td>9881</td><td>9881</td><td>9881</td><td>9881</td><td>9881</td></tr>
+<tr><td>mean</td><td>null</td><td>null</td><td>null</td><td>19.9703471308572</td><td>null</td><td>1288899.8444489425</td><td>47460.885639105356</td><td>3066.993320514118</td><td>5817.3166683534055</td><td>null</td><td>null</td></tr>
+<tr><td>stddev</td><td>null</td><td>null</td><td>null</td><td>7.544083075116899</td><td>null</td><td>5110157.363651556</td><td>170513.18455936198</td><td>38892.08334635203</td><td>30624.86865832553</td><td>null</td><td>null</td></tr>
+<tr><td>min</td><td>-0NYY8cqdiQ</td><td>2017-11-14</td><td>12 News</td><td>1</td><td>2008-06-17T00:07:...</td><td>10001</td><td>0</td><td>0</td><td>0</td><td>False</td><td>False</td></tr>
+<tr><td>25%</td><td>null</td><td>null</td><td>null</td><td>17.0</td><td>null</td><td>89594.0</td><td>2031.0</td><td>85.0</td><td>273.0</td><td>null</td><td>null</td></tr>
+<tr><td>50%</td><td>null</td><td>null</td><td>null</td><td>24.0</td><td>null</td><td>311117.0</td><td>9002.0</td><td>324.0</td><td>1031.0</td><td>null</td><td>null</td></tr>
+<tr><td>75%</td><td>null</td><td>null</td><td>null</td><td>25.0</td><td>null</td><td>1000754.0</td><td>29424.0</td><td>1130.0</td><td>3374.0</td><td>null</td><td>null</td></tr>
+<tr><td>max</td><td>zy0b9e40tK8</td><td>2018-02-01</td><td>wdwmagic</td><td>43</td><td>2018-01-31T17:44:...</td><td>99999</td><td>99980</td><td>998</td><td>99980</td><td>True</td><td>True</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span> <span class="o">=</span> <span class="n">dfYoutube</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;likes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">))</span>
+<span class="n">dfYoutube</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8804327774530825
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.mllib.stat</span> <span class="kn">import</span> <span class="n">Statistics</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;comment_count&#39;</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="s1">&#39;dislikes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">:])</span>
+<span class="n">Statistics</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.77526237, 0.85024311, 0.75684277],
+       [0.77526237, 1.        , 0.88043278, 0.6734562 ],
+       [0.85024311, 0.88043278, 1.        , 0.53002173],
+       [0.75684277, 0.6734562 , 0.53002173, 1.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.mllib.stat</span> <span class="kn">import</span> <span class="n">Statistics</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">computeCorrelationMatrix</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">):</span>
+    <span class="n">dfRdd</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">:])</span>
+    <span class="n">corr_mat</span> <span class="o">=</span> <span class="n">Statistics</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">dfRdd</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+    <span class="n">corr_mat_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">corr_mat</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>  <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">corr_mat_df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">computeCorrelationMatrix</span><span class="p">(</span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;comment_count&#39;</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="s1">&#39;dislikes&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>comment_count</th>
+      <th>views</th>
+      <th>likes</th>
+      <th>dislikes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>comment_count</th>
+      <td>1.000000</td>
+      <td>0.775262</td>
+      <td>0.850243</td>
+      <td>0.756843</td>
+    </tr>
+    <tr>
+      <th>views</th>
+      <td>0.775262</td>
+      <td>1.000000</td>
+      <td>0.880433</td>
+      <td>0.673456</td>
+    </tr>
+    <tr>
+      <th>likes</th>
+      <td>0.850243</td>
+      <td>0.880433</td>
+      <td>1.000000</td>
+      <td>0.530022</td>
+    </tr>
+    <tr>
+      <th>dislikes</th>
+      <td>0.756843</td>
+      <td>0.673456</td>
+      <td>0.530022</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="missing-values">
+<h4>Missing values<a class="headerlink" href="#missing-values" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Laptop&#39;</span><span class="p">,</span> <span class="s1">&#39;$1000&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Mouse&#39;</span><span class="p">,</span> <span class="s1">&#39;$20&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Headphone&#39;</span><span class="p">,</span> <span class="s1">&#39;$50&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;USB&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;product&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="s1">&#39;stock&#39;</span><span class="p">]</span>
+
+<span class="n">dfProduct</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfProduct</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>product</th><th>price</th><th>stock</th></tr>
+<tr><td>Laptop</td><td>$1000</td><td>null</td></tr>
+<tr><td>Mouse</td><td>$20</td><td>100</td></tr>
+<tr><td>Headphone</td><td>$50</td><td>50</td></tr>
+<tr><td>USB</td><td>null</td><td>null</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfProduct</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;stock&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">isNull</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>product</th><th>price</th><th>stock</th></tr>
+<tr><td>Laptop</td><td>$1000</td><td>null</td></tr>
+<tr><td>USB</td><td>null</td><td>null</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfProduct</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">isNull</span><span class="p">()</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dfProduct</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>product</th><th>price</th><th>stock</th></tr>
+<tr><td>0</td><td>1</td><td>2</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="in-depth-exploring">
+<h3>2.2. In-depth exploring<a class="headerlink" href="#in-depth-exploring" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;../data/youtube_trending.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dfYoutube</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>2kyS6SvSYSE</td><td>2017-11-14</td><td>CaseyNeistat</td><td>22</td><td>2017-11-13T17:13:...</td><td>748374</td><td>57527</td><td>2966</td><td>15954</td><td>False</td><td>False</td></tr>
+<tr><td>1ZAPwfrtAFY</td><td>2017-11-14</td><td>LastWeekTonight</td><td>24</td><td>2017-11-13T07:30:...</td><td>2418783</td><td>97185</td><td>6146</td><td>12703</td><td>False</td><td>False</td></tr>
+<tr><td>5qpjK5DgCt4</td><td>2017-11-14</td><td>Rudy Mancuso</td><td>23</td><td>2017-11-12T19:05:...</td><td>3191434</td><td>146033</td><td>5339</td><td>8181</td><td>False</td><td>False</td></tr>
+<tr><td>puqaWrEC7tY</td><td>2017-11-14</td><td>Good Mythical Mor...</td><td>24</td><td>2017-11-13T11:00:...</td><td>343168</td><td>10172</td><td>666</td><td>2146</td><td>False</td><td>False</td></tr>
+<tr><td>d380meD0W0M</td><td>2017-11-14</td><td>nigahiga</td><td>24</td><td>2017-11-12T18:01:...</td><td>2095731</td><td>132235</td><td>1989</td><td>17518</td><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+<section id="selection">
+<h4>Selection<a class="headerlink" href="#selection" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">likes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column&lt;&#39;likes&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>views</th></tr>
+<tr><td>748374</td></tr>
+<tr><td>2418783</td></tr>
+<tr><td>3191434</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="s1">&#39;dislikes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>likes</th><th>dislikes</th></tr>
+<tr><td>57527</td><td>2966</td></tr>
+<tr><td>97185</td><td>6146</td></tr>
+<tr><td>146033</td><td>5339</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s1">&#39;likes - dislikes AS like_dislike_diff&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>like_dislike_diff</th></tr>
+<tr><td>54561.0</td></tr>
+<tr><td>91039.0</td></tr>
+<tr><td>140694.0</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">collect</span><span class="p">()[</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Row(video_id=&#39;gHZ1Qz0KiKM&#39;, trending_date=&#39;2017-11-14&#39;, channel_title=&#39;iJustine&#39;, category_id=&#39;28&#39;, publish_time=&#39;2017-11-13T19:07:23.000Z&#39;, views=&#39;119180&#39;, likes=&#39;9763&#39;, dislikes=&#39;511&#39;, comment_count=&#39;1434&#39;, comments_disabled=&#39;False&#39;, ratings_disabled=&#39;False&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">collect</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">channel_title</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Rudy Mancuso&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="filtering">
+<h4>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">100e6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>TyHvyGVs42U</td><td>2017-11-26</td><td>LuisFonsiVEVO</td><td>10</td><td>2017-11-17T05:00:...</td><td>102012605</td><td>2376636</td><td>117196</td><td>134224</td><td>False</td><td>False</td></tr>
+<tr><td>FlsCjmMhFmw</td><td>2017-12-10</td><td>YouTube Spotlight</td><td>24</td><td>2017-12-06T17:58:...</td><td>100911567</td><td>2656659</td><td>1353647</td><td>682890</td><td>False</td><td>False</td></tr>
+<tr><td>FlsCjmMhFmw</td><td>2017-12-11</td><td>YouTube Spotlight</td><td>24</td><td>2017-12-06T17:58:...</td><td>113874632</td><td>2811215</td><td>1470383</td><td>787174</td><td>False</td><td>False</td></tr>
+<tr><td>FlsCjmMhFmw</td><td>2017-12-12</td><td>YouTube Spotlight</td><td>24</td><td>2017-12-06T17:58:...</td><td>125432237</td><td>2912702</td><td>1545015</td><td>807558</td><td>False</td><td>False</td></tr>
+<tr><td>FlsCjmMhFmw</td><td>2017-12-13</td><td>YouTube Spotlight</td><td>24</td><td>2017-12-06T17:58:...</td><td>137843120</td><td>3014471</td><td>1602383</td><td>817582</td><td>False</td><td>False</td></tr>
+<tr><td>FlsCjmMhFmw</td><td>2017-12-14</td><td>YouTube Spotlight</td><td>24</td><td>2017-12-06T17:58:...</td><td>149376127</td><td>3093544</td><td>1643059</td><td>810698</td><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;channel_title&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;VEVO&#39;</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">80e6</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>TyHvyGVs42U</td><td>2017-11-24</td><td>LuisFonsiVEVO</td><td>10</td><td>2017-11-17T05:00:...</td><td>80605857</td><td>2173715</td><td>104121</td><td>122511</td><td>False</td><td>False</td></tr>
+<tr><td>TyHvyGVs42U</td><td>2017-11-25</td><td>LuisFonsiVEVO</td><td>10</td><td>2017-11-17T05:00:...</td><td>91552137</td><td>2277789</td><td>110752</td><td>128071</td><td>False</td><td>False</td></tr>
+<tr><td>TyHvyGVs42U</td><td>2017-11-26</td><td>LuisFonsiVEVO</td><td>10</td><td>2017-11-17T05:00:...</td><td>102012605</td><td>2376636</td><td>117196</td><td>134224</td><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s1">&#39;channel_title LIKE &quot;%VEVO%&quot; AND views &gt; 80e6&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>TyHvyGVs42U</td><td>2017-11-24</td><td>LuisFonsiVEVO</td><td>10</td><td>2017-11-17T05:00:...</td><td>80605857</td><td>2173715</td><td>104121</td><td>122511</td><td>False</td><td>False</td></tr>
+<tr><td>TyHvyGVs42U</td><td>2017-11-25</td><td>LuisFonsiVEVO</td><td>10</td><td>2017-11-17T05:00:...</td><td>91552137</td><td>2277789</td><td>110752</td><td>128071</td><td>False</td><td>False</td></tr>
+<tr><td>TyHvyGVs42U</td><td>2017-11-26</td><td>LuisFonsiVEVO</td><td>10</td><td>2017-11-17T05:00:...</td><td>102012605</td><td>2376636</td><td>117196</td><td>134224</td><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;video_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">isNull</span><span class="p">())</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>null</td><td>2017-11-14</td><td>Animal Adventure ...</td><td>15</td><td>2017-11-12T00:18:...</td><td>45455</td><td>2282</td><td>35</td><td>17</td><td>False</td><td>False</td></tr>
+<tr><td>null</td><td>2017-11-15</td><td>Animal Adventure ...</td><td>15</td><td>2017-11-12T00:18:...</td><td>45965</td><td>2284</td><td>35</td><td>17</td><td>False</td><td>False</td></tr>
+<tr><td>null</td><td>2017-11-16</td><td>Mental Floss</td><td>27</td><td>2017-11-15T16:00:...</td><td>21740</td><td>979</td><td>5</td><td>93</td><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+<section id="sorting">
+<h4>Sorting<a class="headerlink" href="#sorting" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;trending_date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">asc</span><span class="p">(),</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">asc</span><span class="p">()</span>
+<span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>qg0GdM60syI</td><td>2017-11-14</td><td>90s Commercials</td><td>27</td><td>2017-03-31T21:46:...</td><td>773</td><td>2</td><td>0</td><td>0</td><td>False</td><td>False</td></tr>
+<tr><td>NZFhMSgbKKM</td><td>2017-11-14</td><td>Ben Rohrbach</td><td>17</td><td>2017-11-13T15:11:...</td><td>945</td><td>7</td><td>5</td><td>8</td><td>False</td><td>False</td></tr>
+<tr><td>4d07RXYLsJE</td><td>2017-11-14</td><td>Jenny Hanell</td><td>28</td><td>2017-11-04T20:48:...</td><td>1827</td><td>3</td><td>0</td><td>2</td><td>False</td><td>False</td></tr>
+<tr><td>wRGldR_SQAA</td><td>2017-11-14</td><td>Steve Kovach</td><td>22</td><td>2017-11-09T18:01:...</td><td>2259</td><td>0</td><td>0</td><td>0</td><td>False</td><td>False</td></tr>
+<tr><td>zNqCVTs38nU</td><td>2017-11-14</td><td>D3sports.com</td><td>17</td><td>2017-11-13T02:15:...</td><td>4569</td><td>35</td><td>18</td><td>19</td><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+<section id="unique-values">
+<h4>Unique values<a class="headerlink" href="#unique-values" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;comments_disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;ratings_disabled&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>False</td><td>True</td></tr>
+<tr><td>True</td><td>True</td></tr>
+<tr><td>True</td><td>False</td></tr>
+<tr><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">countDistinct</span><span class="p">(</span><span class="s1">&#39;comments_disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;ratings_disabled&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>count(DISTINCT comments_disabled, ratings_disabled)</th></tr>
+<tr><td>4</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+<section id="data-aggregation">
+<h4>Data aggregation<a class="headerlink" href="#data-aggregation" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>video_id</th><th>trending_date</th><th>channel_title</th><th>category_id</th><th>publish_time</th><th>views</th><th>likes</th><th>dislikes</th><th>comment_count</th><th>comments_disabled</th><th>ratings_disabled</th></tr>
+<tr><td>2kyS6SvSYSE</td><td>2017-11-14</td><td>CaseyNeistat</td><td>22</td><td>2017-11-13T17:13:...</td><td>748374</td><td>57527</td><td>2966</td><td>15954</td><td>False</td><td>False</td></tr>
+<tr><td>1ZAPwfrtAFY</td><td>2017-11-14</td><td>LastWeekTonight</td><td>24</td><td>2017-11-13T07:30:...</td><td>2418783</td><td>97185</td><td>6146</td><td>12703</td><td>False</td><td>False</td></tr>
+<tr><td>5qpjK5DgCt4</td><td>2017-11-14</td><td>Rudy Mancuso</td><td>23</td><td>2017-11-12T19:05:...</td><td>3191434</td><td>146033</td><td>5339</td><td>8181</td><td>False</td><td>False</td></tr>
+<tr><td>puqaWrEC7tY</td><td>2017-11-14</td><td>Good Mythical Mor...</td><td>24</td><td>2017-11-13T11:00:...</td><td>343168</td><td>10172</td><td>666</td><td>2146</td><td>False</td><td>False</td></tr>
+<tr><td>d380meD0W0M</td><td>2017-11-14</td><td>nigahiga</td><td>24</td><td>2017-11-12T18:01:...</td><td>2095731</td><td>132235</td><td>1989</td><td>17518</td><td>False</td><td>False</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="s1">&#39;dislikes&#39;</span><span class="p">,</span> <span class="s1">&#39;comment_count&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
+    <span class="n">youtube</span> <span class="o">=</span> <span class="n">dfYoutube</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;category_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>category_id</th><th>count</th></tr>
+<tr><td>15</td><td>199</td></tr>
+<tr><td>29</td><td>15</td></tr>
+<tr><td>22</td><td>798</td></tr>
+<tr><td>28</td><td>546</td></tr>
+<tr><td>43</td><td>10</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;category_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s1">&#39;likes&#39;</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s1">&#39;likes&#39;</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="s1">&#39;likes&#39;</span><span class="p">),</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">stddev</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">skewness</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>category_id</th><th>avg(likes)</th><th>sum(likes)</th><th>max(likes)</th><th>stddev_samp(views)</th><th>var_samp(views)</th><th>skewness(views)</th><th>kurtosis(views)</th></tr>
+<tr><td>15</td><td>20438.45226130653</td><td>4067252.0</td><td>9939</td><td>1053910.929171636</td><td>1.110728246627421...</td><td>3.7439036440919358</td><td>14.581943331932447</td></tr>
+<tr><td>29</td><td>133141.86666666667</td><td>1997128.0</td><td>986</td><td>6267908.628900739</td><td>3.928667858024835E13</td><td>3.4743735320694227</td><td>10.071331820156791</td></tr>
+<tr><td>22</td><td>32485.075187969924</td><td>2.592309E7</td><td>9857</td><td>1536250.770096244</td><td>2.360066428621303E12</td><td>4.172345303282912</td><td>21.43860099370683</td></tr>
+<tr><td>28</td><td>25856.664835164836</td><td>1.4117739E7</td><td>99783</td><td>1611070.241800707</td><td>2.595547324015788...</td><td>4.020001503753627</td><td>18.471799408511846</td></tr>
+<tr><td>43</td><td>4410.8</td><td>44108.0</td><td>4739</td><td>21735.7763506774</td><td>4.724439735666669E8</td><td>-1.0559781645594817</td><td>0.12177982169667523</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;category_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+    <span class="s1">&#39;likes&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">:</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;views&#39;</span><span class="p">:</span> <span class="s1">&#39;stddev&#39;</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">:</span> <span class="s1">&#39;variance&#39;</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">:</span> <span class="s1">&#39;skewness&#39;</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">:</span> <span class="s1">&#39;kurtosis&#39;</span>
+<span class="p">})</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>category_id</th><th>kurtosis(views)</th><th>max(likes)</th></tr>
+<tr><td>15</td><td>14.581943331932447</td><td>9939</td></tr>
+<tr><td>29</td><td>10.071331820156791</td><td>986</td></tr>
+<tr><td>22</td><td>21.43860099370683</td><td>9857</td></tr>
+<tr><td>28</td><td>18.471799408511846</td><td>99783</td></tr>
+<tr><td>43</td><td>0.12177982169667523</td><td>4739</td></tr>
+</table>
+</div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span>\
+    <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;comments_disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;ratings_disabled&#39;</span><span class="p">)</span>\
+    <span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;category_id&#39;</span><span class="p">)</span>\
+    <span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border='1'>
+<tr><th>comments_disabled</th><th>ratings_disabled</th><th>1</th><th>10</th><th>15</th><th>17</th><th>19</th><th>2</th><th>20</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>43</th></tr>
+<tr><td>False</td><td>True</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>7</td><td>null</td><td>10</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td></tr>
+<tr><td>True</td><td>True</td><td>7</td><td>8</td><td>null</td><td>7</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>4</td><td>1</td><td>null</td><td>null</td><td>1</td><td>4</td><td>null</td></tr>
+<tr><td>True</td><td>False</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>7</td><td>24</td><td>2</td><td>43</td><td>57</td><td>null</td><td>5</td><td>21</td><td>null</td><td>null</td></tr>
+<tr><td>False</td><td>False</td><td>533</td><td>1606</td><td>199</td><td>475</td><td>98</td><td>102</td><td>78</td><td>764</td><td>925</td><td>2362</td><td>726</td><td>913</td><td>347</td><td>524</td><td>11</td><td>10</td></tr>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter-04"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="hiveql-data-manipulation.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">HiveQL: Data Manipulation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="pyspark-data-cleaning.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PySpark: Data Cleaning</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
