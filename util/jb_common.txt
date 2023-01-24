@@ -34,16 +34,3 @@ td {font-size:12px}
 p {font-size:14px}
 div.highlight {font-size:14px}
 </style>
-
-import findspark; findspark.init()
-from pyspark.sql import SparkSession
-spark = SparkSession.builder.enableHiveSupport().getOrCreate()
-spark.conf.set('spark.sql.repl.eagerEval.enabled', True)
-spark.conf.set('spark.sql.repl.eagerEval.truncate', 1000)
-
-import pyspark.sql.functions as F
-import pyspark.sql.types as T
-from pyspark.sql.window import Window
-
-import numpy as np
-import pandas as pd
