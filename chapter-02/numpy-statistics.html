@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -53,6 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Scipy: Hypothesis Testing" href="scipy-hypothesis-testing.html" />
@@ -97,7 +99,7 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="../_static/logo.png" class="logo" alt="logo">
+      <img src="../_static/logo.svg" class="logo" alt="logo">
       
       
     </a>
@@ -318,8 +320,28 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
      XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/ray-hyperparameter-optimization.html">
+     Ray: Hyperparameter Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/shap-model-interpretation.html">
+     Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/imblearn-targeted-modeling.html">
+     1. Imbalanced learning
     </a>
    </li>
   </ul>
@@ -983,27 +1005,6 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="nt">th</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
-<span class="nt">td</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
-<span class="nt">p</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
-<span class="nt">div</span><span class="p">.</span><span class="nc">highlight</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><style>
-th {font-size:12px}
-td {font-size:12px}
-p {font-size:14px}
-div.highlight {font-size:14px}
-</style>
-</div></div>
-</div>
 <section id="descriptive-statisics">
 <h2>1. Descriptive statisics<a class="headerlink" href="#descriptive-statisics" title="Permalink to this headline">#</a></h2>
 <section id="basic-statistics">
@@ -1173,7 +1174,7 @@ where:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-statistics_23_0.png"><img alt="../_images/numpy-statistics_23_0.png" class="align-center" src="../_images/numpy-statistics_23_0.png" style="width: 384.0px; height: 531.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_22_0.png"><img alt="../_images/numpy-statistics_22_0.png" class="align-center" src="../_images/numpy-statistics_22_0.png" style="width: 384.0px; height: 531.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1207,7 +1208,7 @@ where:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-statistics_26_0.png"><img alt="../_images/numpy-statistics_26_0.png" class="align-center" src="../_images/numpy-statistics_26_0.png" style="width: 686.0px; height: 329.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_25_0.png"><img alt="../_images/numpy-statistics_25_0.png" class="align-center" src="../_images/numpy-statistics_25_0.png" style="width: 686.0px; height: 329.5px;" /></a>
 </div>
 </div>
 <p>Note that the side of the skewness refers to the side of the longer tail. In the graph above, the red sample is said to be right skewed since the mass of its distribution is concentrated to the left, leading to a longer right tail.</p>
@@ -1253,7 +1254,7 @@ where:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-statistics_31_0.png"><img alt="../_images/numpy-statistics_31_0.png" class="align-center" src="../_images/numpy-statistics_31_0.png" style="width: 607.0px; height: 329.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_30_0.png"><img alt="../_images/numpy-statistics_30_0.png" class="align-center" src="../_images/numpy-statistics_30_0.png" style="width: 607.0px; height: 329.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1319,7 +1320,7 @@ where:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-statistics_40_0.png"><img alt="../_images/numpy-statistics_40_0.png" class="align-center" src="../_images/numpy-statistics_40_0.png" style="width: 279.2px; height: 195.60000000000002px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_39_0.png"><img alt="../_images/numpy-statistics_39_0.png" class="align-center" src="../_images/numpy-statistics_39_0.png" style="width: 279.2px; height: 195.60000000000002px;" /></a>
 </div>
 </div>
 </section>
@@ -1463,7 +1464,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-statistics_55_0.png"><img alt="../_images/numpy-statistics_55_0.png" class="align-center" src="../_images/numpy-statistics_55_0.png" style="width: 678.5px; height: 280.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_54_0.png"><img alt="../_images/numpy-statistics_54_0.png" class="align-center" src="../_images/numpy-statistics_54_0.png" style="width: 678.5px; height: 280.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1475,7 +1476,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-statistics_56_0.png"><img alt="../_images/numpy-statistics_56_0.png" class="align-center" src="../_images/numpy-statistics_56_0.png" style="width: 678.5px; height: 280.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_55_0.png"><img alt="../_images/numpy-statistics_55_0.png" class="align-center" src="../_images/numpy-statistics_55_0.png" style="width: 678.5px; height: 280.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1487,7 +1488,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-statistics_57_0.png"><img alt="../_images/numpy-statistics_57_0.png" class="align-center" src="../_images/numpy-statistics_57_0.png" style="width: 678.5px; height: 280.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_56_0.png"><img alt="../_images/numpy-statistics_56_0.png" class="align-center" src="../_images/numpy-statistics_56_0.png" style="width: 678.5px; height: 280.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1530,7 +1531,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-statistics_60_0.png"><img alt="../_images/numpy-statistics_60_0.png" class="align-center" src="../_images/numpy-statistics_60_0.png" style="width: 678.5px; height: 280.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_59_0.png"><img alt="../_images/numpy-statistics_59_0.png" class="align-center" src="../_images/numpy-statistics_59_0.png" style="width: 678.5px; height: 280.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1542,7 +1543,7 @@ E[(\mathbf{x}-E[\mathbf{x}])\cdot(\mathbf{y}-E[\mathbf{y}])]
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/numpy-statistics_61_0.png"><img alt="../_images/numpy-statistics_61_0.png" class="align-center" src="../_images/numpy-statistics_61_0.png" style="width: 677.5px; height: 280.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_60_0.png"><img alt="../_images/numpy-statistics_60_0.png" class="align-center" src="../_images/numpy-statistics_60_0.png" style="width: 677.5px; height: 280.5px;" /></a>
 </div>
 </div>
 </section>
@@ -2078,7 +2079,7 @@ c_{\alpha/2}\frac{\hat{\sigma}_1^2}{\hat{\sigma}_2^2}
          Iterations 6
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/numpy-statistics_93_1.png"><img alt="../_images/numpy-statistics_93_1.png" class="align-center" src="../_images/numpy-statistics_93_1.png" style="width: 593.0px; height: 302.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/numpy-statistics_92_1.png"><img alt="../_images/numpy-statistics_92_1.png" class="align-center" src="../_images/numpy-statistics_92_1.png" style="width: 593.0px; height: 302.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">

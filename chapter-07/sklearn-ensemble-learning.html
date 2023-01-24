@@ -1,0 +1,1470 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Sklearn: Ensemble Learning</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="XGBoost: Tree Boosting" href="xgboost-tree-boosting.html" />
+    <link rel="prev" title="7. Tabular Learning" href="_intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-01/_intro.html">
+   <b>
+    1. Python Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     Numpy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     Sympy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-probability.html">
+     Numpy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-statistics.html">
+     Numpy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     Scipy: Hypothesis Testing
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-03/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/numpy-arrays.html">
+     Numpy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-04/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-05/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ray-hyperparameter-optimization.html">
+     Ray: Hyperparameter Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="shap-model-interpretation.html">
+     Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="imblearn-targeted-modeling.html">
+     1. Imbalanced learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-10/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/chapter-07/sklearn-ensemble-learning.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/chapter-07/sklearn-ensemble-learning.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter-07/sklearn-ensemble-learning.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   1. Overview
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#big-picture">
+     1.1. Big picture
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bias-variance-analysis">
+     1.2. Bias-variance analysis
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#error-reduction">
+       Error reduction
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stacking">
+   2. Stacking
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#voting">
+     2.1. Voting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     2.2. Stacking
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#with-cross-validation">
+       With cross validation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#blending">
+       Blending
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bagging">
+   3. Bagging
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#random-forest">
+     3.1. Random Forest
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#extra-trees">
+     3.2. Extra Trees
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     3.3. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#boosting">
+   4. Boosting
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adaptive-boosting">
+     4.1. Adaptive Boosting
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#algorithm">
+       Algorithm
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-boosting">
+     4.2 Gradient Boosting
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Algorithm
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Sklearn: Ensemble Learning</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   1. Overview
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#big-picture">
+     1.1. Big picture
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bias-variance-analysis">
+     1.2. Bias-variance analysis
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#error-reduction">
+       Error reduction
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stacking">
+   2. Stacking
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#voting">
+     2.1. Voting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     2.2. Stacking
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#with-cross-validation">
+       With cross validation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#blending">
+       Blending
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bagging">
+   3. Bagging
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#random-forest">
+     3.1. Random Forest
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#extra-trees">
+     3.2. Extra Trees
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     3.3. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#boosting">
+   4. Boosting
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adaptive-boosting">
+     4.1. Adaptive Boosting
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#algorithm">
+       Algorithm
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-boosting">
+     4.2 Gradient Boosting
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Algorithm
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="sklearn-ensemble-learning">
+<h1>Sklearn: Ensemble Learning<a class="headerlink" href="#sklearn-ensemble-learning" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span><span class="p">,</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">VotingClassifier</span><span class="p">,</span> <span class="n">VotingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">StackingClassifier</span><span class="p">,</span> <span class="n">StackingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingClassifier</span><span class="p">,</span> <span class="n">BaggingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">ExtraTreesClassifier</span><span class="p">,</span> <span class="n">ExtraTreesRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span><span class="p">,</span> <span class="n">AdaBoostRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingClassifier</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="overview">
+<h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<p>Classical Machine Learning algorithms are usually shown to be poor when handling real-world datasets. Models fit from these algorithms often suffer from two problems: high bias and high variance; such a model is called a <em>weak learner</em>. In this topic, we are going through some elegant techniques that combine multiple weak learners to form a powerful model, which produces an improved overall result. This is referred to generally as <a class="reference external" href="https://en.wikipedia.org/wiki/Ensemble_learning">Ensemble Learning</a>, a family of method has proven their effectiveness in many Machine Learing competitions.</p>
+<section id="big-picture">
+<h3>1.1. Big picture<a class="headerlink" href="#big-picture" title="Permalink to this headline">#</a></h3>
+<p>The branches of Ensemble Learning is summarized in the tree diagram below, where italic ones are specific algorithms.</p>
+<ul class="simple">
+<li><p>Stacking (Wolpert, 1992)</p>
+<ul>
+<li><p>Voting</p></li>
+<li><p>Stacking</p></li>
+<li><p>Blending</p></li>
+</ul>
+</li>
+<li><p>Bagging</p>
+<ul>
+<li><p><em>RandomForest</em> (Breiman, 1995)</p></li>
+<li><p><em>ExtraTrees</em> (Geurts, 2006)</p></li>
+</ul>
+</li>
+<li><p>Boosting</p>
+<ul>
+<li><p>Adaptive Boosting</p>
+<ul>
+<li><p><em>AdaBoost</em> (Freund and Schapire, 1995)</p></li>
+</ul>
+</li>
+<li><p>Gradient Boosting</p>
+<ul>
+<li><p><em>GBDT</em> (Friedman, 2001)</p>
+<ul>
+<li><p><em>XGBoost</em> (Chen and Guestrin, 2014-02)</p></li>
+<li><p><em>LightGBM</em> (Guolin, 2016-08)</p></li>
+<li><p><em>CatBoost</em> (Yandex, 2017-07)</p></li>
+<li><p><em>NGBoost</em> (Duan and Avati, 2018-06)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="bias-variance-analysis">
+<h3>1.2. Bias-variance analysis<a class="headerlink" href="#bias-variance-analysis" title="Permalink to this headline">#</a></h3>
+<p>Let’s say <span class="math notranslate nohighlight">\(x\)</span> is a variable we think that may have a strong relationship on <span class="math notranslate nohighlight">\(y\)</span>, the variable we are trying to predict. When collecting data about <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>, there are always some noises <span class="math notranslate nohighlight">\(\epsilon\)</span> occuring. The relationship between <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> is written as:</p>
+<div class="math notranslate nohighlight">
+\[y=f(x)+\epsilon\]</div>
+<p>Predicting <span class="math notranslate nohighlight">\(y\)</span> is the process of finding a function <span class="math notranslate nohighlight">\(\hat{f}\)</span> that best models the true relationship <span class="math notranslate nohighlight">\(f\)</span>. The predicted value made by <span class="math notranslate nohighlight">\(\hat{f}\)</span> is <span class="math notranslate nohighlight">\(\hat{y}=\hat{f}(x)\)</span>. To measure the error of a predictive model, a common metric is mean squared error <span class="math notranslate nohighlight">\(\mathbb{E}(y-\hat{y})^2\)</span>. It can be decomposed into:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\text{TotalError}
+&amp;= \left(\mathbb{E}[\hat{y}]-f(x)\right)^2 + \mathbb{E}\left[\left(\hat{y}-\mathbb{E}[\hat{y}]\right)^2\right] + \sigma^2_\epsilon \\
+&amp;= \text{MSE}\left(\hat{y},f(x)\right) + \text{Var}(\hat{y}) + \text{Var}(\epsilon) \\
+&amp;= \text{Bias} + \text{Variance} + \text{IrreducibleError} \\
+\end{aligned}\end{split}\]</div>
+<p>From this equation:</p>
+<ul class="simple">
+<li><p>Bias is the mean squared error between the predicted value <span class="math notranslate nohighlight">\(\hat{y}\)</span> and the underlying true value we want to predict <span class="math notranslate nohighlight">\(f(x)\)</span>. So a model with high bias seems to be too simple to catch the underlying pattern <span class="math notranslate nohighlight">\(f\)</span> in the data.</p></li>
+<li><p>Variance (of <span class="math notranslate nohighlight">\(\hat{y}\)</span>) shows how spread the predicted values are; the higher variance a model has, the more sensitive it is to noises. This is because noises make training data fluctuate, so that high variance is a sign of capturing noises.</p></li>
+</ul>
+<p>A good model should have low bias and low variance, but practically it’s a challenge to achieve since there is always a trade-off between the two.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">yTrue</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">yTrue</span> <span class="o">+</span> <span class="n">e</span>
+
+<span class="n">xFunc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">yFuncTrue</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xFunc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">degrees</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">axSub</span><span class="p">,</span> <span class="n">degree</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">degrees</span><span class="p">):</span>
+    <span class="c1"># build model and predict</span>
+    <span class="n">coefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="n">degree</span><span class="p">)</span>
+    <span class="n">fHat</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="p">(</span><span class="n">degree</span><span class="o">-</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">coefs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">degree</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">yFuncHat</span> <span class="o">=</span> <span class="n">fHat</span><span class="p">(</span><span class="n">xFunc</span><span class="p">)</span>
+    <span class="n">yHat</span> <span class="o">=</span> <span class="n">fHat</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="n">bias</span> <span class="o">=</span> <span class="n">MSE</span><span class="p">(</span><span class="n">yTrue</span><span class="p">,</span> <span class="n">yHat</span><span class="p">)</span>
+    <span class="n">variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">yHat</span><span class="p">)</span>
+    
+    <span class="n">axSub</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed data&#39;</span><span class="p">)</span>
+    <span class="n">axSub</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xFunc</span><span class="p">,</span> <span class="n">yFuncTrue</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ground truth&#39;</span><span class="p">)</span>
+    <span class="n">axSub</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xFunc</span><span class="p">,</span> <span class="n">yFuncHat</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;indianred&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prediction&#39;</span><span class="p">)</span>
+    <span class="n">axSub</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Polynomial fit, degree = </span><span class="si">{</span><span class="n">degree</span><span class="si">}</span><span class="se">\n</span><span class="s1">Bias = </span><span class="si">{</span><span class="n">bias</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">, Variance = </span><span class="si">{</span><span class="n">variance</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">axSub</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/sklearn-ensemble-learning_7_0.png" src="../_images/sklearn-ensemble-learning_7_0.png" />
+</div>
+</div>
+<section id="error-reduction">
+<h4>Error reduction<a class="headerlink" href="#error-reduction" title="Permalink to this headline">#</a></h4>
+<p>In order to improve a model, we can try either to reduce bias or to reduce variance. But as state earlier, there is a trade-off, so it would be more practical to reduce one of the two error sources, while accept a small increase in the other. Ensemble Learning is the solution here, and I will do a quick analysis of how ensemble methods solve the issue.</p>
+<p>The first method being metioned here is Bagging, it adds noises by subsetting the training dataset, so that the variance will reduce but the bias will increase a small amount. The second method is Boosting, it corrects error step-by-step and thus reduce bias a lot, but data leakage will increase variance a little bit.</p>
+</section>
+</section>
+</section>
+<section id="stacking">
+<h2>2. Stacking<a class="headerlink" href="#stacking" title="Permalink to this headline">#</a></h2>
+<section id="voting">
+<h3>2.1. Voting<a class="headerlink" href="#voting" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://scikit-learn.org/stable/modules/ensemble.html#voting-classifier">Voting</a> (for classification) or <a class="reference external" href="https://scikit-learn.org/stable/modules/ensemble.html#voting-regressor">averaging</a> (for regression) is the simplest ensembling method. When doing voting for classification, there are two strategies can be applied: marjority voting on predicted results (hard voting) and taking argmax of the weighted average of predicted probabilities (soft voting).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xValid</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yValid</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf1</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">clf2</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)</span>
+<span class="n">clf3</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+
+<span class="n">modelsBase</span> <span class="o">=</span> <span class="p">[</span><span class="n">clf1</span><span class="p">,</span> <span class="n">clf2</span><span class="p">,</span> <span class="n">clf3</span><span class="p">]</span>
+<span class="n">modelsBaseNamed</span> <span class="o">=</span> <span class="p">[(</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">modelsBase</span><span class="p">]</span>
+<span class="n">ensembler</span> <span class="o">=</span> <span class="n">VotingClassifier</span><span class="p">(</span><span class="n">modelsBaseNamed</span><span class="p">,</span> <span class="n">voting</span><span class="o">=</span><span class="s1">&#39;soft&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">modelsBase</span> <span class="o">+</span> <span class="p">[</span><span class="n">ensembler</span><span class="p">]:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
+    <span class="n">yPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)[:</span> <span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yPred</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUC = 0.9464 [SVC]
+AUC = 0.9931 [LogisticRegression]
+AUC = 0.8512 [DecisionTreeClassifier]
+AUC = 0.9851 [VotingClassifier]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>2.2. Stacking<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://scikit-learn.org/stable/modules/ensemble.html#stacked-generalization">Stacking</a> technique organizes its members into two levels:</p>
+<ul class="simple">
+<li><p>Level 1, a number of <em>base models</em> are fitted to the training set. Each prediction made by one of these fitted base model is called a <em>latent feature</em>.</p></li>
+<li><p>Level 2, a <em>meta model</em> is trained using the latent features constructed in level 1.</p></li>
+</ul>
+<p>The idea behind stacking is that each base model has an unique approach, it might discover some parts of the ground truth that other models do hot have. Combining them might utilize the their strengths and thus improve the overall quality. Note that Voting is a special case of Stacking, where the final combiner is a very simple model. In practice, the base models are often selected <em>heterogeneously</em>, and the meta model is often a simple linear model.</p>
+<section id="with-cross-validation">
+<h4>With cross validation<a class="headerlink" href="#with-cross-validation" title="Permalink to this headline">#</a></h4>
+<p>The approach described earlier leaks the target when going from level 1 to level 2, so it is prone to overfitting. A solution has been implemented in Scikit-learn is combining it with cross validation.</p>
+<ul class="simple">
+<li><p>Step 1: Split the training data into <span class="math notranslate nohighlight">\(K\)</span> folds.</p></li>
+<li><p>Step 2: Successively in <span class="math notranslate nohighlight">\(K\)</span> rounds, use <span class="math notranslate nohighlight">\(K-1\)</span> folds to train first-level models, then predict on the remaining unused fold.</p></li>
+<li><p>Step 3: For each model, contruct its complete latent feature by concatenating its predictions on <span class="math notranslate nohighlight">\(K\)</span> folds.</p></li>
+<li><p>Step 4: Train the second-level model on the latent feature set constructed in step 3.</p></li>
+</ul>
+</section>
+<section id="blending">
+<h4>Blending<a class="headerlink" href="#blending" title="Permalink to this headline">#</a></h4>
+<p>Blending is a simplified version of Stacking, it replaces cross validation with holdout validation. This technique gains popular recently because real world datasets are large, so training time is also an important aspect. However, people usually use <em>stacking</em> and <em>blending</em> interchangeably.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xValid</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yValid</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf1</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
+<span class="n">clf2</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">clf3</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">clf4</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)</span>
+<span class="n">clf5</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+
+<span class="n">modelsBase</span> <span class="o">=</span> <span class="p">[</span><span class="n">clf1</span><span class="p">,</span> <span class="n">clf2</span><span class="p">,</span> <span class="n">clf3</span><span class="p">,</span> <span class="n">clf4</span><span class="p">,</span> <span class="n">clf5</span><span class="p">]</span>
+<span class="n">modelsBaseNamed</span> <span class="o">=</span> <span class="p">[(</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">modelsBase</span><span class="p">]</span>
+<span class="n">modelMeta</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+
+<span class="n">ensembler</span> <span class="o">=</span> <span class="n">StackingClassifier</span><span class="p">(</span><span class="n">modelsBaseNamed</span><span class="p">,</span> <span class="n">modelMeta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">modelsBase</span> <span class="o">+</span> <span class="p">[</span><span class="n">ensembler</span><span class="p">]:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
+    <span class="n">yPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)[:</span> <span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yPred</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUC = 0.9568 [KNeighborsClassifier]
+AUC = 0.9775 [GaussianNB]
+AUC = 0.9464 [SVC]
+AUC = 0.9931 [LogisticRegression]
+AUC = 0.8442 [DecisionTreeClassifier]
+AUC = 0.9891 [StackingClassifier]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="bagging">
+<h2>3. Bagging<a class="headerlink" href="#bagging" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://scikit-learn.org/stable/modules/ensemble.html#bagging-meta-estimator">Bootstrap aggregating</a> (Bagging) uses averaging/voting method over a number of <em>homogeneous</em> weak models in order to reduce variance. Specifically, Bagging is divided into two parts: <a class="reference external" href="https://en.wikipedia.org/wiki/Bootstrapping_(statistics)">bootstrapping</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Aggregate_function%3E">aggregating</a>.</p>
+<ul class="simple">
+<li><p>Boostrapping: The entire dataset is performed random sampling with replacement on both rows and columns. This outputs a number of bootstraps where each of them is different from the others.</p></li>
+<li><p>Aggregating: after boostrap samples are generated, they are fit into the weak learners. All the model results will be combined by averaging (for regression) or voting (for classification).</p></li>
+</ul>
+<p>A Bagging ensembler operates as a committee that outperforms any individual weak model. This wonderful effect - <em>the wisdom of crowds</em> - can be explained that weak models protect each other from their individual errors. If the members share the same behaviors, they also make the same mistakes. Therefore, the low correlation between weak models is the key. Note that the Bagging method requires the initial sample to be large enough for the bootstrapping step to be statistical significant.</p>
+<section id="random-forest">
+<h3>3.1. Random Forest<a class="headerlink" href="#random-forest" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Random_forest">Random Forest</a> is the implementation of Bagging method on Decision Trees. It can be easily parallelized, does not requires too much hyperparameters tuning and has a decent prediction power. Random Forest is a very popular algorithm, before Boosting methods take the crown. The <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html"><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html"><code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code></a> classes have the following Bagging hyperparameters (ones inherited from Decision Tree are not mentioned):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>: the number of trees in the forest, defaults to <em>100</em>. Control the complexity of the algorithm. Try increasing this when the model is underfitting, but it will take a longer training time.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code>: the ratio of features used in each tree, defaults to <em>auto</em> (square root of <em>nFeature</em>). A lower value increases bias and reduces variance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_samples</span></code>: the ratio of instances used in each tree, defaults to <em>None</em> (100% of <em>nSample</em>). A lower value increases bias and reduces variance.</p></li>
+</ul>
+</section>
+<section id="extra-trees">
+<h3>3.2. Extra Trees<a class="headerlink" href="#extra-trees" title="Permalink to this headline">#</a></h3>
+<p>Besides Random Forest, Sickit-learn also develops a quite similar algorithm, Extremely Randomized Trees (Extra Trees for short). Instead of finding the split with highest information gain at each step, this method goes one step further in randomness by selecting the best candidate among a number of randomly-generated cut points. The <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html"><code class="docutils literal notranslate"><span class="pre">ExtraTreesClassifier</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html"><code class="docutils literal notranslate"><span class="pre">ExtraTreesRegressor</span></code></a> classes have same hyperparameters as in Random Forest, there are only some small differences in their default values.</p>
+</section>
+<section id="implementation">
+<h3>3.3. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xValid</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yValid</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">modelBase</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">})</span>
+<span class="n">ensembler</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">modelBase</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="n">model1</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">model2</span> <span class="o">=</span> <span class="n">ExtraTreesClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">modelBase</span><span class="p">,</span> <span class="n">ensembler</span><span class="p">,</span> <span class="n">model1</span><span class="p">,</span> <span class="n">model2</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
+    <span class="n">yPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)[:</span> <span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yPred</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUC = 0.9845 [LogisticRegression]
+AUC = 0.9897 [BaggingClassifier]
+AUC = 0.9688 [RandomForestClassifier]
+AUC = 0.9749 [ExtraTreesClassifier]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="boosting">
+<h2>4. Boosting<a class="headerlink" href="#boosting" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Boosting_(machine_learning)">Boosting</a> works in the same spirit as Bagging: it also build a group of <em>homogeneous</em> models to obtain a more powerful predictor. The difference is that Boosting trains weak models sequentially while Bagging perform the training independently. The idea behind Boosting is to fit models iteratively such that the training of each model depends on the previous ones. Using this strategy, badly handled observations in the earlier steps will be taken care better in the later steps. Since the Boosting method puts its efforts on important cases, we end up have a strong learner with lower bias.</p>
+<p>In many competitions, Boosting methods used on Decision Trees are so effective for tabular datasets and is widely used by top competitors. For the rest of this article, we will take a deep dive into a bunch of interesting Boosting algorithms. To start off, let’s take a quick overview of two Boosting approaches, Adaptive Boosting and Gradient Boosting. They do both train trees consequently, but behave differently. We first denote: <span class="math notranslate nohighlight">\(\eta\)</span> - the learning rate, <span class="math notranslate nohighlight">\(T\)</span> - the number of iterations, <span class="math notranslate nohighlight">\(f^{(t)}\)</span> and <span class="math notranslate nohighlight">\(f^{(t)}(\mathbf{X})\)</span> - the tree number <span class="math notranslate nohighlight">\(t\)</span> and its predicted value for <span class="math notranslate nohighlight">\(t=1,2,\dots,T\)</span>.</p>
+<p><em>Adaptive Boosting</em></p>
+<ul class="simple">
+<li><p>Train <span class="math notranslate nohighlight">\(f^{(1)}\)</span></p></li>
+<li><p>Train <span class="math notranslate nohighlight">\(f^{(2)}\)</span> base on <span class="math notranslate nohighlight">\(f^{(1)}\)</span></p></li>
+<li><p>Train <span class="math notranslate nohighlight">\(f^{(3)}\)</span> base on <span class="math notranslate nohighlight">\(f^{(2)}\)</span></p></li>
+<li><p>…</p></li>
+<li><p>Train <span class="math notranslate nohighlight">\(f^{(T)}\)</span> base on <span class="math notranslate nohighlight">\(f^{(T-1)}\)</span></p></li>
+<li><p>Scale each tree by a coefficient <span class="math notranslate nohighlight">\(\eta\)</span> and predict
+<span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\leftarrow\eta f^{(1)}(\mathbf{X})+\eta f^{(2)}(\mathbf{X})+\dots+\eta f^{(T)}(\mathbf{X})\)</span></p></li>
+</ul>
+<p><em>Gradient Boosting</em></p>
+<ul class="simple">
+<li><p>Intialize <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(0)}\)</span></p></li>
+<li><p>Train <span class="math notranslate nohighlight">\(f^{(1)}\)</span> base on <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(0)}\)</span> and compute <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(1)}=\hat{\mathbf{y}}^{(0)}+\eta f^{(1)}(\mathbf{X})\)</span></p></li>
+<li><p>Train <span class="math notranslate nohighlight">\(f^{(2)}\)</span> base on <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(1)}\)</span> and compute <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(2)}=\hat{\mathbf{y}}^{(1)}+\eta f^{(2)}(\mathbf{X})\)</span></p></li>
+<li><p>…</p></li>
+<li><p>Train <span class="math notranslate nohighlight">\(f^{(T)}\)</span> base on <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(T-1)}\)</span> and compute <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(T)}=\hat{\mathbf{y}}^{(T-1)}+\eta f^{(T)}(\mathbf{X})\)</span></p></li>
+<li><p>Predict <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\leftarrow\hat{\mathbf{y}}^{(T)}\)</span></p></li>
+</ul>
+<section id="adaptive-boosting">
+<h3>4.1. Adaptive Boosting<a class="headerlink" href="#adaptive-boosting" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/AdaBoost">Adaptive Boosting</a> was originally designed for binary classification problems. This method can be used to boost any algorithm, but Decision Tree is always the go-to choice. More specifically, Decision Trees used here are very shallow, they only have one root and two leaves, explaining why they are also called Decision Stumps.</p>
+<section id="algorithm">
+<h4>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">#</a></h4>
+<p><em>Input:</em></p>
+<ul class="simple">
+<li><p>A dataset having <span class="math notranslate nohighlight">\(N\)</span> observations <span class="math notranslate nohighlight">\((\mathbf{X},\mathbf{y})=\{(\mathbf{s}_n,y_n)\}_{n=1}^N\)</span> where <span class="math notranslate nohighlight">\(y_n\in\{-1,1\}\)</span></p></li>
+<li><p>The number of weak models, <span class="math notranslate nohighlight">\(T\)</span></p></li>
+<li><p>The learning rate, <span class="math notranslate nohighlight">\(\eta\)</span></p></li>
+</ul>
+<p><em>Step 1.</em> Initialize the weight for each observation: <span class="math notranslate nohighlight">\(w_n^{(1)}=1/N\)</span>.</p>
+<p><em>Step 2.</em> For each iteration number <span class="math notranslate nohighlight">\(t\)</span> where <span class="math notranslate nohighlight">\(t=1,2,\dots,T\)</span>:</p>
+<ul class="simple">
+<li><p>Train a weak model <span class="math notranslate nohighlight">\(f^{(t)}\)</span> that minimizes the sum of weights over misclassifications, represented by the error:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\epsilon^{(t)}=\sum_{n=1}^{N}{w_n^{(t)}\left[\hat{y}_n\neq y_n\right]}\]</div>
+<ul class="simple">
+<li><p>Calculate <span class="math notranslate nohighlight">\(\alpha^{(t)}\)</span> the amount of say for the current weak classifier; deciding how much <span class="math notranslate nohighlight">\(f^{(t)}\)</span> will contribute in the final prediction. This calculation rewards <span class="math notranslate nohighlight">\(f^{(t)}\)</span> a very high influence if its total error is low and penalizes <span class="math notranslate nohighlight">\(f^{(t)}\)</span> a negative influence for a high total error.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\alpha^{(t)}=\frac{\eta}{2}\,\log{\frac{1-\epsilon^{(t)}}{\epsilon^{(t)}}}\]</div>
+<ul class="simple">
+<li><p>Update sample weights for the next iteration so that: the weights of the correctly classied samples decrease <span class="math notranslate nohighlight">\(\exp{(\alpha^{(t)})}\)</span> times and the weights of misclassifications increase the same amount. Notice that the term <span class="math notranslate nohighlight">\(-\hat{y}_n y_n\)</span> equals to <span class="math notranslate nohighlight">\(1\)</span> if the prediction is correct and equals to <span class="math notranslate nohighlight">\(-1\)</span> if the prediction is incorrect.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[w_n^{(t+1)}=w_n^{(t)}\exp{\left(-\hat{y}_n y_n\alpha^{(t)}\right)}\]</div>
+<ul class="simple">
+<li><p>Normalize new weights so that they add up to <span class="math notranslate nohighlight">\(1\)</span>. This step is required to make the calculation of <span class="math notranslate nohighlight">\(\alpha^{(t+1)}\)</span> meaningful. At this step, some implementations resample the dataset so that the distribution of observations follows the newly calculated weights.</p></li>
+</ul>
+<p><em>Step 3.</em> Build an additive strong model that performs weighted voting over <span class="math notranslate nohighlight">\(T\)</span> weak learners; this is model outputs the prediction of the algorithm, <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\)</span>. The formula uses the notation <span class="math notranslate nohighlight">\(\text{sign}(\bullet)\)</span>, indicating the <a class="reference external" href="https://en.wikipedia.org/wiki/Sign_function">sign function</a>.</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{y}}=\text{sign}\left(\sum_{t=1}^T\alpha^{(t)} f^{(t)}(\mathbf{X})\right)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eta</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">eta</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;Learning rate = </span><span class="si">{</span><span class="n">eta</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Error, $\epsilon_t$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Influence, $\alpha_t$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sklearn-ensemble-learning_34_0.png"><img alt="../_images/sklearn-ensemble-learning_34_0.png" class="align-center" src="../_images/sklearn-ensemble-learning_34_0.png" style="width: 335.5px; height: 308.0px;" /></a>
+</div>
+</div>
+</section>
+<section id="id2">
+<h4>Implementation<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
+<p>The classes <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html"><code class="docutils literal notranslate"><span class="pre">AdaBoostClassifier</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostRegressor.html"><code class="docutils literal notranslate"><span class="pre">AdaBoostRegressor</span></code></a> have the following Boosting hyperparameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">base_estimator</span></code>: the algorithm to be boosted, defaults to <em>None</em> (Decision Tree with max depth of 1).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>: the number of boosting stages (<span class="math notranslate nohighlight">\(T\)</span>), defaults to <em>50</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>: the learning rate (<span class="math notranslate nohighlight">\(\eta\)</span>), defaults to <em>1</em>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xValid</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yValid</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">modelBase</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ensembler</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">modelBase</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">ensembler</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
+    <span class="n">yPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)[:</span> <span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yPred</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUC = 0.9828 [AdaBoostClassifier]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="gradient-boosting">
+<h3>4.2 Gradient Boosting<a class="headerlink" href="#gradient-boosting" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_boosting">Grandient Boosting</a> is another boosting strategy beside Adaptive Boosting. The idea of this method is mostly inspired by <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a>, thus the name Gradient Boosting. Just like other ensembling methods, this algorithm works best on Decision Trees and becomes the foundation for its modern variants such as XGBoost, LightGBM and CatBoost.</p>
+<p>Gradient Boosting Trees was originally designed for regression problems. For classification, we use regression approach to predict <a class="reference external" href="https://en.wikipedia.org/wiki/Logit">log of the odds</a>.</p>
+<section id="id3">
+<h4>Algorithm<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h4>
+<p><em>Input:</em></p>
+<ul class="simple">
+<li><p>A dataset having <span class="math notranslate nohighlight">\(N\)</span> labeled observations <span class="math notranslate nohighlight">\((\mathbf{X},\mathbf{y})=\{(\mathbf{s}_n,y_n)\}_{n=1}^N\)</span></p></li>
+<li><p>The number of weak models, <span class="math notranslate nohighlight">\(T\)</span></p></li>
+<li><p>The learning rate, <span class="math notranslate nohighlight">\(\eta\)</span></p></li>
+<li><p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a> loss function <span class="math notranslate nohighlight">\(\mathcal{L}(\hat{\mathbf{y}})\)</span> (<a class="reference external" href="https://en.wikipedia.org/wiki/Residual_sum_of_squares">squared error</a> is a popular choice)</p></li>
+</ul>
+<p><em>Step 1.</em> Initialize the prediction as a constant. Since this is the very first prediction and will be updated step-by-step, we denote this value <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(0)}\)</span>. When the loss function is MSE, this value is nothing but the mean of <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{y}}^{(0)}=\arg\min\sum_{n=1}^N \mathcal{L}(\hat{y}_n)\]</div>
+<p><em>Step 2.</em> For <span class="math notranslate nohighlight">\(t=1\)</span> to <span class="math notranslate nohighlight">\(T\)</span>:</p>
+<ul class="simple">
+<li><p>Compute the psuedo-residual <span class="math notranslate nohighlight">\(r_n^{(t)}\)</span> equals to the negative gradient of the loss function with respect to the prediction of the iteration <span class="math notranslate nohighlight">\(t-1\)</span>. When MSE is used, this term is proportional to the actual residual, <span class="math notranslate nohighlight">\(y_n-\hat{y}_n^{(t-1)}\)</span>. In general, we call it pseudo-residual which allows plugging in different loss functions.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[r_n^{(t)}=-g_n^{(t)}=-\frac{\partial\mathcal{L}(\hat{y}_n^{(t-1)})}{\partial \hat{y}_n^{(t-1)}}\]</div>
+<ul class="simple">
+<li><p>Fit a weak learner (regression tree) <span class="math notranslate nohighlight">\(f^{(t)}\)</span> using the training set <span class="math notranslate nohighlight">\((\mathbf{X},\mathbf{r}^{(t)})\)</span>. This step results in a tree with <span class="math notranslate nohighlight">\(M\)</span> leaf nodes; meaning the input space is split into <span class="math notranslate nohighlight">\(M\)</span> <a class="reference external" href="https://en.wikipedia.org/wiki/Disjoint_sets">disjoint</a> regions, each region is denoted <span class="math notranslate nohighlight">\(R_m\;(m=1,2,\dots,M)\)</span>. Trees in this step are not restricted to be stumps as in AdaBoost. Compute <span class="math notranslate nohighlight">\(f^{(t)}(\mathbf{X})\)</span>, the predicted value for the model <span class="math notranslate nohighlight">\(f^{(t)}\)</span> so that it minimizes the loss function at the current step.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[f^{(t)}(\mathbf{X})=\underset{f}{\arg\min}\sum_{n=1}^{N}{\mathcal{L}\left(\hat{y}_n^{(t-1)}+f(\mathbf{s}_n)\right)}\]</div>
+<ul class="simple">
+<li><p>Use first-order <a class="reference external" href="https://en.wikipedia.org/wiki/Taylor_series">Taylor approximation</a>: <span class="math notranslate nohighlight">\(f(x)\approx f(a)+f'(a)(x-a)\)</span> to estimate the loss function evaluated at step <span class="math notranslate nohighlight">\(t-1\)</span>. Here, <span class="math notranslate nohighlight">\(x\)</span> corresponds to <span class="math notranslate nohighlight">\(\hat{y}_n^{(t-1)}+f(\mathbf{s}_n)\)</span> and <span class="math notranslate nohighlight">\(a\)</span> corresponds to <span class="math notranslate nohighlight">\(\hat{y}_n^{(t-1)}\)</span>. Using the notation <span class="math notranslate nohighlight">\(g_n^{(t)}\)</span> defined earlier, we have:
+<span class="math notranslate nohighlight">\(\mathcal{L}\left(\hat{y}_n^{(t-1)}+f(\mathbf{s}_n)\right)\approx\mathcal{L}\left(\hat{y}_n^{(t-1)}\right)+g_n^{(t)}f(\mathbf{s}_n)\)</span>.
+We can prove that <span class="math notranslate nohighlight">\(f^{(t)}(\mathbf{X})\)</span> is proportional to the negative gradient as follows. When MSE is chosen, is simply computes the average residual in each leaf.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+   f^{(t)}(\mathbf{X})
+   &amp;\approx \underset{f}{\arg\min} \sum_{n=1}^{N}\mathcal{L}\left(\hat{y}_n^{(t-1)}\right)+g_n^{(t)}f(\mathbf{s}_n) \\
+   &amp;= \underset{f}{\arg\min} \sum_{n=1}^{N}g_n^{(t)}f(\mathbf{s}_n) \propto -g_n^{(t)}
+   \end{aligned}\end{split}\]</div>
+<ul class="simple">
+<li><p>Compute the predicted value up to the current step, <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(t)}\)</span>. Since we are adding negative gradient <span class="math notranslate nohighlight">\(-g_n^{(t-1)}\)</span> scaled by the learning rate <span class="math notranslate nohighlight">\(\eta\)</span> step-by-step, this can be considered a Gradient Descent process.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{y}}^{(t)}=\hat{\mathbf{y}}^{(t-1)}+\eta f^{(t)}(\mathbf{X})\]</div>
+<p><em>Step 3</em>. Take the last round’s predicted value as the final prediction: <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\leftarrow \hat{\mathbf{y}}^{(T)}\)</span>. Note that in Gradient Boosting, the prediction at each iteration <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(t)}\)</span> has taken into account all weak learners up to the current step. This behaviour is not like Adaptive Boosting, in which the strong model is only built once all weak leaners was trained successfully.</p>
+</section>
+<section id="id4">
+<h4>Implementation<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
+<p>The <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html"><code class="docutils literal notranslate"><span class="pre">GradientBoostingClassifier</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html"><code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code></a> classes are the original impelementation of Gradient Boosting Trees. After a while, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"><code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html"><code class="docutils literal notranslate"><span class="pre">HistGradientBoostingRegressor</span></code></a> which use histogram-based split finding were introduced. The later implementation is significantly faster for big datasets. The common hyperparameters of these algorithms are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loss</span></code>: the type of loss function, defaults to <em>deviance</em> (classification) and <em>squared_error</em> (regression).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>: the number of boosting stages (<span class="math notranslate nohighlight">\(T\)</span>), defaults to <em>100</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>: the learning rate (<span class="math notranslate nohighlight">\(\eta\)</span>), defaults to <em>0.1</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code>: the ratio of features used in each tree, defaults to <em>auto</em> (square root of <em>nFeature</em>). A lower value increases bias and reduces variance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subsample</span></code>: the ratio of instances used in each tree, defaults to <em>1</em> (100% of <em>nSample</em>). A lower value increases bias and reduces variance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">criterion</span></code>: the measure of quality of splits, defaults to <em>friedman_mse</em>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xTrain</span><span class="p">,</span> <span class="n">xValid</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yValid</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model1</span> <span class="o">=</span> <span class="n">GradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">model2</span> <span class="o">=</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">model1</span><span class="p">,</span> <span class="n">model2</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
+    <span class="n">yPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)[:</span> <span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yPred</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUC = 0.9729 [GradientBoostingClassifier]
+AUC = 0.9831 [HistGradientBoostingClassifier]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><em><a class="reference external" href="http://scikit-learn.org">scikit-learn.org</a> - <a class="reference external" href="https://scikit-learn.org/stable/modules/ensemble.html">Scikit-learn’s ensemble methods</a></em></p></li>
+<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205">Ensemble methods: bagging, boosting and stacking</a></em></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter-07"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="_intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><b>7. Tabular Learning</b></p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="xgboost-tree-boosting.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">XGBoost: Tree Boosting</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

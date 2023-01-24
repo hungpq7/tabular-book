@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -53,6 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Plotly: Interactive Visualization" href="plotly-interactive-visualization.html" />
@@ -97,7 +99,7 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="../_static/logo.png" class="logo" alt="logo">
+      <img src="../_static/logo.svg" class="logo" alt="logo">
       
       
     </a>
@@ -318,8 +320,28 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
      XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/ray-hyperparameter-optimization.html">
+     Ray: Hyperparameter Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/shap-model-interpretation.html">
+     Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/imblearn-targeted-modeling.html">
+     1. Imbalanced learning
     </a>
    </li>
   </ul>
@@ -936,27 +958,6 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="nt">th</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
-<span class="nt">td</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">12</span><span class="kt">px</span><span class="p">}</span>
-<span class="nt">p</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
-<span class="nt">div</span><span class="p">.</span><span class="nc">highlight</span> <span class="p">{</span><span class="k">font-size</span><span class="p">:</span><span class="mi">14</span><span class="kt">px</span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><style>
-th {font-size:12px}
-td {font-size:12px}
-p {font-size:14px}
-div.highlight {font-size:14px}
-</style>
-</div></div>
-</div>
 <section id="introduction">
 <h2>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
 <section id="motivation">
@@ -985,7 +986,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_6_0.png"><img alt="../_images/seaborn-statistical-visualization_6_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_6_0.png" style="width: 783.45px; height: 200.70000000000002px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_5_0.png"><img alt="../_images/seaborn-statistical-visualization_5_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_5_0.png" style="width: 783.45px; height: 200.70000000000002px;" /></a>
 </div>
 </div>
 </section>
@@ -1006,7 +1007,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_10_0.png"><img alt="../_images/seaborn-statistical-visualization_10_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_10_0.png" style="width: 349.0px; height: 68.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_9_0.png"><img alt="../_images/seaborn-statistical-visualization_9_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_9_0.png" style="width: 349.0px; height: 68.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1017,7 +1018,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_11_0.png"><img alt="../_images/seaborn-statistical-visualization_11_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_11_0.png" style="width: 516.5px; height: 68.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_10_0.png"><img alt="../_images/seaborn-statistical-visualization_10_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_10_0.png" style="width: 516.5px; height: 68.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1028,7 +1029,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_12_0.png"><img alt="../_images/seaborn-statistical-visualization_12_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_12_0.png" style="width: 516.5px; height: 68.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_11_0.png"><img alt="../_images/seaborn-statistical-visualization_11_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_11_0.png" style="width: 516.5px; height: 68.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1210,7 +1211,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_19_0.png"><img alt="../_images/seaborn-statistical-visualization_19_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_19_0.png" style="width: 293.0px; height: 286.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_18_0.png"><img alt="../_images/seaborn-statistical-visualization_18_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_18_0.png" style="width: 293.0px; height: 286.0px;" /></a>
 </div>
 </div>
 <section id="pie-matrix">
@@ -1329,7 +1330,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_22_0.png"><img alt="../_images/seaborn-statistical-visualization_22_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_22_0.png" style="width: 785.5px; height: 639.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_21_0.png"><img alt="../_images/seaborn-statistical-visualization_21_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_21_0.png" style="width: 785.5px; height: 639.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1434,7 +1435,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_27_0.png"><img alt="../_images/seaborn-statistical-visualization_27_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_27_0.png" style="width: 883.5px; height: 320.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_26_0.png"><img alt="../_images/seaborn-statistical-visualization_26_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_26_0.png" style="width: 883.5px; height: 320.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1566,7 +1567,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_32_0.png"><img alt="../_images/seaborn-statistical-visualization_32_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_32_0.png" style="width: 650.0px; height: 461.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_31_0.png"><img alt="../_images/seaborn-statistical-visualization_31_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_31_0.png" style="width: 650.0px; height: 461.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1710,7 +1711,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_37_0.png"><img alt="../_images/seaborn-statistical-visualization_37_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_37_0.png" style="width: 654.0px; height: 371.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_36_0.png"><img alt="../_images/seaborn-statistical-visualization_36_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_36_0.png" style="width: 654.0px; height: 371.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1807,7 +1808,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_42_0.png"><img alt="../_images/seaborn-statistical-visualization_42_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_42_0.png" style="width: 610.0px; height: 316.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_41_0.png"><img alt="../_images/seaborn-statistical-visualization_41_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_41_0.png" style="width: 610.0px; height: 316.5px;" /></a>
 </div>
 </div>
 <section id="swarm-plot">
@@ -1889,7 +1890,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_45_0.png"><img alt="../_images/seaborn-statistical-visualization_45_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_45_0.png" style="width: 598.5px; height: 425.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_44_0.png"><img alt="../_images/seaborn-statistical-visualization_44_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_44_0.png" style="width: 598.5px; height: 425.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2102,7 +2103,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_51_0.png"><img alt="../_images/seaborn-statistical-visualization_51_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_51_0.png" style="width: 710.8000000000001px; height: 680.4000000000001px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_50_0.png"><img alt="../_images/seaborn-statistical-visualization_50_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_50_0.png" style="width: 710.8000000000001px; height: 680.4000000000001px;" /></a>
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -2125,7 +2126,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_52_0.png"><img alt="../_images/seaborn-statistical-visualization_52_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_52_0.png" style="width: 476.0px; height: 454.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_51_0.png"><img alt="../_images/seaborn-statistical-visualization_51_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_51_0.png" style="width: 476.0px; height: 454.5px;" /></a>
 </div>
 </div>
 </section>
@@ -2220,7 +2221,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_55_0.png"><img alt="../_images/seaborn-statistical-visualization_55_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_55_0.png" style="width: 402.0px; height: 245.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_54_0.png"><img alt="../_images/seaborn-statistical-visualization_54_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_54_0.png" style="width: 402.0px; height: 245.5px;" /></a>
 </div>
 </div>
 </section>
@@ -2248,7 +2249,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_59_0.png"><img alt="../_images/seaborn-statistical-visualization_59_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_59_0.png" style="width: 498.0px; height: 302.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_58_0.png"><img alt="../_images/seaborn-statistical-visualization_58_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_58_0.png" style="width: 498.0px; height: 302.5px;" /></a>
 </div>
 </div>
 </section>
@@ -2273,7 +2274,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_61_0.png"><img alt="../_images/seaborn-statistical-visualization_61_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_61_0.png" style="width: 492.5px; height: 302.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_60_0.png"><img alt="../_images/seaborn-statistical-visualization_60_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_60_0.png" style="width: 492.5px; height: 302.5px;" /></a>
 </div>
 </div>
 </section>
@@ -2378,7 +2379,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_64_0.png"><img alt="../_images/seaborn-statistical-visualization_64_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_64_0.png" style="width: 422.0px; height: 425.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_63_0.png"><img alt="../_images/seaborn-statistical-visualization_63_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_63_0.png" style="width: 422.0px; height: 425.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -2389,7 +2390,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_65_0.png"><img alt="../_images/seaborn-statistical-visualization_65_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_65_0.png" style="width: 422.0px; height: 425.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_64_0.png"><img alt="../_images/seaborn-statistical-visualization_64_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_64_0.png" style="width: 422.0px; height: 425.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -2400,7 +2401,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_66_0.png"><img alt="../_images/seaborn-statistical-visualization_66_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_66_0.png" style="width: 422.0px; height: 425.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_65_0.png"><img alt="../_images/seaborn-statistical-visualization_65_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_65_0.png" style="width: 422.0px; height: 425.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2525,7 +2526,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_72_0.png"><img alt="../_images/seaborn-statistical-visualization_72_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_72_0.png" style="width: 548.5px; height: 371.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_71_0.png"><img alt="../_images/seaborn-statistical-visualization_71_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_71_0.png" style="width: 548.5px; height: 371.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2634,7 +2635,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_75_0.png"><img alt="../_images/seaborn-statistical-visualization_75_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_75_0.png" style="width: 548.5px; height: 371.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_74_0.png"><img alt="../_images/seaborn-statistical-visualization_74_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_74_0.png" style="width: 548.5px; height: 371.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2736,7 +2737,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_80_0.png"><img alt="../_images/seaborn-statistical-visualization_80_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_80_0.png" style="width: 599.0px; height: 302.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_79_0.png"><img alt="../_images/seaborn-statistical-visualization_79_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_79_0.png" style="width: 599.0px; height: 302.5px;" /></a>
 </div>
 </div>
 </section>
@@ -2831,7 +2832,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_84_0.png"><img alt="../_images/seaborn-statistical-visualization_84_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_84_0.png" style="width: 626.0px; height: 302.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_83_0.png"><img alt="../_images/seaborn-statistical-visualization_83_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_83_0.png" style="width: 626.0px; height: 302.5px;" /></a>
 </div>
 </div>
 </section>
@@ -2936,7 +2937,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_88_0.png"><img alt="../_images/seaborn-statistical-visualization_88_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_88_0.png" style="width: 638.0px; height: 583.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_87_0.png"><img alt="../_images/seaborn-statistical-visualization_87_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_87_0.png" style="width: 638.0px; height: 583.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -2947,7 +2948,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_89_0.png"><img alt="../_images/seaborn-statistical-visualization_89_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_89_0.png" style="width: 638.0px; height: 583.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_88_0.png"><img alt="../_images/seaborn-statistical-visualization_88_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_88_0.png" style="width: 638.0px; height: 583.0px;" /></a>
 </div>
 </div>
 </section>
@@ -3040,7 +3041,7 @@ div.highlight {font-size:14px}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_93_0.png"><img alt="../_images/seaborn-statistical-visualization_93_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_93_0.png" style="width: 795.5px; height: 710.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/seaborn-statistical-visualization_92_0.png"><img alt="../_images/seaborn-statistical-visualization_92_0.png" class="align-center" src="../_images/seaborn-statistical-visualization_92_0.png" style="width: 795.5px; height: 710.5px;" /></a>
 </div>
 </div>
 </section>
