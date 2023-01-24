@@ -1098,7 +1098,10 @@ title="Print to PDF"
 <span class="kn">import</span> <span class="nn">optuna</span>
 <span class="kn">from</span> <span class="nn">optuna.samplers</span> <span class="kn">import</span> <span class="n">RandomSampler</span><span class="p">,</span> <span class="n">TPESampler</span><span class="p">,</span> <span class="n">CmaEsSampler</span><span class="p">,</span> <span class="n">NSGAIISampler</span>
 <span class="kn">from</span> <span class="nn">optuna.pruners</span> <span class="kn">import</span> <span class="n">HyperbandPruner</span><span class="p">,</span> <span class="n">SuccessiveHalvingPruner</span><span class="p">,</span> <span class="n">MedianPruner</span>
-
+<span class="kn">from</span> <span class="nn">optuna.visualization</span> <span class="kn">import</span> <span class="n">plot_contour</span>
+<span class="kn">from</span> <span class="nn">optuna.visualization</span> <span class="kn">import</span> <span class="n">plot_optimization_history</span>
+<span class="kn">from</span> <span class="nn">optuna.visualization</span> <span class="kn">import</span> <span class="n">plot_parallel_coordinate</span>
+<span class="kn">from</span> <span class="nn">optuna.visualization</span> <span class="kn">import</span> <span class="n">plot_param_importances</span>
 
 <span class="kn">import</span> <span class="nn">ray</span>
 <span class="kn">from</span> <span class="nn">ray</span> <span class="kn">import</span> <span class="n">tune</span>
@@ -1135,7 +1138,7 @@ f &amp;:\text{hyperparameter}\rightarrow\text{score}
 <section id="exhausted-search">
 <h3>1.1. Exhausted search<a class="headerlink" href="#exhausted-search" title="Permalink to this headline">#</a></h3>
 <p>There are two popular methods of searching hyperparameters, implemented in Scikit-learn via the classes <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html"><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html"><code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code></a>. The idea of each method are already explained clearly in the image below, where the red area shows how much each hyperparameter contributes to model score.</p>
-<a class="reference internal image-reference" href="../_images/grid_random_search.png"><img alt="../_images/grid_random_search.png" class="align-center" src="../_images/grid_random_search.png" style="height: 450px;" /></a>
+<a class="reference internal image-reference" href="../_images/grid_random_search.png"><img alt="../_images/grid_random_search.png" class="align-center" src="../_images/grid_random_search.png" style="height: 400px;" /></a>
 <p>Grid Search goes to every possible combinations, and thus it will revisit a parameter value multiple times. This makes Grid Search have a low coverage and is very expensive, especially for algorithms with a huge number of hyperparameters such as XGBoost and LightGBM.</p>
 <p>Random Search is a more efficient method, it randomly takes a number combinations to train models. With the same number of iterations provided, Random Search can cover a wider range of values, and thus it is able to reach the optimal value that Grid Search cannot. Another advantage is that you can include unimportant hyperparameters in your search without increasing the number of trials.</p>
 </section>
@@ -2723,10 +2726,9 @@ if (outputEl) {{
 <h3>5.3. AutoML<a class="headerlink" href="#automl" title="Permalink to this headline">#</a></h3>
 <p>In this section we are going to implement several AutoML libraries:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://microsoft.github.io/FLAML/docs/Use-Cases/Task-Oriented-AutoML'&gt;AutoML&lt;/a&gt;</span></code>
-by Microsoft’s FLAML</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://epistasislab.github.io/tpot/api/'&gt;TPOTClassifier&lt;/a&gt;</span></code> by TPOT</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html'&gt;H2OAutoML&lt;/a&gt;</span></code> by H2O</p></li>
+<li><p><a class="reference external" href="https://microsoft.github.io/FLAML/docs/Use-Cases/Task-Oriented-AutoML"><code class="docutils literal notranslate"><span class="pre">AutoML</span></code></a> by Microsoft’s FLAML</p></li>
+<li><p><a class="reference external" href="https://epistasislab.github.io/tpot/api/"><code class="docutils literal notranslate"><span class="pre">TPOTClassifier</span></code></a> by TPOT</p></li>
+<li><p><a class="reference external" href="https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html"><code class="docutils literal notranslate"><span class="pre">H2OAutoML</span></code></a> by H2O</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
