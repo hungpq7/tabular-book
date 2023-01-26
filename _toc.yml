@@ -26,9 +26,9 @@ chapters:
   - file: chapter-02/numpy-statistics
   - file: chapter-02/scipy-hypothesis-testing
   - file: chapter-02/numpy-applied-mathematics
-    title: "(w) Numpy: Applied Mathematics"
+    title: "(w) NumPy: Applied Mathematics"
   - file: chapter-02/networkx-network-analysis
-    title: "(w) Networkx: Network Analysis"
+    title: "(w) NetworkX: Network Analysis"
 
 - file: chapter-03/_intro
   sections:
