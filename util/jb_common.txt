@@ -25,12 +25,3 @@ IMAGE METADATA:
 PUBLISH BOOK
 jb build .
 ghp-import -n -p -f _build/html
-
-CSS CONFIG
-%%html
-<style>
-th {font-size:12px}
-td {font-size:12px}
-p {font-size:14px}
-div.highlight {font-size:14px}
-</style>
