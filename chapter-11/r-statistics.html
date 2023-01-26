@@ -1,0 +1,2539 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>R: Statistics</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Ggplot: Data Visualizatio" href="ggplot-data-visualization.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-01/_intro.html">
+   <b>
+    1. Python Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-algorithms.html">
+     (w) Python: Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     NumPy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     SymPy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-probability.html">
+     NumPy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-statistics.html">
+     NumPy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     SciPy: Hypothesis Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-applied-mathematics.html">
+     (w) NumPy: Applied Mathematics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/networkx-network-analysis.html">
+     (w) NetworkX: Network Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-03/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/numpy-arrays.html">
+     NumPy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-04/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-05/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Machine Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-machine-learning.html">
+     Sklearn: Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-classification.html">
+     Sklearn: Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-regression.html">
+     Sklearn: Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-feature-engineering.html">
+     Sklearn: Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/lenskit-recommendation.html">
+     Lenskit: Recommendation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/pyspark-machine-learning.html">
+     PySpark: Machine Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-07/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/ray-hyperparameter-optimization.html">
+     Ray: Hyperparam Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/shap-model-interpretation.html">
+     (w) Shap: Model Interpretation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/imblearn-targeted-modeling.html">
+     (w) Imblearn: Targeted Modeling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-08/_intro.html">
+   <b>
+    8. Time Series
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/statsmodels-temporal-analysis.html">
+     Statsmodels: Temporal Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/prophet-forecasting-algorithms.html">
+     Prophet: Forecasting Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/sktime-forecasting-pipeline.html">
+     Sktime: Forecasting Pipeline
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/darts-deep-forecasting.html">
+     (w) Darts: Deep Forecasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-09/_intro.html">
+   <b>
+    9. Unsupervised Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/mlxtend-association-rules.html">
+     (w) Mlxtend: Association Rules
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/sklearn-clustering.html">
+     Sklearn: Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/sklearn-dimensional-reduction.html">
+     Sklearn: Dimensional Reduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/pyod-anomaly-detection.html">
+     Pyod: Anomaly Detection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-10/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/gensim-text-mining.html">
+     Gensim: Text Mining
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/opencv-image-processing.html">
+     (w) Opencv: Image Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-multilayer-perceptron.html">
+     Keras: Multilayer Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-recurrent-networks.html">
+     Keras: Recurrent Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-convolutional-networks.html">
+     (w) Keras: Convolutional Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/pytorch-deep-learning.html">
+     PyTorch: Deep Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    11. R Programming
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="r-basic-concepts.html">
+     R: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="r-data-structures.html">
+     R: Data Structures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tidyverse-data-wrangling.html">
+     Tidyverse: Data Wrangling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="dplyr-data-cleaning.html">
+     Dplyr: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ggplot-data-visualization.html">
+     Ggplot: Data Visualizatio
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     R: Statistics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/chapter-11/r-statistics.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/chapter-11/r-statistics.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter-11/r-statistics.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#descriptive-statistics">
+   1. Descriptive statistics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quantiles">
+     1.1. Quantiles
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#correlation">
+     1.2. Correlation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pearson-coefficient">
+       Pearson coefficient
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#spearman-coefficient">
+       Spearman coefficient
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hypothesis-testing">
+   2. Hypothesis testing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-hypotheses">
+     The hypotheses
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#significance-level">
+     Significance level
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-statistic">
+     Test statistic
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#p-value">
+     p-value
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Descriptive statistics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#z-test">
+     2.1. Z-test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mean-z-test">
+       Mean z-test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#proportion-z-test">
+       Proportion z-test
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#f-test">
+     2.2. F-test
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#t-test">
+     2.3. T-test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#one-sample-mean-t-test">
+       One-sample mean t-test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#independent-samples-mean-t-test">
+       Independent samples mean t-test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#paired-samples-mean-t-test">
+       Paired samples mean t-test
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#chi-squared-test">
+     2.4. Chi-squared test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dependence-chi-squared-test">
+       Dependence chi-squared test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#propotion-chi-squared-test">
+       Propotion chi-squared test
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#anova">
+     2.5. ANOVA
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#one-factor-anova">
+       One-factor ANOVA
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#distribution-test">
+     2.6. Distribution test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regression">
+   3. Regression
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simple-linear-regression">
+     3.1. Simple linear regression
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multivariate-linear-regression">
+     3.2. Multivariate linear regression
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>R: Statistics</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#descriptive-statistics">
+   1. Descriptive statistics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quantiles">
+     1.1. Quantiles
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#correlation">
+     1.2. Correlation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pearson-coefficient">
+       Pearson coefficient
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#spearman-coefficient">
+       Spearman coefficient
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hypothesis-testing">
+   2. Hypothesis testing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-hypotheses">
+     The hypotheses
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#significance-level">
+     Significance level
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-statistic">
+     Test statistic
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#p-value">
+     p-value
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Descriptive statistics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#z-test">
+     2.1. Z-test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mean-z-test">
+       Mean z-test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#proportion-z-test">
+       Proportion z-test
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#f-test">
+     2.2. F-test
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#t-test">
+     2.3. T-test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#one-sample-mean-t-test">
+       One-sample mean t-test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#independent-samples-mean-t-test">
+       Independent samples mean t-test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#paired-samples-mean-t-test">
+       Paired samples mean t-test
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#chi-squared-test">
+     2.4. Chi-squared test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dependence-chi-squared-test">
+       Dependence chi-squared test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#propotion-chi-squared-test">
+       Propotion chi-squared test
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#anova">
+     2.5. ANOVA
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#one-factor-anova">
+       One-factor ANOVA
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#distribution-test">
+     2.6. Distribution test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regression">
+   3. Regression
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simple-linear-regression">
+     3.1. Simple linear regression
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multivariate-linear-regression">
+     3.2. Multivariate linear regression
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="r-statistics">
+<h1>R: Statistics<a class="headerlink" href="#r-statistics" title="Permalink to this headline">#</a></h1>
+<section id="descriptive-statistics">
+<h2>1. Descriptive statistics<a class="headerlink" href="#descriptive-statistics" title="Permalink to this headline">#</a></h2>
+<section id="quantiles">
+<h3>1.1. Quantiles<a class="headerlink" href="#quantiles" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;package &#39;tidyverse&#39; was built under R version 4.0.4&quot;
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">Error</span>: package or namespace load failed for &#39;tidyverse&#39; in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+ <span class="n">namespace</span> <span class="s1">&#39;rlang&#39;</span> <span class="mf">0.4</span><span class="o">.</span><span class="mi">7</span> <span class="ow">is</span> <span class="n">already</span> <span class="n">loaded</span><span class="p">,</span> <span class="n">but</span> <span class="o">&gt;=</span> <span class="mf">0.4</span><span class="o">.</span><span class="mi">10</span> <span class="ow">is</span> <span class="n">required</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">tryCatch</span><span class="p">({</span>
+ <span class="o">.</span>     <span class="n">attr</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="s2">&quot;LibPath&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">loc</span>
+ <span class="o">.</span>     <span class="n">ns</span> <span class="o">&lt;-</span> <span class="n">loadNamespace</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">lib</span><span class="o">.</span><span class="n">loc</span><span class="p">)</span>
+ <span class="o">.</span>     <span class="n">env</span> <span class="o">&lt;-</span> <span class="n">attachNamespace</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="p">,</span> <span class="n">deps</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">include</span><span class="o">.</span><span class="n">only</span><span class="p">)</span>
+ <span class="o">.</span> <span class="p">},</span> <span class="n">error</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+ <span class="o">.</span>     <span class="n">P</span> <span class="o">&lt;-</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span>is.null<span class="o">(</span>cc &lt;- conditionCall<span class="o">(</span>e<span class="o">)))</span> 
+ <span class="o">.</span>         <span class="n">paste</span><span class="p">(</span><span class="s2">&quot; in&quot;</span><span class="p">,</span> <span class="n">deparse</span><span class="p">(</span><span class="n">cc</span><span class="p">)[</span><span class="mi">1</span><span class="n">L</span><span class="p">])</span>
+ <span class="o">.</span>     <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+ <span class="o">.</span>     <span class="n">msg</span> <span class="o">&lt;-</span> <span class="n">gettextf</span><span class="p">(</span><span class="s2">&quot;package or namespace load failed for </span><span class="si">%s%s</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> 
+ <span class="o">.</span>         <span class="n">sQuote</span><span class="p">(</span><span class="n">package</span><span class="p">),</span> <span class="n">P</span><span class="p">,</span> <span class="n">conditionMessage</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+ <span class="o">.</span>     <span class="k">if</span> <span class="p">(</span><span class="n">logical</span><span class="o">.</span><span class="k">return</span><span class="p">)</span> 
+ <span class="o">.</span>         <span class="n">message</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">&quot;Error:&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">),</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
+ <span class="o">.</span>     <span class="k">else</span> <span class="n">stop</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">call</span><span class="o">.</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
+ <span class="o">.</span> <span class="p">})</span>
+<span class="mi">3</span><span class="o">.</span> <span class="n">tryCatchList</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">parentenv</span><span class="p">,</span> <span class="n">handlers</span><span class="p">)</span>
+<span class="mi">4</span><span class="o">.</span> <span class="n">tryCatchOne</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">parentenv</span><span class="p">,</span> <span class="n">handlers</span><span class="p">[[</span><span class="mi">1</span><span class="n">L</span><span class="p">]])</span>
+<span class="mi">5</span><span class="o">.</span> <span class="n">value</span><span class="p">[[</span><span class="mi">3</span><span class="n">L</span><span class="p">]](</span><span class="n">cond</span><span class="p">)</span>
+<span class="mi">6</span><span class="o">.</span> <span class="n">stop</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">call</span><span class="o">.</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">select</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span> <span class="n">disp</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      mpg             disp      
+ Min.   :10.40   Min.   : 71.1  
+ 1st Qu.:15.43   1st Qu.:120.8  
+ Median :19.20   Median :196.3  
+ Mean   :20.09   Mean   :230.7  
+ 3rd Qu.:22.80   3rd Qu.:326.0  
+ Max.   :33.90   Max.   :472.0  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span> <span class="o">%&gt;%</span> <span class="nf">quantile</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="m">0.1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style><dl class=dl-inline><dt>0%</dt><dd>10.4</dd><dt>10%</dt><dd>14.34</dd><dt>20%</dt><dd>15.2</dd><dt>30%</dt><dd>15.98</dd><dt>40%</dt><dd>17.92</dd><dt>50%</dt><dd>19.2</dd><dt>60%</dt><dd>21</dd><dt>70%</dt><dd>21.47</dd><dt>80%</dt><dd>24.08</dd><dt>90%</dt><dd>30.09</dd><dt>100%</dt><dd>33.9</dd></dl>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean of 90% center values</span>
+<span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">,</span> <span class="n">trim</span><span class="o">=</span><span class="m">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">19.6961538461538</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># interquantile range</span>
+<span class="nf">rnorm</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">IQR</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">2.64019756290017</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># standard deviation</span>
+<span class="nf">rnorm</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">sd</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">2.98123515435572</div></div>
+</div>
+</section>
+<section id="correlation">
+<h3>1.2. Correlation<a class="headerlink" href="#correlation" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="pearson-coefficient">
+<h4>Pearson coefficient<a class="headerlink" href="#pearson-coefficient" title="Permalink to this headline">#</a></h4>
+<p>Pearson’s correlation assesses linear relationship between two variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">correlation</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/correlation.csv&#39;</span><span class="p">)</span>
+<span class="nf">cor</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A matrix: 3 × 3 of type dbl</caption>
+<thead>
+	<tr><th></th><th scope=col>drink</th><th scope=col>travel</th><th scope=col>restaurant</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>drink</th><td> 1.00000000</td><td>-0.02156269</td><td> 0.95176075</td></tr>
+	<tr><th scope=row>travel</th><td>-0.02156269</td><td> 1.00000000</td><td>-0.01245761</td></tr>
+	<tr><th scope=row>restaurant</th><td> 0.95176075</td><td>-0.01245761</td><td> 1.00000000</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">correlation</span> <span class="o">%&gt;%</span> 
+    <span class="nf">pivot_longer</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">travel</span><span class="p">,</span> <span class="n">restaurant</span><span class="p">))</span> <span class="o">%&gt;%</span>
+    <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
+    <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">drink</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">name</span><span class="p">))</span> <span class="o">+</span>
+    <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">geom_smooth</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme_minimal</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;
+</pre></div>
+</div>
+<img alt="../_images/r-statistics_13_1.png" src="../_images/r-statistics_13_1.png" />
+</div>
+</div>
+</section>
+<section id="spearman-coefficient">
+<h4>Spearman coefficient<a class="headerlink" href="#spearman-coefficient" title="Permalink to this headline">#</a></h4>
+<p>Spearman coefficient measures rank correlation instead of value correlation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">hnx</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">220</span><span class="p">,</span><span class="m">218</span><span class="p">,</span><span class="m">216</span><span class="p">,</span><span class="m">217</span><span class="p">,</span><span class="m">215</span><span class="p">,</span><span class="m">213</span><span class="p">,</span><span class="m">219</span><span class="p">,</span><span class="m">236</span><span class="p">,</span><span class="m">237</span><span class="p">,</span><span class="m">235</span><span class="p">)</span>
+<span class="n">hose</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">151</span><span class="p">,</span><span class="m">150</span><span class="p">,</span><span class="m">148</span><span class="p">,</span><span class="m">149</span><span class="p">,</span><span class="m">147</span><span class="p">,</span><span class="m">146</span><span class="p">,</span><span class="m">152</span><span class="p">,</span><span class="m">165</span><span class="p">,</span><span class="m">162</span><span class="p">,</span><span class="m">161</span><span class="p">)</span>
+
+<span class="n">stock</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">hnx</span><span class="p">,</span> <span class="n">hose</span><span class="p">)</span>
+<span class="n">stock</span> <span class="o">%&gt;%</span> <span class="nf">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 3 × 2</caption>
+<thead>
+	<tr><th></th><th scope=col>hnx</th><th scope=col>hose</th></tr>
+	<tr><th></th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>220</td><td>151</td></tr>
+	<tr><th scope=row>2</th><td>218</td><td>150</td></tr>
+	<tr><th scope=row>3</th><td>216</td><td>148</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cor</span><span class="p">(</span><span class="n">stock</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;spearman&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A matrix: 2 × 2 of type dbl</caption>
+<thead>
+	<tr><th></th><th scope=col>hnx</th><th scope=col>hose</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>hnx</th><td>1.0000000</td><td>0.9757576</td></tr>
+	<tr><th scope=row>hose</th><td>0.9757576</td><td>1.0000000</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="hypothesis-testing">
+<h2>2. Hypothesis testing<a class="headerlink" href="#hypothesis-testing" title="Permalink to this headline">#</a></h2>
+<p>Hypothesis testing is a method of statistical inference which is built upon distributions. The approach of this technique is to test the validity of a claim about the population using sample data. Hypothesis testing takes into account the following concepts:</p>
+<section id="the-hypotheses">
+<h3>The hypotheses<a class="headerlink" href="#the-hypotheses" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>The null hypothesis (denoted <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>): the common view whose validity needs to be tested.</p></li>
+<li><p>The alternative hypothesis (denoted <span class="math notranslate nohighlight">\(\mbox{H}_1\)</span>): what will be believed if <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span> is rejected. <span class="math notranslate nohighlight">\(H_1\)</span> can be either <span class="math notranslate nohighlight">\(x\neq x_0\)</span>, <span class="math notranslate nohighlight">\(x&lt;x_0\)</span> or <span class="math notranslate nohighlight">\(x&gt;x_0\)</span>.</p></li>
+</ul>
+</section>
+<section id="significance-level">
+<h3>Significance level<a class="headerlink" href="#significance-level" title="Permalink to this headline">#</a></h3>
+<p>Significant level (denoted <span class="math notranslate nohighlight">\(\alpha\)</span>) is the probability of rejecting the null hypothesis. Common values for significant level are <span class="math notranslate nohighlight">\(\alpha=0.05\)</span> or <span class="math notranslate nohighlight">\(\alpha=0.01\)</span>. A related concept is the confidence level (<span class="math notranslate nohighlight">\(\gamma=1-\alpha\)</span>).</p>
+</section>
+<section id="test-statistic">
+<h3>Test statistic<a class="headerlink" href="#test-statistic" title="Permalink to this headline">#</a></h3>
+<p>Test statistic is a number calculated from the data, which is used to perform the test. The math behind the computing of test statistic ensures it follows a specific dsitribution. Each test statistic is represented by a fraction where the numerator is the signal and the denominator is the noise.</p>
+</section>
+<section id="p-value">
+<h3>p-value<a class="headerlink" href="#p-value" title="Permalink to this headline">#</a></h3>
+<p>Using test statistic <span class="math notranslate nohighlight">\(t\)</span> and its probability disribution function <span class="math notranslate nohighlight">\(f(x)\)</span>, p-value can be calculated as either <span class="math notranslate nohighlight">\(2P(x&gt;|t|)\)</span>, <span class="math notranslate nohighlight">\(P(x&lt;-t)\)</span> or <span class="math notranslate nohighlight">\(P(x&gt;t)\)</span> depends on <span class="math notranslate nohighlight">\(\mbox{H}_1\)</span>. p-value is the evidence against <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>; the smaller the p-value is, the stronger evidence that you should reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>.</p>
+<ul class="simple">
+<li><p>A p-value less than 0.05 indicates the difference is significant, meaning there is a probability of less than 5% that the null hypothesis is correct. Therefore, we reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span> and accept <span class="math notranslate nohighlight">\(\mbox{H}_1\)</span>.</p></li>
+<li><p>A p-value higher than 0.05 indicates the difference is not significant. This case we reject <span class="math notranslate nohighlight">\(\mbox{H}_1\)</span> and are failed to reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Descriptive statistics<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>For populations:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span>: population size</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span>: population mean</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma\)</span>: population standard deviation</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma^2\)</span>: population variance</p></li>
+<li><p><span class="math notranslate nohighlight">\(p\)</span>: propotion of successes in population</p></li>
+</ul>
+<p>For samples:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(n\)</span>: sample size</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat\mu\)</span> or <span class="math notranslate nohighlight">\(\bar x\)</span>: sample mean</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat\sigma\)</span>: sample standard deviation</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat\sigma^2\)</span>: sample variance</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat p\)</span>: propotion of successes in sample</p></li>
+</ul>
+</section>
+<section id="z-test">
+<h3>2.1. Z-test<a class="headerlink" href="#z-test" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A tibble: 6 × 23</caption>
+<thead>
+	<tr><th scope=col>Code</th><th scope=col>area</th><th scope=col>gender</th><th scope=col>age</th><th scope=col>age_group</th><th scope=col>year_of_school</th><th scope=col>degree</th><th scope=col>job</th><th scope=col>know_english</th><th scope=col>know_france</th><th scope=col>...</th><th scope=col>flight_date</th><th scope=col>flight_status</th><th scope=col>professionally_staff</th><th scope=col>customer_service</th><th scope=col>diversity_product</th><th scope=col>good_price</th><th scope=col>easily_transaction</th><th scope=col>goodlooking_staff</th><th scope=col>diversity_flighttime</th><th scope=col>good_construction</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>...</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>central </td><td>female</td><td>69</td><td>middle</td><td>16</td><td>master   </td><td>manager</td><td>1</td><td>1</td><td>...</td><td>01/05/2013</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+	<tr><td>2</td><td>southern</td><td>female</td><td>50</td><td>middle</td><td>12</td><td>highshool</td><td>officer</td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>3</td><td>3</td><td>3</td><td>2</td><td>3</td><td>3</td><td>2</td><td>3</td></tr>
+	<tr><td>3</td><td>northern</td><td>male  </td><td>73</td><td>elder </td><td>12</td><td>highshool</td><td>officer</td><td>1</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>3</td><td>5</td><td>1</td><td>1</td></tr>
+	<tr><td>4</td><td>northern</td><td>female</td><td>73</td><td>elder </td><td>12</td><td>highshool</td><td>officer</td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>5</td><td>3</td><td>2</td><td>4</td><td>5</td><td>3</td><td>2</td><td>2</td></tr>
+	<tr><td>5</td><td>central </td><td>male  </td><td>69</td><td>middle</td><td>16</td><td>master   </td><td>officer</td><td>1</td><td>0</td><td>...</td><td>01/05/2013</td><td>0</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td></tr>
+	<tr><td>6</td><td>northern</td><td>female</td><td>72</td><td>elder </td><td>12</td><td>highshool</td><td>sale   </td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>0</td><td>5</td><td>5</td><td>2</td><td>2</td><td>5</td><td>5</td><td>2</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<section id="mean-z-test">
+<h4>Mean z-test<a class="headerlink" href="#mean-z-test" title="Permalink to this headline">#</a></h4>
+<p>Usage: Comparing the mean of one or two populations.</p>
+<p>Assumptions:</p>
+<ul class="simple">
+<li><p>Populations are normally distributed</p></li>
+<li><p>Samples are random and have at least 30 observations</p></li>
+<li><p>Population variances are known</p></li>
+</ul>
+<p><strong>Problem:</strong> Given a random sample sized <span class="math notranslate nohighlight">\(n=500\)</span> of people’s income from a population having the standard deviation <span class="math notranslate nohighlight">\(\sigma=5000\)</span>. With the significant level  <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>, can we conclude that the mean of the population <span class="math notranslate nohighlight">\(\mu=A=14000\)</span>?</p>
+<p>First, state the hypotheses from the information:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: \mu = 14000\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1: \mu \neq 14000\)</span></p></li>
+</ul>
+<p>Since we are doing a two-tailed test, the critical value will be <span class="math notranslate nohighlight">\(z_{\alpha/2}=z_{0.025} = 1.96\)</span>. If <span class="math notranslate nohighlight">\(|Z|&gt;1.96\)</span>, reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span> and accept <span class="math notranslate nohighlight">\(\mbox{H}_1\)</span>. However in this example, <span class="math notranslate nohighlight">\(|Z|=0.63\)</span> and the corresponding p-value <span class="math notranslate nohighlight">\(=0.5287\)</span>, so <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span> cannot be rejected. The formula for test statistic is:</p>
+<div class="math notranslate nohighlight">
+\[Z = \frac{\hat{\mu}-A}{\sigma/\sqrt{n}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">df</span><span class="o">$</span><span class="n">income</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">%&gt;%</span> <span class="n">length</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">%&gt;%</span> <span class="n">mean</span>
+<span class="n">sd</span> <span class="o">=</span> <span class="m">5000</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="m">14000</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sd</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="n">z</span> <span class="o">%&gt;%</span> <span class="n">abs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">0.627798445362837</div></div>
+</div>
+<p><strong>Problem:</strong> The average income of male is <span class="math notranslate nohighlight">\(5000\)</span> higher than female, true or false? Given <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, population standard deviations of income of male and female are <span class="math notranslate nohighlight">\(\sigma_1=7000\)</span> and <span class="math notranslate nohighlight">\(\sigma_2=5000\)</span>, consecutively.</p>
+<p>The hypotheses:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: \mu_1 = \mu_2+5000\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1: \mu_1 &gt; \mu_2+5000\)</span></p></li>
+</ul>
+<p>This is a right-tailed test, <span class="math notranslate nohighlight">\(z_{\alpha}=z_{0.05} = 1.64\)</span> will be taken. If <span class="math notranslate nohighlight">\(Z&gt;1.64\)</span>, reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span> and conclude that the average income of male is higher than female. In this example, <span class="math notranslate nohighlight">\(Z=2.57\)</span> and the corresponding p-value is <span class="math notranslate nohighlight">\(0.0051\)</span>. The formula for test statistic is:</p>
+<div class="math notranslate nohighlight">
+\[Z = \frac{\hat{\mu}_1-\hat{\mu}_2-A}{\sqrt{\sigma_1^2/n_1+\sigma_2^2/n_2}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sample1</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">gender</span><span class="o">==</span><span class="s">&#39;male&#39;</span><span class="p">))</span><span class="o">$</span><span class="n">income</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">gender</span><span class="o">==</span><span class="s">&#39;female&#39;</span><span class="p">))</span><span class="o">$</span><span class="n">income</span>
+
+<span class="n">n1</span> <span class="o">=</span> <span class="n">sample1</span> <span class="o">%&gt;%</span> <span class="n">length</span>
+<span class="n">n2</span> <span class="o">=</span> <span class="n">sample2</span> <span class="o">%&gt;%</span> <span class="n">length</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">sample1</span> <span class="o">%&gt;%</span> <span class="n">mean</span>
+<span class="n">mu2</span> <span class="o">=</span> <span class="n">sample2</span> <span class="o">%&gt;%</span> <span class="n">mean</span>
+<span class="n">sd1</span> <span class="o">=</span> <span class="m">7000</span>
+<span class="n">sd2</span> <span class="o">=</span> <span class="m">5000</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu1</span> <span class="o">-</span> <span class="n">mu2</span> <span class="o">-</span> <span class="m">5000</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">((</span><span class="n">sd1</span><span class="o">**</span><span class="m">2</span><span class="o">/</span><span class="n">n1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">sd2</span><span class="o">**</span><span class="m">2</span><span class="o">/</span><span class="n">n2</span><span class="p">))</span>
+<span class="n">z</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">2.57347910582982</div></div>
+</div>
+</section>
+<section id="proportion-z-test">
+<h4>Proportion z-test<a class="headerlink" href="#proportion-z-test" title="Permalink to this headline">#</a></h4>
+<p>Usage: Comparing the proportion of one or two populations.</p>
+<p>Assumptions:</p>
+<ul class="simple">
+<li><p>Populations are normally distributed</p></li>
+<li><p>Samples are random and have at least 30 observations</p></li>
+</ul>
+<p><strong>Problem:</strong> In a large consignment of food packets, a random sample of <span class="math notranslate nohighlight">\(n=100\)</span> packets revealed that 5 packets were leaking. Can we conclude that the population contains at least <span class="math notranslate nohighlight">\(A=10\%\)</span> of leaked packets at <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>?</p>
+<p>The hypotheses:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: p\geq0.1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1: p&lt;0.1\)</span></p></li>
+</ul>
+<p>This is a left-tailed test, <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span> will be rejected if <span class="math notranslate nohighlight">\(Z&lt;-z_{0.05}=-1.64\)</span>. For <span class="math notranslate nohighlight">\(Z=-2.294\)</span>, the corresponding p-value is <span class="math notranslate nohighlight">\(0.011\)</span> (<span class="math notranslate nohighlight">\(&lt;0.05\)</span>). The formula for test statistic is:</p>
+<div class="math notranslate nohighlight">
+\[Z = \frac{\hat{p}-A}{\sqrt{\hat{p}(1-\hat{p})/n}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="m">100</span>
+<span class="n">p</span> <span class="o">=</span> <span class="m">5</span><span class="o">/</span><span class="m">100</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="m">0.1</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">z</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">-2.29415733870562</div></div>
+</div>
+<p><strong>Problem:</strong> A machine turns out 16 imperfect articles in a sample of <span class="math notranslate nohighlight">\(n_1=500\)</span>. After maintaining, it turns 3 imperfect articles in a sample of <span class="math notranslate nohighlight">\(n_2=100\)</span>. Has the machine improved after maintaining at significance level <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>?</p>
+<p>The hypotheses:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: p_1=p_2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1: p_1&gt;p_2\)</span></p></li>
+</ul>
+<p>If <span class="math notranslate nohighlight">\(Z&gt;z_{0.05}=1.64\)</span>, reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>. The formula for test statistic is:</p>
+<div class="math notranslate nohighlight">
+\[Z = \frac{\hat{p}_1-\hat{p}_2-A}{\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n1</span> <span class="o">=</span> <span class="m">500</span>
+<span class="n">n2</span> <span class="o">=</span> <span class="m">100</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="m">16</span><span class="o">/</span><span class="m">500</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="m">3</span><span class="o">/</span><span class="m">100</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">p1</span><span class="o">*</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">p1</span><span class="p">)</span><span class="o">/</span><span class="n">n1</span> <span class="o">+</span> <span class="n">p2</span><span class="o">*</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">p2</span><span class="p">)</span><span class="o">/</span><span class="n">n2</span><span class="p">)</span>
+<span class="n">z</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">0.106456497164033</div></div>
+</div>
+</section>
+</section>
+<section id="f-test">
+<h3>2.2. F-test<a class="headerlink" href="#f-test" title="Permalink to this headline">#</a></h3>
+<p>Usage:</p>
+<ul class="simple">
+<li><p>Comparing the variances of two populations</p></li>
+<li><p>Being used in one-way ANOVA to compare means between groups (section 2.4)</p></li>
+<li><p>Being used in multivariate linear regression to testing the significant of R-squared (section 3.2)</p></li>
+</ul>
+<p>Assumption:</p>
+<ul class="simple">
+<li><p>Populations are normally distributed</p></li>
+<li><p>Two random independent samples</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Problem:</strong> With the significance level <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>, compare the population variances of income of male and female.</p>
+<p>The hypotheses:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: \sigma^2_1 = 5\sigma^2_2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1: \sigma^2_1 &gt; 5\sigma^2_2\)</span></p></li>
+</ul>
+<p>If p-value <span class="math notranslate nohighlight">\(&lt;0.05\)</span>: reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>. The formula for test statistic is:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{1}{A}\frac{\hat{\sigma}_1^2}{\hat{\sigma}_2^2}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sample1</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">gender</span><span class="o">==</span><span class="s">&#39;male&#39;</span><span class="p">))</span><span class="o">$</span><span class="n">income</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">gender</span><span class="o">==</span><span class="s">&#39;female&#39;</span><span class="p">))</span><span class="o">$</span><span class="n">income</span>
+
+<span class="nf">var.test</span><span class="p">(</span><span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="m">5</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s">&#39;greater&#39;</span><span class="p">,</span> <span class="n">conf.level</span><span class="o">=</span><span class="m">0.95</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	F test to compare two variances
+
+data:  sample1 and sample2
+F = 1.2719, num df = 270, denom df = 228, p-value = 0.03028
+alternative hypothesis: true ratio of variances is greater than 5
+95 percent confidence interval:
+ 5.151238      Inf
+sample estimates:
+ratio of variances 
+          6.359427 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="t-test">
+<h3>2.3. T-test<a class="headerlink" href="#t-test" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A tibble: 6 × 23</caption>
+<thead>
+	<tr><th scope=col>Code</th><th scope=col>area</th><th scope=col>gender</th><th scope=col>age</th><th scope=col>age_group</th><th scope=col>year_of_school</th><th scope=col>degree</th><th scope=col>job</th><th scope=col>know_english</th><th scope=col>know_france</th><th scope=col>...</th><th scope=col>flight_date</th><th scope=col>flight_status</th><th scope=col>professionally_staff</th><th scope=col>customer_service</th><th scope=col>diversity_product</th><th scope=col>good_price</th><th scope=col>easily_transaction</th><th scope=col>goodlooking_staff</th><th scope=col>diversity_flighttime</th><th scope=col>good_construction</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>...</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>central </td><td>female</td><td>69</td><td>middle</td><td>16</td><td>master   </td><td>manager</td><td>1</td><td>1</td><td>...</td><td>01/05/2013</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+	<tr><td>2</td><td>southern</td><td>female</td><td>50</td><td>middle</td><td>12</td><td>highshool</td><td>officer</td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>3</td><td>3</td><td>3</td><td>2</td><td>3</td><td>3</td><td>2</td><td>3</td></tr>
+	<tr><td>3</td><td>northern</td><td>male  </td><td>73</td><td>elder </td><td>12</td><td>highshool</td><td>officer</td><td>1</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>3</td><td>5</td><td>1</td><td>1</td></tr>
+	<tr><td>4</td><td>northern</td><td>female</td><td>73</td><td>elder </td><td>12</td><td>highshool</td><td>officer</td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>5</td><td>3</td><td>2</td><td>4</td><td>5</td><td>3</td><td>2</td><td>2</td></tr>
+	<tr><td>5</td><td>central </td><td>male  </td><td>69</td><td>middle</td><td>16</td><td>master   </td><td>officer</td><td>1</td><td>0</td><td>...</td><td>01/05/2013</td><td>0</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td></tr>
+	<tr><td>6</td><td>northern</td><td>female</td><td>72</td><td>elder </td><td>12</td><td>highshool</td><td>sale   </td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>0</td><td>5</td><td>5</td><td>2</td><td>2</td><td>5</td><td>5</td><td>2</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<section id="one-sample-mean-t-test">
+<h4>One-sample mean t-test<a class="headerlink" href="#one-sample-mean-t-test" title="Permalink to this headline">#</a></h4>
+<p>Usage: To compare the mean of a population when its variance is unknown.</p>
+<p>Assumption:</p>
+<ul class="simple">
+<li><p>The population is normally distributed</p></li>
+<li><p>The sample is random</p></li>
+</ul>
+<p><strong>Problem:</strong> With the confidence level <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>, the mean of income is <span class="math notranslate nohighlight">\(13000\)</span> or not?</p>
+<p>The hypotheses:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: \mu=13000\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1: \mu\neq13000\)</span></p></li>
+</ul>
+<p>The formula for test statistic is:</p>
+<div class="math notranslate nohighlight">
+\[T = \frac{\hat{\mu}-A}{\hat\sigma/\sqrt{n}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">df</span><span class="o">$</span><span class="n">income</span>
+<span class="nf">t.test</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="m">13000</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s">&#39;two.sided&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	One Sample t-test
+
+data:  sample
+t = 2.6905, df = 499, p-value = 0.007374
+alternative hypothesis: true mean is not equal to 13000
+95 percent confidence interval:
+ 13231.88 14487.36
+sample estimates:
+mean of x 
+ 13859.62 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="independent-samples-mean-t-test">
+<h4>Independent samples mean t-test<a class="headerlink" href="#independent-samples-mean-t-test" title="Permalink to this headline">#</a></h4>
+<p>Usage: To compare the means of two population using their independent samples. A f-test should be used first to check the equality of the two population variances.</p>
+<p>Assumptions:</p>
+<ul class="simple">
+<li><p>Two populations are normally distributed</p></li>
+<li><p>Two samples are independent and random</p></li>
+<li><p>Two variances are equal</p></li>
+</ul>
+<p><strong>Problem:</strong> With <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>, the average income of male and female are equal, true or false?</p>
+<p>The hypotheses:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: \mu_1 = \mu_2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1: \mu_1 \neq \mu_2\)</span></p></li>
+</ul>
+<p>If <span class="math notranslate nohighlight">\(\sigma_1^2 \neq \sigma_2^2\)</span> (this example - already tested in section 2.2), the formula for test statistic is:</p>
+<div class="math notranslate nohighlight">
+\[T = \frac{\hat{\mu}_1-\hat{\mu}_2-A}{\sqrt{\frac{\hat{\sigma}_1^2}{n_1}+\frac{\hat{\sigma}_2^2}{n_2}}}\]</div>
+<p>If <span class="math notranslate nohighlight">\(\sigma_1^2 = \sigma_2^2\)</span>, the test statistic is:</p>
+<div class="math notranslate nohighlight">
+\[T = \frac{\hat{\mu}_1-\hat{\mu}_2-A}{\hat\sigma_p \sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\hat\sigma_p = \sqrt{\frac{(n_1-1)\hat{\sigma}_1^2 + (n_2-1)\hat{\sigma}_2^2}{n_1+n_2-2}}\]</div>
+<p>is the pooled standard deviation of the two samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sample1</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">gender</span><span class="o">==</span><span class="s">&#39;male&#39;</span><span class="p">))</span><span class="o">$</span><span class="n">income</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">gender</span><span class="o">==</span><span class="s">&#39;female&#39;</span><span class="p">))</span><span class="o">$</span><span class="n">income</span>
+
+<span class="nf">t.test</span><span class="p">(</span><span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span> <span class="n">var.equal</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Welch Two Sample t-test
+
+data:  sample1 and sample2
+t = 11.817, df = 364.87, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 5323.120 7448.517
+sample estimates:
+mean of x mean of y 
+ 16784.32  10398.51 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">t.test</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">income</span> <span class="o">~</span> <span class="n">df</span><span class="o">$</span><span class="n">gender</span><span class="p">,</span> <span class="n">var.equal</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Welch Two Sample t-test
+
+data:  df$income by df$gender
+t = -11.817, df = 364.87, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -7448.517 -5323.120
+sample estimates:
+mean in group female   mean in group male 
+            10398.51             16784.32 
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Problem:</strong> Compare the average income of higher education group (at least 15 years) over the other group.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">var.test</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">income</span> <span class="o">~</span> <span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">year_of_school</span><span class="o">&gt;=</span><span class="m">15</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	F test to compare two variances
+
+data:  df$income by df$year_of_school &gt;= 15
+F = 0.068841, num df = 262, denom df = 236, p-value &lt; 2.2e-16
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.05360573 0.08826216
+sample estimates:
+ratio of variances 
+        0.06884143 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># sample 1 will be group FALSE, sample 2 will be group TRUE</span>
+<span class="nf">t.test</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">income</span> <span class="o">~</span> <span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">year_of_school</span><span class="o">&gt;=</span><span class="m">15</span><span class="p">),</span> <span class="n">var.equal</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s">&#39;less&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Welch Two Sample t-test
+
+data:  df$income by df$year_of_school &gt;= 15
+t = -13.275, df = 265.27, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is less than 0
+95 percent confidence interval:
+      -Inf -6614.743
+sample estimates:
+mean in group FALSE  mean in group TRUE 
+           10279.03            17833.02 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="paired-samples-mean-t-test">
+<h4>Paired samples mean t-test<a class="headerlink" href="#paired-samples-mean-t-test" title="Permalink to this headline">#</a></h4>
+<p>Usage: Comparing two population means, given their dependent samples. A paired samples t-test calculates the diffrence between paired observation and then performs a one-sample t-test.</p>
+<p>Assumptions:</p>
+<ul class="simple">
+<li><p>The two populations should be both normally distributed</p></li>
+<li><p>The two random samples come in pairs (before and after data for example)</p></li>
+<li><p>Same sample sizes</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span> <span class="o">=</span> <span class="nf">data.frame</span><span class="p">(</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">72</span><span class="p">,</span><span class="m">77</span><span class="p">,</span><span class="m">84</span><span class="p">,</span><span class="m">79</span><span class="p">,</span><span class="m">74</span><span class="p">,</span><span class="m">67</span><span class="p">,</span><span class="m">74</span><span class="p">,</span><span class="m">77</span><span class="p">,</span><span class="m">79</span><span class="p">,</span><span class="m">89</span><span class="p">),</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">65</span><span class="p">,</span><span class="m">68</span><span class="p">,</span><span class="m">77</span><span class="p">,</span><span class="m">73</span><span class="p">,</span><span class="m">66</span><span class="p">,</span><span class="m">61</span><span class="p">,</span><span class="m">66</span><span class="p">,</span><span class="m">71</span><span class="p">,</span><span class="m">71</span><span class="p">,</span><span class="m">78</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Problem:</strong> With <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>, the average weight after is 8 kg less than before, true or false?</p>
+<p>The hypotheses:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: \mu_1-\mu_2\geq8\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1: \mu_1-\mu_2&lt;8\)</span></p></li>
+</ul>
+<p>The test statistic is:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{\hat\mu_1-\hat\mu_2-A}{\hat\sigma_d/\sqrt n} = \frac{\hat\mu_d-A}{\hat\sigma_d/\sqrt n}\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat\mu_d\)</span> is the sample mean of the differences</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat\sigma_d\)</span> is the sample standard deviation of the differences</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sample1</span> <span class="o">=</span> <span class="n">weight</span><span class="o">$</span><span class="n">before</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="n">weight</span><span class="o">$</span><span class="n">after</span>
+
+<span class="nf">t.test</span><span class="p">(</span><span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="m">8</span><span class="p">,</span> <span class="n">pair</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s">&#39;less&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Paired t-test
+
+data:  sample1 and sample2
+t = -0.80178, df = 9, p-value = 0.2217
+alternative hypothesis: true difference in means is less than 8
+95 percent confidence interval:
+     -Inf 8.514517
+sample estimates:
+mean of the differences 
+                    7.6 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="chi-squared-test">
+<h3>2.4. Chi-squared test<a class="headerlink" href="#chi-squared-test" title="Permalink to this headline">#</a></h3>
+<p>Usage:</p>
+<ul class="simple">
+<li><p>Comparing the propotions of two or more populations</p></li>
+<li><p>Independence testing between qualitative variables</p></li>
+</ul>
+<p>Assumptions:</p>
+<ul class="simple">
+<li><p>Populations are normally distributed</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A tibble: 6 × 23</caption>
+<thead>
+	<tr><th scope=col>Code</th><th scope=col>area</th><th scope=col>gender</th><th scope=col>age</th><th scope=col>age_group</th><th scope=col>year_of_school</th><th scope=col>degree</th><th scope=col>job</th><th scope=col>know_english</th><th scope=col>know_france</th><th scope=col>...</th><th scope=col>flight_date</th><th scope=col>flight_status</th><th scope=col>professionally_staff</th><th scope=col>customer_service</th><th scope=col>diversity_product</th><th scope=col>good_price</th><th scope=col>easily_transaction</th><th scope=col>goodlooking_staff</th><th scope=col>diversity_flighttime</th><th scope=col>good_construction</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>...</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>central </td><td>female</td><td>69</td><td>middle</td><td>16</td><td>master   </td><td>manager</td><td>1</td><td>1</td><td>...</td><td>01/05/2013</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+	<tr><td>2</td><td>southern</td><td>female</td><td>50</td><td>middle</td><td>12</td><td>highshool</td><td>officer</td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>3</td><td>3</td><td>3</td><td>2</td><td>3</td><td>3</td><td>2</td><td>3</td></tr>
+	<tr><td>3</td><td>northern</td><td>male  </td><td>73</td><td>elder </td><td>12</td><td>highshool</td><td>officer</td><td>1</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>3</td><td>5</td><td>1</td><td>1</td></tr>
+	<tr><td>4</td><td>northern</td><td>female</td><td>73</td><td>elder </td><td>12</td><td>highshool</td><td>officer</td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>5</td><td>3</td><td>2</td><td>4</td><td>5</td><td>3</td><td>2</td><td>2</td></tr>
+	<tr><td>5</td><td>central </td><td>male  </td><td>69</td><td>middle</td><td>16</td><td>master   </td><td>officer</td><td>1</td><td>0</td><td>...</td><td>01/05/2013</td><td>0</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td></tr>
+	<tr><td>6</td><td>northern</td><td>female</td><td>72</td><td>elder </td><td>12</td><td>highshool</td><td>sale   </td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>0</td><td>5</td><td>5</td><td>2</td><td>2</td><td>5</td><td>5</td><td>2</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<section id="dependence-chi-squared-test">
+<h4>Dependence chi-squared test<a class="headerlink" href="#dependence-chi-squared-test" title="Permalink to this headline">#</a></h4>
+<p><strong>Problem</strong>: Is there a relationship between <code class="docutils literal notranslate"><span class="pre">age_group</span></code> and <code class="docutils literal notranslate"><span class="pre">degree</span></code>?</p>
+<p>The hypotheses:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0:\)</span> The two variables are independent</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1:\)</span> The two variables are dependent</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">age_group</span></code> and <code class="docutils literal notranslate"><span class="pre">degree</span></code> are said to be strongly related if p-value <span class="math notranslate nohighlight">\(&lt;0.05\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">var1</span> <span class="o">&lt;-</span> <span class="n">df</span><span class="o">$</span><span class="n">age_group</span>
+<span class="n">var2</span> <span class="o">&lt;-</span> <span class="n">df</span><span class="o">$</span><span class="n">degree</span>
+
+<span class="nf">chisq.test</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Pearson&#39;s Chi-squared test
+
+data:  var1 and var2
+X-squared = 84.746, df = 4, p-value &lt; 2.2e-16
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="propotion-chi-squared-test">
+<h4>Propotion chi-squared test<a class="headerlink" href="#propotion-chi-squared-test" title="Permalink to this headline">#</a></h4>
+<p><strong>Problem</strong>: The number of officer is equal to the number of salesperson and 5 times greater than the number of managers, true or false?</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: p_1=1/11, p_2=p_3=5/11\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1\)</span>: There is at least one incorrect equation.</p></li>
+</ul>
+<p>If p-value <span class="math notranslate nohighlight">\(&lt;0.05\)</span> then reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">apr1</span> <span class="o">&lt;-</span> <span class="n">df</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">job</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarise</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="nf">n</span><span class="p">())</span>
+<span class="n">apr1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`summarise()` ungrouping output (override with `.groups` argument)
+</pre></div>
+</div>
+<div class="output text_html"><table>
+<caption>A tibble: 3 × 2</caption>
+<thead>
+	<tr><th scope=col>job</th><th scope=col>count</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>manager</td><td> 44</td></tr>
+	<tr><td>officer</td><td>239</td></tr>
+	<tr><td>sale   </td><td>217</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">prop.test</span><span class="p">(</span>
+    <span class="n">apr1</span><span class="o">$</span><span class="n">count</span><span class="p">,</span>
+    <span class="n">n</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">500</span><span class="p">,</span> <span class="m">500</span><span class="p">,</span> <span class="m">500</span><span class="p">),</span>
+    <span class="n">p</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">11</span><span class="p">,</span> <span class="m">5</span><span class="o">/</span><span class="m">11</span><span class="p">,</span> <span class="m">5</span><span class="o">/</span><span class="m">11</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	3-sample test for given proportions without continuity correction
+
+data:  apr1$count out of c(500, 500, 500), null probabilities c(1/11, 5/11, 5/11)
+X-squared = 2.0119, df = 3, p-value = 0.5699
+alternative hypothesis: two.sided
+null values:
+    prop 1     prop 2     prop 3 
+0.09090909 0.45454545 0.45454545 
+sample estimates:
+prop 1 prop 2 prop 3 
+ 0.088  0.478  0.434 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="anova">
+<h3>2.5. ANOVA<a class="headerlink" href="#anova" title="Permalink to this headline">#</a></h3>
+<p>ANOVA (Analysis of Variance) is a technique involving a collection of statistical tests analyzing the difference of the means of two or more groups. The means is calculated from a quantitative variable; the groups are determined using qualitative variables.</p>
+<section id="one-factor-anova">
+<h4>One-factor ANOVA<a class="headerlink" href="#one-factor-anova" title="Permalink to this headline">#</a></h4>
+<p>Usage: Compare multiple population means when you have one categorical variable containing at least three categories.</p>
+<p>Assumptions:</p>
+<ul class="simple">
+<li><p>Populations are normally distributed</p></li>
+<li><p>Samples are random</p></li>
+<li><p>Homogeneity of variances</p></li>
+</ul>
+<p>The work flow:</p>
+<ol class="simple">
+<li><p>Test the homogeneity of variances, using one of the following test:</p>
+<ul class="simple">
+<li><p>Bartlett test (<code class="docutils literal notranslate"><span class="pre">bartlett.test()</span></code> function)</p></li>
+<li><p>Levene test (<code class="docutils literal notranslate"><span class="pre">car::leveneTest()</span></code> function)</p></li>
+<li><p>Fligner-Killeen test (<code class="docutils literal notranslate"><span class="pre">fligner.test()</span></code> function)</p></li>
+</ul>
+</li>
+<li><p>Test the equality of population means:</p>
+<ul class="simple">
+<li><p>If the variances are equal, use the <code class="docutils literal notranslate"><span class="pre">aov()</span></code> function</p></li>
+<li><p>If the variances are not equal, use the <code class="docutils literal notranslate"><span class="pre">oneway.test()</span></code> function</p></li>
+</ul>
+</li>
+<li><p>Post-hoc test to compare pairwise population means, using the <code class="docutils literal notranslate"><span class="pre">userfriendlyscience::oneway()</span></code> function:</p>
+<ul class="simple">
+<li><p>If the variances are equal, use Tukey HSD test (<code class="docutils literal notranslate"><span class="pre">posthoc='tukey'</span></code>)</p></li>
+<li><p>If the variances are not equal, use Games-Howell test (<code class="docutils literal notranslate"><span class="pre">posthoc='games-howell'</span></code>)</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A tibble: 6 × 23</caption>
+<thead>
+	<tr><th scope=col>Code</th><th scope=col>area</th><th scope=col>gender</th><th scope=col>age</th><th scope=col>age_group</th><th scope=col>year_of_school</th><th scope=col>degree</th><th scope=col>job</th><th scope=col>know_english</th><th scope=col>know_france</th><th scope=col>...</th><th scope=col>flight_date</th><th scope=col>flight_status</th><th scope=col>professionally_staff</th><th scope=col>customer_service</th><th scope=col>diversity_product</th><th scope=col>good_price</th><th scope=col>easily_transaction</th><th scope=col>goodlooking_staff</th><th scope=col>diversity_flighttime</th><th scope=col>good_construction</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>...</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>central </td><td>female</td><td>69</td><td>middle</td><td>16</td><td>master   </td><td>manager</td><td>1</td><td>1</td><td>...</td><td>01/05/2013</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+	<tr><td>2</td><td>southern</td><td>female</td><td>50</td><td>middle</td><td>12</td><td>highshool</td><td>officer</td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>3</td><td>3</td><td>3</td><td>2</td><td>3</td><td>3</td><td>2</td><td>3</td></tr>
+	<tr><td>3</td><td>northern</td><td>male  </td><td>73</td><td>elder </td><td>12</td><td>highshool</td><td>officer</td><td>1</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>3</td><td>5</td><td>1</td><td>1</td></tr>
+	<tr><td>4</td><td>northern</td><td>female</td><td>73</td><td>elder </td><td>12</td><td>highshool</td><td>officer</td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>1</td><td>5</td><td>3</td><td>2</td><td>4</td><td>5</td><td>3</td><td>2</td><td>2</td></tr>
+	<tr><td>5</td><td>central </td><td>male  </td><td>69</td><td>middle</td><td>16</td><td>master   </td><td>officer</td><td>1</td><td>0</td><td>...</td><td>01/05/2013</td><td>0</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td></tr>
+	<tr><td>6</td><td>northern</td><td>female</td><td>72</td><td>elder </td><td>12</td><td>highshool</td><td>sale   </td><td>0</td><td>0</td><td>...</td><td>01/05/2013</td><td>0</td><td>5</td><td>5</td><td>2</td><td>2</td><td>5</td><td>5</td><td>2</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<p><strong>Problem:</strong> Is there a difference in average income between 3 areas (Central, Southern and Northern)? If there is, which group differs from the others?</p>
+<p><strong>Step 1:</strong> Check the equality of population variances. If p-value <span class="math notranslate nohighlight">\(&lt;0.05\)</span>, then reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>. The hypotheses:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: \sigma_1^2 = \sigma_2^2 = \dots = \sigma_k^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1:\)</span> Exist at least one pair <span class="math notranslate nohighlight">\(\sigma_i^2 \neq \sigma_j^2 \)</span> where <span class="math notranslate nohighlight">\(i \neq j\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">bartlett.test</span><span class="p">(</span><span class="n">income</span> <span class="o">~</span> <span class="n">area</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Bartlett test of homogeneity of variances
+
+data:  income by area
+Bartlett&#39;s K-squared = 865.48, df = 2, p-value &lt; 2.2e-16
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">fligner.test</span><span class="p">(</span><span class="n">income</span> <span class="o">~</span> <span class="n">area</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Fligner-Killeen test of homogeneity of variances
+
+data:  income by area
+Fligner-Killeen:med chi-squared = 243.66, df = 2, p-value &lt; 2.2e-16
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Step 2:</strong> Test wether the population means are equal or not. If p-value <span class="math notranslate nohighlight">\(&lt;0.05\)</span>, then reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>. The hypothese:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: \)</span>\mu_1 = \mu_2 = \dots = \mu_k$</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mbox{H}_1: There is at least one pair \)</span>\mu_i \neq \mu_j <span class="math notranslate nohighlight">\( where \)</span>i \neq j$</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">aov</span><span class="p">(</span><span class="n">income</span> <span class="o">~</span> <span class="n">area</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>             Df    Sum Sq   Mean Sq F value Pr(&gt;F)    
+area          2 1.202e+10 6.012e+09   222.2 &lt;2e-16 ***
+Residuals   497 1.345e+10 2.705e+07                   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">oneway.test</span><span class="p">(</span><span class="n">income</span> <span class="o">~</span> <span class="n">area</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	One-way analysis of means (not assuming equal variances)
+
+data:  income and area
+F = 441.89, num df = 2.00, denom df = 283.47, p-value &lt; 2.2e-16
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Step 3:</strong> Post-hoc test to compare pairwise means. Any pair having p-value <span class="math notranslate nohighlight">\(&lt;0.05\)</span> can be considered significantly diffrerent in mean. Notice that the <code class="docutils literal notranslate"><span class="pre">oneway()</span></code> funtion from the <code class="docutils literal notranslate"><span class="pre">userfriendlyscience</span></code> library includes all neccessary tests for 3 steps.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">version</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>               _                           
+platform       x86_64-w64-mingw32          
+arch           x86_64                      
+os             mingw32                     
+system         x86_64, mingw32             
+status                                     
+major          3                           
+minor          6.1                         
+year           2019                        
+month          07                          
+day            05                          
+svn rev        76782                       
+language       R                           
+version.string R version 3.6.1 (2019-07-05)
+nickname       Action of the Toes          
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#39;userfriendlyscience&#39;</span><span class="p">,</span>
+                  <span class="n">contriburl</span><span class="o">=</span><span class="s">&#39;https://userfriendlyscience.com/src/contrib&#39;</span><span class="p">,</span>
+                  <span class="n">type</span><span class="o">=</span><span class="s">&#39;win.binary&#39;</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing package into &#39;E:/Documents/R/win-library/3.6&#39;
+(as &#39;lib&#39; is unspecified)
+
+Warning message:
+&quot;dependency &#39;fBasics&#39; is not available&quot;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>package &#39;userfriendlyscience&#39; successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\Admin\AppData\Local\Temp\RtmpwZEu7H\downloaded_packages
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#39;fBasics&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing package into &#39;E:/Documents/R/win-library/3.6&#39;
+(as &#39;lib&#39; is unspecified)
+
+also installing the dependencies &#39;timeSeries&#39;, &#39;spatial&#39;, &#39;gss&#39;, &#39;stabledist&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>package &#39;timeSeries&#39; successfully unpacked and MD5 sums checked
+package &#39;spatial&#39; successfully unpacked and MD5 sums checked
+package &#39;gss&#39; successfully unpacked and MD5 sums checked
+package &#39;stabledist&#39; successfully unpacked and MD5 sums checked
+package &#39;fBasics&#39; successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\Admin\AppData\Local\Temp\RtmpwZEu7H\downloaded_packages
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#39;foreign&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing package into &#39;E:/Documents/R/win-library/3.6&#39;
+(as &#39;lib&#39; is unspecified)
+
+Warning message:
+&quot;package &#39;foreign&#39; is not available (for R version 3.6.1)&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">userfriendlyscience</span><span class="p">)</span>
+<span class="nf">oneway</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">income</span><span class="p">,</span> <span class="n">df</span><span class="o">$</span><span class="n">area</span><span class="p">,</span> <span class="n">posthoc</span><span class="o">=</span><span class="s">&#39;games-howell&#39;</span><span class="p">,</span> <span class="n">levene</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">Error</span>: package or namespace load failed for &#39;userfriendlyscience&#39; in loadNamespace(j &lt;- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
+ <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">package</span> <span class="n">called</span> <span class="s1">&#39;foreign&#39;</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">library</span><span class="p">(</span><span class="n">userfriendlyscience</span><span class="p">)</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">tryCatch</span><span class="p">({</span>
+ <span class="o">.</span>     <span class="n">attr</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="s2">&quot;LibPath&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">loc</span>
+ <span class="o">.</span>     <span class="n">ns</span> <span class="o">&lt;-</span> <span class="n">loadNamespace</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">lib</span><span class="o">.</span><span class="n">loc</span><span class="p">)</span>
+ <span class="o">.</span>     <span class="n">env</span> <span class="o">&lt;-</span> <span class="n">attachNamespace</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="p">,</span> <span class="n">deps</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">include</span><span class="o">.</span><span class="n">only</span><span class="p">)</span>
+ <span class="o">.</span> <span class="p">},</span> <span class="n">error</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+ <span class="o">.</span>     <span class="n">P</span> <span class="o">&lt;-</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span>is.null<span class="o">(</span>cc &lt;- conditionCall<span class="o">(</span>e<span class="o">)))</span> 
+ <span class="o">.</span>         <span class="n">paste</span><span class="p">(</span><span class="s2">&quot; in&quot;</span><span class="p">,</span> <span class="n">deparse</span><span class="p">(</span><span class="n">cc</span><span class="p">)[</span><span class="mi">1</span><span class="n">L</span><span class="p">])</span>
+ <span class="o">.</span>     <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+ <span class="o">.</span>     <span class="n">msg</span> <span class="o">&lt;-</span> <span class="n">gettextf</span><span class="p">(</span><span class="s2">&quot;package or namespace load failed for </span><span class="si">%s%s</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> 
+ <span class="o">.</span>         <span class="n">sQuote</span><span class="p">(</span><span class="n">package</span><span class="p">),</span> <span class="n">P</span><span class="p">,</span> <span class="n">conditionMessage</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+ <span class="o">.</span>     <span class="k">if</span> <span class="p">(</span><span class="n">logical</span><span class="o">.</span><span class="k">return</span><span class="p">)</span> 
+ <span class="o">.</span>         <span class="n">message</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">&quot;Error:&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">),</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
+ <span class="o">.</span>     <span class="k">else</span> <span class="n">stop</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">call</span><span class="o">.</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
+ <span class="o">.</span> <span class="p">})</span>
+<span class="mi">3</span><span class="o">.</span> <span class="n">tryCatchList</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">parentenv</span><span class="p">,</span> <span class="n">handlers</span><span class="p">)</span>
+<span class="mi">4</span><span class="o">.</span> <span class="n">tryCatchOne</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">parentenv</span><span class="p">,</span> <span class="n">handlers</span><span class="p">[[</span><span class="mi">1</span><span class="n">L</span><span class="p">]])</span>
+<span class="mi">5</span><span class="o">.</span> <span class="n">value</span><span class="p">[[</span><span class="mi">3</span><span class="n">L</span><span class="p">]](</span><span class="n">cond</span><span class="p">)</span>
+<span class="mi">6</span><span class="o">.</span> <span class="n">stop</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">call</span><span class="o">.</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="distribution-test">
+<h3>2.6. Distribution test<a class="headerlink" href="#distribution-test" title="Permalink to this headline">#</a></h3>
+<p>The Kolmogorov-Smirnov test (KS test) is used to test whether a random variable follows a specific distribution or not. The test statistic is calculated as the difference between the empirical CDF of the observed variable and the CDF of the reference distribution. In R, the <code class="docutils literal notranslate"><span class="pre">ks.test()</span></code> function performs Kolmogorov-Smirnov test.</p>
+<p>Here are the popular distributions that <code class="docutils literal notranslate"><span class="pre">ks.test()</span></code> supports:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>Distribution</p></th>
+<th class="text-align:left head"><p>R function</p></th>
+<th class="text-align:left head"><p>Parameters</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>Binomial</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">pbinom</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">prob</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>Poisson</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">ppois</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">lambda</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>Unifrom</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">punif</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>Normal</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">pnorm</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">sd</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>Cauchy</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">pcauchy</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">location</span></code>, <code class="docutils literal notranslate"><span class="pre">scale</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>T</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">pt</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">df</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>F</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">pf</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">df1</span></code>, <code class="docutils literal notranslate"><span class="pre">df2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>Chi-squared</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">pchisq</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">df</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>Exponential</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">pexp</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">rate</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>Beta</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">pbeta</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">shape1</span></code>, <code class="docutils literal notranslate"><span class="pre">shape2</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>Gamma</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">pgamma</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">shape</span></code>, <code class="docutils literal notranslate"><span class="pre">scale</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="m">1000</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">ks.test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pnorm</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>Type</p></th>
+<th class="text-align:left head"><p>Usage</p></th>
+<th class="text-align:left head"><p>Test statistic</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>Z-test</p></td>
+<td class="text-align:left"><p>1. Comparing the means of 1 or 2 populations <br> 2. Comparing the proportions of 1 or 2 populations</p></td>
+<td class="text-align:left"><p><span class="math notranslate nohighlight">\(Z\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>F-test</p></td>
+<td class="text-align:left"><p>Comparing the variances of 2 populations</p></td>
+<td class="text-align:left"><p><span class="math notranslate nohighlight">\(F\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>T-test</p></td>
+<td class="text-align:left"><p>Comparing the means of 1 or 2 populations</p></td>
+<td class="text-align:left"><p><span class="math notranslate nohighlight">\(T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>Chi-squared test</p></td>
+<td class="text-align:left"><p>1. Comparing the propotions of 3 or more populations <br> 2. Testing of qualitative variables replationship</p></td>
+<td class="text-align:left"><p><span class="math notranslate nohighlight">\(\chi^2\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>ANOVA</p></td>
+<td class="text-align:left"><p>Comparing the means of 3 population or more</p></td>
+<td class="text-align:left"><p><span class="math notranslate nohighlight">\(F\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>KS test</p></td>
+<td class="text-align:left"><p>Testing of distribution</p></td>
+<td class="text-align:left"><p><span class="math notranslate nohighlight">\(D\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="regression">
+<h2>3. Regression<a class="headerlink" href="#regression" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="simple-linear-regression">
+<h3>3.1. Simple linear regression<a class="headerlink" href="#simple-linear-regression" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">income</span> <span class="o">~</span> <span class="n">year_of_school</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">%&gt;%</span> <span class="n">summary</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># predict income for other years of school</span>
+<span class="n">new.income</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">year_of_school</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">16</span><span class="p">))</span>
+<span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">new.income</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="multivariate-linear-regression">
+<h3>3.2. Multivariate linear regression<a class="headerlink" href="#multivariate-linear-regression" title="Permalink to this headline">#</a></h3>
+<p><strong>Problem:</strong></p>
+<ol class="simple">
+<li><p>Wrtie the regression function representing how the two variables <code class="docutils literal notranslate"><span class="pre">year_of_school</span></code> and <code class="docutils literal notranslate"><span class="pre">age</span></code> affect <code class="docutils literal notranslate"><span class="pre">income</span></code>.</p></li>
+<li><p>Predict income of a person who have 16 years of school and 40 years old</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">linear</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">income</span><span class="o">~</span><span class="n">year_of_school</span><span class="o">+</span><span class="n">age</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">linear</span> <span class="o">%&gt;%</span> <span class="n">summary</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">linear</span> <span class="o">%&gt;%</span> <span class="n">anova</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">&lt;-</span> <span class="n">linear</span> <span class="o">%&gt;%</span> <span class="n">residuals</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># residuals isn&#39;t normally distributed</span>
+<span class="nf">ks.test</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="s">&#39;pnorm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># heteroskedasticity : the variance of the residuals isn&#39;t equal</span>
+<span class="n">car</span><span class="o">::</span><span class="nf">ncvTest</span><span class="p">(</span><span class="n">linear</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># multi co-linear: no multicollinearity</span>
+<span class="n">car</span><span class="o">::</span><span class="nf">vif</span><span class="p">(</span><span class="n">linear</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># residual are not autocorrelation</span>
+<span class="n">car</span><span class="o">::</span><span class="nf">durbinWatsonTest</span><span class="p">(</span><span class="n">linear</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># predict income with age = 40 and year of school = 16</span>
+<span class="n">pred</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">year_of_school</span><span class="o">=</span><span class="m">16</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="m">40</span><span class="p">)</span>
+<span class="nf">predict</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            kernelName: "ir",
+            path: "./chapter-11"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="ggplot-data-visualization.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Ggplot: Data Visualizatio</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,2872 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Prophet: Forecasting Algorithms</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Sktime: Forecasting Pipeline" href="sktime-forecasting-pipeline.html" />
+    <link rel="prev" title="Statsmodels: Temporal Analysis" href="statsmodels-temporal-analysis.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-01/_intro.html">
+   <b>
+    1. Python Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-algorithms.html">
+     (w) Python: Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     NumPy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     SymPy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-probability.html">
+     NumPy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-statistics.html">
+     NumPy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     SciPy: Hypothesis Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-applied-mathematics.html">
+     (w) NumPy: Applied Mathematics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/networkx-network-analysis.html">
+     (w) NetworkX: Network Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-03/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/numpy-arrays.html">
+     NumPy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-04/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-05/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Machine Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-machine-learning.html">
+     Sklearn: Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-classification.html">
+     Sklearn: Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-regression.html">
+     Sklearn: Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-feature-engineering.html">
+     Sklearn: Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/lenskit-recommendation.html">
+     Lenskit: Recommendation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/pyspark-machine-learning.html">
+     PySpark: Machine Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-07/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/ray-hyperparameter-optimization.html">
+     Ray: Hyperparam Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/shap-model-interpretation.html">
+     (w) Shap: Model Interpretation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/imblearn-targeted-modeling.html">
+     (w) Imblearn: Targeted Modeling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    8. Time Series
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="statsmodels-temporal-analysis.html">
+     Statsmodels: Temporal Analysis
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Prophet: Forecasting Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="sktime-forecasting-pipeline.html">
+     Sktime: Forecasting Pipeline
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="darts-deep-forecasting.html">
+     (w) Darts: Deep Forecasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-09/_intro.html">
+   <b>
+    9. Unsupervised Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/mlxtend-association-rules.html">
+     (w) Mlxtend: Association Rules
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/sklearn-clustering.html">
+     Sklearn: Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/sklearn-dimensional-reduction.html">
+     Sklearn: Dimensional Reduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/pyod-anomaly-detection.html">
+     Pyod: Anomaly Detection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-10/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/gensim-text-mining.html">
+     Gensim: Text Mining
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/opencv-image-processing.html">
+     (w) Opencv: Image Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-multilayer-perceptron.html">
+     Keras: Multilayer Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-recurrent-networks.html">
+     Keras: Recurrent Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-convolutional-networks.html">
+     (w) Keras: Convolutional Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/pytorch-deep-learning.html">
+     PyTorch: Deep Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-11/_intro.html">
+   <b>
+    11. R Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/r-basic-concepts.html">
+     R: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/r-data-structures.html">
+     R: Data Structures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/tidyverse-data-wrangling.html">
+     Tidyverse: Data Wrangling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/dplyr-data-cleaning.html">
+     Dplyr: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/ggplot-data-visualization.html">
+     Ggplot: Data Visualizatio
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/r-statistics.html">
+     R: Statistics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/chapter-08/prophet-forecasting-algorithms.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/chapter-08/prophet-forecasting-algorithms.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter-08/prophet-forecasting-algorithms.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#arima">
+   1. ARIMA
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#arima-model">
+     1.1. ARIMA model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#arima-functions">
+       ARIMA functions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#procedure">
+       Procedure
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#model-selection">
+       Model selection
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#extensions">
+     1.2. Extensions
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sarima">
+       SARIMA
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sarimax">
+       SARIMAX
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#var">
+       VAR
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     1.3. Implementation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sarimax-implementation">
+       SARIMAX implementation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#var-implementation">
+       VAR implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ets">
+   2. ETS
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#holt-winters-method">
+     2.1. Holt-Winters’ method
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#level-component">
+       Level component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#trend-component">
+       Trend component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#seasonality-component">
+       Seasonality component
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ets-model">
+     2.2. ETS model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ets-function">
+       ETS function
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Procedure
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Model selection
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.3. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tbats">
+   3. TBATS
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tbats-model">
+     3.1. TBATS model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     3.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prophet">
+   4. Prophet
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm">
+     4.1. Algorithm
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       Trend component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       Seasonality component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#holidays-and-events">
+       Holidays and events
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     4.2. Implementation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hyperparameters-tuning">
+       Hyperparameters tuning
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Prophet: Forecasting Algorithms</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#arima">
+   1. ARIMA
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#arima-model">
+     1.1. ARIMA model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#arima-functions">
+       ARIMA functions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#procedure">
+       Procedure
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#model-selection">
+       Model selection
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#extensions">
+     1.2. Extensions
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sarima">
+       SARIMA
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sarimax">
+       SARIMAX
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#var">
+       VAR
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     1.3. Implementation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sarimax-implementation">
+       SARIMAX implementation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#var-implementation">
+       VAR implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ets">
+   2. ETS
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#holt-winters-method">
+     2.1. Holt-Winters’ method
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#level-component">
+       Level component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#trend-component">
+       Trend component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#seasonality-component">
+       Seasonality component
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ets-model">
+     2.2. ETS model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ets-function">
+       ETS function
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Procedure
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Model selection
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.3. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tbats">
+   3. TBATS
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tbats-model">
+     3.1. TBATS model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     3.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prophet">
+   4. Prophet
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm">
+     4.1. Algorithm
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       Trend component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       Seasonality component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#holidays-and-events">
+       Holidays and events
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     4.2. Implementation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hyperparameters-tuning">
+       Hyperparameters tuning
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="prophet-forecasting-algorithms">
+<h1>Prophet: Forecasting Algorithms<a class="headerlink" href="#prophet-forecasting-algorithms" title="Permalink to this headline">#</a></h1>
+<section id="arima">
+<h2>1. ARIMA<a class="headerlink" href="#arima" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average">ARIMA</a> (AutoRegressive Integrated Moving Average) is an statistical model aiming to demonstrate the auto-correlations in time series data. The term <em>auto</em> means we are examining the relationship between our series with historical versions of itself (lagged series).</p>
+<section id="arima-model">
+<h3>1.1. ARIMA model<a class="headerlink" href="#arima-model" title="Permalink to this headline">#</a></h3>
+<section id="arima-functions">
+<h4>ARIMA functions<a class="headerlink" href="#arima-functions" title="Permalink to this headline">#</a></h4>
+<p>In a nutshell, ARIMA is a combination of 3 separated processes:</p>
+<ul class="simple">
+<li><p>Integration, <span class="math notranslate nohighlight">\(\text{I}(d)\)</span>. In this process, the model keeps differencing a time series until it’s stationary. The parameter <span class="math notranslate nohighlight">\(d\)</span> is the order of differencing and is determined using ADF test. The term <em>integration</em> shares the same meaning as summing, which implies the reverse of differencing.</p></li>
+<li><p>Auto-Regressive, <span class="math notranslate nohighlight">\(\text{AR}(p)\)</span>. In this process, we perform a linear regression model where input variables are lagged versions of our data. The parameter <span class="math notranslate nohighlight">\(p\)</span> indicates the maximum lag degree and is determined using PACF of a stationary series: when a coefficient suddenly drops to 0, then the corresponding lag is a possible value for <span class="math notranslate nohighlight">\(p\)</span>. The <span class="math notranslate nohighlight">\(\text{AR}(p)\)</span> function is:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\hat{y}_t
+&amp;= c+\phi_1y_{t-1}+\phi_2y_{t-2}+\dots+\phi_py_{t-p} \\
+&amp;= c+(\phi_1B+\phi_2B^2+\dots+\phi_pB^p)y_t \\
+\end{aligned}\end{split}\]</div>
+<ul class="simple">
+<li><p>Moving Average model, <span class="math notranslate nohighlight">\(\text{MA}(q)\)</span>. It models our time series as a linear combination of past error (denoted <span class="math notranslate nohighlight">\(\epsilon\)</span>, where <span class="math notranslate nohighlight">\(\epsilon_{t-k}=y_{t-k}-\phi_1 y_{t-k-1}\)</span>). The parameter <span class="math notranslate nohighlight">\(q\)</span> indicates the maximum lag degree and is determined using ACF chart of a stationary series, in a similar decision-making process as for <span class="math notranslate nohighlight">\(p\)</span>. The <span class="math notranslate nohighlight">\(\text{MA}(q)\)</span> functions is:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\hat{y}_t
+&amp;= c+\theta_1\epsilon_{t-1}+\theta_2\epsilon_{t-2}+\dots+\theta_q\epsilon_{t-q} \\
+&amp;= c+(\theta_1B+\theta_2B^2+\dots+\theta_qB^q)\epsilon_t \\
+\end{aligned}\end{split}\]</div>
+<p>The entire model <span class="math notranslate nohighlight">\(\text{ARIMA}(p,d,q)\)</span> is written as below:</p>
+<div class="math notranslate nohighlight">
+\[(1-B)^d\hat{y}_t=c+(\phi_1B+\phi_2B^2+\dots+\phi_pB^p)(1-B)^dy_t+(\theta_1B+\theta_2B^2+\dots+\theta_qB^q)\epsilon_t\]</div>
+</section>
+<section id="procedure">
+<h4>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p><em>Estimation</em>. ARIMA estimates its parameters <span class="math notranslate nohighlight">\(c,\phi_1,\phi_2,\dots,\phi_p,\theta_1,\theta_2,\dots,\theta_q\)</span> either by minimizing sum of squared errors (<a class="reference external" href="https://en.wikipedia.org/wiki/Ordinary_least_squares">OLS</a>) or by maximizing likelihood (<a class="reference external" href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">MLE</a>). Both methods return the same result.</p></li>
+<li><p><em>Point forecasting</em>. It’s obvious, by looking at ARIMA function, that each observation at time <span class="math notranslate nohighlight">\(t\)</span> is modeled using previous step <span class="math notranslate nohighlight">\(t-1,t-2,\dots\)</span>. This prediction is written <span class="math notranslate nohighlight">\(\hat{y}_{t|t-1}\)</span>. As we have known all values up to time <span class="math notranslate nohighlight">\(T\)</span>, the forecasting is done in a <em>recursive</em> behaviour: <span class="math notranslate nohighlight">\(\hat{y}_{T+1|T},\hat{y}_{T+2|T+1},\dots,\hat{y}_{T+h|T+h-1}\)</span>.</p></li>
+<li><p><em>Prediction interval</em>. Being a regression model, ARIMA assumes that fitted residuals are normally distributed. Thus the confidence interval is given by <span class="math notranslate nohighlight">\(z_{\alpha/2}\sigma_h\)</span> where <span class="math notranslate nohighlight">\(\alpha\)</span> is significance level and <span class="math notranslate nohighlight">\(\sigma_h\)</span> is the forecast standard deviation, it is proportional to the variance of residuals and <span class="math notranslate nohighlight">\(h\)</span>. But also note that when the above assumption is not hold, then prediction interval may be incorrect.</p></li>
+</ul>
+</section>
+<section id="model-selection">
+<h4>Model selection<a class="headerlink" href="#model-selection" title="Permalink to this headline">#</a></h4>
+<p>Model selection (also known as hyperparameters tuning) for ARIMA is the process of choosing appropriate values for <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span> and <span class="math notranslate nohighlight">\(d\)</span>. While the selection of <span class="math notranslate nohighlight">\(d\)</span> is very straightforward, we would want to put more focus on tuning <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span>. As described earlier, viable values for <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> can be obtained by looking at PACF and ACF charts of the differenced series, respectively. However, this method usually returns a number of choices rather than guarantees a single optimal selection. Thus we treat it as a tool for limiting potential candidates, then perform greedy search. The objective of exhausted search in ARIMA is to minimize an <em>information criterion</em>, which has several options:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike’s Information Criterion</a>:
+<span class="math notranslate nohighlight">\(\text{AIC} = -2 \log(L) + 2(p+q+k+1)\)</span></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Bayesian_information_criterion">Bayesian Information Criterion</a>:
+<span class="math notranslate nohighlight">\(\text{BIC} = \text{AIC} + [\log(T)-2](p+q+k+1)\)</span></p></li>
+<li><p>AICc, a corrected version of AIC for small data, in which time series is usually the case. When <span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>, AICc converges to AIC.</p></li>
+</ul>
+<p>All the above information criteria are constructed of the <em>loss</em> part and the <em>regularization</em> part. The regularization part prevents the model from adding too many explanatory variables and makes sure the model has a good forecasting power. It is recommended to use AICc in real-world tasks.</p>
+</section>
+</section>
+<section id="extensions">
+<h3>1.2. Extensions<a class="headerlink" href="#extensions" title="Permalink to this headline">#</a></h3>
+<section id="sarima">
+<h4>SARIMA<a class="headerlink" href="#sarima" title="Permalink to this headline">#</a></h4>
+<p>SARIMA (Seasonal ARIMA) is an extended version of ARIMA so that it is capable of learning seasonal patterns. The new model is written as:</p>
+<div class="math notranslate nohighlight">
+\[\text{ARIMA} (p,d,q) \times (P,D,Q)_m\]</div>
+<p>where <span class="math notranslate nohighlight">\(m\)</span> is sesonal period and <span class="math notranslate nohighlight">\((P,Q,D)\)</span> are seasonal hyperparameters. Since SARIMA is very complicated, writing the entire function down is not convenient; it’s better going through each of its newly added components.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(m\)</span>: the seasonal period. It is very easy to be pointed out after doing some analyses.</p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span>: the order of seasonal differencing. The process is to apply seasonal differencing first to <em>de-seasonality</em>, then apply non-seasonal differencing to <em>de-trend</em>, until our data is stationary. Basically, after performing both types of differencing, we end up working on the series <span class="math notranslate nohighlight">\((1-B^m)^D(1-B)^dy_t\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\)</span>: the seasonal lag degree for auto-regressive model. For example, we are estimating monthly profit using profit of this month last year, this month 2 years ago,…, this month <span class="math notranslate nohighlight">\(P\)</span> years ago. Viable values for <span class="math notranslate nohighlight">\(P\)</span> are also determined using PACF, but this time we only look at seasonal lags.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q\)</span>: the seasonal lag degree for moving average model. We can also select <span class="math notranslate nohighlight">\(Q\)</span> by looking at seasonal lags in ACF.</p></li>
+</ul>
+</section>
+<section id="sarimax">
+<h4>SARIMAX<a class="headerlink" href="#sarimax" title="Permalink to this headline">#</a></h4>
+<p>SARIMAX (SARIMA with eXogenous variables) adds other independent variables <span class="math notranslate nohighlight">\(\mathbf{x}_1,\mathbf{x}_2,\dots\)</span> to the SARIMA function. This function, stand alone, is given by:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{y}}=c+\beta_1\mathbf{x}_1+\beta_2\mathbf{x}_2+\dots\]</div>
+<p>Exogenous variables should be predictable, for examples: holidays, so they can be used to forecast in the same time step. If we don’t know their values in the future, we can only use them to study their effects on <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>.</p>
+</section>
+<section id="var">
+<h4>VAR<a class="headerlink" href="#var" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Vector_autoregression">VAR</a> (Vector AutoRegression) is a generalization of the univariate autoregression model for forcasting a vector of time series. In this model, all variables are treated symmetrically - all of them are <em>endogenous</em>. The structure of VAR is each variable is a linear function of past lags of itself and past lags of the other variables, given in matrix notation as below:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{y}}_{t}=
+\mathbf{c}+
+\boldsymbol{\phi}_1\circ\mathbf{y}_{t-1}+
+\boldsymbol{\phi}_2\circ\mathbf{y}_{t-2}+
+\cdots+
+\boldsymbol{\phi}_p\circ\mathbf{y}_{t-p}+
+\boldsymbol{\epsilon}_t
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{y}_t\)</span> is a vector storing observations at time <span class="math notranslate nohighlight">\(t\)</span> of all time series, <span class="math notranslate nohighlight">\(t=1,2\dots,T\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{c}\)</span> is the vector of intercepts</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\phi}_1,\dots,\boldsymbol{\phi}_p\)</span> are vectors of coefficients at each different lags</p></li>
+<li><p><span class="math notranslate nohighlight">\(p\)</span> is the maximum order of auto-regressive</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\epsilon}_t\)</span> is white noise</p></li>
+</ul>
+<p>Before fit our data into VAR, all variables should be stationary. The model will then automatically select the most suitable value of <span class="math notranslate nohighlight">\(p\)</span> be considering different criteria: <span class="math notranslate nohighlight">\(\text{AIC}\)</span>, <span class="math notranslate nohighlight">\(\text{FPE}\)</span>, <span class="math notranslate nohighlight">\(\text{SC}\)</span> and <span class="math notranslate nohighlight">\(\text{HQIC}\)</span>.</p>
+</section>
+</section>
+<section id="implementation">
+<h3>1.3. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima.model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.sarimax</span> <span class="kn">import</span> <span class="n">SARIMAX</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.varmax</span> <span class="kn">import</span> <span class="n">VARMAX</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span><span class="p">,</span> <span class="n">mean_absolute_error</span> <span class="k">as</span> <span class="n">MAE</span><span class="p">,</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="sarimax-implementation">
+<h4>SARIMAX implementation<a class="headerlink" href="#sarimax-implementation" title="Permalink to this headline">#</a></h4>
+<p>We are going to implement SARIMAX’s original form via class
+<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/devel/generated/statsmodels.tsa.arima.model.ARIMA.html'&gt;ARIMA&lt;/a&gt;</span></code>
+or state space form via class
+<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/dev/generated/statsmodels.tsa.statespace.sarimax.SARIMAX.html'&gt;SARIMAX&lt;/a&gt;</span></code>.
+They both use the same hyperparameters; the earlier class is useful in extracting model components while the later supports forecasting better.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">order</span></code>: the non-seasonal orders in the form of a tuple <span class="math notranslate nohighlight">\((p,d,q)\)</span>, defaults to <em>(1, 0, 0)</em>. <span class="math notranslate nohighlight">\(d\)</span> must be an integer, while <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> can be an integer (using all lagged series up to that value) or a list (using only specific lags).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">seasonal_order</span></code>: the seasonal orders in the form of a tuple <span class="math notranslate nohighlight">\((P,D,Q,m)\)</span>, defaults to <em>(0, 0, 0, 0)</em>. <span class="math notranslate nohighlight">\(D\)</span> and <span class="math notranslate nohighlight">\(m\)</span> must be an integer; <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> can be either an integer or a list.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<span class="n">dfQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">dfQty</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="n">y</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>date
+2019-01-11    189.82
+2019-01-12    461.89
+2019-01-13       NaN
+2019-01-14       NaN
+2019-01-15       NaN
+Freq: D, Name: quantity, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">SARIMAX</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">seasonal_order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>SARIMAX Results</caption>
+<tr>
+  <th>Dep. Variable:</th>                <td>quantity</td>              <th>  No. Observations:  </th>    <td>696</td>   
+</tr>
+<tr>
+  <th>Model:</th>           <td>SARIMAX(2, 1, 3)x(2, 1, [1, 2], 7)</td> <th>  Log Likelihood     </th> <td>-1858.433</td>
+</tr>
+<tr>
+  <th>Date:</th>                     <td>Tue, 28 Jun 2022</td>          <th>  AIC                </th> <td>3736.866</td> 
+</tr>
+<tr>
+  <th>Time:</th>                         <td>16:41:54</td>              <th>  BIC                </th> <td>3782.204</td> 
+</tr>
+<tr>
+  <th>Sample:</th>                      <td>01-11-2019</td>             <th>  HQIC               </th> <td>3754.406</td> 
+</tr>
+<tr>
+  <th></th>                            <td>- 12-06-2020</td>            <th>                     </th>     <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>                 <td>opg</td>                <th>                     </th>     <td> </td>    
+</tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+      <td></td>        <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>ar.L1</th>    <td>    0.8515</td> <td>    1.040</td> <td>    0.818</td> <td> 0.413</td> <td>   -1.188</td> <td>    2.891</td>
+</tr>
+<tr>
+  <th>ar.L2</th>    <td>   -0.4002</td> <td>    0.679</td> <td>   -0.589</td> <td> 0.556</td> <td>   -1.732</td> <td>    0.931</td>
+</tr>
+<tr>
+  <th>ma.L1</th>    <td>   -1.2415</td> <td>    1.086</td> <td>   -1.143</td> <td> 0.253</td> <td>   -3.371</td> <td>    0.888</td>
+</tr>
+<tr>
+  <th>ma.L2</th>    <td>    0.5936</td> <td>    1.124</td> <td>    0.528</td> <td> 0.597</td> <td>   -1.609</td> <td>    2.796</td>
+</tr>
+<tr>
+  <th>ma.L3</th>    <td>   -0.3361</td> <td>    0.310</td> <td>   -1.083</td> <td> 0.279</td> <td>   -0.944</td> <td>    0.272</td>
+</tr>
+<tr>
+  <th>ar.S.L7</th>  <td>   -0.6523</td> <td>    0.832</td> <td>   -0.784</td> <td> 0.433</td> <td>   -2.284</td> <td>    0.979</td>
+</tr>
+<tr>
+  <th>ar.S.L14</th> <td>    0.0629</td> <td>    0.319</td> <td>    0.198</td> <td> 0.843</td> <td>   -0.562</td> <td>    0.687</td>
+</tr>
+<tr>
+  <th>ma.S.L7</th>  <td>   -0.3510</td> <td>    0.791</td> <td>   -0.444</td> <td> 0.657</td> <td>   -1.901</td> <td>    1.199</td>
+</tr>
+<tr>
+  <th>ma.S.L14</th> <td>   -0.5668</td> <td>    0.744</td> <td>   -0.762</td> <td> 0.446</td> <td>   -2.024</td> <td>    0.891</td>
+</tr>
+<tr>
+  <th>sigma2</th>   <td> 2.556e+05</td> <td> 2.94e+04</td> <td>    8.699</td> <td> 0.000</td> <td> 1.98e+05</td> <td> 3.13e+05</td>
+</tr>
+</table></div></div>
+</div>
+<p>Note that Statsmodels distinguishes <em>forecast</em> (for future values) and <em>prediction</em> (for observed values). Thus, we will work on 2 separated methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">forecaster</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_forecast</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">forecaster</span><span class="o">.</span><span class="n">summary_frame</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>quantity</th>
+      <th>mean</th>
+      <th>mean_se</th>
+      <th>mean_ci_lower</th>
+      <th>mean_ci_upper</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-12-07</th>
+      <td>709.980037</td>
+      <td>530.200523</td>
+      <td>676.732870</td>
+      <td>743.227203</td>
+    </tr>
+    <tr>
+      <th>2020-12-08</th>
+      <td>747.900832</td>
+      <td>626.328889</td>
+      <td>708.625765</td>
+      <td>787.175898</td>
+    </tr>
+    <tr>
+      <th>2020-12-09</th>
+      <td>945.555913</td>
+      <td>682.462069</td>
+      <td>902.760916</td>
+      <td>988.350910</td>
+    </tr>
+    <tr>
+      <th>2020-12-10</th>
+      <td>1010.003658</td>
+      <td>690.453033</td>
+      <td>966.707573</td>
+      <td>1053.299743</td>
+    </tr>
+    <tr>
+      <th>2020-12-11</th>
+      <td>962.607449</td>
+      <td>689.159342</td>
+      <td>919.392487</td>
+      <td>1005.822410</td>
+    </tr>
+    <tr>
+      <th>2020-12-12</th>
+      <td>1008.861260</td>
+      <td>686.040604</td>
+      <td>965.841864</td>
+      <td>1051.880656</td>
+    </tr>
+    <tr>
+      <th>2020-12-13</th>
+      <td>914.228175</td>
+      <td>678.455653</td>
+      <td>871.684408</td>
+      <td>956.771943</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictor</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_prediction</span><span class="p">()</span>
+<span class="n">predictor</span><span class="o">.</span><span class="n">summary_frame</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>quantity</th>
+      <th>mean</th>
+      <th>mean_se</th>
+      <th>mean_ci_lower</th>
+      <th>mean_ci_upper</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-01-11</th>
+      <td>0.000000</td>
+      <td>1633.762976</td>
+      <td>-102.448012</td>
+      <td>102.448012</td>
+    </tr>
+    <tr>
+      <th>2019-01-12</th>
+      <td>180.327594</td>
+      <td>1289.382228</td>
+      <td>99.474588</td>
+      <td>261.180599</td>
+    </tr>
+    <tr>
+      <th>2019-01-13</th>
+      <td>441.486381</td>
+      <td>1287.788377</td>
+      <td>360.733322</td>
+      <td>522.239441</td>
+    </tr>
+    <tr>
+      <th>2019-01-14</th>
+      <td>441.291429</td>
+      <td>1750.437348</td>
+      <td>331.527143</td>
+      <td>551.055715</td>
+    </tr>
+    <tr>
+      <th>2019-01-15</th>
+      <td>428.189605</td>
+      <td>2123.620260</td>
+      <td>295.024221</td>
+      <td>561.354989</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2020-12-02</th>
+      <td>794.631547</td>
+      <td>535.515548</td>
+      <td>761.051093</td>
+      <td>828.212002</td>
+    </tr>
+    <tr>
+      <th>2020-12-03</th>
+      <td>1049.842517</td>
+      <td>534.571725</td>
+      <td>1016.321247</td>
+      <td>1083.363788</td>
+    </tr>
+    <tr>
+      <th>2020-12-04</th>
+      <td>1222.312068</td>
+      <td>527.366149</td>
+      <td>1189.242636</td>
+      <td>1255.381500</td>
+    </tr>
+    <tr>
+      <th>2020-12-05</th>
+      <td>691.552966</td>
+      <td>534.243903</td>
+      <td>658.052252</td>
+      <td>725.053680</td>
+    </tr>
+    <tr>
+      <th>2020-12-06</th>
+      <td>836.595410</td>
+      <td>530.451347</td>
+      <td>803.332515</td>
+      <td>869.858305</td>
+    </tr>
+  </tbody>
+</table>
+<p>696 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="var-implementation">
+<h4>VAR implementation<a class="headerlink" href="#var-implementation" title="Permalink to this headline">#</a></h4>
+<p>Statsmodels implements VAR’s statespace form via class
+<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/dev/generated/statsmodels.tsa.statespace.varmax.VARMAX.html'&gt;VARMAX&lt;/a&gt;</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">StationaryTest</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
+    <span class="n">stat</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">crits</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">regression</span><span class="o">=</span><span class="s1">&#39;nc&#39;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pval</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+    
+    <span class="n">conclusion</span> <span class="o">=</span> <span class="s1">&#39;stationary&#39;</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="s1">&#39;non-stationary&#39;</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="s1">&#39;&lt;&#39;</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="s1">&#39;&gt;&#39;</span>
+    
+    <span class="n">mess</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;p-value=</span><span class="si">{</span><span class="n">pval</span><span class="si">:</span><span class="s1">6f</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">sign</span><span class="si">}</span><span class="s1"> 0.05 | data is </span><span class="si">{</span><span class="n">conclusion</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mess</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCpi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/cpi.csv&#39;</span><span class="p">)</span>
+<span class="n">dfCpi</span> <span class="o">=</span> <span class="n">dfCpi</span><span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s1">&#39;month&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime64&#39;</span><span class="p">})</span>
+<span class="n">dfCpi</span> <span class="o">=</span> <span class="n">dfCpi</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">)</span>
+<span class="n">dfCpi</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ex_rate</th>
+      <th>money_supply</th>
+      <th>inf</th>
+    </tr>
+    <tr>
+      <th>month</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2009-01-01</th>
+      <td>16954</td>
+      <td>1.582872e+06</td>
+      <td>15.536579</td>
+    </tr>
+    <tr>
+      <th>2009-02-01</th>
+      <td>16953</td>
+      <td>1.722413e+06</td>
+      <td>6.701754</td>
+    </tr>
+    <tr>
+      <th>2009-03-01</th>
+      <td>16991</td>
+      <td>1.830077e+06</td>
+      <td>2.417558</td>
+    </tr>
+    <tr>
+      <th>2009-04-01</th>
+      <td>17941</td>
+      <td>1.914078e+06</td>
+      <td>4.602838</td>
+    </tr>
+    <tr>
+      <th>2009-05-01</th>
+      <td>18544</td>
+      <td>1.964660e+06</td>
+      <td>9.696635</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dfCpi</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">StationaryTest</span><span class="p">(</span><span class="n">dfCpi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p-value=0.999465 &gt; 0.05 | data is non-stationary
+p-value=1.000000 &gt; 0.05 | data is non-stationary
+p-value=0.322387 &gt; 0.05 | data is non-stationary
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCpiDif</span> <span class="o">=</span> <span class="n">dfCpi</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dfCpiDif</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">StationaryTest</span><span class="p">(</span><span class="n">dfCpiDif</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p-value=0.000000 &lt; 0.05 | data is stationary
+p-value=0.551794 &gt; 0.05 | data is non-stationary
+p-value=0.005036 &lt; 0.05 | data is stationary
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCpiDif</span> <span class="o">=</span> <span class="n">dfCpi</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dfCpiDif</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">StationaryTest</span><span class="p">(</span><span class="n">dfCpiDif</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p-value=0.000000 &lt; 0.05 | data is stationary
+p-value=0.000000 &lt; 0.05 | data is stationary
+p-value=0.000007 &lt; 0.05 | data is stationary
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">VARMAX</span><span class="p">(</span><span class="n">dfCpiDif</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">maxlags</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">ic</span><span class="o">=</span><span class="s1">&#39;aic&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Statespace Model Results</caption>
+<tr>
+  <th>Dep. Variable:</th>   <td>['ex_rate', 'money_supply', 'inf']</td> <th>  No. Observations:  </th>    <td>42</td>   
+</tr>
+<tr>
+  <th>Model:</th>                         <td>VAR(1)</td>               <th>  Log Likelihood     </th> <td>-950.816</td>
+</tr>
+<tr>
+  <th></th>                             <td>+ intercept</td>            <th>  AIC                </th> <td>1937.633</td>
+</tr>
+<tr>
+  <th>Date:</th>                     <td>Thu, 14 Jul 2022</td>          <th>  BIC                </th> <td>1968.911</td>
+</tr>
+<tr>
+  <th>Time:</th>                         <td>13:53:39</td>              <th>  HQIC               </th> <td>1949.097</td>
+</tr>
+<tr>
+  <th>Sample:</th>                      <td>03-01-2009</td>             <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th></th>                            <td>- 08-01-2012</td>            <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>                 <td>opg</td>                <th>                     </th>     <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Ljung-Box (L1) (Q):</th>     <td>1.41, 3.19, 0.00</td> <th>  Jarque-Bera (JB):  </th> <td>91.82, 104.75, 1.20</td>
+</tr>
+<tr>
+  <th>Prob(Q):</th>                <td>0.23, 0.07, 0.95</td> <th>  Prob(JB):          </th>  <td>0.00, 0.00, 0.55</td>  
+</tr>
+<tr>
+  <th>Heteroskedasticity (H):</th> <td>0.02, 0.44, 0.14</td> <th>  Skew:              </th>  <td>1.27, 1.72, -0.09</td> 
+</tr>
+<tr>
+  <th>Prob(H) (two-sided):</th>    <td>0.00, 0.14, 0.00</td> <th>  Kurtosis:          </th>  <td>9.78, 9.93, 3.81</td>  
+</tr>
+</table>
+<table class="simpletable">
+<caption>Results for equation ex_rate</caption>
+<tr>
+         <td></td>            <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>intercept</th>       <td>    6.8306</td> <td>    5.480</td> <td>    1.246</td> <td> 0.213</td> <td>   -3.911</td> <td>   17.572</td>
+</tr>
+<tr>
+  <th>L1.ex_rate</th>      <td>   -0.5388</td> <td>    0.132</td> <td>   -4.068</td> <td> 0.000</td> <td>   -0.798</td> <td>   -0.279</td>
+</tr>
+<tr>
+  <th>L1.money_supply</th> <td>    0.0002</td> <td>    0.001</td> <td>    0.131</td> <td> 0.896</td> <td>   -0.003</td> <td>    0.003</td>
+</tr>
+<tr>
+  <th>L1.inf</th>          <td>   -2.5876</td> <td>   13.560</td> <td>   -0.191</td> <td> 0.849</td> <td>  -29.164</td> <td>   23.989</td>
+</tr>
+</table>
+<table class="simpletable">
+<caption>Results for equation money_supply</caption>
+<tr>
+         <td></td>            <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>intercept</th>       <td> 4430.1990</td> <td>    0.002</td> <td> 2.15e+06</td> <td> 0.000</td> <td> 4430.195</td> <td> 4430.203</td>
+</tr>
+<tr>
+  <th>L1.ex_rate</th>      <td>  -87.6299</td> <td>    1.990</td> <td>  -44.045</td> <td> 0.000</td> <td>  -91.529</td> <td>  -83.731</td>
+</tr>
+<tr>
+  <th>L1.money_supply</th> <td>   -0.4452</td> <td>    0.308</td> <td>   -1.445</td> <td> 0.149</td> <td>   -1.049</td> <td>    0.159</td>
+</tr>
+<tr>
+  <th>L1.inf</th>          <td>-4080.0207</td> <td>    0.001</td> <td>-2.94e+06</td> <td> 0.000</td> <td>-4080.023</td> <td>-4080.018</td>
+</tr>
+</table>
+<table class="simpletable">
+<caption>Results for equation inf</caption>
+<tr>
+         <td></td>            <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>intercept</th>       <td>    0.1298</td> <td>    0.387</td> <td>    0.335</td> <td> 0.737</td> <td>   -0.629</td> <td>    0.889</td>
+</tr>
+<tr>
+  <th>L1.ex_rate</th>      <td>    0.0041</td> <td>    0.001</td> <td>    2.847</td> <td> 0.004</td> <td>    0.001</td> <td>    0.007</td>
+</tr>
+<tr>
+  <th>L1.money_supply</th> <td> 1.438e-06</td> <td> 4.42e-06</td> <td>    0.325</td> <td> 0.745</td> <td>-7.23e-06</td> <td> 1.01e-05</td>
+</tr>
+<tr>
+  <th>L1.inf</th>          <td>    0.1393</td> <td>    0.123</td> <td>    1.137</td> <td> 0.256</td> <td>   -0.101</td> <td>    0.380</td>
+</tr>
+</table>
+<table class="simpletable">
+<caption>Error covariance matrix</caption>
+<tr>
+                <td></td>                   <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>sqrt.var.ex_rate</th>              <td>  380.9602</td> <td>   20.316</td> <td>   18.752</td> <td> 0.000</td> <td>  341.141</td> <td>  420.779</td>
+</tr>
+<tr>
+  <th>sqrt.cov.ex_rate.money_supply</th> <td>-1.501e+04</td> <td>    0.001</td> <td>-2.58e+07</td> <td> 0.000</td> <td> -1.5e+04</td> <td> -1.5e+04</td>
+</tr>
+<tr>
+  <th>sqrt.var.money_supply</th>         <td> 1.209e+05</td> <td>    0.003</td> <td> 3.61e+07</td> <td> 0.000</td> <td> 1.21e+05</td> <td> 1.21e+05</td>
+</tr>
+<tr>
+  <th>sqrt.cov.ex_rate.inf</th>          <td>    0.2972</td> <td>    0.317</td> <td>    0.937</td> <td> 0.349</td> <td>   -0.325</td> <td>    0.919</td>
+</tr>
+<tr>
+  <th>sqrt.cov.money_supply.inf</th>     <td>   -0.5292</td> <td>    0.697</td> <td>   -0.759</td> <td> 0.448</td> <td>   -1.895</td> <td>    0.837</td>
+</tr>
+<tr>
+  <th>sqrt.var.inf</th>                  <td>    2.1577</td> <td>    0.285</td> <td>    7.582</td> <td> 0.000</td> <td>    1.600</td> <td>    2.716</td>
+</tr>
+</table><br/><br/>Warnings:<br/>[1] Covariance matrix calculated using the outer product of gradients (complex-step).<br/>[2] Covariance matrix is singular or near-singular, with condition number 1.59e+25. Standard errors may be unstable.</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">plot_diagnostics</span><span class="p">(</span><span class="n">variable</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/prophet-forecasting-algorithms_27_0.png" src="../_images/prophet-forecasting-algorithms_27_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">get_forecast</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">summary_frame</span><span class="p">(</span><span class="n">endog</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>money_supply</th>
+      <th>mean</th>
+      <th>mean_se</th>
+      <th>mean_ci_lower</th>
+      <th>mean_ci_upper</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2012-09-01</th>
+      <td>220783.357572</td>
+      <td>102249.700313</td>
+      <td>20377.627528</td>
+      <td>421189.087616</td>
+    </tr>
+    <tr>
+      <th>2012-10-01</th>
+      <td>206025.704672</td>
+      <td>111667.807843</td>
+      <td>-12839.176933</td>
+      <td>424890.586277</td>
+    </tr>
+    <tr>
+      <th>2012-11-01</th>
+      <td>204141.384441</td>
+      <td>112023.610686</td>
+      <td>-15420.857921</td>
+      <td>423703.626804</td>
+    </tr>
+    <tr>
+      <th>2012-12-01</th>
+      <td>202818.011280</td>
+      <td>112098.685311</td>
+      <td>-16891.374644</td>
+      <td>422527.397203</td>
+    </tr>
+    <tr>
+      <th>2013-01-01</th>
+      <td>202643.613557</td>
+      <td>112101.533046</td>
+      <td>-17071.353825</td>
+      <td>422358.580939</td>
+    </tr>
+    <tr>
+      <th>2013-02-01</th>
+      <td>202519.919885</td>
+      <td>112102.249296</td>
+      <td>-17196.451322</td>
+      <td>422236.291092</td>
+    </tr>
+    <tr>
+      <th>2013-03-01</th>
+      <td>202501.468416</td>
+      <td>112102.277431</td>
+      <td>-17214.957934</td>
+      <td>422217.894766</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ex_rate</th>
+      <th>money_supply</th>
+      <th>inf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2012-09-01</th>
+      <td>116.385561</td>
+      <td>220783.357572</td>
+      <td>-0.886404</td>
+    </tr>
+    <tr>
+      <th>2012-10-01</th>
+      <td>118.620922</td>
+      <td>206025.704672</td>
+      <td>-0.569714</td>
+    </tr>
+    <tr>
+      <th>2012-11-01</th>
+      <td>127.952594</td>
+      <td>204141.384441</td>
+      <td>-0.510029</td>
+    </tr>
+    <tr>
+      <th>2012-12-01</th>
+      <td>128.653998</td>
+      <td>202818.011280</td>
+      <td>-0.445874</td>
+    </tr>
+    <tr>
+      <th>2013-01-01</th>
+      <td>129.738022</td>
+      <td>202643.613557</td>
+      <td>-0.423876</td>
+    </tr>
+    <tr>
+      <th>2013-02-01</th>
+      <td>129.917587</td>
+      <td>202519.919885</td>
+      <td>-0.410325</td>
+    </tr>
+    <tr>
+      <th>2013-03-01</th>
+      <td>130.070560</td>
+      <td>202501.468416</td>
+      <td>-0.404707</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfForecastDif</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">dfForecast</span> <span class="o">=</span> <span class="n">dfCpi</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">dfForecastDif</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">dfForecast</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ex_rate</th>
+      <th>money_supply</th>
+      <th>inf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2012-09-01</th>
+      <td>23301.385561</td>
+      <td>1.042758e+07</td>
+      <td>2.553596</td>
+    </tr>
+    <tr>
+      <th>2012-10-01</th>
+      <td>23420.006482</td>
+      <td>1.063360e+07</td>
+      <td>1.983882</td>
+    </tr>
+    <tr>
+      <th>2012-11-01</th>
+      <td>23547.959076</td>
+      <td>1.083775e+07</td>
+      <td>1.473853</td>
+    </tr>
+    <tr>
+      <th>2012-12-01</th>
+      <td>23676.613074</td>
+      <td>1.104056e+07</td>
+      <td>1.027979</td>
+    </tr>
+    <tr>
+      <th>2013-01-01</th>
+      <td>23806.351097</td>
+      <td>1.124321e+07</td>
+      <td>0.604103</td>
+    </tr>
+    <tr>
+      <th>2013-02-01</th>
+      <td>23936.268683</td>
+      <td>1.144573e+07</td>
+      <td>0.193778</td>
+    </tr>
+    <tr>
+      <th>2013-03-01</th>
+      <td>24066.339243</td>
+      <td>1.164823e+07</td>
+      <td>-0.210929</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="ets">
+<h2>2. ETS<a class="headerlink" href="#ets" title="Permalink to this headline">#</a></h2>
+<p>ETS (Error, Trend and Seasonality) is the <a class="reference external" href="https://www.statsmodels.org/dev/statespace.html">state-space</a> form of Holt-Winters’ method, which adds seasonality and trend to the simple <em>exponetial smoothing</em> model. The naive method assumes that only most recent observations are the most important ones.</p>
+<section id="holt-winters-method">
+<h3>2.1. Holt-Winters’ method<a class="headerlink" href="#holt-winters-method" title="Permalink to this headline">#</a></h3>
+<section id="level-component">
+<h4>Level component<a class="headerlink" href="#level-component" title="Permalink to this headline">#</a></h4>
+<p>First, we go through the most basic foundation: exponential smoothing. A common sense is that most recent data should have a higher influence to the current value rather than further observations. Thus, we attach <em>exponentially decreasing weights</em> to observations, described as a <em>smoothing parameter</em>, <span class="math notranslate nohighlight">\(\alpha\)</span> (for <span class="math notranslate nohighlight">\(0\leq\alpha\leq1\)</span>). The 1-step ahead forecast is given by the equation:</p>
+<div class="math notranslate nohighlight">
+\[\hat{y}_{T+1|T}=\alpha y_T+\alpha(1-\alpha)y_{T-1}+\alpha(1-\alpha)^2y_{T-2}+\dots\]</div>
+<p>The function is smartly designed, so that the sum of weights tends to reach <span class="math notranslate nohighlight">\(1\)</span>, especially when <span class="math notranslate nohighlight">\(T\)</span> is large enough. This is because:</p>
+<div class="math notranslate nohighlight">
+\[
+\lim_{T\rightarrow\infty}\sum_{t=0}^{T-1}(1-\alpha)^t
+=\lim_{T\rightarrow\infty}\frac{1-(1-\alpha)^T}{\alpha}
+=\frac{1}{\alpha}
+\]</div>
+<p>The above function can be approximated using a recursion: <span class="math notranslate nohighlight">\(\hat{y}_{T+1|T}=\alpha y_{T}+(1-\alpha)\hat{y}_{T|T-1}\)</span>. Rewriting it gives us the very first component of ETS, the level <span class="math notranslate nohighlight">\(l_t\)</span>, represented as a weighted average between the last observation (<span class="math notranslate nohighlight">\(y_t\)</span>) and the last calculated level (<span class="math notranslate nohighlight">\(l_{t-1}\)</span>).</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+  \hat{y}_{t+h|t} &amp; = l_{t}\\
+  l_{t}        &amp; = \alpha y_{t} + (1 - \alpha)l_{t-1}
+\end{aligned}\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_{t+h|t}\)</span> is a fitted value for <span class="math notranslate nohighlight">\(t=1,2,\dots,T-1\)</span> and <span class="math notranslate nohighlight">\(h=1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_{t+h|t}\)</span> is a forecast for <span class="math notranslate nohighlight">\(t=T\)</span> and <span class="math notranslate nohighlight">\(h=1,2,\dots\)</span></p></li>
+</ul>
+<p>The level component is parameterized by <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(l_0\)</span> (the initial value to calculate <span class="math notranslate nohighlight">\(l_1\)</span>). Notice that the forecast function returns a <em>flat forecast</em>, as it does not depend on <span class="math notranslate nohighlight">\(h\)</span>.</p>
+</section>
+<section id="trend-component">
+<h4>Trend component<a class="headerlink" href="#trend-component" title="Permalink to this headline">#</a></h4>
+<p>If we think the level at time <span class="math notranslate nohighlight">\(t\)</span> as some sort of <em>intercept</em>, then we need a <em>slope</em>. Let’s denote it <span class="math notranslate nohighlight">\(b_t\)</span> and model it using the last <em>instantaneous velocity</em> (<span class="math notranslate nohighlight">\(l_t-l_{t-1}\)</span>) and, of course, the last value of its own sequence (<span class="math notranslate nohighlight">\(b_{t-1}\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[b_t=\beta'(l_t-l_{t-1})+(1-\beta')b_{t-1}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\beta'\,(0\leq\beta'\leq1)\)</span> is a smothing parameter. By plugging in the equation for <span class="math notranslate nohighlight">\(l_t\)</span> and denoting <span class="math notranslate nohighlight">\(\beta=\alpha\beta'\,(0\leq\beta\leq\alpha)\)</span>, we can extend the simple exponential smoothing equation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+  \hat{y}_{t+h|t} &amp;= l_t + hb_t \\
+  l_t             &amp;= \alpha y_{t} + (1-\alpha)(l_{t-1}+b_{t-1}) \\
+  b_t             &amp;= \beta(y_t-l_{t-1}) + (1-\beta)b_{t-1}
+\end{aligned}\end{split}\]</div>
+<p>Holt, the author of this method named it <em>trend</em>, but keep in mind that it is not the same <em>trend</em> as in component decomposition. An important conslusion can be drawn from the formulation is that the forecast function is now a linear function of <span class="math notranslate nohighlight">\(h\)</span> rather than a constant. This function is less naive, but tends to overforecast in further horizons. This is the motivation for a damping parameter, <span class="math notranslate nohighlight">\(\phi\,(0\leq\phi\leq1)\)</span>, which has proven its success and popularity in forecasting tasks. The equation for damped trend is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+  \hat{y}_{t+h|t} &amp;= l_t + (\phi+\phi^2+\dots+\phi^h)b_t \\
+  l_t             &amp;= \alpha y_{t} + (1-\alpha)(l_{t-1}+\phi b_{t-1}) \\
+  b_t             &amp;= \beta(y_t-l_{t-1}) + (1-\beta)\phi b_{t-1}
+\end{aligned}\end{split}\]</div>
+<p>If <span class="math notranslate nohighlight">\(\phi=1\)</span> then there is no damping at all, while a lower value of <span class="math notranslate nohighlight">\(\phi\)</span> indicates a very strong damping effect. In practice, <span class="math notranslate nohighlight">\(\phi\)</span> should not be less than <span class="math notranslate nohighlight">\(0.8\)</span>. In addition to <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>, trend component also has the initial value <span class="math notranslate nohighlight">\(b_0\)</span> as a parameter.</p>
+</section>
+<section id="seasonality-component">
+<h4>Seasonality component<a class="headerlink" href="#seasonality-component" title="Permalink to this headline">#</a></h4>
+<p>The seasonal part (<span class="math notranslate nohighlight">\(s_t\)</span>) in ETS requires a pre-selected seasonal period (<span class="math notranslate nohighlight">\(m\)</span>), and the same number of seasonal initial values (<span class="math notranslate nohighlight">\(s_{-m+1},s_{-m+2},\dots,s_0\)</span>). For example, to model quarterly data (<span class="math notranslate nohighlight">\(m=4\)</span>), the intial values are <span class="math notranslate nohighlight">\(s_{-3},s_{-2},s_{-1},s_0\)</span>. The equation for seasonal component stand alone is expressed by the weighted average of the current seasonal term (<span class="math notranslate nohighlight">\(y_t-l_t\)</span>) and the last seasonal term (<span class="math notranslate nohighlight">\(s_{t-m}\)</span>) :</p>
+<div class="math notranslate nohighlight">
+\[s_t=\gamma'(y_t-l_t)+(1-\gamma')s_{t-m}\]</div>
+<p><span class="math notranslate nohighlight">\(0\leq\gamma'\leq1\)</span> is a smoothing parameter. If we substitute <span class="math notranslate nohighlight">\(l_t\)</span> from the smoothing equation and <span class="math notranslate nohighlight">\(\gamma=(1-\alpha)\gamma'\,(0\leq\gamma\leq1-\alpha)\)</span>, we end up getting the complete ETS model. When expressing the equations, the damping factor is removed for simplification purposes.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+  \hat{y}_{t+h|t} &amp;= l_{t} + hb_{t} + s_{t+h-m(k+1)} \\
+  l_t &amp;= \alpha(y_{t} - s_{t-m}) + (1 - \alpha)(l_{t-1} + b_{t-1}) \\
+  b_{t} &amp;= \beta(y_t-l_{t-1}-s_{t-m})+(1-\beta)b_{t-1} \\
+  s_t &amp;= \gamma (y_{t}-l_{t-1}-b_{t-1}) + (1-\gamma)s_{t-m}
+\end{aligned}\end{split}\]</div>
+<p>The term <span class="math notranslate nohighlight">\(s_{t+h-m(k+1)}\)</span> where <span class="math notranslate nohighlight">\(k=\lfloor(h-1)/m\rfloor\)</span> may look ugly, but it is just the seasonal term of the same index last observed period.</p>
+</section>
+</section>
+<section id="ets-model">
+<h3>2.2. ETS model<a class="headerlink" href="#ets-model" title="Permalink to this headline">#</a></h3>
+<section id="ets-function">
+<h4>ETS function<a class="headerlink" href="#ets-function" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://www.statsmodels.org/dev/statespace.html">State space</a> is an abstract representation of time series models, including both ARIMA and Holt-Winters. For Holt-Winters only, each of its components (or <em>states</em>) can be represented as an equation of <em>error</em>. This state space form has a better readability than Holt-Winters’ function.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    y_t &amp;= l_{t-1}+\phi b_{t-1}+s_{t-m}+\epsilon_t \\
+    l_t &amp;= l_{t-1}+\phi b_{t-1}+\alpha\epsilon_t \\
+    b_t &amp;= \phi b_{t-1}+\beta\epsilon_t \\
+    s_t &amp;= s_{t-m}+\gamma\epsilon_t
+\end{aligned}\end{split}\]</div>
+<p>Each component of error, trend and seasonality has two forms: additive and multiplicative. To distinguish between different combinations, we use the syntax: <span class="math notranslate nohighlight">\(\text{ETS}(\cdot\cdot\cdot)\)</span>, in which each dot stands for the form of the corresponding component: error, trend and seasonality. For example, <span class="math notranslate nohighlight">\(\text{ETS(A,Md,M)}\)</span> stands for an ETS model with additive error, damped multiplicative trend and multiplicative seasonality.</p>
+</section>
+<section id="id1">
+<h4>Procedure<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p><em>Estimation</em>. Like ARIMA, ETS also estimates its parameters either by minimizing sum of squared error or maximizing the likelihood that error follows a normal distribution. ETS’s parameters are coefficients (both smoothing and damping): <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span>, <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> and initial values: <span class="math notranslate nohighlight">\(l_0\)</span>, <span class="math notranslate nohighlight">\(b_0\)</span> and <span class="math notranslate nohighlight">\(s_0,s_{-1},\dots,s_{-m+1}\)</span>.</p></li>
+<li><p><em>Point forecasting</em>. When forecasting future points using ETS equations (<span class="math notranslate nohighlight">\(t&gt;T\)</span>), we only need to set <span class="math notranslate nohighlight">\(\epsilon_t=0\)</span>. For further forecasts (<span class="math notranslate nohighlight">\(h&gt;1\)</span>), the same <em>recursion</em> fashion used in ARIMA is applied.</p></li>
+<li><p><em>Prediction interval</em>. ETS also uses forecast variance to add confidence interval to point forecast. The formulas gets more and more complicated as we add more components and use multiplicative method, so they aren’t going to be presented here.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h4>Model selection<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
+<p>Model selection for ETS is the process of choosing the appropriate form for each component. Like in ARIMA, this can be done by minimizing information criteria (AIC, AICc and BIC). But as there are only a few number of combinations (<span class="math notranslate nohighlight">\(2^4=16\)</span>), we’d better use Machine Learning’s approach that exhausted searches for the best score (MAE, MSE or R2) on an observed validation set.</p>
+<p>Some models, particularly <span class="math notranslate nohighlight">\(\text{ETS}(\text{A}\cdot\text{M})\)</span> (additive error, multiplicative seasonal and any type of trend), can be excluded from our search and help reducing the computation time. These are potentially unstable models who suffer from division by very small numbers.</p>
+</section>
+</section>
+<section id="id3">
+<h3>2.3. Implementation<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<p>We can implement Holt-Winters’ model via class
+<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/devel/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html'&gt;ExponentialSmoothing&lt;/a&gt;</span></code>
+or ETS model via class
+<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/devel/generated/statsmodels.tsa.exponential_smoothing.ets.ETSModel.html'&gt;ETSModel&lt;/a&gt;</span></code>. Both classes share the same hyperparameters, the later class sacrifies the capability of extracting model components (level, trend and season) in trade-off for generalization.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">error</span></code>: the type of error model, defaults to <em>add</em>. The other option is <em>mul</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trend</span></code>: the type of trend model, defaults to <em>None</em>. Other options are <em>add</em> and <em>mul</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">damped_trend</span></code>: whether to use damping factor in the trend model, defaults to <em>False</em>. The other option is <em>True</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">seasonal</span></code>: the type of seasonality model, defaults to <em>None</em>. Other options are <em>add</em> and <em>mul</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">seasonal_periods</span></code>: the length of a season, defaults to <em>None</em>. Must be an integer if seasonal model is used.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.exponential_smoothing.ets</span> <span class="kn">import</span> <span class="n">ETSModel</span> <span class="k">as</span> <span class="n">ETS</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.holtwinters</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span> <span class="k">as</span> <span class="n">HW</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span><span class="p">,</span> <span class="n">mean_absolute_error</span> <span class="k">as</span> <span class="n">MAE</span><span class="p">,</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">dfQuantity</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">))</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">quantity</span>
+<span class="n">s</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>date
+2019-10-28    379.49
+2019-10-29    669.51
+2019-10-30    337.17
+2019-10-31    603.74
+2019-11-01    189.82
+Name: quantity, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nTest</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="n">cutEnd</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">cutTest</span> <span class="o">=</span> <span class="n">cutEnd</span> <span class="o">-</span> <span class="n">nTest</span>
+
+<span class="n">xTest</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="n">cutTest</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">cutTest</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ETS</span><span class="p">(</span><span class="n">xTest</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="n">damped_trend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>ETS Results</caption>
+<tr>
+  <th>Dep. Variable:</th>       <td>quantity</td>     <th>  No. Observations:  </th>    <td>219</td>   
+</tr>
+<tr>
+  <th>Model:</th>               <td>ETS(AAdA)</td>    <th>  Log Likelihood     </th> <td>-1529.151</td>
+</tr>
+<tr>
+  <th>Date:</th>            <td>Tue, 07 Jun 2022</td> <th>  AIC                </th> <td>3132.302</td> 
+</tr>
+<tr>
+  <th>Time:</th>                <td>16:43:02</td>     <th>  BIC                </th> <td>3257.698</td> 
+</tr>
+<tr>
+  <th>Sample:</th>             <td>10-28-2019</td>    <th>  HQIC               </th> <td>3182.946</td> 
+</tr>
+<tr>
+  <th></th>                   <td>- 06-02-2020</td>   <th>  Scale              </th> <td>67980.277</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>approx</td>      <th>                     </th>     <td> </td>    
+</tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+  <th>Ljung-Box (Q):</th>          <td>70.89</td> <th>  Jarque-Bera (JB):  </th> <td>196.46</td>
+</tr>
+<tr>
+  <th>Prob(Q):</th>                <td>0.00</td>  <th>  Prob(JB):          </th>  <td>0.00</td> 
+</tr>
+<tr>
+  <th>Heteroskedasticity (H):</th> <td>3.24</td>  <th>  Skew:              </th>  <td>-0.58</td>
+</tr>
+<tr>
+  <th>Prob(H) (two-sided):</th>    <td>0.00</td>  <th>  Kurtosis:          </th>  <td>7.49</td> 
+</tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">forecaster</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_prediction</span><span class="p">(</span><span class="n">cutTest</span><span class="p">,</span> <span class="n">cutEnd</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">yTestPred</span> <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">predicted_mean</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;forecast&#39;</span><span class="p">)</span>
+<span class="n">dfForecast</span> <span class="o">=</span> <span class="n">yTestPred</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+<span class="n">dfForecast</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">yTest</span>
+<span class="n">listCi</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">ci</span> <span class="ow">in</span> <span class="n">listCi</span><span class="p">:</span>
+    <span class="n">strCi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ci</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">dfCi</span> <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">summary_frame</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="o">-</span><span class="n">ci</span><span class="p">)</span>
+    <span class="n">dfCi</span> <span class="o">=</span> <span class="n">dfCi</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="n">dfForecast</span><span class="p">[[</span><span class="sa">f</span><span class="s1">&#39;ci_</span><span class="si">{</span><span class="n">strCi</span><span class="si">}</span><span class="s1">_lower&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;ci_</span><span class="si">{</span><span class="n">strCi</span><span class="si">}</span><span class="s1">_upper&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dfCi</span>
+<span class="n">dfForecast</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>forecast</th>
+      <th>truth</th>
+      <th>ci_90_lower</th>
+      <th>ci_90_upper</th>
+      <th>ci_95_lower</th>
+      <th>ci_95_upper</th>
+      <th>ci_99_lower</th>
+      <th>ci_99_upper</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-06-28</th>
+      <td>505.658104</td>
+      <td>0.00</td>
+      <td>-934.301371</td>
+      <td>1945.617578</td>
+      <td>-1210.159440</td>
+      <td>2221.475647</td>
+      <td>-1749.308387</td>
+      <td>2760.624594</td>
+    </tr>
+    <tr>
+      <th>2020-06-29</th>
+      <td>415.254539</td>
+      <td>304.24</td>
+      <td>-1050.717878</td>
+      <td>1881.226956</td>
+      <td>-1331.559337</td>
+      <td>2162.068415</td>
+      <td>-1880.448038</td>
+      <td>2710.957116</td>
+    </tr>
+    <tr>
+      <th>2020-06-30</th>
+      <td>467.350354</td>
+      <td>661.91</td>
+      <td>-1024.181410</td>
+      <td>1958.882118</td>
+      <td>-1309.919363</td>
+      <td>2244.620071</td>
+      <td>-1868.377982</td>
+      <td>2803.078690</td>
+    </tr>
+    <tr>
+      <th>2020-07-01</th>
+      <td>409.722661</td>
+      <td>729.94</td>
+      <td>-1106.937785</td>
+      <td>1926.383108</td>
+      <td>-1397.489727</td>
+      <td>2216.935050</td>
+      <td>-1965.357015</td>
+      <td>2784.802338</td>
+    </tr>
+    <tr>
+      <th>2020-07-02</th>
+      <td>510.193281</td>
+      <td>608.80</td>
+      <td>-1031.186243</td>
+      <td>2051.572805</td>
+      <td>-1326.473705</td>
+      <td>2346.860268</td>
+      <td>-1903.596300</td>
+      <td>2923.982862</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">dfForecast</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">MSE</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">mae</span> <span class="o">=</span> <span class="n">MAE</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">R2</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;ETS | RMSE=</span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | MAE=</span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | R2=</span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">truth</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;teal&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;GroundTruth&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">forecast</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Forecast&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ci</span> <span class="ow">in</span> <span class="n">listCi</span><span class="p">:</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">ci</span> <span class="o">+</span> <span class="mf">0.05</span>
+    <span class="n">strCi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ci</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;ci_</span><span class="si">{</span><span class="n">strCi</span><span class="si">}</span><span class="s1">_lower&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;ci_</span><span class="si">{</span><span class="n">strCi</span><span class="si">}</span><span class="s1">_upper&#39;</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;CI </span><span class="si">{</span><span class="n">strCi</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/prophet-forecasting-algorithms_48_0.png" src="../_images/prophet-forecasting-algorithms_48_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="tbats">
+<h2>3. TBATS<a class="headerlink" href="#tbats" title="Permalink to this headline">#</a></h2>
+<p>TBATS (Trigonometric seasonality, Box-Cox transformation, ARMA errors, Trend and Seasonal components) is a combination of ARMA and Holt-Winters’ methods, with Fourier series to handle multiple, non-integers seasonal periods. This type of seasonality is popular in business time series, for example, daily data usually has weekly (<span class="math notranslate nohighlight">\(m_1=7\)</span>) as well as annual (<span class="math notranslate nohighlight">\(m_2=365.25\)</span>) patterns.</p>
+<section id="tbats-model">
+<h3>3.1. TBATS model<a class="headerlink" href="#tbats-model" title="Permalink to this headline">#</a></h3>
+<p>TBATS model is described in the following equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+y_t^{(\lambda)} &amp;= l_{t-1}+\delta b_{t-1}+s_{t-m}+d_t \\
+l_t &amp;= l_{t-1}+\delta b_{t-1}+\alpha d_t \\
+b_t &amp;= \delta b_{t-1}+\beta d_t \\
+d_t &amp;= (\phi_1 d_{t-1}+\dots+\phi_p d_{t-p})+(\theta_1 d_{t-1}+\dots+\theta_q d_{t-q})+\epsilon_t \\
+\end{aligned}\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(l_t\)</span> and <span class="math notranslate nohighlight">\(b_t\)</span> are trend and damped slope components, <span class="math notranslate nohighlight">\(d_t\)</span> refers to <span class="math notranslate nohighlight">\(\text{ARMA}(p,q)\)</span>. The operator <span class="math notranslate nohighlight">\(\lambda\)</span> stands for Box-Cox transformation, which allows capturing non-linear patterns. <span class="math notranslate nohighlight">\(s_t\)</span> in the above equation is a seasonal component; as it is the most complicated part of TBATS, we only express a single component to make things as simple as possible. To model multiple seasonal periods, we simple add more <span class="math notranslate nohighlight">\(s_t\)</span> components. Each component <span class="math notranslate nohighlight">\(s_t\)</span> is modeled as the sum of <span class="math notranslate nohighlight">\(K\)</span> harmonics: <span class="math notranslate nohighlight">\(s_t = s_{1,t}+\dots+s_{K,t}\)</span>. Each harmonic <span class="math notranslate nohighlight">\(s_{k,t}\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+s_{k,t} &amp;= s_{k,t-1}\cos(w) + s'_{k,t-1}\sin(w) + \gamma_1d_t \\
+s'_{k,t} &amp;= -s_{k,t-1}\sin(w) + s'_{k,t-1}\cos(w) + \gamma_2d_t
+\end{aligned}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(w=2\pi k/m\)</span>, where <span class="math notranslate nohighlight">\(m\)</span> is the length of seasonal period, <span class="math notranslate nohighlight">\(s'_{k,t}\)</span> is just a subsidiary variable presented to compute <span class="math notranslate nohighlight">\(s_{k,t}\)</span>.</p>
+</section>
+<section id="id4">
+<h3>3.2. Implementation<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<p>TBATS is implemented in Sktime via class
+<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.tbats.TBATS.html'&gt;TBATS&lt;/a&gt;</span></code>.
+The hyperparameters are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">use_box_cox</span></code>: whether to use Box-Cox transform, defaults to <em>None</em> (automated). Other options are <em>True</em> and <em>Fasle</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_trend</span></code>: the type of trend model, defaults to <em>None</em>. Other options are <em>add</em> and <em>mul</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_damped_trend</span></code>: whether to use damping factor in the trend model, defaults to <em>False</em>. The other option is <em>True</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_arma_errors</span></code>: the type of seasonality model, defaults to <em>None</em>. Other options are <em>add</em> and <em>mul</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sp</span></code>: the length of a season, defaults to <em>None</em>. Must be an integer if seasonal model is used.</p></li>
+</ul>
+</section>
+</section>
+<section id="prophet">
+<h2>4. Prophet<a class="headerlink" href="#prophet" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://facebook.github.io/prophet/">Prophet</a> is proposed by Facebook in September 2017. It has so many advantages and is widely used in forecasting tasks.</p>
+<ul class="simple">
+<li><p>It is fast and accurate</p></li>
+<li><p>Requires no manual effort and is robust to outliers, missing data and dramatically changes</p></li>
+<li><p>Accepts domain knowledge</p></li>
+</ul>
+<section id="algorithm">
+<h3>4.1. Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">#</a></h3>
+<p>Prophet decomposes our time series into three components: trends, seasonality, holidays and combines them in an additive model. The parameters of each model are estimated using <a class="reference external" href="https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation">MAP</a> (Maximum A Posterior).</p>
+<div class="math notranslate nohighlight">
+\[\hat{y}_t=g(t)+s(t)+h(t)+\epsilon_t\]</div>
+<p>Here:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(g(t)\)</span> is the trend function which models <em>non-periodic</em> changes in the time series</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(t)\)</span> models periodic changes (yearly, weekly and daily seasonality)</p></li>
+<li><p><span class="math notranslate nohighlight">\(h(t)\)</span> is the model of holidays which occur irregularly</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon_t\)</span> is the irreducible error term, it should follow a normal distribution</p></li>
+</ul>
+<section id="id5">
+<h4>Trend component<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
+<p>Prophet’s trend function is capable of modeling two types of trend:</p>
+<ul class="simple">
+<li><p>Linear growth (via a linear function): <span class="math notranslate nohighlight">\(g(t)=kt+m\)</span></p></li>
+<li><p>Saturating growth (via a logistic function): <span class="math notranslate nohighlight">\(g(t)=\dfrac{C}{1+\exp(-k(t-m))}\)</span></p></li>
+</ul>
+<p>where <span class="math notranslate nohighlight">\(k\)</span> is the growth rate, <span class="math notranslate nohighlight">\(m\)</span> is an offset parameter and <span class="math notranslate nohighlight">\(C\)</span> is the carrying capacity. The trend model is even extended so that it can handle change-points. Let’s say there are <span class="math notranslate nohighlight">\(S\)</span> change-points, each denoted <span class="math notranslate nohighlight">\(y_s\)</span> for <span class="math notranslate nohighlight">\(s=1,2,\dots,S\)</span>. Prophet assumes that the rate and offset at time <span class="math notranslate nohighlight">\(t\)</span> is the sum of base value plus all of the adjustments up to that point. We then define a <em>mask</em> vector (which is useful at expressing adjustments), <span class="math notranslate nohighlight">\(\mathbf{a}(t)\in\{0,1\}^S\)</span>, such that:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}a_s(t)=\begin{cases}
+1 &amp;\text{if }t&gt;s \\
+0 &amp;\text{otherwise}
+\end{cases}\end{split}\]</div>
+<p>The adjustments of growth rate at different change-points is denoted by a vector, <span class="math notranslate nohighlight">\(\boldsymbol{\delta}\in\mathbb{R}^S\)</span>. For offset, its adjustment vector, denoted <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\in\mathbb{R}^S\)</span>, is more complicated: <span class="math notranslate nohighlight">\(\gamma_s\)</span> is computed using all previous values of <span class="math notranslate nohighlight">\(\boldsymbol{\delta}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The updated value for <span class="math notranslate nohighlight">\(k\)</span> and <span class="math notranslate nohighlight">\(m\)</span> is then given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+k &amp;\leftarrow k+\mathbf{a}(t)^{\text{T}}\boldsymbol{\delta} \\
+m &amp;\leftarrow m+\mathbf{a}(t)^{\text{T}}\boldsymbol{\gamma}
+\end{aligned}\end{split}\]</div>
+<p>Change-points can be either defined explicitly by analysts (for example, the known dates of product launches) or detected automatically by Prophet. A large number of potential change-points are initialized equally-spaced on the first 80% of the time series. Then Prophet uses the prior <span class="math notranslate nohighlight">\(\boldsymbol{\delta}\sim\text{Laplace}(0,\tau)\)</span>, where <span class="math notranslate nohighlight">\(\tau\)</span> controls the flexibility of the trend model. The <a class="reference external" href="https://en.wikipedia.org/wiki/Laplace_distribution">Laplace distribution</a> is used here due to its concentration to its location, making <span class="math notranslate nohighlight">\(\boldsymbol{\delta}\)</span> favours 0. Such a sparse vector ensures most of the candidates are not going to be used. The larger <span class="math notranslate nohighlight">\(\tau\)</span> is, the less sparse <span class="math notranslate nohighlight">\(\boldsymbol{\delta}\)</span> is and the more flexible the trend model is.</p>
+</section>
+<section id="id6">
+<h4>Seasonality component<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h4>
+<p>Prophet relies on <a class="reference external" href="https://en.wikipedia.org/wiki/Fourier_series">Fourier series</a> to provide a flexible model of periodic effects. Let <span class="math notranslate nohighlight">\(m\)</span> be the period we expect the time series to have (e.g. <span class="math notranslate nohighlight">\(m=365.25\)</span> for yearly data, <span class="math notranslate nohighlight">\(m=7\)</span> for weekly data when our time series is given in days). The formula for seasonality at time <span class="math notranslate nohighlight">\(t\)</span> is approximated with a standard Fourier series:</p>
+<div class="math notranslate nohighlight">
+\[s(t)=\sum_{n=1}^{N}{\left(a_n\cos\frac{2\pi nt}{m}+b_n\sin\frac{2\pi nt}{m}\right)}\]</div>
+<p>Fitting seasonality is the process of estimating <span class="math notranslate nohighlight">\(2N\)</span> parameters <span class="math notranslate nohighlight">\(\boldsymbol{\beta}=(a_1,b_1,a_2,b_2,\dots,a_N,b_N)\)</span>. Prophet takes <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\sim\mathcal{N}(0,\sigma^2)\)</span> to impose a smoothing prior on the seasonality. When <span class="math notranslate nohighlight">\(N\)</span> is too large, seasonal patterns may change very quickly and thus we risk overfitting. In practice, selecting <span class="math notranslate nohighlight">\(N=3\)</span> for weekly seasonality and <span class="math notranslate nohighlight">\(N=10\)</span> for yearly seasonality is a good rule of thumb. Optimal value for <span class="math notranslate nohighlight">\(N\)</span> can also be found via model selection procedure that minimizes AIC.</p>
+</section>
+<section id="holidays-and-events">
+<h4>Holidays and events<a class="headerlink" href="#holidays-and-events" title="Permalink to this headline">#</a></h4>
+<p>Holidays and events cause large, non-periodic but somewhat predictable shocks to business time series. Prophet assumes that not only a holiday, but also other days surrounding it, have effects on our time series. let’s say at holiday number <span class="math notranslate nohighlight">\(i\)</span>, denote <span class="math notranslate nohighlight">\(D_i\)</span> the window which specifies the surrounding days and <span class="math notranslate nohighlight">\(\kappa_i\)</span> the coefficient attached to the corresponding window. The holiday model is given by:</p>
+<div class="math notranslate nohighlight">
+\[h(t)=\mathbf{Z}(t)\boldsymbol{\kappa}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{Z}(t)=[\mathbf{1}_{t\in D_1},\dots,\mathbf{1}_{t\in D_I}]\)</span> is the matrix of regressors</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\kappa}\)</span> is the vector of coefficients, the prior is <span class="math notranslate nohighlight">\(\boldsymbol{\kappa}\sim\mathcal{N}(0,\nu^2)\)</span></p></li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h3>4.2. Implementation<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
+<section id="hyperparameters-tuning">
+<h4>Hyperparameters tuning<a class="headerlink" href="#hyperparameters-tuning" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">growth</span></code>: the type of trend, linear or saturating, defaults to <em>linear</em>. The other option is <em>logistic</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">changepoints</span></code>: a custom list of dates provided by analysts when change-points happen, defaults to <em>None</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_changepoints</span></code>: the number of initial change-points, defaults to <em>25</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">changepoint_range</span></code>: the proportion of history data in which potential change-points are initialized on, defaults to <em>0.8</em> (for the first 80% historical data).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">changepoint_prior_scale</span></code>: the value of <span class="math notranslate nohighlight">\(\tau\)</span>, defaults to <em>0.05</em>. Larger values allow more change-points but can lead to overfitting.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yearly_seasonality</span></code>
+<code class="docutils literal notranslate"><span class="pre">weekly_seasonality</span></code>
+<code class="docutils literal notranslate"><span class="pre">daily_seasonality</span></code>: how the respective seasonality is fitted, all default to <em>auto</em>. Other options are <em>True</em>, <em>False</em> or an integer representing <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">seasonality_mode</span></code>: the type of seasonality model, defaults to <em>additive</em>. The other option is <em>multiplicative</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">holidays_prior_scale</span></code>: the value of <span class="math notranslate nohighlight">\(\nu\)</span>, defaults to <em>10</em>. This parameter indicates the strength of the holiday model, reducing it dampens holiday effects.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+
+<span class="kn">from</span> <span class="nn">prophet</span> <span class="kn">import</span> <span class="n">Prophet</span> <span class="k">as</span> <span class="n">FBProphet</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.fbprophet</span> <span class="kn">import</span> <span class="n">Prophet</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span><span class="p">,</span> <span class="n">mean_absolute_error</span> <span class="k">as</span> <span class="n">MAE</span><span class="p">,</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<span class="n">dfQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">dfQty</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">))</span>
+<span class="c1"># dfQty = dfQty.rename(columns={&#39;date&#39;: &#39;ds&#39;, &#39;quantity&#39;: &#39;y&#39;})</span>
+<span class="n">sQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">)</span>
+<span class="n">sQty</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>date
+2019-10-28    379.490000
+2019-10-29    669.510000
+2019-10-30    337.170000
+2019-10-31    603.740000
+2019-11-01      0.000001
+                 ...    
+2020-02-03    119.320000
+2020-02-04      0.000000
+2020-02-05    303.440000
+2020-02-06    553.960000
+2020-02-07    608.800000
+Freq: D, Name: quantity, Length: 103, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">(</span><span class="n">daily_seasonality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">yearly_seasonality</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">sQty</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prophet(daily_seasonality=True, yearly_seasonality=True)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">fh</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-02-08    252.915024
+2020-02-09    193.117611
+2020-02-10    280.511671
+2020-02-11    391.861825
+2020-02-12    295.434570
+2020-02-13    330.742117
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">predict_interval</span><span class="p">(</span><span class="n">fh</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="n">coverage</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="4" halign="left">Coverage</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">0.05</th>
+      <th colspan="2" halign="left">0.10</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>lower</th>
+      <th>upper</th>
+      <th>lower</th>
+      <th>upper</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-02-08</th>
+      <td>254.168651</td>
+      <td>280.742016</td>
+      <td>202.216014</td>
+      <td>273.927036</td>
+    </tr>
+    <tr>
+      <th>2020-02-09</th>
+      <td>172.310948</td>
+      <td>195.808734</td>
+      <td>176.280255</td>
+      <td>233.759795</td>
+    </tr>
+    <tr>
+      <th>2020-02-10</th>
+      <td>272.264457</td>
+      <td>291.308642</td>
+      <td>265.284647</td>
+      <td>309.547861</td>
+    </tr>
+    <tr>
+      <th>2020-02-11</th>
+      <td>391.172134</td>
+      <td>416.670542</td>
+      <td>364.299067</td>
+      <td>414.529717</td>
+    </tr>
+    <tr>
+      <th>2020-02-12</th>
+      <td>289.686974</td>
+      <td>320.713603</td>
+      <td>274.673913</td>
+      <td>324.429586</td>
+    </tr>
+    <tr>
+      <th>2020-02-13</th>
+      <td>312.146907</td>
+      <td>340.366883</td>
+      <td>318.463305</td>
+      <td>366.970234</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><em><a class="reference external" href="http://otexts.com">otexts.com</a> - <a class="reference external" href="https://otexts.com/fpp3/">Forecasting: Principles and Practice</a></em></p></li>
+<li><p><em><a class="reference external" href="http://openforecast.org">openforecast.org</a> - <a class="reference external" href="https://www.openforecast.org/adam/">Forecasting and Analytics with Adam</a></em></p></li>
+<li><p><em><a class="reference external" href="http://online.stat.psu.edu">online.stat.psu.edu</a> - <a class="reference external" href="https://online.stat.psu.edu/stat510/">STAT 510: Applied Time Series Analysis</a></em></p></li>
+<li><p><em><a class="reference external" href="http://robjhyndman.com">robjhyndman.com</a> - <a class="reference external" href="https://robjhyndman.com/papers/ComplexSeasonality.pdf">Forecasting time series with complex seasonal patterns using exponential smoothing</a></em></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter-08"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="statsmodels-temporal-analysis.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Statsmodels: Temporal Analysis</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="sktime-forecasting-pipeline.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Sktime: Forecasting Pipeline</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

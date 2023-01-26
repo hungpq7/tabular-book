@@ -1,0 +1,2743 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Pyod: Anomaly Detection</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="10. Deep Learning" href="../chapter-10/_intro.html" />
+    <link rel="prev" title="Sklearn: Dimensional Reduction" href="sklearn-dimensional-reduction.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-01/_intro.html">
+   <b>
+    1. Python Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-algorithms.html">
+     (w) Python: Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-02/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
+     NumPy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/sympy-calculus.html">
+     SymPy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-probability.html">
+     NumPy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-statistics.html">
+     NumPy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
+     SciPy: Hypothesis Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-applied-mathematics.html">
+     (w) NumPy: Applied Mathematics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/networkx-network-analysis.html">
+     (w) NetworkX: Network Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-03/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/numpy-arrays.html">
+     NumPy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-03/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-04/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-04/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-05/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-05/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Machine Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-machine-learning.html">
+     Sklearn: Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-classification.html">
+     Sklearn: Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-regression.html">
+     Sklearn: Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-feature-engineering.html">
+     Sklearn: Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/lenskit-recommendation.html">
+     Lenskit: Recommendation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/pyspark-machine-learning.html">
+     PySpark: Machine Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-07/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/ray-hyperparameter-optimization.html">
+     Ray: Hyperparam Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/shap-model-interpretation.html">
+     (w) Shap: Model Interpretation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-07/imblearn-targeted-modeling.html">
+     (w) Imblearn: Targeted Modeling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-08/_intro.html">
+   <b>
+    8. Time Series
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/statsmodels-temporal-analysis.html">
+     Statsmodels: Temporal Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/prophet-forecasting-algorithms.html">
+     Prophet: Forecasting Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/sktime-forecasting-pipeline.html">
+     Sktime: Forecasting Pipeline
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/darts-deep-forecasting.html">
+     (w) Darts: Deep Forecasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    9. Unsupervised Learning
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="mlxtend-association-rules.html">
+     (w) Mlxtend: Association Rules
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="sklearn-clustering.html">
+     Sklearn: Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="sklearn-dimensional-reduction.html">
+     Sklearn: Dimensional Reduction
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Pyod: Anomaly Detection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-10/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/gensim-text-mining.html">
+     Gensim: Text Mining
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/opencv-image-processing.html">
+     (w) Opencv: Image Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-multilayer-perceptron.html">
+     Keras: Multilayer Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-recurrent-networks.html">
+     Keras: Recurrent Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-convolutional-networks.html">
+     (w) Keras: Convolutional Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/pytorch-deep-learning.html">
+     PyTorch: Deep Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-11/_intro.html">
+   <b>
+    11. R Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/r-basic-concepts.html">
+     R: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/r-data-structures.html">
+     R: Data Structures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/tidyverse-data-wrangling.html">
+     Tidyverse: Data Wrangling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/dplyr-data-cleaning.html">
+     Dplyr: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/ggplot-data-visualization.html">
+     Ggplot: Data Visualizatio
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/r-statistics.html">
+     R: Statistics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/chapter-09/pyod-anomaly-detection.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/chapter-09/pyod-anomaly-detection.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapter-09/pyod-anomaly-detection.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   1. Overview
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#types-of-anomalies">
+     1.1. Types of anomalies
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#approaches">
+     1.2. Approaches
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#statistical-approaches">
+   2. Statistical approaches
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stategies">
+     2.1. Stategies
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#z-score">
+       Z-score
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#interquartile-range">
+       Interquartile range
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#handling">
+     2.2. Handling
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#clipping">
+       Clipping
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#trimming">
+       Trimming
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#transforming">
+       Transforming
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inspired-variants">
+   3. Inspired variants
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dimensional-reduction">
+     3.1. Dimensional reduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clustering">
+     3.2. Clustering
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dbscan">
+       DBSCAN
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#clustering-based">
+       Clustering-based
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#one-class-svm">
+     3.3. One-class SVM
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#knn">
+     3.4. KNN
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dedicated-algorithms">
+   4. Dedicated algorithms
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#local-outlier-factor">
+     4.1. Local Outlier Factor
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#histogram-based">
+     4.2. Histogram-based
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#isolation-forest">
+     4.3. Isolation Forest
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#connectivity-based">
+     4.4. Connectivity-based
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#copula-based">
+     4.5. COPula-based
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#w-autoencoder">
+     [w] Autoencoder
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     4.7. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Pyod: Anomaly Detection</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   1. Overview
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#types-of-anomalies">
+     1.1. Types of anomalies
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#approaches">
+     1.2. Approaches
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#statistical-approaches">
+   2. Statistical approaches
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stategies">
+     2.1. Stategies
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#z-score">
+       Z-score
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#interquartile-range">
+       Interquartile range
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#handling">
+     2.2. Handling
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#clipping">
+       Clipping
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#trimming">
+       Trimming
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#transforming">
+       Transforming
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inspired-variants">
+   3. Inspired variants
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dimensional-reduction">
+     3.1. Dimensional reduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clustering">
+     3.2. Clustering
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dbscan">
+       DBSCAN
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#clustering-based">
+       Clustering-based
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#one-class-svm">
+     3.3. One-class SVM
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#knn">
+     3.4. KNN
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dedicated-algorithms">
+   4. Dedicated algorithms
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#local-outlier-factor">
+     4.1. Local Outlier Factor
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#histogram-based">
+     4.2. Histogram-based
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#isolation-forest">
+     4.3. Isolation Forest
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#connectivity-based">
+     4.4. Connectivity-based
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#copula-based">
+     4.5. COPula-based
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#w-autoencoder">
+     [w] Autoencoder
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     4.7. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="pyod-anomaly-detection">
+<h1>Pyod: Anomaly Detection<a class="headerlink" href="#pyod-anomaly-detection" title="Permalink to this headline">#</a></h1>
+<section id="overview">
+<h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<section id="types-of-anomalies">
+<h3>1.1. Types of anomalies<a class="headerlink" href="#types-of-anomalies" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><em>Local anomalies</em>: Refers to the anomalies that deviant from their local neighbors. Imagine that there are 3 clusters in the dataset, in each cluster have some points that are different from other points in the same cluster. They are local anomalies.</p></li>
+<li><p><em>Global anomlies</em>: The anomalies that far from normal data. Consider again 3 clusters in the dataset, if there are some points which far from all 3 clusters,that are called global anomalies.</p></li>
+<li><p><em>Dependency anomalies</em>: refer to the data points that do not follow the dependency structure which normal data follow. Example salary covariates with education but anomalies do not.</p></li>
+<li><p><em>Clustered anomalies</em>: is group of abnomalies, the data points are not scattered in space but appear in a group that are different from normal data</p></li>
+</ul>
+<img alt="chapter-09/image/types_of_anomaly.png" src="chapter-09/image/types_of_anomaly.png" />
+</section>
+<section id="approaches">
+<h3>1.2. Approaches<a class="headerlink" href="#approaches" title="Permalink to this headline">#</a></h3>
+<p>Beside statistical aproaches such as IQR, Z-score, anomalies can be detected throught 3 types of ML algorithms:</p>
+<ul class="simple">
+<li><p>Unsupervised: The most popular approaches in reality is unsupervied methods, detection algorithms can be essentially grouped in three classes:</p>
+<ul>
+<li><p>Proximity/nearest neighbor-based methods: This method assume that a data point is an outlier if the nearest neighbors of the point are far away in space, that is, the proximity of the point to its neighbors significantly deviates from the proximity of most of the other points to their neighbors in the data set. Some popular algorithms are LOF, COF, kNN, SOD, HBOS</p></li>
+<li><p>Probabilistic/linear-based: This method constructs the empirical distribution of the data set then predict the tail probabilities of each given data point to determine its level of <em>extremeness</em>. OCSVM, COPOD, PCA are usually used in AD</p></li>
+<li><p>Ensemble/isolation-based methods: The idea is to train several anomaly detectors with varying hyperparameters in parallel and then combine its result in the anomaly detection phase, this method suitable for high-dimensional and large-scale dataset. Some popular algorithms are IsolationForest, LODA</p></li>
+</ul>
+</li>
+<li><p>Supervised: The anomalies detection are treated as binary classification (which are very rare)</p></li>
+<li><p>Semi-supervised: Semi-supervised AD algorithms can capitalize the supervision from partial labels, while keeping the ability to detect unseen types of anomalies.</p></li>
+</ul>
+</section>
+</section>
+<section id="statistical-approaches">
+<h2>2. Statistical approaches<a class="headerlink" href="#statistical-approaches" title="Permalink to this headline">#</a></h2>
+<p>An outlier is a data point that differs significantly from other observations. Outliers can cause serious problems in statistical analysis. Detecting outliers is more likely be an art rather than a science, therefore you need both quantitative and qualitative methods to identify outliers.</p>
+<p>However, there’s no best rule for handling outliers. You need to ask yourself <em>Why are they outliers?</em> and <em>How can they affect your analysis?</em>. In this section, we discuss how to detect and handle outliers using Feature-engine.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="stategies">
+<h3>2.1. Stategies<a class="headerlink" href="#stategies" title="Permalink to this headline">#</a></h3>
+<section id="z-score">
+<h4>Z-score<a class="headerlink" href="#z-score" title="Permalink to this headline">#</a></h4>
+<p>Given a vector, <span class="math notranslate nohighlight">\(x\)</span>, we calculate z-score (denoted <span class="math notranslate nohighlight">\(z\)</span>) with the following formula:</p>
+<div class="math notranslate nohighlight">
+\[z = \frac{x-\mu}{\sigma}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation.</p>
+<p>The approach of this method is to eliminate values of <span class="math notranslate nohighlight">\(z&lt;-3\)</span> and <span class="math notranslate nohighlight">\(z&gt;3\)</span>. You can also remove <span class="math notranslate nohighlight">\(x&lt;\mu-3\sigma\)</span> and <span class="math notranslate nohighlight">\(x&gt;\mu+3\sigma\)</span> which gives the same result. Notice that the coefficient can be changed to 2.5 or 3.5 depends on the problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">outliers_zscore</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="s1">&#39;Return a new array has the outliers being replaced with NaN.&#39;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">-</span> <span class="n">z</span><span class="o">*</span><span class="n">std</span>
+    <span class="n">upper</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">z</span><span class="o">*</span><span class="n">std</span>
+    <span class="n">array</span><span class="p">[(</span><span class="n">array</span> <span class="o">&lt;</span> <span class="n">lower</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">array</span> <span class="o">&gt;</span> <span class="n">upper</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">return</span> <span class="n">array</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="interquartile-range">
+<h4>Interquartile range<a class="headerlink" href="#interquartile-range" title="Permalink to this headline">#</a></h4>
+<p>This method considers eliminating values that is lower than <span class="math notranslate nohighlight">\(Q_1-1.5\times \text{IQR}\)</span> or higher than <span class="math notranslate nohighlight">\(Q_3+1.5\times \text{IQR}\)</span>, where: <span class="math notranslate nohighlight">\(Q_1\)</span>, <span class="math notranslate nohighlight">\(Q_2\)</span> and <span class="math notranslate nohighlight">\(Q_3\)</span> are the quartiles; <span class="math notranslate nohighlight">\(\text{IQR}=Q_3-Q_1\)</span> is the interquartile range.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">outliers_iqr</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">Q1</span><span class="p">,</span> <span class="n">Q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">])</span>
+    <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">IQR</span>
+    <span class="n">upper</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">IQR</span>
+    <span class="n">array</span><span class="p">[(</span><span class="n">array</span> <span class="o">&lt;</span> <span class="n">lower</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">array</span> <span class="o">&gt;</span> <span class="n">upper</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">return</span> <span class="n">array</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="handling">
+<h3>2.2. Handling<a class="headerlink" href="#handling" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">feature_engine</span> <span class="kn">import</span> <span class="n">outliers</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="clipping">
+<h4>Clipping<a class="headerlink" href="#clipping" title="Permalink to this headline">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://feature-engine.readthedocs.io/en/latest/api_doc/outliers/Winsorizer.html'&gt;Winsorizer&lt;/a&gt;</span></code> detects outliers based on z-score, IQR and percentiles rule and replace these outliers by the maximum/minimum values at automatically determined values</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4898, 12)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">winsorizer</span> <span class="o">=</span> <span class="n">outliers</span><span class="o">.</span><span class="n">Winsorizer</span><span class="p">(</span><span class="n">capping_method</span><span class="o">=</span><span class="s1">&#39;iqr&#39;</span><span class="p">,</span> <span class="n">tail</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;citric_acid&#39;</span><span class="p">])</span>
+<span class="n">wine_rmo</span> <span class="o">=</span> <span class="n">winsorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">wine</span><span class="p">)</span>
+<span class="n">wine_rmo</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4898, 12)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">wine</span><span class="o">.</span><span class="n">citric_acid</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>                      
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">wine_rmo</span><span class="o">.</span><span class="n">citric_acid</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;citric_acid&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/pyod-anomaly-detection_16_1.png" src="../_images/pyod-anomaly-detection_16_1.png" />
+</div>
+</div>
+</section>
+<section id="trimming">
+<h4>Trimming<a class="headerlink" href="#trimming" title="Permalink to this headline">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://feature-engine.readthedocs.io/en/latest/api_doc/outliers/OutlierTrimmer.html'&gt;OutlierTrimmer&lt;/a&gt;</span></code> detects outliers based on z-score, IQR and percentiles rule and removes observations with outliers from the dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4898, 12)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trimmer</span> <span class="o">=</span> <span class="n">outliers</span><span class="o">.</span><span class="n">OutlierTrimmer</span><span class="p">(</span><span class="n">capping_method</span><span class="o">=</span><span class="s1">&#39;iqr&#39;</span><span class="p">,</span> <span class="n">tail</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;citric_acid&#39;</span><span class="p">])</span>
+<span class="n">wine_rmo</span> <span class="o">=</span> <span class="n">trimmer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">wine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine_rmo</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4876, 12)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="transforming">
+<h4>Transforming<a class="headerlink" href="#transforming" title="Permalink to this headline">#</a></h4>
+<p>Another strategy to handling outliers is to perform a log transformation on the data, which dampens the effect of outliers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">7.46</span><span class="p">,</span> <span class="mf">6.77</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">7.11</span><span class="p">,</span> <span class="mf">7.81</span><span class="p">,</span> <span class="mf">8.84</span><span class="p">,</span> <span class="mf">6.08</span><span class="p">,</span> <span class="mf">5.39</span><span class="p">,</span> <span class="mf">8.15</span><span class="p">,</span> <span class="mf">6.42</span><span class="p">,</span> <span class="mf">5.73</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span><span class="p">;</span> <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Effect of ouliers&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Effect of log transformed outliers&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/pyod-anomaly-detection_23_0.png" src="../_images/pyod-anomaly-detection_23_0.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="inspired-variants">
+<h2>3. Inspired variants<a class="headerlink" href="#inspired-variants" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">pyod.models</span> <span class="kn">import</span> <span class="n">pca</span><span class="p">,</span> <span class="n">cblof</span><span class="p">,</span> <span class="n">ocsvm</span><span class="p">,</span> <span class="n">knn</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">DBSCAN</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="dimensional-reduction">
+<h3>3.1. Dimensional reduction<a class="headerlink" href="#dimensional-reduction" title="Permalink to this headline">#</a></h3>
+<p>As far as we know, PCA is a technique which break down a matrix into vectors called principal components, then reconstruct the original data using just the first few principal components in a lower dimensional space. The reconstructed data points that are the most different from the corresponding original points are anomalous points - which is more obvious on the hyperplane constructed by the eigenvectors with small eigenvalues. Therefore, outlier scores can be obtained as the sum of the projected distance of a sample on all eigenvectors. The <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://pyod.readthedocs.io/en/latest/pyod.models.html#module-pyod.models.pca'&gt;PCA&lt;/a&gt;</span></code> model in Pyod can calculate the outlier scores and predict which observation is outlier</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed_acidity</th>
+      <th>volatile_acidity</th>
+      <th>citric_acid</th>
+      <th>residual_sugar</th>
+      <th>chlorides</th>
+      <th>free_sulfur_dioxide</th>
+      <th>total_sulfur_dioxide</th>
+      <th>density</th>
+      <th>ph</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.0</td>
+      <td>0.27</td>
+      <td>0.36</td>
+      <td>20.7</td>
+      <td>0.045</td>
+      <td>45.0</td>
+      <td>170.0</td>
+      <td>1.0010</td>
+      <td>3.00</td>
+      <td>0.45</td>
+      <td>8.8</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6.3</td>
+      <td>0.30</td>
+      <td>0.34</td>
+      <td>1.6</td>
+      <td>0.049</td>
+      <td>14.0</td>
+      <td>132.0</td>
+      <td>0.9940</td>
+      <td>3.30</td>
+      <td>0.49</td>
+      <td>9.5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8.1</td>
+      <td>0.28</td>
+      <td>0.40</td>
+      <td>6.9</td>
+      <td>0.050</td>
+      <td>30.0</td>
+      <td>97.0</td>
+      <td>0.9951</td>
+      <td>3.26</td>
+      <td>0.44</td>
+      <td>10.1</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">PCA</span><span class="p">(</span><span class="n">n_selected_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">wine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PCA(contamination=0.1, copy=True, iterated_power=&#39;auto&#39;, n_components=None,
+  n_selected_components=3, random_state=None, standardization=True,
+  svd_solver=&#39;auto&#39;, tol=0.0, weighted=True, whiten=False)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ab_score</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">wine</span><span class="p">)</span>
+<span class="n">outlier</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">wine</span><span class="p">)</span> <span class="c1">#return 0/1 indicate index of outliers</span>
+
+<span class="n">min_ab_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ab_score</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">outlier</span><span class="o">==</span><span class="mi">1</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">ab_score</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">min_ab_score</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Anomaly Score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of data points&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/pyod-anomaly-detection_30_0.png" src="../_images/pyod-anomaly-detection_30_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># outliers in dataset</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">outlier</span><span class="o">==</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed_acidity</th>
+      <th>volatile_acidity</th>
+      <th>citric_acid</th>
+      <th>residual_sugar</th>
+      <th>chlorides</th>
+      <th>free_sulfur_dioxide</th>
+      <th>total_sulfur_dioxide</th>
+      <th>density</th>
+      <th>ph</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>14</th>
+      <td>8.3</td>
+      <td>0.42</td>
+      <td>0.62</td>
+      <td>19.25</td>
+      <td>0.040</td>
+      <td>41.0</td>
+      <td>172.0</td>
+      <td>1.0002</td>
+      <td>2.98</td>
+      <td>0.67</td>
+      <td>9.7</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>6.2</td>
+      <td>0.66</td>
+      <td>0.48</td>
+      <td>1.20</td>
+      <td>0.029</td>
+      <td>29.0</td>
+      <td>75.0</td>
+      <td>0.9892</td>
+      <td>3.33</td>
+      <td>0.39</td>
+      <td>12.8</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>6.2</td>
+      <td>0.66</td>
+      <td>0.48</td>
+      <td>1.20</td>
+      <td>0.029</td>
+      <td>29.0</td>
+      <td>75.0</td>
+      <td>0.9892</td>
+      <td>3.33</td>
+      <td>0.39</td>
+      <td>12.8</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>7.6</td>
+      <td>0.67</td>
+      <td>0.14</td>
+      <td>1.50</td>
+      <td>0.074</td>
+      <td>25.0</td>
+      <td>168.0</td>
+      <td>0.9937</td>
+      <td>3.05</td>
+      <td>0.51</td>
+      <td>9.3</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>6.7</td>
+      <td>0.23</td>
+      <td>0.39</td>
+      <td>2.50</td>
+      <td>0.172</td>
+      <td>63.0</td>
+      <td>158.0</td>
+      <td>0.9937</td>
+      <td>3.11</td>
+      <td>0.36</td>
+      <td>9.4</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="clustering">
+<h3>3.2. Clustering<a class="headerlink" href="#clustering" title="Permalink to this headline">#</a></h3>
+<section id="dbscan">
+<h4>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this headline">#</a></h4>
+<p>In clustering topic, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html">DBSCAN</a> can be used to detect outliers based on concept core points - edge points. If a point is neither a core point nor edge point, it will be considered as an outlier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed_acidity</th>
+      <th>volatile_acidity</th>
+      <th>citric_acid</th>
+      <th>residual_sugar</th>
+      <th>chlorides</th>
+      <th>free_sulfur_dioxide</th>
+      <th>total_sulfur_dioxide</th>
+      <th>density</th>
+      <th>ph</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.0</td>
+      <td>0.27</td>
+      <td>0.36</td>
+      <td>20.7</td>
+      <td>0.045</td>
+      <td>45.0</td>
+      <td>170.0</td>
+      <td>1.0010</td>
+      <td>3.00</td>
+      <td>0.45</td>
+      <td>8.8</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6.3</td>
+      <td>0.30</td>
+      <td>0.34</td>
+      <td>1.6</td>
+      <td>0.049</td>
+      <td>14.0</td>
+      <td>132.0</td>
+      <td>0.9940</td>
+      <td>3.30</td>
+      <td>0.49</td>
+      <td>9.5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8.1</td>
+      <td>0.28</td>
+      <td>0.40</td>
+      <td>6.9</td>
+      <td>0.050</td>
+      <td>30.0</td>
+      <td>97.0</td>
+      <td>0.9951</td>
+      <td>3.26</td>
+      <td>0.44</td>
+      <td>10.1</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dbscan</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">dbscan</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">wine</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">wine</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed_acidity</th>
+      <th>volatile_acidity</th>
+      <th>citric_acid</th>
+      <th>residual_sugar</th>
+      <th>chlorides</th>
+      <th>free_sulfur_dioxide</th>
+      <th>total_sulfur_dioxide</th>
+      <th>density</th>
+      <th>ph</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>111</th>
+      <td>7.2</td>
+      <td>0.27</td>
+      <td>0.46</td>
+      <td>18.75</td>
+      <td>0.052</td>
+      <td>45.0</td>
+      <td>255.0</td>
+      <td>1.0000</td>
+      <td>3.04</td>
+      <td>0.52</td>
+      <td>8.9</td>
+      <td>5</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>227</th>
+      <td>7.1</td>
+      <td>0.25</td>
+      <td>0.32</td>
+      <td>10.30</td>
+      <td>0.041</td>
+      <td>66.0</td>
+      <td>272.0</td>
+      <td>0.9969</td>
+      <td>3.17</td>
+      <td>0.52</td>
+      <td>9.1</td>
+      <td>6</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>245</th>
+      <td>6.1</td>
+      <td>0.18</td>
+      <td>0.36</td>
+      <td>2.00</td>
+      <td>0.038</td>
+      <td>20.0</td>
+      <td>249.5</td>
+      <td>0.9923</td>
+      <td>3.37</td>
+      <td>0.79</td>
+      <td>11.3</td>
+      <td>6</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>325</th>
+      <td>7.5</td>
+      <td>0.27</td>
+      <td>0.31</td>
+      <td>5.80</td>
+      <td>0.057</td>
+      <td>131.0</td>
+      <td>313.0</td>
+      <td>0.9946</td>
+      <td>3.18</td>
+      <td>0.59</td>
+      <td>10.5</td>
+      <td>5</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>387</th>
+      <td>6.3</td>
+      <td>0.39</td>
+      <td>0.35</td>
+      <td>5.90</td>
+      <td>0.040</td>
+      <td>82.5</td>
+      <td>260.0</td>
+      <td>0.9941</td>
+      <td>3.12</td>
+      <td>0.66</td>
+      <td>10.1</td>
+      <td>5</td>
+      <td>-1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="clustering-based">
+<h4>Clustering-based<a class="headerlink" href="#clustering-based" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p><em>Small and large cluster</em>:
+Assume the clustering algorithm split dataset into <span class="math notranslate nohighlight">\(c\)</span> cluster sorted by size in descending order <span class="math notranslate nohighlight">\(\mathcal{C}=\{C_1,C_2, \dots ,C_c\}\)</span>. Let <span class="math notranslate nohighlight">\(LC=\{C_1,\dots,C_b\}\)</span> is a set of large cluster, <span class="math notranslate nohighlight">\(SC = C - LC\)</span> is a set of small cluster. <span class="math notranslate nohighlight">\(|C_i|\)</span> is the size of cluser <span class="math notranslate nohighlight">\(C_i\)</span>. To determine <span class="math notranslate nohighlight">\(b\)</span> -  number of large cluster large, <span class="math notranslate nohighlight">\(b\)</span> has sastisfy one of these conditions:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\alpha &amp;\leq \frac{\sum^b_{i=1} |C_i|}{N} \\
+\beta  &amp;\leq \frac{|C_b|}{|C_{b+1}|} \\
+\end{aligned}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(\alpha\)</span> usually is 0.9 - this coef considers that the most data points are not outliers, therefore the clusters has a large porpotion of data are the large clusters. <span class="math notranslate nohighlight">\(\beta\)</span> is default set equal to 5 - this consider that there are significant different in size of large and small clusters.</p>
+<ul class="simple">
+<li><p><em>CBLOF</em>: After defining small and large cluster, <a class="reference external" href="https://pyod.readthedocs.io/en/latest/pyod.models.html#pyod.models.cblof.CBLOF">CBLOF</a> calculates the anomaly score to classifie outlier. The CBLOF score of data point <span class="math notranslate nohighlight">\(p\)</span> is defined as:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split} \text{CBLOF}_p = 
+\begin{cases}
+|C_i| \cdot \min(d(p,C_j)) &amp; \text{ if }  C_i \in \text{ SC and } C_j \in \text{ LC } \\
+|C_i| \cdot d(p,C_i) &amp; \text{ if } C_i \in \text{ LC }\\
+\end{cases}\end{split}\]</div>
+<p>The formula simplify states that score is equal to the distance to the nearest large cluster multiplie by the size of the cluster the object belong to</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed_acidity</th>
+      <th>volatile_acidity</th>
+      <th>citric_acid</th>
+      <th>residual_sugar</th>
+      <th>chlorides</th>
+      <th>free_sulfur_dioxide</th>
+      <th>total_sulfur_dioxide</th>
+      <th>density</th>
+      <th>ph</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.0</td>
+      <td>0.27</td>
+      <td>0.36</td>
+      <td>20.7</td>
+      <td>0.045</td>
+      <td>45.0</td>
+      <td>170.0</td>
+      <td>1.0010</td>
+      <td>3.00</td>
+      <td>0.45</td>
+      <td>8.8</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6.3</td>
+      <td>0.30</td>
+      <td>0.34</td>
+      <td>1.6</td>
+      <td>0.049</td>
+      <td>14.0</td>
+      <td>132.0</td>
+      <td>0.9940</td>
+      <td>3.30</td>
+      <td>0.49</td>
+      <td>9.5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8.1</td>
+      <td>0.28</td>
+      <td>0.40</td>
+      <td>6.9</td>
+      <td>0.050</td>
+      <td>30.0</td>
+      <td>97.0</td>
+      <td>0.9951</td>
+      <td>3.26</td>
+      <td>0.44</td>
+      <td>10.1</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cblof_</span> <span class="o">=</span> <span class="n">cblof</span><span class="o">.</span><span class="n">CBLOF</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">cblof_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">wine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CBLOF(alpha=0.9, beta=5, check_estimator=False, clustering_estimator=None,
+   contamination=0.1, n_clusters=10, n_jobs=None, random_state=None,
+   use_weights=False)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cblof_</span><span class="o">.</span><span class="n">labels_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 0, 0, ..., 0, 0, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cblof_</span><span class="o">.</span><span class="n">labels_</span><span class="o">==</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(490, 12)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="one-class-svm">
+<h3>3.3. One-class SVM<a class="headerlink" href="#one-class-svm" title="Permalink to this headline">#</a></h3>
+<p>In classification, SVM is usually used in multi-class problems but in anomaly detection, there is just 1 class in all dataset, the algorithm must classify a new observation is in class or not. This is the idea of <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.OneClassSVM.html#sklearn.svm.OneClassSVM">One-class SVM</a>. Note that in feature space the inner product of every point with the origin is <span class="math notranslate nohighlight">\(0\)</span> - Hence there is low similarity between the points in the dataset and the origin. Therefore, OCSVM tries to find a hyperplane in feature space that maximizes the distances from the origin (outlier points) and minimizes the distance to the other datapoints (similar points)</p>
+<p>This algorithm is consider as <a class="reference external" href="https://scikit-learn.org/stable/modules/outlier_detection.html#novelty-and-outlier-detection">novelty detection</a> (a kind of semi-supervised) which the training data do not contain outliers, the algorithm only detects the new observation is an outlier or not. Thus, it not suitable if there are outliers in the training set</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed_acidity</th>
+      <th>volatile_acidity</th>
+      <th>citric_acid</th>
+      <th>residual_sugar</th>
+      <th>chlorides</th>
+      <th>free_sulfur_dioxide</th>
+      <th>total_sulfur_dioxide</th>
+      <th>density</th>
+      <th>ph</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.0</td>
+      <td>0.27</td>
+      <td>0.36</td>
+      <td>20.7</td>
+      <td>0.045</td>
+      <td>45.0</td>
+      <td>170.0</td>
+      <td>1.0010</td>
+      <td>3.00</td>
+      <td>0.45</td>
+      <td>8.8</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6.3</td>
+      <td>0.30</td>
+      <td>0.34</td>
+      <td>1.6</td>
+      <td>0.049</td>
+      <td>14.0</td>
+      <td>132.0</td>
+      <td>0.9940</td>
+      <td>3.30</td>
+      <td>0.49</td>
+      <td>9.5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8.1</td>
+      <td>0.28</td>
+      <td>0.40</td>
+      <td>6.9</td>
+      <td>0.050</td>
+      <td>30.0</td>
+      <td>97.0</td>
+      <td>0.9951</td>
+      <td>3.26</td>
+      <td>0.44</td>
+      <td>10.1</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svm</span> <span class="o">=</span> <span class="n">ocsvm</span><span class="o">.</span><span class="n">OCSVM</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">)</span>
+<span class="n">svm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">wine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OCSVM(cache_size=200, coef0=0.0, contamination=0.1, degree=3, gamma=&#39;auto&#39;,
+   kernel=&#39;rbf&#39;, max_iter=-1, nu=0.5, shrinking=True, tol=0.001,
+   verbose=False)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">svm</span><span class="o">.</span><span class="n">labels_</span><span class="o">==</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(490, 12)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="knn">
+<h3>3.4. KNN<a class="headerlink" href="#knn" title="Permalink to this headline">#</a></h3>
+<p>For an observation, a distance from a datapoint to its <span class="math notranslate nohighlight">\(k_{th}\)</span> nearest neighbor could be viewed as the outlying score. Three kNN detectors are supported:</p>
+<ul class="simple">
+<li><p>Largest: use the last distance to the kth neighbor as the outlier score</p></li>
+<li><p>Mean: use the average of all k neighbors as the outlier score</p></li>
+<li><p>Median: use the median of the distance to k neighbors as the outlier score</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed_acidity</th>
+      <th>volatile_acidity</th>
+      <th>citric_acid</th>
+      <th>residual_sugar</th>
+      <th>chlorides</th>
+      <th>free_sulfur_dioxide</th>
+      <th>total_sulfur_dioxide</th>
+      <th>density</th>
+      <th>ph</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.0</td>
+      <td>0.27</td>
+      <td>0.36</td>
+      <td>20.7</td>
+      <td>0.045</td>
+      <td>45.0</td>
+      <td>170.0</td>
+      <td>1.0010</td>
+      <td>3.00</td>
+      <td>0.45</td>
+      <td>8.8</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6.3</td>
+      <td>0.30</td>
+      <td>0.34</td>
+      <td>1.6</td>
+      <td>0.049</td>
+      <td>14.0</td>
+      <td>132.0</td>
+      <td>0.9940</td>
+      <td>3.30</td>
+      <td>0.49</td>
+      <td>9.5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8.1</td>
+      <td>0.28</td>
+      <td>0.40</td>
+      <td>6.9</td>
+      <td>0.050</td>
+      <td>30.0</td>
+      <td>97.0</td>
+      <td>0.9951</td>
+      <td>3.26</td>
+      <td>0.44</td>
+      <td>10.1</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">KNN</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+<span class="n">knn_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">wine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KNN(algorithm=&#39;auto&#39;, contamination=0.1, leaf_size=30, method=&#39;mean&#39;,
+  metric=&#39;minkowski&#39;, metric_params=None, n_jobs=1, n_neighbors=10, p=2,
+  radius=1.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">knn_</span><span class="o">.</span><span class="n">labels_</span><span class="o">==</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(490, 12)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="dedicated-algorithms">
+<h2>4. Dedicated algorithms<a class="headerlink" href="#dedicated-algorithms" title="Permalink to this headline">#</a></h2>
+<section id="local-outlier-factor">
+<h3>4.1. Local Outlier Factor<a class="headerlink" href="#local-outlier-factor" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://pyod.readthedocs.io/en/latest/pyod.models.html#module-pyod.models.lof">LOF</a> is widely uses in anomaly detection specially for local outlier. It computes the local density deviation of a given data point with respect to its neighbors. A point will be considered as outlier when it has a significantly lower density than it neighbors. In other word, LOF compares the local density of a point to local density of its k-nearest neighbors and gives a score as final output. The disadvantage of LOF or proximity-based algorithms is it costs time very much to calculate the distance between large data points.</p>
+<p>The process of LOF follow these step:</p>
+<ul class="simple">
+<li><p>Determined the distance from data point <span class="math notranslate nohighlight">\(p_i\)</span> to <span class="math notranslate nohighlight">\(k_{th}\)</span> nearest neighbors (pyod support all distance metrics from sklearn and scipy). Get the max distance among <span class="math notranslate nohighlight">\(k\)</span> points - this is called <em>K_distance</em>. The number of neighbors of <span class="math notranslate nohighlight">\(p_i\)</span> can greater or equal <span class="math notranslate nohighlight">\(k\)</span> due to the distance between them - denote <span class="math notranslate nohighlight">\(|N_p|\)</span></p></li>
+<li><p>Computes the <em>reachability density (RD)</em> of each <span class="math notranslate nohighlight">\(p_i\)</span> related to others. RD is defined as the maximum of K-distance of <span class="math notranslate nohighlight">\(p_i\)</span> and the distance between <span class="math notranslate nohighlight">\(p_i\)</span> and <span class="math notranslate nohighlight">\(p_j\)</span>:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text{RD}(p_i,p_j) = \max(\text{K_distance}_{p_i}, d(p_i,p_j))\]</div>
+<img alt="chapter-09/image/local_outlier_factor.png" src="chapter-09/image/local_outlier_factor.png" />
+<ul class="simple">
+<li><p>Computes the <em>local reachability density (LRD)</em>. LRD is inverse of the average RD of <span class="math notranslate nohighlight">\(p_i\)</span> from its neighbors. The larger average RD leads to the smaller LRD - it means the density of <span class="math notranslate nohighlight">\(p_i\)</span> is quite low:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text{LRD}_{p_i}= \frac{1}{\sum_{p_j \in N_p}\frac{\text{RD}(p_i,p_j)}{|N_p|} } \]</div>
+<ul class="simple">
+<li><p>Calculates the <em>LOF score</em> for each <span class="math notranslate nohighlight">\(p_i\)</span> - LOF score is the ratio of the average LRD of the <span class="math notranslate nohighlight">\(K\)</span> neighbors of <span class="math notranslate nohighlight">\(p_i\)</span> to the LRD of <span class="math notranslate nohighlight">\(p_i\)</span>. If a point is inliner, the LRD of this point is approximately equal to its neighbors that leads to LOF is nearly equal to 1. On the other hand, if the point is an outlier, the LRD of a point is less than the average LRD of neighbors, then LOF value will be high:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text{LOF}_{p_i} = \frac{\sum_{p_j \in N_p} \text{LRD}_{p_j}}{|N_p|} \cdot \frac{1}{\text{LRD}_{p_i}}\]</div>
+</section>
+<section id="histogram-based">
+<h3>4.2. Histogram-based<a class="headerlink" href="#histogram-based" title="Permalink to this headline">#</a></h3>
+<p>The idea of HBOS (Histogram-based Outlier Score) is based on assumption that the variables are independence of each other. HBOS is constructing a histogram for each variable, then calculating the <em>univariate outlier score</em> for each observation and finally sum up to measure the outlier score of an observation. HBOS is suitable for global and clustered outliers, it also has very fast computing time - especially for large dataset.</p>
+<p>Firstly, the algorithm will create histogram of each variable <span class="math notranslate nohighlight">\(d\)</span>. If a feature is numerical, bin it to get its histogram, if it is categorical, just count the values of each category. The height of bins (<span class="math notranslate nohighlight">\(h_d\)</span>) which data point belongs is the measure of outlier-ness. To get higher value for outlier, we inverse <span class="math notranslate nohighlight">\(h_d\)</span> and standardize score by log transform to ensures all the univariate scores can be summed up with equal weight. The formula of outlier score of a point <span class="math notranslate nohighlight">\(p\)</span> is very simply:</p>
+<div class="math notranslate nohighlight">
+\[\text{HBOS}_p = \sum_{d=0}^D \log(\frac{1}{h_d})\]</div>
+<p>The outliers will have a higher score than inliers points and these will be labelled 1 due to the outlier threshold we set. The challenge of HBOS is, it can be sensitive to the bin width of the histogram. If the bins are too narrow, the normal data points falling in these bins will be identified as outliers and vice versa. To produce a model with a stable outcome, the strategy is to build HBOS models with a range of histogram widths to obtain multiple scores and then aggregate the scores (by average or max average). This approach will reduce  overfitting and increase prediction accuracy.</p>
+</section>
+<section id="isolation-forest">
+<h3>4.3. Isolation Forest<a class="headerlink" href="#isolation-forest" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://pyod.readthedocs.io/en/latest/pyod.models.html#pyod.models.iforest.IForest">Isolation Forest</a> detects the outliers based on ensembling binary decision trees to isolate outliers from the others. Relying on the characteristics of outliers are few and difference, IForest built each tree using sub-sample of dataset, then randomly seleted a feature and a random threshold to split the tree. The process of splitting continue until all instance has been isolated or the tree reach the maximum height or all same-value data points go into same node. The outliers will have short path to the root than others, especially when all tree in the forest say that. Formula of anomaly score depends on the average of path length to the root <span class="math notranslate nohighlight">\(\overline{h_p}\)</span>, number of instances in node - <span class="math notranslate nohighlight">\(n\)</span> and unsuccesfull path in binary search tree <span class="math notranslate nohighlight">\(c(n)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\text{iForest}_p &amp;= 2^{-\frac{\overline{h}_p}{c(n)}} \\
+c(n) &amp;= 2 \cdot (\log(n-1)+0.577) - \frac{2(n-1)}{n} \\
+\end{aligned}\end{split}\]</div>
+<p>Iforest just requires 2 params which are number of trees and sub-sample size - it works very well with small sample sizes and high-dimensional data, time consuming of this method is also fast and it can apply for all 4 types of anomaly. But iForest also has a disadvantage that a node in an iTree is split based on a threshold value, the data is split into left and right branches resulting in horizontal and vertical branch cuts - this will lead to some outliers are passed.</p>
+</section>
+<section id="connectivity-based">
+<h3>4.4. Connectivity-based<a class="headerlink" href="#connectivity-based" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://pyod.readthedocs.io/en/latest/pyod.models.html#module-pyod.models.cof">COF</a> (Connectivity-based Outlier Factor) is another version of LOF. In LOF, the theory is that data points are distributed in circle around the instance, but in the case there is a linear relationship between data points, the distance metric in LOF is no longer correct. COF calculates the anomaly score based on average <em>chain distance</em> between points and their neighbors. Therefore, COF is suitable for local and dependency outliers but like LOF, the time cosuming of COF is quite high with large dataset.</p>
+<p>As same as LOF, COF firstly find <span class="math notranslate nohighlight">\(k\)</span> nearest neighbors of point <span class="math notranslate nohighlight">\(p\)</span> then arrange them in order of closest distance to <span class="math notranslate nohighlight">\(p\)</span>. Call <span class="math notranslate nohighlight">\(e_k\)</span> is the <em>edge distance</em>, equals to each pair of points distance, example <span class="math notranslate nohighlight">\(e_2\)</span> is the distance between <span class="math notranslate nohighlight">\(P_2\)</span> and <span class="math notranslate nohighlight">\(P_3\)</span>, we calculates average chain distance for each instance:</p>
+<div class="math notranslate nohighlight">
+\[\text{ACD}_p = \sum_{i=1}^k \frac{2(k+1-i)}{k(k+1)} e_i\]</div>
+<img src='image/connectivity_based_outlier_factor.png' style='height:180px; margin:0 auto 20px;'>
+At last, anomaly score is generated by ratio of average chaining distance of instance and the average of average chaining distance of $k$ nearest neighbor of this point. The higher the score, the easier it is to be an outlier.
+<div class="math notranslate nohighlight">
+\[\text{COF}_p = \frac{\text{ACD}_p}{\frac{\sum ACD_k}{k}}\]</div>
+</section>
+<section id="copula-based">
+<h3>4.5. COPula-based<a class="headerlink" href="#copula-based" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://pyod.readthedocs.io/en/latest/pyod.models.html#pyod.models.copod.COPOD">COPOD</a> (COPula-based Outlier Detection) is a parameter-free algorithm, which is built based on empirical multivariate distribution. Beside of no hyperparameters, it is also fast and computationally efficient, suitable for high-himensional data. The math behind this algorithm is quite complicated, simply understand that COPOD constructs the multivariate cumulative distribution function, and then uses it to predict tail probabilities of each given data point to determine its level of extremeness. The score in this case is not outlier probability but measuring the likelihood of a row, relative to other points in the dataset.</p>
+</section>
+<section id="w-autoencoder">
+<h3>[w] Autoencoder<a class="headerlink" href="#w-autoencoder" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="implementation">
+<h3>4.7. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
+<p>All unsupervised algorithms in Pyod have an importance hyperameter is <code style='font-size:13px; color:firebrick;'>contamination` which is ratio of anomaly in the dataset. Some notable hyperparams in each algorithm:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>Algorithm</p></th>
+<th class="text-align:left head"><p>Hyperparam</p></th>
+<th class="text-align:left head"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>LOF</p></td>
+<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>n_neighbors`</p></td>
+<td class="text-align:left"><p>20</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>LOF</p></td>
+<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>metric`</p></td>
+<td class="text-align:left"><p>minkowski</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>HBOS</p></td>
+<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>n_bins`</p></td>
+<td class="text-align:left"><p>10</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>HBOS</p></td>
+<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>alpha`</p></td>
+<td class="text-align:left"><p>0.1</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>IForest</p></td>
+<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>n_estimators`</p></td>
+<td class="text-align:left"><p>100</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>IForest</p></td>
+<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>max_samples`</p></td>
+<td class="text-align:left"><p>auto</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>IForest</p></td>
+<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>max_features`</p></td>
+<td class="text-align:left"><p>1</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>COF</p></td>
+<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>n_neighbors`</p></td>
+<td class="text-align:left"><p>20</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>COF</p></td>
+<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>method`</p></td>
+<td class="text-align:left"><p>fast</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">logging</span><span class="p">;</span> <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ParameterGrid</span>
+<span class="kn">from</span> <span class="nn">pyod.models.iforest</span> <span class="kn">import</span> <span class="n">IForest</span>
+<span class="kn">from</span> <span class="nn">pyod.models.lof</span> <span class="kn">import</span> <span class="n">LOF</span>
+<span class="kn">from</span> <span class="nn">pyod.models.hbos</span> <span class="kn">import</span> <span class="n">HBOS</span>
+<span class="kn">from</span> <span class="nn">pyod.models.cof</span> <span class="kn">import</span> <span class="n">COF</span>
+<span class="kn">from</span> <span class="nn">pyod.models.copod</span> <span class="kn">import</span> <span class="n">COPOD</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfWine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data/wine_quality.csv&#39;</span><span class="p">)</span>
+<span class="n">dfWine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed_acidity</th>
+      <th>volatile_acidity</th>
+      <th>citric_acid</th>
+      <th>residual_sugar</th>
+      <th>chlorides</th>
+      <th>free_sulfur_dioxide</th>
+      <th>total_sulfur_dioxide</th>
+      <th>density</th>
+      <th>ph</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.0</td>
+      <td>0.27</td>
+      <td>0.36</td>
+      <td>20.7</td>
+      <td>0.045</td>
+      <td>45.0</td>
+      <td>170.0</td>
+      <td>1.0010</td>
+      <td>3.00</td>
+      <td>0.45</td>
+      <td>8.8</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6.3</td>
+      <td>0.30</td>
+      <td>0.34</td>
+      <td>1.6</td>
+      <td>0.049</td>
+      <td>14.0</td>
+      <td>132.0</td>
+      <td>0.9940</td>
+      <td>3.30</td>
+      <td>0.49</td>
+      <td>9.5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8.1</td>
+      <td>0.28</td>
+      <td>0.40</td>
+      <td>6.9</td>
+      <td>0.050</td>
+      <td>30.0</td>
+      <td>97.0</td>
+      <td>0.9951</td>
+      <td>3.26</td>
+      <td>0.44</td>
+      <td>10.1</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.2</td>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>8.5</td>
+      <td>0.058</td>
+      <td>47.0</td>
+      <td>186.0</td>
+      <td>0.9956</td>
+      <td>3.19</td>
+      <td>0.40</td>
+      <td>9.9</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">paramsGrid</span> <span class="o">=</span> <span class="n">ParameterGrid</span><span class="p">({</span>
+    <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+    <span class="s1">&#39;max_samples&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+<span class="p">})</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">paramsGrid</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">IForest</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dfWine</span><span class="p">)</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">dfWine</span><span class="p">)</span>
+    <span class="n">thres</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">threshold_</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">thres</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/pyod-anomaly-detection_60_0.png" src="../_images/pyod-anomaly-detection_60_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/openvinotoolkit/anomalib">https://github.com/openvinotoolkit/anomalib</a></p></li>
+<li><p><a class="reference external" href="https://github.com/SeldonIO/alibi-detect">https://github.com/SeldonIO/alibi-detect</a></p></li>
+<li><p><a class="reference external" href="https://github.com/vc1492a/PyNomaly">https://github.com/vc1492a/PyNomaly</a></p></li>
+<li><p><a class="reference external" href="https://madm.dfki.de/_media/theses/bachelorthesis-amer_2011.pdf">https://madm.dfki.de/_media/theses/bachelorthesis-amer_2011.pdf</a></p></li>
+<li><p><a class="reference external" href="https://www.goldiges.de/publications/Anomaly_Detection_Algorithms_for_RapidMiner.pdf">https://www.goldiges.de/publications/Anomaly_Detection_Algorithms_for_RapidMiner.pdf</a></p></li>
+<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/313857/why-one-class-svm-seperate-from-the-origin">https://stats.stackexchange.com/questions/313857/why-one-class-svm-seperate-from-the-origin</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/local-outlier-factor-lof-algorithm-for-outlier-identification-8efb887d9843">https://towardsdatascience.com/local-outlier-factor-lof-algorithm-for-outlier-identification-8efb887d9843</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/dataman-in-ai/anomaly-detection-with-histogram-based-outlier-detection-hbo-bc10ef52f23f">https://medium.com/dataman-in-ai/anomaly-detection-with-histogram-based-outlier-detection-hbo-bc10ef52f23f</a></p></li>
+<li><p><a class="reference external" href="https://www.goldiges.de/publications/HBOS-KI-2012.pdf">https://www.goldiges.de/publications/HBOS-KI-2012.pdf</a></p></li>
+<li><p><a class="reference external" href="https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/icdm08b.pdf?q=isolation-forest">https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/icdm08b.pdf?q=isolation-forest</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2009.09463.pdf">https://arxiv.org/pdf/2009.09463.pdf</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/fast-accurate-anomaly-detection-based-on-copulas-copod-3133ce9041fa">https://towardsdatascience.com/fast-accurate-anomaly-detection-based-on-copulas-copod-3133ce9041fa</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter-09"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="sklearn-dimensional-reduction.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Sklearn: Dimensional Reduction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../chapter-10/_intro.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><b>10. Deep Learning</b></p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

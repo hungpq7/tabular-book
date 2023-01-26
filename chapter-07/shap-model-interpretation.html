@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Introduction</title>
+    <title>Shap: Model Interpretation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -57,7 +57,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="1. Imbalanced learning" href="imblearn-targeted-modeling.html" />
+    <link rel="next" title="Imblearn: Targeted Modeling" href="imblearn-targeted-modeling.html" />
     <link rel="prev" title="Ray: Hyperparam Optimization" href="ray-hyperparameter-optimization.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -150,6 +150,11 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-01/python-algorithms.html">
+     (w) Python: Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../chapter-01/python-external-sources.html">
      Python: External Sources
     </a>
@@ -175,27 +180,37 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-02/numpy-linear-algebra.html">
-     Numpy: Linear Algebra
+     NumPy: Linear Algebra
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-02/sympy-calculus.html">
-     Sympy: Calculus
+     SymPy: Calculus
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-02/numpy-probability.html">
-     Numpy: Probability
+     NumPy: Probability
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-02/numpy-statistics.html">
-     Numpy: Statistics
+     NumPy: Statistics
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-02/scipy-hypothesis-testing.html">
-     Scipy: Hypothesis Testing
+     SciPy: Hypothesis Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/numpy-applied-mathematics.html">
+     (w) NumPy: Applied Mathematics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-02/networkx-network-analysis.html">
+     (w) NetworkX: Network Analysis
     </a>
    </li>
   </ul>
@@ -214,7 +229,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-03/numpy-arrays.html">
-     Numpy: Arrays
+     NumPy: Arrays
     </a>
    </li>
    <li class="toctree-l2">
@@ -307,14 +322,58 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-06/_intro.html">
+   <b>
+    6. Machine Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-machine-learning.html">
+     Sklearn: Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-classification.html">
+     Sklearn: Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-regression.html">
+     Sklearn: Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/sklearn-feature-engineering.html">
+     Sklearn: Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/lenskit-recommendation.html">
+     Lenskit: Recommendation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-06/pyspark-machine-learning.html">
+     PySpark: Machine Learning
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="_intro.html">
    <b>
     7. Tabular Learning
    </b>
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-  <label for="toctree-checkbox-6">
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -336,12 +395,80 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Introduction
+     (w) Shap: Model Interpretation
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="imblearn-targeted-modeling.html">
-     1. Imbalanced learning
+     (w) Imblearn: Targeted Modeling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-08/_intro.html">
+   <b>
+    8. Time Series
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/statsmodels-temporal-analysis.html">
+     Statsmodels: Temporal Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/prophet-forecasting-algorithms.html">
+     Prophet: Forecasting Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/sktime-forecasting-pipeline.html">
+     Sktime: Forecasting Pipeline
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-08/darts-deep-forecasting.html">
+     (w) Darts: Deep Forecasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-09/_intro.html">
+   <b>
+    9. Unsupervised Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/mlxtend-association-rules.html">
+     (w) Mlxtend: Association Rules
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/sklearn-clustering.html">
+     Sklearn: Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/sklearn-dimensional-reduction.html">
+     Sklearn: Dimensional Reduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-09/pyod-anomaly-detection.html">
+     Pyod: Anomaly Detection
     </a>
    </li>
   </ul>
@@ -352,15 +479,89 @@ const thebe_selector_output = ".output, .cell_output"
     10. Deep Learning
    </b>
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
    <i class="fas fa-chevron-down">
    </i>
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/gensim-text-mining.html">
+     Gensim: Text Mining
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/opencv-image-processing.html">
+     (w) Opencv: Image Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../chapter-10/numpy-gradient-descent.html">
      Python: Gradient Descent
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-multilayer-perceptron.html">
+     Keras: Multilayer Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-recurrent-networks.html">
+     Keras: Recurrent Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/keras-convolutional-networks.html">
+     (w) Keras: Convolutional Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-10/pytorch-deep-learning.html">
+     PyTorch: Deep Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../chapter-11/_intro.html">
+   <b>
+    11. R Programming
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/r-basic-concepts.html">
+     R: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/r-data-structures.html">
+     R: Data Structures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/tidyverse-data-wrangling.html">
+     Tidyverse: Data Wrangling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/dplyr-data-cleaning.html">
+     Dplyr: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/ggplot-data-visualization.html">
+     Ggplot: Data Visualizatio
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../chapter-11/r-statistics.html">
+     R: Statistics
     </a>
    </li>
   </ul>
@@ -575,88 +776,97 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Introduction
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tabular-explainers">
+   1. Tabular explainers
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#general-explainer">
+     1.1. General explainer
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#feature-importances">
+       Feature importances
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#prediction-contribution">
+       Prediction contribution
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dependence-plot">
+       Dependence plot
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kernel-explainer">
+     1.2. Kernel explainer
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#feature-importance">
+       Feature importance
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#predict-contribution">
+       Predict contribution
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Dependence plot
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tree-explainer">
+     1.3. Tree explainer
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Feature importance
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Dependence plot
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#explainer">
-   1. Explainer
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deep-explainers">
+   2. Deep explainers
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#feature-importanc">
-     Feature importanc
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linearexplaner">
+     2.1. LinearExplaner
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#contributed-in-prediction">
-     Contributed in prediction
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradientexplaner">
+     2.2. GradientExplaner
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dependence-plot">
-     Dependence plot
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deepexplaner">
+     2.3. DeepExplaner
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#kernelexplainer">
-   2. KernelExplainer
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#feature-importance">
-     Feature importance
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#predict-contribution">
-     Predict contribution
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Dependence plot
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#treeexplainer">
-   3. TreeExplainer
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     Feature importance
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     Dependence plot
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linearexplaner">
-   4. LinearExplaner
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#gradientexplaner">
-   5. GradientExplaner
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#deepexplaner">
-   6. DeepExplaner
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -670,7 +880,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Introduction</h1>
+                <h1>Shap: Model Interpretation</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -680,88 +890,97 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Introduction
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tabular-explainers">
+   1. Tabular explainers
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#general-explainer">
+     1.1. General explainer
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#feature-importances">
+       Feature importances
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#prediction-contribution">
+       Prediction contribution
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dependence-plot">
+       Dependence plot
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kernel-explainer">
+     1.2. Kernel explainer
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#feature-importance">
+       Feature importance
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#predict-contribution">
+       Predict contribution
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Dependence plot
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tree-explainer">
+     1.3. Tree explainer
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Feature importance
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Dependence plot
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#explainer">
-   1. Explainer
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deep-explainers">
+   2. Deep explainers
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#feature-importanc">
-     Feature importanc
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linearexplaner">
+     2.1. LinearExplaner
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#contributed-in-prediction">
-     Contributed in prediction
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradientexplaner">
+     2.2. GradientExplaner
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dependence-plot">
-     Dependence plot
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deepexplaner">
+     2.3. DeepExplaner
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#kernelexplainer">
-   2. KernelExplainer
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#feature-importance">
-     Feature importance
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#predict-contribution">
-     Predict contribution
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Dependence plot
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#treeexplainer">
-   3. TreeExplainer
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     Feature importance
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     Dependence plot
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linearexplaner">
-   4. LinearExplaner
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#gradientexplaner">
-   5. GradientExplaner
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#deepexplaner">
-   6. DeepExplaner
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -776,18 +995,36 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
-<p><a class="reference external" href="https://github.com/slundberg/shap">SHAP</a> (SHapley Additive exPlanations) is a game theoretic approach to explain the output of any Machine Learning model. It connects optimal credit allocation with local explanations using the classic Shapley values from game theory and their related extensions.</p>
-<p>All charts of shap use shape value and fearture value since SHAP values represent a feature’s responsibility for a change in the model output, SHAP values usually use with regression or probability output in classification (countinuos values). The SHAP values provide two great advantages come along with 3 main types of charts (bar, waterfall and scatter plot):</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="shap-model-interpretation">
+<h1>Shap: Model Interpretation<a class="headerlink" href="#shap-model-interpretation" title="Permalink to this headline">#</a></h1>
+<p><a class="reference external" href="https://github.com/slundberg/shap">SHAP</a> (SHapley Additive exPlanations) is a game theoretic approach to explain Machine Learning models. It connects optimal credit allocation with local explanations using the classic Shapley values from game theory and their related extensions.</p>
+<p>All charts in SHAP use Shapley values and feature values since they represent a feature’s responsibility for a change in the model output. The SHAP values provide two great advantages come along with 3 main types of charts (bar, waterfall and scatter plot):</p>
 <ul class="simple">
 <li><p>Global interpretability - the SHAP values can show how much each predictor contributes, either positively or negatively, to the target variable. This is like the variable importance plot but it is able to show the positive or negative relationship for each variable with the target</p></li>
 <li><p>Local interpretability - each observation gets its own set of SHAP values. Traditional variable importance algorithms only show the results across the entire population but not on each individual case. The local interpretability enables us to pinpoint and contrast the impacts of the factors</p></li>
 </ul>
-<p>SHAP has a total of 5 explainers out of which 2 are frequently used: <em>treeExplainer</em> and <em>kernelExplainer</em>. Others is using for text, image and deep learning. The difference between these explainers is the algorithm used to compute the SHAP values. But there is 1 module called <em>Explainer</em> - it can be used with any model but taking long time to print the result. To optimize the speed, use the right explainer with the model.</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="explainer">
-<h1>1. Explainer<a class="headerlink" href="#explainer" title="Permalink to this headline">#</a></h1>
+<p>SHAP has a total of 5 explainers out of which 2 are frequently used: <em>tree explainer</em> and <em>kernel explainer</em>. Others is using for text, image and deep learning. The difference between these explainers is the algorithm used to compute the SHAP values. But there is 1 module called <em>Explainer</em> - it can be used with any model but taking long time to print the result. To optimize the speed, use the right explainer with the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">shap</span>
+
+<span class="n">shap</span><span class="o">.</span><span class="n">initjs</span><span class="p">()</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="tabular-explainers">
+<h2>1. Tabular explainers<a class="headerlink" href="#tabular-explainers" title="Permalink to this headline">#</a></h2>
+<section id="general-explainer">
+<h3>1.1. General explainer<a class="headerlink" href="#general-explainer" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -837,7 +1074,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># train an XGBoost model</span>
-<span class="n">dfBoston</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/boston.csv&#39;</span><span class="p">)</span>
+<span class="n">dfBoston</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/boston.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfBoston</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfBoston</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
 </pre></div>
@@ -855,12 +1092,484 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapValue</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.values =
+array([ 7.78602287e-02, -9.65500847e-02, -1.63524270e-01,  3.23649406e-01,
+        3.39305639e-01,  8.04396152e-01, -1.11837827e-01, -1.86580624e-02,
+       -1.03666104e-01, -8.01402479e-02, -1.25936538e-01, -1.45264223e-01,
+       -1.02292620e-01, -1.50598690e-01, -2.84303427e-01, -1.60947368e-01,
+       -1.76398396e-01, -2.02843949e-01, -1.43296227e-01, -2.90298849e-01,
+       -1.29353330e-01, -2.08296791e-01, -2.24818319e-01, -1.24333404e-01,
+       -1.86488047e-01, -2.00685933e-01, -1.95421085e-01, -1.53986007e-01,
+       -2.77911901e-01, -1.09973915e-01, -1.06279872e-01, -2.75816768e-01,
+       -2.02214107e-01, -1.88470215e-01, -1.86339065e-01, -1.26656547e-01,
+       -1.95518024e-02, -1.61263831e-02, -1.94125865e-02,  4.97614183e-02,
+        1.16389535e-01, -3.20471860e-02, -1.04849607e-01, -9.76351053e-02,
+       -1.53207928e-01, -1.28859609e-01, -1.01173662e-01, -3.14192213e-02,
+       -6.57561347e-02, -1.81036908e-02, -3.21411863e-02, -1.08428244e-02,
+       -8.45170300e-03,  8.00911523e-03,  3.25220525e-02,  2.19051257e-01,
+        1.51247174e-01,  1.81135327e-01, -7.37413317e-02,  4.44145920e-03,
+        1.80237330e-02, -4.00313511e-02, -1.70070305e-01,  5.30116213e-03,
+        2.36784667e-01,  5.45736440e-02,  4.33334224e-02,  8.59759524e-02,
+       -3.06680258e-02, -1.65958740e-02, -9.48595703e-02, -3.46736014e-02,
+       -7.13359565e-02, -7.42029026e-02, -7.12468028e-02, -8.72595310e-02,
+        1.57457888e-02, -7.71323219e-02, -5.84050687e-03, -6.36756122e-02,
+        8.96060281e-03, -1.17327325e-01,  1.81027815e-01,  7.63791054e-03,
+       -1.73279457e-02, -3.26415971e-02, -2.12570727e-02, -2.32558995e-02,
+        6.09173859e-03,  3.83940786e-02,  4.98396829e-02, -1.23198144e-02,
+       -1.59764931e-01, -1.14718258e-01, -9.24592465e-02,  6.95262998e-02,
+       -7.48800784e-02,  3.87607887e-02,  4.01401110e-02,  1.49518088e-01,
+       -1.34998873e-01, -1.31891280e-01, -2.91850746e-01, -2.30517477e-01,
+       -2.24505082e-01, -1.76596552e-01, -1.68705419e-01, -2.52520144e-01,
+       -2.24979162e-01, -1.95590109e-01, -8.43592063e-02, -1.49463594e-01,
+       -1.04872473e-01, -8.45888928e-02, -2.45004371e-01, -4.84714843e-02,
+       -1.20376430e-01, -1.73656046e-01,  3.83558981e-02, -2.17419982e-01,
+       -4.79099959e-01, -4.73000556e-01, -4.48341846e-01, -4.47948933e-01,
+       -4.51198936e-01, -4.40527886e-01, -5.36432683e-01,  1.27714816e-02,
+        3.27595845e-02,  3.30922790e-02, -1.43145407e-02,  2.07414940e-01,
+        2.01089710e-01,  2.03993469e-02,  1.66497290e-01,  2.88553506e-01,
+        9.64656565e-03, -1.68044627e-01, -7.22488761e-03,  1.06347412e-01,
+        9.68904607e-03,  2.60773078e-02, -1.20194508e-02, -1.13564702e-02,
+       -1.62632372e-02,  2.58000139e-02,  1.92722790e-02,  3.28658381e-03,
+        2.68958346e-03,  1.90389007e-02,  4.23720339e-03,  4.46875067e-03,
+       -4.78718616e-02,  2.03595106e-02,  5.40937111e-02,  3.84141952e-02,
+        8.12976435e-03, -1.91172242e-01, -1.02871172e-02, -4.07197094e-03,
+        7.46192262e-02, -3.19935799e-01, -2.98574328e-01, -3.39280427e-01,
+        1.35187497e-02, -4.83222790e-02, -2.79946774e-01,  6.00711554e-02,
+        6.61778972e-02, -3.49551663e-02, -2.97962986e-02,  7.41480151e-03,
+        8.99934545e-02, -2.32528523e-02,  2.63068154e-02,  1.51005257e-02,
+        6.42913952e-02,  8.45583454e-02,  1.19416639e-02,  3.28986019e-01,
+        3.62522542e-01,  1.18448484e+00,  3.81362379e-01,  3.25553209e-01,
+        8.30927491e-01,  9.19268310e-01,  4.81890589e-01,  1.02255039e-01,
+        2.22062785e-02,  1.30970508e-01,  1.08943291e-01,  5.68778738e-02,
+        5.12790084e-02,  6.51865155e-02,  4.24767919e-02,  3.99228603e-01,
+        1.39975831e-01, -3.71855684e-02,  1.68598250e-01,  9.50673446e-02,
+        9.28652361e-02,  1.63360432e-01,  1.32068515e-01,  2.66990691e-01,
+        2.76140273e-01, -5.63665144e-02,  1.04142614e-02,  1.97576240e-01,
+        1.46314263e-01,  2.89425012e-02,  7.77790174e-02,  3.22103240e-02,
+        3.76482382e-02,  6.45187870e-02,  1.92225203e-01,  2.42786035e-02,
+        5.64901158e-02, -3.14220898e-02,  8.11754446e-03, -9.05627459e-02,
+       -3.55454683e-02,  4.67419326e-02,  9.93798580e-03,  4.67778221e-02,
+       -5.64276427e-02,  2.12393235e-03, -4.42239903e-02,  9.57754999e-02,
+        2.26990087e-03,  8.63656588e-03, -2.53396053e-02,  7.75409713e-02,
+       -1.75106287e-01, -7.83250015e-03,  4.22128700e-02,  2.04121917e-02,
+       -7.67469630e-02, -6.42762892e-03,  2.81850304e-02, -1.41808754e-02,
+        1.68242566e-02,  2.48530470e-02,  1.70585997e-02,  1.55772651e-02,
+       -1.06817320e-01, -4.57438231e-02,  5.06782904e-02, -1.16893999e-01,
+       -2.35864166e-02,  1.59774348e-02, -1.67252943e-02,  3.67757380e-02,
+        7.10434886e-03,  2.14300081e-02,  1.69888046e-02,  4.80747893e-02,
+        2.95706671e-02, -2.59365775e-02,  2.51263119e-02, -7.35159367e-02,
+        1.50662353e-02,  2.08391957e-02,  5.05251512e-02,  1.75309461e-02,
+        3.30598205e-02,  3.59291248e-02, -3.77259627e-02,  8.37794915e-02,
+        4.57124040e-02, -1.19775809e-01, -1.05652034e-01, -1.46913216e-01,
+       -1.13367207e-01, -9.88529861e-01, -2.28490494e-02, -3.49691771e-02,
+        1.90288611e-02, -1.11495322e-02,  1.06053269e-02,  2.50781476e-01,
+        1.86878085e-01,  2.10171059e-01,  1.85643509e-01,  5.22627175e-01,
+        2.42301691e-02,  4.50227596e-02, -6.26183301e-02,  8.52002529e-04,
+       -3.09724752e-02, -2.29985779e-03, -2.01123692e-02,  2.53426526e-02,
+        2.61291955e-03, -1.74626857e-02,  5.31082079e-02,  2.87103392e-02,
+        1.68782860e-01,  7.68487602e-02,  3.76382768e-02,  4.75304611e-02,
+        5.60142100e-02, -9.20729339e-02,  3.32710184e-02, -3.59554728e-03,
+        3.65587831e-01,  2.58717149e-01,  3.80187958e-01,  2.53937811e-01,
+       -8.25233042e-01, -2.43122548e-01, -2.75448948e-01, -3.26029062e-01,
+       -2.27826431e-01, -2.95221210e-01, -2.77001977e-01, -3.18350911e-01,
+       -2.58732647e-01, -1.73901498e-01, -1.66774258e-01, -1.85379952e-01,
+       -1.54194295e-01, -1.63203344e-01, -9.41686779e-02, -2.49068424e-01,
+       -1.52242139e-01, -7.64475644e-01, -1.88017070e-01, -1.18499182e-01,
+        1.95164960e-02, -1.57805048e-02, -1.44859182e-03, -3.16703469e-02,
+        7.80054107e-02, -4.59375754e-02, -7.00311661e-02,  8.77441466e-02,
+       -2.17757877e-02, -5.31938076e-02, -3.68241705e-02, -3.45094204e-02,
+       -3.46969031e-02,  1.07945390e-01,  5.24268709e-02,  2.18863152e-02,
+        4.41456847e-02, -1.66289583e-02, -3.31991315e-02, -2.42033303e-02,
+        2.06140131e-02,  5.92985749e-02,  4.04861197e-02, -6.89131692e-02,
+       -3.79466355e-01,  3.11340481e-01,  5.22454008e-02,  2.66035218e-02,
+        3.27593554e-03,  1.14563396e-02, -3.00102960e-02,  5.54392161e-03,
+        1.06984330e-02, -1.40042102e-04, -4.06896397e-02,  7.68903345e-02,
+       -8.65998685e-01, -3.27539747e-03,  7.31690554e-03, -1.10179513e-04,
+       -1.23348549e-01, -7.33121634e-02, -1.77585855e-01, -5.34582436e-02,
+       -4.23899963e-02, -2.51932442e-02, -3.80535312e-02, -1.74567014e-01,
+       -3.37484181e-02, -5.09479567e-02, -2.11385936e-02, -4.29499224e-02,
+       -3.73158827e-02, -1.97239202e-02, -3.52846645e-02, -3.32694761e-02,
+       -1.71777885e-02, -3.47495191e-02, -3.46605219e-02, -3.27252708e-02,
+       -2.06552017e-02, -3.19078192e-02,  2.25974191e-02,  4.26351801e-02,
+       -3.16281728e-02, -3.17109353e-03, -4.42894467e-04, -4.16499609e-03,
+        3.13823000e-02, -3.20738330e-02, -3.78317907e-02,  3.03490530e-03,
+       -2.28208452e-02, -4.35340218e-02, -8.15364905e-03, -2.02255957e-02,
+       -1.16833793e-02, -2.90577672e-02, -1.80769656e-02,  1.24276290e-03,
+       -1.11271385e-02,  1.55074522e-02, -3.62051725e-02,  6.98247971e-03,
+       -8.44282564e-03, -1.33041153e-02, -1.74810905e-02, -2.09609931e-03,
+       -2.92523392e-02, -1.64475050e-02, -6.52578240e-03, -2.78042518e-02,
+        1.41307944e-02,  1.33267604e-02,  1.41624026e-02,  1.04769403e-02,
+        1.60487387e-02, -1.37849606e-03, -1.42336264e-01,  5.52855730e-02,
+        6.91997726e-03, -6.35257456e-04,  1.28423469e-02,  2.95808222e-02,
+        2.89895907e-02,  5.22111468e-02,  1.76341161e-02,  1.37884552e-02,
+        1.80991367e-02, -1.02851745e-02, -3.58738098e-03, -2.97403783e-02,
+       -2.54392698e-02,  5.49956411e-02,  3.14209014e-02,  8.49668682e-03,
+       -3.23337433e-03,  3.28847440e-03,  3.49005833e-02, -5.77099137e-02,
+       -4.91137290e-03,  1.51289981e-02,  2.38352213e-02,  2.28496715e-02,
+        6.84963726e-03, -1.57683492e-01,  1.64593067e-02,  5.98986857e-02,
+        8.06248263e-02,  5.66761270e-02,  3.02660037e-02,  4.60450016e-02,
+        5.38088977e-02,  5.30105717e-02, -3.12497653e-02, -4.34448570e-02,
+       -5.94703220e-02, -2.94320495e-03,  9.95857567e-02,  7.67013207e-02,
+        3.34176533e-02, -5.78559004e-02,  5.46978600e-02,  1.67007614e-02,
+        3.20425965e-02, -2.87197856e-03,  8.31554830e-03,  2.90959477e-02,
+        4.11548354e-02, -1.17467530e-02,  7.91410264e-03,  2.12079845e-03,
+       -8.87526348e-02, -2.88559608e-02, -5.18605560e-02,  3.52615714e-02,
+       -3.03217042e-02, -1.00138329e-01,  5.68020493e-02, -8.27707648e-02,
+       -1.09610260e+00, -1.60674906e+00, -1.59743893e+00, -1.08611202e+00,
+       -2.46564567e-01, -4.04957905e-02, -2.35028267e-02, -6.59085587e-02,
+       -9.76219475e-02, -2.24538267e-01, -5.08001111e-02, -1.65132955e-01,
+       -3.91862869e-01, -4.66887616e-02, -3.33256237e-02, -9.87499580e-02,
+       -8.39682892e-02, -2.59856015e-01], dtype=float32)
+
+.base_values =
+array([22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942], dtype=float32)
+
+.data =
+array([ 2.31,  7.07,  7.07,  2.18,  2.18,  2.18,  7.87,  7.87,  7.87,
+        7.87,  7.87,  7.87,  7.87,  8.14,  8.14,  8.14,  8.14,  8.14,
+        8.14,  8.14,  8.14,  8.14,  8.14,  8.14,  8.14,  8.14,  8.14,
+        8.14,  8.14,  8.14,  8.14,  8.14,  8.14,  8.14,  8.14,  5.96,
+        5.96,  5.96,  5.96,  2.95,  2.95,  6.91,  6.91,  6.91,  6.91,
+        6.91,  6.91,  6.91,  6.91,  6.91,  5.64,  5.64,  5.64,  5.64,
+        4.  ,  1.22,  0.74,  1.32,  5.13,  5.13,  5.13,  5.13,  5.13,
+        5.13,  1.38,  3.37,  3.37,  6.07,  6.07,  6.07, 10.81, 10.81,
+       10.81, 10.81, 12.83, 12.83, 12.83, 12.83, 12.83, 12.83,  4.86,
+        4.86,  4.86,  4.86,  4.49,  4.49,  4.49,  4.49,  3.41,  3.41,
+        3.41,  3.41, 15.04, 15.04, 15.04,  2.89,  2.89,  2.89,  2.89,
+        2.89,  8.56,  8.56,  8.56,  8.56,  8.56,  8.56,  8.56,  8.56,
+        8.56,  8.56,  8.56, 10.01, 10.01, 10.01, 10.01, 10.01, 10.01,
+       10.01, 10.01, 10.01, 25.65, 25.65, 25.65, 25.65, 25.65, 25.65,
+       25.65, 21.89, 21.89, 21.89, 21.89, 21.89, 21.89, 21.89, 21.89,
+       21.89, 21.89, 21.89, 21.89, 21.89, 21.89, 21.89, 19.58, 19.58,
+       19.58, 19.58, 19.58, 19.58, 19.58, 19.58, 19.58, 19.58, 19.58,
+       19.58, 19.58, 19.58, 19.58, 19.58, 19.58, 19.58, 19.58, 19.58,
+       19.58, 19.58, 19.58, 19.58, 19.58, 19.58, 19.58, 19.58, 19.58,
+       19.58,  4.05,  4.05,  4.05,  4.05,  4.05,  4.05,  4.05,  2.46,
+        2.46,  2.46,  2.46,  2.46,  2.46,  2.46,  2.46,  3.44,  3.44,
+        3.44,  3.44,  3.44,  3.44,  2.93,  2.93,  0.46,  1.52,  1.52,
+        1.52,  1.47,  1.47,  2.03,  2.03,  2.68,  2.68, 10.59, 10.59,
+       10.59, 10.59, 10.59, 10.59, 10.59, 10.59, 10.59, 10.59, 10.59,
+       13.89, 13.89, 13.89, 13.89,  6.2 ,  6.2 ,  6.2 ,  6.2 ,  6.2 ,
+        6.2 ,  6.2 ,  6.2 ,  6.2 ,  6.2 ,  6.2 ,  6.2 ,  6.2 ,  6.2 ,
+        6.2 ,  6.2 ,  6.2 ,  6.2 ,  4.93,  4.93,  4.93,  4.93,  4.93,
+        4.93,  5.86,  5.86,  5.86,  5.86,  5.86,  5.86,  5.86,  5.86,
+        5.86,  5.86,  3.64,  3.64,  3.75,  3.97,  3.97,  3.97,  3.97,
+        3.97,  3.97,  3.97,  3.97,  3.97,  3.97,  3.97,  3.97,  6.96,
+        6.96,  6.96,  6.96,  6.96,  6.41,  6.41,  6.41,  6.41,  6.41,
+        3.33,  3.33,  3.33,  3.33,  1.21,  2.97,  2.25,  1.76,  5.32,
+        5.32,  5.32,  4.95,  4.95,  4.95, 13.92, 13.92, 13.92, 13.92,
+       13.92,  2.24,  2.24,  2.24,  6.09,  6.09,  6.09,  2.18,  2.18,
+        2.18,  2.18,  9.9 ,  9.9 ,  9.9 ,  9.9 ,  9.9 ,  9.9 ,  9.9 ,
+        9.9 ,  9.9 ,  9.9 ,  9.9 ,  9.9 ,  7.38,  7.38,  7.38,  7.38,
+        7.38,  7.38,  7.38,  7.38,  3.24,  3.24,  3.24,  6.06,  6.06,
+        5.19,  5.19,  5.19,  5.19,  5.19,  5.19,  5.19,  5.19,  1.52,
+        1.89,  3.78,  3.78,  4.39,  4.39,  4.15,  2.01,  1.25,  1.25,
+        1.69,  1.69,  2.02,  1.91,  1.91, 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 , 18.1 ,
+       18.1 , 18.1 , 27.74, 27.74, 27.74, 27.74, 27.74,  9.69,  9.69,
+        9.69,  9.69,  9.69,  9.69,  9.69,  9.69, 11.93, 11.93, 11.93,
+       11.93, 11.93])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapValue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.values =
+array([-4.2850167e-01, -6.6636719e-02,  7.7860229e-02, -1.5295845e-03,
+       -7.2922713e-01, -2.1700280e+00,  1.9213372e-01, -4.1425934e-01,
+       -4.9156108e-01, -4.7296646e-01,  2.5669456e-01, -5.3907130e-02,
+        5.7883248e+00], dtype=float32)
+
+.base_values =
+22.532942
+
+.data =
+array([6.320e-03, 1.800e+01, 2.310e+00, 0.000e+00, 5.380e-01, 6.575e+00,
+       6.520e+01, 4.090e+00, 1.000e+00, 2.960e+02, 1.530e+01, 3.969e+02,
+       4.980e+00])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapValue</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(506, 13)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapValue</span><span class="o">.</span><span class="n">base_values</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(506,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapValue</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(506, 13)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapValue</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.values =
+array([[-4.28501666e-01, -6.66367188e-02,  7.78602287e-02, ...,
+         2.56694555e-01, -5.39071299e-02,  5.78832483e+00],
+       [-1.59477890e-01, -3.92092764e-02, -9.65500847e-02, ...,
+         4.60188717e-01,  1.29054254e-03,  1.54787719e+00],
+       [-6.22594878e-02, -3.92413028e-02, -1.63524270e-01, ...,
+         3.61137800e-02,  2.09844872e-01,  7.91517401e+00],
+       ...,
+       [-3.46925646e-01, -1.13532774e-03, -9.87499580e-02, ...,
+        -2.10595775e+00, -8.69371593e-02,  2.02094817e+00],
+       [ 3.54982555e-01, -1.44685265e-02, -8.39682892e-02, ...,
+        -1.67015433e+00,  9.48226675e-02,  2.35491967e+00],
+       [-9.26840603e-01, -2.58212350e-03, -2.59856015e-01, ...,
+        -1.92664945e+00, -3.10639203e-01,  6.63177595e-02]], dtype=float32)
+
+.base_values =
+array([22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942, 22.532942, 22.532942, 22.532942, 22.532942,
+       22.532942, 22.532942], dtype=float32)
+
+.data =
+array([[6.3200e-03, 1.8000e+01, 2.3100e+00, ..., 1.5300e+01, 3.9690e+02,
+        4.9800e+00],
+       [2.7310e-02, 0.0000e+00, 7.0700e+00, ..., 1.7800e+01, 3.9690e+02,
+        9.1400e+00],
+       [2.7290e-02, 0.0000e+00, 7.0700e+00, ..., 1.7800e+01, 3.9283e+02,
+        4.0300e+00],
+       ...,
+       [6.0760e-02, 0.0000e+00, 1.1930e+01, ..., 2.1000e+01, 3.9690e+02,
+        5.6400e+00],
+       [1.0959e-01, 0.0000e+00, 1.1930e+01, ..., 2.1000e+01, 3.9345e+02,
+        6.4800e+00],
+       [4.7410e-02, 0.0000e+00, 1.1930e+01, ..., 2.1000e+01, 3.9690e+02,
+        7.8800e+00]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">partial_dependence_plot</span><span class="p">(</span><span class="s1">&#39;lstat&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span> <span class="n">shap</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">ice</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_5_0.png" src="../_images/shap-model-interpretation_5_0.png" />
+<img alt="../_images/shap-model-interpretation_13_0.png" src="../_images/shap-model-interpretation_13_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -870,8 +1579,8 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 </div>
-<section id="feature-importanc">
-<h2>Feature importanc<a class="headerlink" href="#feature-importanc" title="Permalink to this headline">#</a></h2>
+<section id="feature-importances">
+<h4>Feature importances<a class="headerlink" href="#feature-importances" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># summarize the effects of all the features</span>
@@ -880,7 +1589,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_8_0.png" src="../_images/shap-model-interpretation_8_0.png" />
+<img alt="../_images/shap-model-interpretation_16_0.png" src="../_images/shap-model-interpretation_16_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -939,7 +1648,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_11_0.png" src="../_images/shap-model-interpretation_11_0.png" />
+<img alt="../_images/shap-model-interpretation_19_0.png" src="../_images/shap-model-interpretation_19_0.png" />
 </div>
 </div>
 <p>The plot above sorts features by the sum of SHAP value magnitudes over all samples, and uses SHAP values to show the distribution of the impacts each feature has on the model output. The color represents the feature value (red high, blue low). This reveals for example that a high LSTAT (% lower status of the population) lowers the predicted home price.</p>
@@ -951,12 +1660,12 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_13_0.png" src="../_images/shap-model-interpretation_13_0.png" />
+<img alt="../_images/shap-model-interpretation_21_0.png" src="../_images/shap-model-interpretation_21_0.png" />
 </div>
 </div>
 </section>
-<section id="contributed-in-prediction">
-<h2>Contributed in prediction<a class="headerlink" href="#contributed-in-prediction" title="Permalink to this headline">#</a></h2>
+<section id="prediction-contribution">
+<h4>Prediction contribution<a class="headerlink" href="#prediction-contribution" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># visualize the first prediction&#39;s explanation</span>
@@ -965,7 +1674,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_15_0.png" src="../_images/shap-model-interpretation_15_0.png" />
+<img alt="../_images/shap-model-interpretation_23_0.png" src="../_images/shap-model-interpretation_23_0.png" />
 </div>
 </div>
 <p>Waterfall chart show the distributed of each feature to the prediction, features pushing the prediction higher are shown in red, lower are shown in blue. With base values of model is <span class="math notranslate nohighlight">\(E[f(X)]\)</span> and the prediction is <span class="math notranslate nohighlight">\(f(X)\)</span></p>
@@ -1019,7 +1728,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </section>
 <section id="dependence-plot">
-<h2>Dependence plot<a class="headerlink" href="#dependence-plot" title="Permalink to this headline">#</a></h2>
+<h4>Dependence plot<a class="headerlink" href="#dependence-plot" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a dependence scatter plot to show the effect of a single feature across the whole dataset</span>
@@ -1028,7 +1737,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_20_0.png" src="../_images/shap-model-interpretation_20_0.png" />
+<img alt="../_images/shap-model-interpretation_28_0.png" src="../_images/shap-model-interpretation_28_0.png" />
 </div>
 </div>
 <p>The chart above show that higher RM come with higher in house price prediction - especially with low RAD value, if RAD is high, RM has little effect on prediction</p>
@@ -1041,15 +1750,15 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_22_0.png" src="../_images/shap-model-interpretation_22_0.png" />
-<img alt="../_images/shap-model-interpretation_22_1.png" src="../_images/shap-model-interpretation_22_1.png" />
-<img alt="../_images/shap-model-interpretation_22_2.png" src="../_images/shap-model-interpretation_22_2.png" />
+<img alt="../_images/shap-model-interpretation_30_0.png" src="../_images/shap-model-interpretation_30_0.png" />
+<img alt="../_images/shap-model-interpretation_30_1.png" src="../_images/shap-model-interpretation_30_1.png" />
+<img alt="../_images/shap-model-interpretation_30_2.png" src="../_images/shap-model-interpretation_30_2.png" />
 </div>
 </div>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="kernelexplainer">
-<h1>2. KernelExplainer<a class="headerlink" href="#kernelexplainer" title="Permalink to this headline">#</a></h1>
+<section id="kernel-explainer">
+<h3>1.2. Kernel explainer<a class="headerlink" href="#kernel-explainer" title="Permalink to this headline">#</a></h3>
 <p>KernelExplainer works the same way with Explainer - it can explain any model output. Below is the example in classification problem</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1101,7 +1810,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/iris.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfIris</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span>
 <span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1131,7 +1840,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </script></div>
 </div>
 <section id="feature-importance">
-<h2>Feature importance<a class="headerlink" href="#feature-importance" title="Permalink to this headline">#</a></h2>
+<h4>Feature importance<a class="headerlink" href="#feature-importance" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for all instance</span>
@@ -1140,7 +1849,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_29_0.png" src="../_images/shap-model-interpretation_29_0.png" />
+<img alt="../_images/shap-model-interpretation_37_0.png" src="../_images/shap-model-interpretation_37_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1152,14 +1861,14 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_30_0.png" src="../_images/shap-model-interpretation_30_0.png" />
-<img alt="../_images/shap-model-interpretation_30_1.png" src="../_images/shap-model-interpretation_30_1.png" />
-<img alt="../_images/shap-model-interpretation_30_2.png" src="../_images/shap-model-interpretation_30_2.png" />
+<img alt="../_images/shap-model-interpretation_38_0.png" src="../_images/shap-model-interpretation_38_0.png" />
+<img alt="../_images/shap-model-interpretation_38_1.png" src="../_images/shap-model-interpretation_38_1.png" />
+<img alt="../_images/shap-model-interpretation_38_2.png" src="../_images/shap-model-interpretation_38_2.png" />
 </div>
 </div>
 </section>
 <section id="predict-contribution">
-<h2>Predict contribution<a class="headerlink" href="#predict-contribution" title="Permalink to this headline">#</a></h2>
+<h4>Predict contribution<a class="headerlink" href="#predict-contribution" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the SHAP values for the Setosa output of the first instance</span>
@@ -1248,7 +1957,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </section>
 <section id="id1">
-<h2>Dependence plot<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<h4>Dependence plot<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">dependence_plot</span><span class="p">(</span>
@@ -1259,7 +1968,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_37_0.png" src="../_images/shap-model-interpretation_37_0.png" />
+<img alt="../_images/shap-model-interpretation_45_0.png" src="../_images/shap-model-interpretation_45_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1272,90 +1981,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_38_0.png" src="../_images/shap-model-interpretation_38_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="n">shapValues</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;__add__&#39;,
- &#39;__class__&#39;,
- &#39;__copy__&#39;,
- &#39;__delattr__&#39;,
- &#39;__dict__&#39;,
- &#39;__dir__&#39;,
- &#39;__doc__&#39;,
- &#39;__eq__&#39;,
- &#39;__format__&#39;,
- &#39;__ge__&#39;,
- &#39;__getattribute__&#39;,
- &#39;__getitem__&#39;,
- &#39;__gt__&#39;,
- &#39;__hash__&#39;,
- &#39;__init__&#39;,
- &#39;__init_subclass__&#39;,
- &#39;__le__&#39;,
- &#39;__len__&#39;,
- &#39;__lt__&#39;,
- &#39;__module__&#39;,
- &#39;__mul__&#39;,
- &#39;__ne__&#39;,
- &#39;__new__&#39;,
- &#39;__radd__&#39;,
- &#39;__reduce__&#39;,
- &#39;__reduce_ex__&#39;,
- &#39;__repr__&#39;,
- &#39;__rmul__&#39;,
- &#39;__rsub__&#39;,
- &#39;__setattr__&#39;,
- &#39;__sizeof__&#39;,
- &#39;__str__&#39;,
- &#39;__sub__&#39;,
- &#39;__subclasshook__&#39;,
- &#39;__truediv__&#39;,
- &#39;__weakref__&#39;,
- &#39;_apply_binary_operator&#39;,
- &#39;_flatten_feature_names&#39;,
- &#39;_numpy_func&#39;,
- &#39;_s&#39;,
- &#39;_use_data_as_feature_names&#39;,
- &#39;abs&#39;,
- &#39;argsort&#39;,
- &#39;base_values&#39;,
- &#39;clustering&#39;,
- &#39;cohorts&#39;,
- &#39;compute_time&#39;,
- &#39;data&#39;,
- &#39;display_data&#39;,
- &#39;error_std&#39;,
- &#39;feature_names&#39;,
- &#39;flip&#39;,
- &#39;hclust&#39;,
- &#39;hierarchical_values&#39;,
- &#39;hstack&#39;,
- &#39;identity&#39;,
- &#39;instance_names&#39;,
- &#39;lower_bounds&#39;,
- &#39;main_effects&#39;,
- &#39;max&#39;,
- &#39;mean&#39;,
- &#39;min&#39;,
- &#39;op_history&#39;,
- &#39;output_dims&#39;,
- &#39;output_indexes&#39;,
- &#39;output_names&#39;,
- &#39;percentile&#39;,
- &#39;sample&#39;,
- &#39;shape&#39;,
- &#39;sum&#39;,
- &#39;upper_bounds&#39;,
- &#39;values&#39;]
-</pre></div>
-</div>
+<img alt="../_images/shap-model-interpretation_46_0.png" src="../_images/shap-model-interpretation_46_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1377,8 +2003,8 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="treeexplainer">
-<h1>3. TreeExplainer<a class="headerlink" href="#treeexplainer" title="Permalink to this headline">#</a></h1>
+<section id="tree-explainer">
+<h3>1.3. Tree explainer<a class="headerlink" href="#tree-explainer" title="Permalink to this headline">#</a></h3>
 <p>TreeExplainer is used for tree-based model. The functions used in TreeExplainer are the same as KernelExplainer. Below is the example in regression problem</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1427,7 +2053,7 @@ if("topMouseOut"!==t&&"topMouseOver"!==t)return null;var c;if(u.window===u)c=u;e
 n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"use strict";function r(t,e){"_hostNode"in t?void 0:c("33"),"_hostNode"in e?void 0:c("33");for(var n=0,r=t;r;r=r._hostParent)n++;for(var i=0,o=e;o;o=o._hostParent)i++;for(;n-i>0;)t=t._hostParent,n--;for(;i-n>0;)e=e._hostParent,i--;for(var a=n;a--;){if(t===e)return t;t=t._hostParent,e=e._hostParent}return null}function i(t,e){"_hostNode"in t?void 0:c("35"),"_hostNode"in e?void 0:c("35");for(;e;){if(e===t)return!0;e=e._hostParent}return!1}function o(t){return"_hostNode"in t?void 0:c("36"),t._hostParent}function a(t,e,n){for(var r=[];t;)r.push(t),t=t._hostParent;var i;for(i=r.length;i-- >0;)e(r[i],"captured",n);for(i=0;i<r.length;i++)e(r[i],"bubbled",n)}function u(t,e,n,i,o){for(var a=t&&e?r(t,e):null,u=[];t&&t!==a;)u.push(t),t=t._hostParent;for(var c=[];e&&e!==a;)c.push(e),e=e._hostParent;var s;for(s=0;s<u.length;s++)n(u[s],"bubbled",i);for(s=c.length;s-- >0;)n(c[s],"captured",o)}var c=n(2);n(0);t.exports={isAncestor:i,getLowestCommonAncestor:r,getParentInstance:o,traverseTwoPhase:a,traverseEnterLeave:u}},function(t,e,n){"use strict";function r(){this.reinitializeTransaction()}var i=n(3),o=n(11),a=n(53),u=n(8),c={initialize:u,close:function(){p.isBatchingUpdates=!1}},s={initialize:u,close:o.flushBatchedUpdates.bind(o)},l=[s,c];i(r.prototype,a,{getTransactionWrappers:function(){return l}});var f=new r,p={isBatchingUpdates:!1,batchedUpdates:function(t,e,n,r,i,o){var a=p.isBatchingUpdates;return p.isBatchingUpdates=!0,a?t(e,n,r,i,o):f.perform(t,null,e,n,r,i,o)}};t.exports=p},function(t,e,n){"use strict";function r(){C||(C=!0,y.EventEmitter.injectReactEventListener(m),y.EventPluginHub.injectEventPluginOrder(u),y.EventPluginUtils.injectComponentTree(p),y.EventPluginUtils.injectTreeTraversal(d),y.EventPluginHub.injectEventPluginsByName({SimpleEventPlugin:w,EnterLeaveEventPlugin:c,ChangeEventPlugin:a,SelectEventPlugin:x,BeforeInputEventPlugin:o}),y.HostComponent.injectGenericComponentClass(f),y.HostComponent.injectTextComponentClass(v),y.DOMProperty.injectDOMPropertyConfig(i),y.DOMProperty.injectDOMPropertyConfig(s),y.DOMProperty.injectDOMPropertyConfig(b),y.EmptyComponent.injectEmptyComponentFactory(function(t){return new h(t)}),y.Updates.injectReconcileTransaction(_),y.Updates.injectBatchingStrategy(g),y.Component.injectEnvironment(l))}var i=n(331),o=n(333),a=n(335),u=n(337),c=n(338),s=n(341),l=n(343),f=n(346),p=n(4),h=n(348),d=n(356),v=n(354),g=n(357),m=n(361),y=n(362),_=n(367),b=n(372),x=n(373),w=n(374),C=!1;t.exports={inject:r}},function(t,e,n){"use strict";var r="function"==typeof Symbol&&Symbol.for&&Symbol.for("react.element")||60103;t.exports=r},function(t,e,n){"use strict";function r(t){i.enqueueEvents(t),i.processEventQueue(!1)}var i=n(22),o={handleTopLevel:function(t,e,n,o){var a=i.extractEvents(t,e,n,o);r(a)}};t.exports=o},function(t,e,n){"use strict";function r(t){for(;t._hostParent;)t=t._hostParent;var e=f.getNodeFromInstance(t),n=e.parentNode;return f.getClosestInstanceFromNode(n)}function i(t,e){this.topLevelType=t,this.nativeEvent=e,this.ancestors=[]}function o(t){var e=h(t.nativeEvent),n=f.getClosestInstanceFromNode(e),i=n;do t.ancestors.push(i),i=i&&r(i);while(i);for(var o=0;o<t.ancestors.length;o++)n=t.ancestors[o],v._handleTopLevel(t.topLevelType,n,t.nativeEvent,h(t.nativeEvent))}function a(t){var e=d(window);t(e)}var u=n(3),c=n(150),s=n(6),l=n(17),f=n(4),p=n(11),h=n(93),d=n(324);u(i.prototype,{destructor:function(){this.topLevelType=null,this.nativeEvent=null,this.ancestors.length=0}}),l.addPoolingTo(i,l.twoArgumentPooler);var v={_enabled:!0,_handleTopLevel:null,WINDOW_HANDLE:s.canUseDOM?window:null,setHandleTopLevel:function(t){v._handleTopLevel=t},setEnabled:function(t){v._enabled=!!t},isEnabled:function(){return v._enabled},trapBubbledEvent:function(t,e,n){return n?c.listen(n,e,v.dispatchEvent.bind(null,t)):null},trapCapturedEvent:function(t,e,n){return n?c.capture(n,e,v.dispatchEvent.bind(null,t)):null},monitorScrollValue:function(t){var e=a.bind(null,t);c.listen(window,"scroll",e)},dispatchEvent:function(t,e){if(v._enabled){var n=i.getPooled(t,e);try{p.batchedUpdates(o,n)}finally{i.release(n)}}}};t.exports=v},function(t,e,n){"use strict";var r=n(21),i=n(22),o=n(50),a=n(86),u=n(159),c=n(51),s=n(161),l=n(11),f={Component:a.injection,DOMProperty:r.injection,EmptyComponent:u.injection,EventPluginHub:i.injection,EventPluginUtils:o.injection,EventEmitter:c.injection,HostComponent:s.injection,Updates:l.injection};t.exports=f},function(t,e,n){"use strict";var r=n(385),i=/\/?>/,o=/^<\!\-\-/,a={CHECKSUM_ATTR_NAME:"data-react-checksum",addChecksumToMarkup:function(t){var e=r(t);return o.test(t)?t:t.replace(i," "+a.CHECKSUM_ATTR_NAME+'="'+e+'"$&')},canReuseMarkup:function(t,e){var n=e.getAttribute(a.CHECKSUM_ATTR_NAME);n=n&&parseInt(n,10);var i=r(t);return i===n}};t.exports=a},function(t,e,n){"use strict";function r(t,e,n){return{type:"INSERT_MARKUP",content:t,fromIndex:null,fromNode:null,toIndex:n,afterNode:e}}function i(t,e,n){return{type:"MOVE_EXISTING",content:null,fromIndex:t._mountIndex,fromNode:p.getHostNode(t),toIndex:n,afterNode:e}}function o(t,e){return{type:"REMOVE_NODE",content:null,fromIndex:t._mountIndex,fromNode:e,toIndex:null,afterNode:null}}function a(t){return{type:"SET_MARKUP",content:t,fromIndex:null,fromNode:null,toIndex:null,afterNode:null}}function u(t){return{type:"TEXT_CONTENT",content:t,fromIndex:null,fromNode:null,toIndex:null,afterNode:null}}function c(t,e){return e&&(t=t||[],t.push(e)),t}function s(t,e){f.processChildrenUpdates(t,e)}var l=n(2),f=n(86),p=(n(40),n(9),n(15),n(24)),h=n(342),d=(n(8),n(388)),v=(n(0),{Mixin:{_reconcilerInstantiateChildren:function(t,e,n){return h.instantiateChildren(t,e,n)},_reconcilerUpdateChildren:function(t,e,n,r,i,o){var a,u=0;return a=d(e,u),h.updateChildren(t,a,n,r,i,this,this._hostContainerInfo,o,u),a},mountChildren:function(t,e,n){var r=this._reconcilerInstantiateChildren(t,e,n);this._renderedChildren=r;var i=[],o=0;for(var a in r)if(r.hasOwnProperty(a)){var u=r[a],c=0,s=p.mountComponent(u,e,this,this._hostContainerInfo,n,c);u._mountIndex=o++,i.push(s)}return i},updateTextContent:function(t){var e=this._renderedChildren;h.unmountChildren(e,!1);for(var n in e)e.hasOwnProperty(n)&&l("118");var r=[u(t)];s(this,r)},updateMarkup:function(t){var e=this._renderedChildren;h.unmountChildren(e,!1);for(var n in e)e.hasOwnProperty(n)&&l("118");var r=[a(t)];s(this,r)},updateChildren:function(t,e,n){this._updateChildren(t,e,n)},_updateChildren:function(t,e,n){var r=this._renderedChildren,i={},o=[],a=this._reconcilerUpdateChildren(r,t,o,i,e,n);if(a||r){var u,l=null,f=0,h=0,d=0,v=null;for(u in a)if(a.hasOwnProperty(u)){var g=r&&r[u],m=a[u];g===m?(l=c(l,this.moveChild(g,v,f,h)),h=Math.max(g._mountIndex,h),g._mountIndex=f):(g&&(h=Math.max(g._mountIndex,h)),l=c(l,this._mountChildAtIndex(m,o[d],v,f,e,n)),d++),f++,v=p.getHostNode(m)}for(u in i)i.hasOwnProperty(u)&&(l=c(l,this._unmountChild(r[u],i[u])));l&&s(this,l),this._renderedChildren=a}},unmountChildren:function(t){var e=this._renderedChildren;h.unmountChildren(e,t),this._renderedChildren=null},moveChild:function(t,e,n,r){if(t._mountIndex<r)return i(t,e,n)},createChild:function(t,e,n){return r(n,e,t._mountIndex)},removeChild:function(t,e){return o(t,e)},_mountChildAtIndex:function(t,e,n,r,i,o){return t._mountIndex=r,this.createChild(t,n,e)},_unmountChild:function(t,e){var n=this.removeChild(t,e);return t._mountIndex=null,n}}});t.exports=v},function(t,e,n){"use strict";function r(t){return!(!t||"function"!=typeof t.attachRef||"function"!=typeof t.detachRef)}var i=n(2),o=(n(0),{addComponentAsRefTo:function(t,e,n){r(n)?void 0:i("119"),n.attachRef(e,t)},removeComponentAsRefFrom:function(t,e,n){r(n)?void 0:i("120");var o=n.getPublicInstance();o&&o.refs[e]===t.getPublicInstance()&&n.detachRef(e)}});t.exports=o},function(t,e,n){"use strict";var r="SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";t.exports=r},function(t,e,n){"use strict";function r(t){this.reinitializeTransaction(),this.renderToStaticMarkup=!1,this.reactMountReady=o.getPooled(null),this.useCreateElement=t}var i=n(3),o=n(155),a=n(17),u=n(51),c=n(162),s=(n(9),n(53)),l=n(88),f={initialize:c.getSelectionInformation,close:c.restoreSelection},p={initialize:function(){var t=u.isEnabled();return u.setEnabled(!1),t},close:function(t){u.setEnabled(t)}},h={initialize:function(){this.reactMountReady.reset()},close:function(){this.reactMountReady.notifyAll()}},d=[f,p,h],v={getTransactionWrappers:function(){return d},getReactMountReady:function(){return this.reactMountReady},getUpdateQueue:function(){return l},checkpoint:function(){return this.reactMountReady.checkpoint()},rollback:function(t){this.reactMountReady.rollback(t)},destructor:function(){o.release(this.reactMountReady),this.reactMountReady=null}};i(r.prototype,s,v),a.addPoolingTo(r),t.exports=r},function(t,e,n){"use strict";function r(t,e,n){"function"==typeof t?t(e.getPublicInstance()):o.addComponentAsRefTo(e,t,n)}function i(t,e,n){"function"==typeof t?t(null):o.removeComponentAsRefFrom(e,t,n)}var o=n(365),a={};a.attachRefs=function(t,e){if(null!==e&&"object"==typeof e){var n=e.ref;null!=n&&r(n,t,e._owner)}},a.shouldUpdateRefs=function(t,e){var n=null,r=null;null!==t&&"object"==typeof t&&(n=t.ref,r=t._owner);var i=null,o=null;return null!==e&&"object"==typeof e&&(i=e.ref,o=e._owner),n!==i||"string"==typeof i&&o!==r},a.detachRefs=function(t,e){if(null!==e&&"object"==typeof e){var n=e.ref;null!=n&&i(n,t,e._owner)}},t.exports=a},function(t,e,n){"use strict";function r(t){this.reinitializeTransaction(),this.renderToStaticMarkup=t,this.useCreateElement=!1,this.updateQueue=new u(this)}var i=n(3),o=n(17),a=n(53),u=(n(9),n(370)),c=[],s={enqueue:function(){}},l={getTransactionWrappers:function(){return c},getReactMountReady:function(){return s},getUpdateQueue:function(){return this.updateQueue},destructor:function(){},checkpoint:function(){},rollback:function(){}};i(r.prototype,a,l),o.addPoolingTo(r),t.exports=r},function(t,e,n){"use strict";function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function i(t,e){}var o=n(88),a=(n(1),function(){function t(e){r(this,t),this.transaction=e}return t.prototype.isMounted=function(t){return!1},t.prototype.enqueueCallback=function(t,e,n){this.transaction.isInTransaction()&&o.enqueueCallback(t,e,n)},t.prototype.enqueueForceUpdate=function(t){this.transaction.isInTransaction()?o.enqueueForceUpdate(t):i(t,"forceUpdate")},t.prototype.enqueueReplaceState=function(t,e){this.transaction.isInTransaction()?o.enqueueReplaceState(t,e):i(t,"replaceState")},t.prototype.enqueueSetState=function(t,e){this.transaction.isInTransaction()?o.enqueueSetState(t,e):i(t,"setState")},t}());t.exports=a},function(t,e,n){"use strict";t.exports="15.4.2"},function(t,e,n){"use strict";var r={xlink:"http://www.w3.org/1999/xlink",xml:"http://www.w3.org/XML/1998/namespace"},i={accentHeight:"accent-height",accumulate:0,additive:0,alignmentBaseline:"alignment-baseline",allowReorder:"allowReorder",alphabetic:0,amplitude:0,arabicForm:"arabic-form",ascent:0,attributeName:"attributeName",attributeType:"attributeType",autoReverse:"autoReverse",azimuth:0,baseFrequency:"baseFrequency",baseProfile:"baseProfile",baselineShift:"baseline-shift",bbox:0,begin:0,bias:0,by:0,calcMode:"calcMode",capHeight:"cap-height",clip:0,clipPath:"clip-path",clipRule:"clip-rule",clipPathUnits:"clipPathUnits",colorInterpolation:"color-interpolation",colorInterpolationFilters:"color-interpolation-filters",colorProfile:"color-profile",colorRendering:"color-rendering",contentScriptType:"contentScriptType",contentStyleType:"contentStyleType",cursor:0,cx:0,cy:0,d:0,decelerate:0,descent:0,diffuseConstant:"diffuseConstant",direction:0,display:0,divisor:0,dominantBaseline:"dominant-baseline",dur:0,dx:0,dy:0,edgeMode:"edgeMode",elevation:0,enableBackground:"enable-background",end:0,exponent:0,externalResourcesRequired:"externalResourcesRequired",fill:0,fillOpacity:"fill-opacity",fillRule:"fill-rule",filter:0,filterRes:"filterRes",filterUnits:"filterUnits",floodColor:"flood-color",floodOpacity:"flood-opacity",focusable:0,fontFamily:"font-family",fontSize:"font-size",fontSizeAdjust:"font-size-adjust",fontStretch:"font-stretch",fontStyle:"font-style",fontVariant:"font-variant",fontWeight:"font-weight",format:0,from:0,fx:0,fy:0,g1:0,g2:0,glyphName:"glyph-name",glyphOrientationHorizontal:"glyph-orientation-horizontal",glyphOrientationVertical:"glyph-orientation-vertical",glyphRef:"glyphRef",gradientTransform:"gradientTransform",gradientUnits:"gradientUnits",hanging:0,horizAdvX:"horiz-adv-x",horizOriginX:"horiz-origin-x",ideographic:0,imageRendering:"image-rendering",in:0,in2:0,intercept:0,k:0,k1:0,k2:0,k3:0,k4:0,kernelMatrix:"kernelMatrix",kernelUnitLength:"kernelUnitLength",kerning:0,keyPoints:"keyPoints",keySplines:"keySplines",keyTimes:"keyTimes",lengthAdjust:"lengthAdjust",letterSpacing:"letter-spacing",lightingColor:"lighting-color",limitingConeAngle:"limitingConeAngle",local:0,markerEnd:"marker-end",markerMid:"marker-mid",markerStart:"marker-start",markerHeight:"markerHeight",markerUnits:"markerUnits",markerWidth:"markerWidth",mask:0,maskContentUnits:"maskContentUnits",maskUnits:"maskUnits",mathematical:0,mode:0,numOctaves:"numOctaves",offset:0,opacity:0,operator:0,order:0,orient:0,orientation:0,origin:0,overflow:0,overlinePosition:"overline-position",overlineThickness:"overline-thickness",paintOrder:"paint-order",panose1:"panose-1",pathLength:"pathLength",patternContentUnits:"patternContentUnits",patternTransform:"patternTransform",patternUnits:"patternUnits",pointerEvents:"pointer-events",points:0,pointsAtX:"pointsAtX",pointsAtY:"pointsAtY",pointsAtZ:"pointsAtZ",preserveAlpha:"preserveAlpha",preserveAspectRatio:"preserveAspectRatio",primitiveUnits:"primitiveUnits",r:0,radius:0,refX:"refX",refY:"refY",renderingIntent:"rendering-intent",repeatCount:"repeatCount",repeatDur:"repeatDur",requiredExtensions:"requiredExtensions",requiredFeatures:"requiredFeatures",restart:0,result:0,rotate:0,rx:0,ry:0,scale:0,seed:0,shapeRendering:"shape-rendering",slope:0,spacing:0,specularConstant:"specularConstant",specularExponent:"specularExponent",speed:0,spreadMethod:"spreadMethod",startOffset:"startOffset",stdDeviation:"stdDeviation",stemh:0,stemv:0,stitchTiles:"stitchTiles",stopColor:"stop-color",stopOpacity:"stop-opacity",strikethroughPosition:"strikethrough-position",strikethroughThickness:"strikethrough-thickness",string:0,stroke:0,strokeDasharray:"stroke-dasharray",strokeDashoffset:"stroke-dashoffset",strokeLinecap:"stroke-linecap",strokeLinejoin:"stroke-linejoin",strokeMiterlimit:"stroke-miterlimit",strokeOpacity:"stroke-opacity",strokeWidth:"stroke-width",surfaceScale:"surfaceScale",systemLanguage:"systemLanguage",tableValues:"tableValues",targetX:"targetX",targetY:"targetY",textAnchor:"text-anchor",textDecoration:"text-decoration",textRendering:"text-rendering",textLength:"textLength",to:0,transform:0,u1:0,u2:0,underlinePosition:"underline-position",underlineThickness:"underline-thickness",unicode:0,unicodeBidi:"unicode-bidi",unicodeRange:"unicode-range",unitsPerEm:"units-per-em",vAlphabetic:"v-alphabetic",vHanging:"v-hanging",vIdeographic:"v-ideographic",vMathematical:"v-mathematical",values:0,vectorEffect:"vector-effect",version:0,vertAdvY:"vert-adv-y",vertOriginX:"vert-origin-x",vertOriginY:"vert-origin-y",viewBox:"viewBox",viewTarget:"viewTarget",visibility:0,widths:0,wordSpacing:"word-spacing",writingMode:"writing-mode",x:0,xHeight:"x-height",x1:0,x2:0,xChannelSelector:"xChannelSelector",xlinkActuate:"xlink:actuate",xlinkArcrole:"xlink:arcrole",xlinkHref:"xlink:href",xlinkRole:"xlink:role",xlinkShow:"xlink:show",xlinkTitle:"xlink:title",xlinkType:"xlink:type",xmlBase:"xml:base",xmlns:0,xmlnsXlink:"xmlns:xlink",xmlLang:"xml:lang",xmlSpace:"xml:space",y:0,y1:0,y2:0,yChannelSelector:"yChannelSelector",z:0,zoomAndPan:"zoomAndPan"},o={Properties:{},DOMAttributeNamespaces:{xlinkActuate:r.xlink,xlinkArcrole:r.xlink,xlinkHref:r.xlink,xlinkRole:r.xlink,xlinkShow:r.xlink,xlinkTitle:r.xlink,xlinkType:r.xlink,xmlBase:r.xml,xmlLang:r.xml,xmlSpace:r.xml},DOMAttributeNames:{}};Object.keys(i).forEach(function(t){o.Properties[t]=0,i[t]&&(o.DOMAttributeNames[t]=i[t])}),t.exports=o},function(t,e,n){"use strict";function r(t){if("selectionStart"in t&&c.hasSelectionCapabilities(t))return{start:t.selectionStart,end:t.selectionEnd};if(window.getSelection){var e=window.getSelection();return{anchorNode:e.anchorNode,anchorOffset:e.anchorOffset,focusNode:e.focusNode,focusOffset:e.focusOffset}}if(document.selection){var n=document.selection.createRange();return{parentElement:n.parentElement(),text:n.text,top:n.boundingTop,left:n.boundingLeft}}}function i(t,e){if(y||null==v||v!==l())return null;var n=r(v);if(!m||!p(m,n)){m=n;var i=s.getPooled(d.select,g,t,e);return i.type="select",i.target=v,o.accumulateTwoPhaseDispatches(i),i}return null}var o=n(23),a=n(6),u=n(4),c=n(162),s=n(14),l=n(152),f=n(170),p=n(80),h=a.canUseDOM&&"documentMode"in document&&document.documentMode<=11,d={select:{phasedRegistrationNames:{bubbled:"onSelect",captured:"onSelectCapture"},dependencies:["topBlur","topContextMenu","topFocus","topKeyDown","topKeyUp","topMouseDown","topMouseUp","topSelectionChange"]}},v=null,g=null,m=null,y=!1,_=!1,b={eventTypes:d,extractEvents:function(t,e,n,r){if(!_)return null;var o=e?u.getNodeFromInstance(e):window;switch(t){case"topFocus":(f(o)||"true"===o.contentEditable)&&(v=o,g=e,m=null);break;case"topBlur":v=null,g=null,m=null;break;case"topMouseDown":y=!0;break;case"topContextMenu":case"topMouseUp":return y=!1,i(n,r);case"topSelectionChange":if(h)break;case"topKeyDown":case"topKeyUp":return i(n,r)}return null},didPutListener:function(t,e,n){"onSelect"===e&&(_=!0)}};t.exports=b},function(t,e,n){"use strict";function r(t){return"."+t._rootNodeID}function i(t){return"button"===t||"input"===t||"select"===t||"textarea"===t}var o=n(2),a=n(150),u=n(23),c=n(4),s=n(375),l=n(376),f=n(14),p=n(379),h=n(381),d=n(52),v=n(378),g=n(382),m=n(383),y=n(25),_=n(384),b=n(8),x=n(91),w=(n(0),{}),C={};["abort","animationEnd","animationIteration","animationStart","blur","canPlay","canPlayThrough","click","contextMenu","copy","cut","doubleClick","drag","dragEnd","dragEnter","dragExit","dragLeave","dragOver","dragStart","drop","durationChange","emptied","encrypted","ended","error","focus","input","invalid","keyDown","keyPress","keyUp","load","loadedData","loadedMetadata","loadStart","mouseDown","mouseMove","mouseOut","mouseOver","mouseUp","paste","pause","play","playing","progress","rateChange","reset","scroll","seeked","seeking","stalled","submit","suspend","timeUpdate","touchCancel","touchEnd","touchMove","touchStart","transitionEnd","volumeChange","waiting","wheel"].forEach(function(t){var e=t[0].toUpperCase()+t.slice(1),n="on"+e,r="top"+e,i={phasedRegistrationNames:{bubbled:n,captured:n+"Capture"},dependencies:[r]};w[t]=i,C[r]=i});var M={},k={eventTypes:w,extractEvents:function(t,e,n,r){var i=C[t];if(!i)return null;var a;switch(t){case"topAbort":case"topCanPlay":case"topCanPlayThrough":case"topDurationChange":case"topEmptied":case"topEncrypted":case"topEnded":case"topError":case"topInput":case"topInvalid":case"topLoad":case"topLoadedData":case"topLoadedMetadata":case"topLoadStart":case"topPause":case"topPlay":case"topPlaying":case"topProgress":case"topRateChange":case"topReset":case"topSeeked":case"topSeeking":case"topStalled":case"topSubmit":case"topSuspend":case"topTimeUpdate":case"topVolumeChange":case"topWaiting":a=f;break;case"topKeyPress":if(0===x(n))return null;case"topKeyDown":case"topKeyUp":a=h;break;case"topBlur":case"topFocus":a=p;break;case"topClick":if(2===n.button)return null;case"topDoubleClick":case"topMouseDown":case"topMouseMove":case"topMouseUp":case"topMouseOut":case"topMouseOver":case"topContextMenu":a=d;break;case"topDrag":case"topDragEnd":case"topDragEnter":case"topDragExit":case"topDragLeave":case"topDragOver":case"topDragStart":case"topDrop":a=v;break;case"topTouchCancel":case"topTouchEnd":case"topTouchMove":case"topTouchStart":a=g;break;case"topAnimationEnd":case"topAnimationIteration":case"topAnimationStart":a=s;break;case"topTransitionEnd":a=m;break;case"topScroll":a=y;break;case"topWheel":a=_;break;case"topCopy":case"topCut":case"topPaste":a=l}a?void 0:o("86",t);var c=a.getPooled(i,e,n,r);return u.accumulateTwoPhaseDispatches(c),c},didPutListener:function(t,e,n){if("onClick"===e&&!i(t._tag)){var o=r(t),u=c.getNodeFromInstance(t);M[o]||(M[o]=a.listen(u,"click",b))}},willDeleteListener:function(t,e){if("onClick"===e&&!i(t._tag)){var n=r(t);M[n].remove(),delete M[n]}}};t.exports=k},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(14),o={animationName:null,elapsedTime:null,pseudoElement:null};i.augmentClass(r,o),t.exports=r},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(14),o={clipboardData:function(t){return"clipboardData"in t?t.clipboardData:window.clipboardData}};i.augmentClass(r,o),t.exports=r},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(14),o={data:null};i.augmentClass(r,o),t.exports=r},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(52),o={dataTransfer:null};i.augmentClass(r,o),t.exports=r},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(25),o={relatedTarget:null};i.augmentClass(r,o),t.exports=r},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(14),o={data:null};i.augmentClass(r,o),t.exports=r},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(25),o=n(91),a=n(389),u=n(92),c={key:a,location:null,ctrlKey:null,shiftKey:null,altKey:null,metaKey:null,repeat:null,locale:null,getModifierState:u,charCode:function(t){return"keypress"===t.type?o(t):0},keyCode:function(t){return"keydown"===t.type||"keyup"===t.type?t.keyCode:0},which:function(t){return"keypress"===t.type?o(t):"keydown"===t.type||"keyup"===t.type?t.keyCode:0}};i.augmentClass(r,c),t.exports=r},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(25),o=n(92),a={touches:null,targetTouches:null,changedTouches:null,altKey:null,metaKey:null,ctrlKey:null,shiftKey:null,getModifierState:o};i.augmentClass(r,a),t.exports=r},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(14),o={propertyName:null,elapsedTime:null,pseudoElement:null};i.augmentClass(r,o),t.exports=r},function(t,e,n){"use strict";function r(t,e,n,r){return i.call(this,t,e,n,r)}var i=n(52),o={deltaX:function(t){return"deltaX"in t?t.deltaX:"wheelDeltaX"in t?-t.wheelDeltaX:0},deltaY:function(t){return"deltaY"in t?t.deltaY:"wheelDeltaY"in t?-t.wheelDeltaY:"wheelDelta"in t?-t.wheelDelta:0},deltaZ:null,deltaMode:null};i.augmentClass(r,o),t.exports=r},function(t,e,n){"use strict";function r(t){for(var e=1,n=0,r=0,o=t.length,a=o&-4;r<a;){for(var u=Math.min(r+4096,a);r<u;r+=4)n+=(e+=t.charCodeAt(r))+(e+=t.charCodeAt(r+1))+(e+=t.charCodeAt(r+2))+(e+=t.charCodeAt(r+3));e%=i,n%=i}for(;r<o;r++)n+=e+=t.charCodeAt(r);return e%=i,n%=i,e|n<<16}var i=65521;t.exports=r},function(t,e,n){"use strict";function r(t,e,n){var r=null==e||"boolean"==typeof e||""===e;if(r)return"";var i=isNaN(e);if(i||0===e||o.hasOwnProperty(t)&&o[t])return""+e;if("string"==typeof e){e=e.trim()}return e+"px"}var i=n(154),o=(n(1),i.isUnitlessNumber);t.exports=r},function(t,e,n){"use strict";function r(t){if(null==t)return null;if(1===t.nodeType)return t;var e=a.get(t);return e?(e=u(e),e?o.getNodeFromInstance(e):null):void("function"==typeof t.render?i("44"):i("45",Object.keys(t)))}var i=n(2),o=(n(15),n(4)),a=n(40),u=n(167);n(0),n(1);t.exports=r},function(t,e,n){"use strict";(function(e){function r(t,e,n,r){if(t&&"object"==typeof t){var i=t,o=void 0===i[n];o&&null!=e&&(i[n]=e)}}function i(t,e){if(null==t)return t;var n={};return o(t,r,n),n}var o=(n(84),n(172));n(1);"undefined"!=typeof e&&e.env,1,t.exports=i}).call(e,n(153))},function(t,e,n){"use strict";function r(t){if(t.key){var e=o[t.key]||t.key;if("Unidentified"!==e)return e}if("keypress"===t.type){var n=i(t);return 13===n?"Enter":String.fromCharCode(n)}return"keydown"===t.type||"keyup"===t.type?a[t.keyCode]||"Unidentified":""}var i=n(91),o={Esc:"Escape",Spacebar:" ",Left:"ArrowLeft",Up:"ArrowUp",Right:"ArrowRight",Down:"ArrowDown",Del:"Delete",Win:"OS",Menu:"ContextMenu",Apps:"ContextMenu",Scroll:"ScrollLock",MozPrintableKey:"Unidentified"},a={8:"Backspace",9:"Tab",12:"Clear",13:"Enter",16:"Shift",17:"Control",18:"Alt",19:"Pause",20:"CapsLock",27:"Escape",32:" ",33:"PageUp",34:"PageDown",35:"End",36:"Home",37:"ArrowLeft",38:"ArrowUp",39:"ArrowRight",40:"ArrowDown",45:"Insert",46:"Delete",112:"F1",113:"F2",114:"F3",115:"F4",116:"F5",117:"F6",118:"F7",119:"F8",120:"F9",121:"F10",122:"F11",123:"F12",144:"NumLock",145:"ScrollLock",224:"Meta"};t.exports=r},function(t,e,n){"use strict";function r(t){var e=t&&(i&&t[i]||t[o]);if("function"==typeof e)return e}var i="function"==typeof Symbol&&Symbol.iterator,o="@@iterator";t.exports=r},function(t,e,n){"use strict";function r(){return i++}var i=1;t.exports=r},function(t,e,n){"use strict";function r(t){for(;t&&t.firstChild;)t=t.firstChild;return t}function i(t){for(;t;){if(t.nextSibling)return t.nextSibling;t=t.parentNode}}function o(t,e){for(var n=r(t),o=0,a=0;n;){if(3===n.nodeType){if(a=o+n.textContent.length,o<=e&&a>=e)return{node:n,offset:e-o};o=a}n=r(i(n))}}t.exports=o},function(t,e,n){"use strict";function r(t,e){var n={};return n[t.toLowerCase()]=e.toLowerCase(),n["Webkit"+t]="webkit"+e,n["Moz"+t]="moz"+e,n["ms"+t]="MS"+e,n["O"+t]="o"+e.toLowerCase(),n}function i(t){if(u[t])return u[t];if(!a[t])return t;var e=a[t];for(var n in e)if(e.hasOwnProperty(n)&&n in c)return u[t]=e[n];return""}var o=n(6),a={animationend:r("Animation","AnimationEnd"),animationiteration:r("Animation","AnimationIteration"),animationstart:r("Animation","AnimationStart"),transitionend:r("Transition","TransitionEnd")},u={},c={};o.canUseDOM&&(c=document.createElement("div").style,"AnimationEvent"in window||(delete a.animationend.animation,delete a.animationiteration.animation,delete a.animationstart.animation),"TransitionEvent"in window||delete a.transitionend.transition),t.exports=i},function(t,e,n){"use strict";function r(t){return'"'+i(t)+'"'}var i=n(54);t.exports=r},function(t,e,n){"use strict";var r=n(163);t.exports=r.renderSubtreeIntoContainer},function(t,e,n){"use strict";function r(t,e){var n=l.extractSingleTouch(e);return n?n[t.page]:t.page in e?e[t.page]:e[t.client]+f[t.envScroll]}function i(t,e){var n=r(b.x,e),i=r(b.y,e);return Math.pow(Math.pow(n-t.x,2)+Math.pow(i-t.y,2),.5)}function o(t){return{tapMoveThreshold:g,ignoreMouseThreshold:m,eventTypes:C,extractEvents:function(e,n,o,a){if(!h(e)&&!d(e))return null;if(v(e))_=M();else if(t(_,M()))return null;var u=null,l=i(y,o);return d(e)&&l<g&&(u=s.getPooled(C.touchTap,n,o,a)),h(e)?(y.x=r(b.x,o),y.y=r(b.y,o)):d(e)&&(y.x=0,y.y=0),c.accumulateTwoPhaseDispatches(u),u}}}var a=n(339),u=n(50),c=n(23),s=n(25),l=n(397),f=n(89),p=n(329),h=(a.topLevelTypes,u.isStartish),d=u.isEndish,v=function(t){var e=["topTouchCancel","topTouchEnd","topTouchStart","topTouchMove"];return e.indexOf(t)>=0},g=10,m=750,y={x:null,y:null},_=null,b={x:{page:"pageX",client:"clientX",envScroll:"currentPageScrollLeft"},y:{page:"pageY",client:"clientY",envScroll:"currentPageScrollTop"}},x=["topTouchStart","topTouchCancel","topTouchEnd","topTouchMove"],w=["topMouseDown","topMouseMove","topMouseUp"].concat(x),C={touchTap:{phasedRegistrationNames:{bubbled:p({onTouchTap:null}),captured:p({onTouchTapCapture:null})},dependencies:w}},M=function(){return Date.now?Date.now:function(){return+new Date}}();t.exports=o},function(t,e){var n={extractSingleTouch:function(t){var e=t.touches,n=t.changedTouches,r=e&&e.length>0,i=n&&n.length>0;return!r&&i?n[0]:r?e[0]:t}};t.exports=n},function(t,e){t.exports=function(t,e){if(t&&e-t<750)return!0}},function(t,e,n){"use strict";function r(t){var e=/[=:]/g,n={"=":"=0",":":"=2"},r=(""+t).replace(e,function(t){return n[t]});return"$"+r}function i(t){var e=/(=0|=2)/g,n={"=0":"=","=2":":"},r="."===t[0]&&"$"===t[1]?t.substring(2):t.substring(1);return(""+r).replace(e,function(t){return n[t]})}var o={escape:r,unescape:i};t.exports=o},function(t,e,n){"use strict";var r=n(28),i=(n(0),function(t){var e=this;if(e.instancePool.length){var n=e.instancePool.pop();return e.call(n,t),n}return new e(t)}),o=function(t,e){var n=this;if(n.instancePool.length){var r=n.instancePool.pop();return n.call(r,t,e),r}return new n(t,e)},a=function(t,e,n){var r=this;if(r.instancePool.length){var i=r.instancePool.pop();return r.call(i,t,e,n),i}return new r(t,e,n)},u=function(t,e,n,r){var i=this;if(i.instancePool.length){var o=i.instancePool.pop();return i.call(o,t,e,n,r),o}return new i(t,e,n,r)},c=function(t){var e=this;t instanceof e?void 0:r("25"),t.destructor(),e.instancePool.length<e.poolSize&&e.instancePool.push(t)},s=10,l=i,f=function(t,e){var n=t;return n.instancePool=[],n.getPooled=e||l,n.poolSize||(n.poolSize=s),n.release=c,n},p={addPoolingTo:f,oneArgumentPooler:i,twoArgumentPooler:o,threeArgumentPooler:a,fourArgumentPooler:u};t.exports=p},function(t,e,n){"use strict";function r(t){return(""+t).replace(b,"$&/")}function i(t,e){this.func=t,this.context=e,this.count=0}function o(t,e,n){var r=t.func,i=t.context;r.call(i,e,t.count++)}function a(t,e,n){if(null==t)return t;var r=i.getPooled(e,n);m(t,o,r),i.release(r)}function u(t,e,n,r){this.result=t,this.keyPrefix=e,this.func=n,this.context=r,this.count=0}function c(t,e,n){var i=t.result,o=t.keyPrefix,a=t.func,u=t.context,c=a.call(u,e,t.count++);Array.isArray(c)?s(c,i,n,g.thatReturnsArgument):null!=c&&(v.isValidElement(c)&&(c=v.cloneAndReplaceKey(c,o+(!c.key||e&&e.key===c.key?"":r(c.key)+"/")+n)),i.push(c))}function s(t,e,n,i,o){var a="";null!=n&&(a=r(n)+"/");var s=u.getPooled(e,a,i,o);m(t,c,s),u.release(s)}function l(t,e,n){if(null==t)return t;var r=[];return s(t,r,null,e,n),r}function f(t,e,n){return null}function p(t,e){return m(t,f,null)}function h(t){var e=[];return s(t,e,null,g.thatReturnsArgument),e}var d=n(400),v=n(27),g=n(8),m=n(409),y=d.twoArgumentPooler,_=d.fourArgumentPooler,b=/\/+/g;i.prototype.destructor=function(){this.func=null,this.context=null,this.count=0},d.addPoolingTo(i,y),u.prototype.destructor=function(){this.result=null,this.keyPrefix=null,this.func=null,this.context=null,this.count=0},d.addPoolingTo(u,_);var x={forEach:a,map:l,mapIntoWithKeyPrefixInternal:s,count:p,toArray:h};t.exports=x},function(t,e,n){"use strict";function r(t){return t}function i(t,e){var n=b.hasOwnProperty(e)?b[e]:null;w.hasOwnProperty(e)&&("OVERRIDE_BASE"!==n?p("73",e):void 0),t&&("DEFINE_MANY"!==n&&"DEFINE_MANY_MERGED"!==n?p("74",e):void 0)}function o(t,e){if(e){"function"==typeof e?p("75"):void 0,v.isValidElement(e)?p("76"):void 0;var n=t.prototype,r=n.__reactAutoBindPairs;e.hasOwnProperty(y)&&x.mixins(t,e.mixins);for(var o in e)if(e.hasOwnProperty(o)&&o!==y){var a=e[o],u=n.hasOwnProperty(o);if(i(u,o),x.hasOwnProperty(o))x[o](t,a);else{var l=b.hasOwnProperty(o),f="function"==typeof a,h=f&&!l&&!u&&e.autobind!==!1;if(h)r.push(o,a),n[o]=a;else if(u){var d=b[o];!l||"DEFINE_MANY_MERGED"!==d&&"DEFINE_MANY"!==d?p("77",d,o):void 0,"DEFINE_MANY_MERGED"===d?n[o]=c(n[o],a):"DEFINE_MANY"===d&&(n[o]=s(n[o],a))}else n[o]=a}}}else;}function a(t,e){if(e)for(var n in e){var r=e[n];if(e.hasOwnProperty(n)){var i=n in x;i?p("78",n):void 0;var o=n in t;o?p("79",n):void 0,t[n]=r}}}function u(t,e){t&&e&&"object"==typeof t&&"object"==typeof e?void 0:p("80");for(var n in e)e.hasOwnProperty(n)&&(void 0!==t[n]?p("81",n):void 0,t[n]=e[n]);return t}function c(t,e){return function(){var n=t.apply(this,arguments),r=e.apply(this,arguments);if(null==n)return r;if(null==r)return n;var i={};return u(i,n),u(i,r),i}}function s(t,e){return function(){t.apply(this,arguments),e.apply(this,arguments)}}function l(t,e){var n=e.bind(t);return n;
 }function f(t){for(var e=t.__reactAutoBindPairs,n=0;n<e.length;n+=2){var r=e[n],i=e[n+1];t[r]=l(t,i)}}var p=n(28),h=n(3),d=n(97),v=n(27),g=(n(175),n(98)),m=n(38),y=(n(0),n(1),"mixins"),_=[],b={mixins:"DEFINE_MANY",statics:"DEFINE_MANY",propTypes:"DEFINE_MANY",contextTypes:"DEFINE_MANY",childContextTypes:"DEFINE_MANY",getDefaultProps:"DEFINE_MANY_MERGED",getInitialState:"DEFINE_MANY_MERGED",getChildContext:"DEFINE_MANY_MERGED",render:"DEFINE_ONCE",componentWillMount:"DEFINE_MANY",componentDidMount:"DEFINE_MANY",componentWillReceiveProps:"DEFINE_MANY",shouldComponentUpdate:"DEFINE_ONCE",componentWillUpdate:"DEFINE_MANY",componentDidUpdate:"DEFINE_MANY",componentWillUnmount:"DEFINE_MANY",updateComponent:"OVERRIDE_BASE"},x={displayName:function(t,e){t.displayName=e},mixins:function(t,e){if(e)for(var n=0;n<e.length;n++)o(t,e[n])},childContextTypes:function(t,e){t.childContextTypes=h({},t.childContextTypes,e)},contextTypes:function(t,e){t.contextTypes=h({},t.contextTypes,e)},getDefaultProps:function(t,e){t.getDefaultProps?t.getDefaultProps=c(t.getDefaultProps,e):t.getDefaultProps=e},propTypes:function(t,e){t.propTypes=h({},t.propTypes,e)},statics:function(t,e){a(t,e)},autobind:function(){}},w={replaceState:function(t,e){this.updater.enqueueReplaceState(this,t),e&&this.updater.enqueueCallback(this,e,"replaceState")},isMounted:function(){return this.updater.isMounted(this)}},C=function(){};h(C.prototype,d.prototype,w);var M={createClass:function(t){var e=r(function(t,n,r){this.__reactAutoBindPairs.length&&f(this),this.props=t,this.context=n,this.refs=m,this.updater=r||g,this.state=null;var i=this.getInitialState?this.getInitialState():null;"object"!=typeof i||Array.isArray(i)?p("82",e.displayName||"ReactCompositeComponent"):void 0,this.state=i});e.prototype=new C,e.prototype.constructor=e,e.prototype.__reactAutoBindPairs=[],_.forEach(o.bind(null,e)),o(e,t),e.getDefaultProps&&(e.defaultProps=e.getDefaultProps()),e.prototype.render?void 0:p("83");for(var n in b)e.prototype[n]||(e.prototype[n]=null);return e},injection:{injectMixin:function(t){_.push(t)}}};t.exports=M},function(t,e,n){"use strict";var r=n(27),i=r.createFactory,o={a:i("a"),abbr:i("abbr"),address:i("address"),area:i("area"),article:i("article"),aside:i("aside"),audio:i("audio"),b:i("b"),base:i("base"),bdi:i("bdi"),bdo:i("bdo"),big:i("big"),blockquote:i("blockquote"),body:i("body"),br:i("br"),button:i("button"),canvas:i("canvas"),caption:i("caption"),cite:i("cite"),code:i("code"),col:i("col"),colgroup:i("colgroup"),data:i("data"),datalist:i("datalist"),dd:i("dd"),del:i("del"),details:i("details"),dfn:i("dfn"),dialog:i("dialog"),div:i("div"),dl:i("dl"),dt:i("dt"),em:i("em"),embed:i("embed"),fieldset:i("fieldset"),figcaption:i("figcaption"),figure:i("figure"),footer:i("footer"),form:i("form"),h1:i("h1"),h2:i("h2"),h3:i("h3"),h4:i("h4"),h5:i("h5"),h6:i("h6"),head:i("head"),header:i("header"),hgroup:i("hgroup"),hr:i("hr"),html:i("html"),i:i("i"),iframe:i("iframe"),img:i("img"),input:i("input"),ins:i("ins"),kbd:i("kbd"),keygen:i("keygen"),label:i("label"),legend:i("legend"),li:i("li"),link:i("link"),main:i("main"),map:i("map"),mark:i("mark"),menu:i("menu"),menuitem:i("menuitem"),meta:i("meta"),meter:i("meter"),nav:i("nav"),noscript:i("noscript"),object:i("object"),ol:i("ol"),optgroup:i("optgroup"),option:i("option"),output:i("output"),p:i("p"),param:i("param"),picture:i("picture"),pre:i("pre"),progress:i("progress"),q:i("q"),rp:i("rp"),rt:i("rt"),ruby:i("ruby"),s:i("s"),samp:i("samp"),script:i("script"),section:i("section"),select:i("select"),small:i("small"),source:i("source"),span:i("span"),strong:i("strong"),style:i("style"),sub:i("sub"),summary:i("summary"),sup:i("sup"),table:i("table"),tbody:i("tbody"),td:i("td"),textarea:i("textarea"),tfoot:i("tfoot"),th:i("th"),thead:i("thead"),time:i("time"),title:i("title"),tr:i("tr"),track:i("track"),u:i("u"),ul:i("ul"),var:i("var"),video:i("video"),wbr:i("wbr"),circle:i("circle"),clipPath:i("clipPath"),defs:i("defs"),ellipse:i("ellipse"),g:i("g"),image:i("image"),line:i("line"),linearGradient:i("linearGradient"),mask:i("mask"),path:i("path"),pattern:i("pattern"),polygon:i("polygon"),polyline:i("polyline"),radialGradient:i("radialGradient"),rect:i("rect"),stop:i("stop"),svg:i("svg"),text:i("text"),tspan:i("tspan")};t.exports=o},function(t,e,n){"use strict";function r(t,e){return t===e?0!==t||1/t===1/e:t!==t&&e!==e}function i(t){this.message=t,this.stack=""}function o(t){function e(e,n,r,o,a,u,c){o=o||E,u=u||r;if(null==n[r]){var s=w[a];return e?new i(null===n[r]?"The "+s+" `"+u+"` is marked as required "+("in `"+o+"`, but its value is `null`."):"The "+s+" `"+u+"` is marked as required in "+("`"+o+"`, but its value is `undefined`.")):null}return t(n,r,o,a,u)}var n=e.bind(null,!1);return n.isRequired=e.bind(null,!0),n}function a(t){function e(e,n,r,o,a,u){var c=e[n],s=y(c);if(s!==t){var l=w[o],f=_(c);return new i("Invalid "+l+" `"+a+"` of type "+("`"+f+"` supplied to `"+r+"`, expected ")+("`"+t+"`."))}return null}return o(e)}function u(){return o(M.thatReturns(null))}function c(t){function e(e,n,r,o,a){if("function"!=typeof t)return new i("Property `"+a+"` of component `"+r+"` has invalid PropType notation inside arrayOf.");var u=e[n];if(!Array.isArray(u)){var c=w[o],s=y(u);return new i("Invalid "+c+" `"+a+"` of type "+("`"+s+"` supplied to `"+r+"`, expected an array."))}for(var l=0;l<u.length;l++){var f=t(u,l,r,o,a+"["+l+"]",C);if(f instanceof Error)return f}return null}return o(e)}function s(){function t(t,e,n,r,o){var a=t[e];if(!x.isValidElement(a)){var u=w[r],c=y(a);return new i("Invalid "+u+" `"+o+"` of type "+("`"+c+"` supplied to `"+n+"`, expected a single ReactElement."))}return null}return o(t)}function l(t){function e(e,n,r,o,a){if(!(e[n]instanceof t)){var u=w[o],c=t.name||E,s=b(e[n]);return new i("Invalid "+u+" `"+a+"` of type "+("`"+s+"` supplied to `"+r+"`, expected ")+("instance of `"+c+"`."))}return null}return o(e)}function f(t){function e(e,n,o,a,u){for(var c=e[n],s=0;s<t.length;s++)if(r(c,t[s]))return null;var l=w[a],f=JSON.stringify(t);return new i("Invalid "+l+" `"+u+"` of value `"+c+"` "+("supplied to `"+o+"`, expected one of "+f+"."))}return Array.isArray(t)?o(e):M.thatReturnsNull}function p(t){function e(e,n,r,o,a){if("function"!=typeof t)return new i("Property `"+a+"` of component `"+r+"` has invalid PropType notation inside objectOf.");var u=e[n],c=y(u);if("object"!==c){var s=w[o];return new i("Invalid "+s+" `"+a+"` of type "+("`"+c+"` supplied to `"+r+"`, expected an object."))}for(var l in u)if(u.hasOwnProperty(l)){var f=t(u,l,r,o,a+"."+l,C);if(f instanceof Error)return f}return null}return o(e)}function h(t){function e(e,n,r,o,a){for(var u=0;u<t.length;u++){var c=t[u];if(null==c(e,n,r,o,a,C))return null}var s=w[o];return new i("Invalid "+s+" `"+a+"` supplied to "+("`"+r+"`."))}return Array.isArray(t)?o(e):M.thatReturnsNull}function d(){function t(t,e,n,r,o){if(!g(t[e])){var a=w[r];return new i("Invalid "+a+" `"+o+"` supplied to "+("`"+n+"`, expected a ReactNode."))}return null}return o(t)}function v(t){function e(e,n,r,o,a){var u=e[n],c=y(u);if("object"!==c){var s=w[o];return new i("Invalid "+s+" `"+a+"` of type `"+c+"` "+("supplied to `"+r+"`, expected `object`."))}for(var l in t){var f=t[l];if(f){var p=f(u,l,r,o,a+"."+l,C);if(p)return p}}return null}return o(e)}function g(t){switch(typeof t){case"number":case"string":case"undefined":return!0;case"boolean":return!t;case"object":if(Array.isArray(t))return t.every(g);if(null===t||x.isValidElement(t))return!0;var e=k(t);if(!e)return!1;var n,r=e.call(t);if(e!==t.entries){for(;!(n=r.next()).done;)if(!g(n.value))return!1}else for(;!(n=r.next()).done;){var i=n.value;if(i&&!g(i[1]))return!1}return!0;default:return!1}}function m(t,e){return"symbol"===t||("Symbol"===e["@@toStringTag"]||"function"==typeof Symbol&&e instanceof Symbol)}function y(t){var e=typeof t;return Array.isArray(t)?"array":t instanceof RegExp?"object":m(e,t)?"symbol":e}function _(t){var e=y(t);if("object"===e){if(t instanceof Date)return"date";if(t instanceof RegExp)return"regexp"}return e}function b(t){return t.constructor&&t.constructor.name?t.constructor.name:E}var x=n(27),w=n(175),C=n(405),M=n(8),k=n(177),E=(n(1),"<<anonymous>>"),T={array:a("array"),bool:a("boolean"),func:a("function"),number:a("number"),object:a("object"),string:a("string"),symbol:a("symbol"),any:u(),arrayOf:c,element:s(),instanceOf:l,node:d(),objectOf:p,oneOf:f,oneOfType:h,shape:v};i.prototype=Error.prototype,t.exports=T},function(t,e,n){"use strict";var r="SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";t.exports=r},function(t,e,n){"use strict";function r(t,e,n){this.props=t,this.context=e,this.refs=c,this.updater=n||u}function i(){}var o=n(3),a=n(97),u=n(98),c=n(38);i.prototype=a.prototype,r.prototype=new i,r.prototype.constructor=r,o(r.prototype,a.prototype),r.prototype.isPureReactComponent=!0,t.exports=r},function(t,e,n){"use strict";t.exports="15.4.2"},function(t,e,n){"use strict";function r(t){return o.isValidElement(t)?void 0:i("143"),t}var i=n(28),o=n(27);n(0);t.exports=r},function(t,e,n){"use strict";function r(t,e){return t&&"object"==typeof t&&null!=t.key?s.escape(t.key):e.toString(36)}function i(t,e,n,o){var p=typeof t;if("undefined"!==p&&"boolean"!==p||(t=null),null===t||"string"===p||"number"===p||"object"===p&&t.$$typeof===u)return n(o,t,""===e?l+r(t,0):e),1;var h,d,v=0,g=""===e?l:e+f;if(Array.isArray(t))for(var m=0;m<t.length;m++)h=t[m],d=g+r(h,m),v+=i(h,d,n,o);else{var y=c(t);if(y){var _,b=y.call(t);if(y!==t.entries)for(var x=0;!(_=b.next()).done;)h=_.value,d=g+r(h,x++),v+=i(h,d,n,o);else for(;!(_=b.next()).done;){var w=_.value;w&&(h=w[1],d=g+s.escape(w[0])+f+r(h,0),v+=i(h,d,n,o))}}else if("object"===p){var C="",M=String(t);a("31","[object Object]"===M?"object with keys {"+Object.keys(t).join(", ")+"}":M,C)}}return v}function o(t,e,n){return null==t?0:i(t,"",e,n)}var a=n(28),u=(n(15),n(174)),c=n(177),s=(n(0),n(399)),l=(n(1),"."),f=":";t.exports=o},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var i=n(41),o=r(i),a=n(182),u=r(a),c=n(183),s=r(c),l=n(181),f=r(l),p=n(180),h=r(p),d=n(179),v=r(d);(0,s.default)(),window.SHAP={SimpleListVisualizer:f.default,AdditiveForceVisualizer:h.default,AdditiveForceArrayVisualizer:v.default,React:o.default,ReactDom:u.default}}]);</script></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span>
 </pre></div>
@@ -1821,7 +2447,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <section id="id2">
-<h2>Feature importance<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<h4>Feature importance<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">shap_values</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
@@ -1829,12 +2455,12 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_49_0.png" src="../_images/shap-model-interpretation_49_0.png" />
+<img alt="../_images/shap-model-interpretation_56_0.png" src="../_images/shap-model-interpretation_56_0.png" />
 </div>
 </div>
 </section>
 <section id="id3">
-<h2>Dependence plot<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<h4>Dependence plot<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">dependence_plot</span><span class="p">(</span><span class="n">ind</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">shap_values</span><span class="o">=</span><span class="n">shap_values</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
@@ -1842,7 +2468,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_51_0.png" src="../_images/shap-model-interpretation_51_0.png" />
+<img alt="../_images/shap-model-interpretation_58_0.png" src="../_images/shap-model-interpretation_58_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1854,25 +2480,30 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/shap-model-interpretation_52_0.png" src="../_images/shap-model-interpretation_52_0.png" />
+<img alt="../_images/shap-model-interpretation_59_0.png" src="../_images/shap-model-interpretation_59_0.png" />
 </div>
 </div>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="linearexplaner">
-<h1>4. LinearExplaner<a class="headerlink" href="#linearexplaner" title="Permalink to this headline">#</a></h1>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="gradientexplaner">
-<h1>5. GradientExplaner<a class="headerlink" href="#gradientexplaner" title="Permalink to this headline">#</a></h1>
+<section id="deep-explainers">
+<h2>2. Deep explainers<a class="headerlink" href="#deep-explainers" title="Permalink to this headline">#</a></h2>
+<section id="linearexplaner">
+<h3>2.1. LinearExplaner<a class="headerlink" href="#linearexplaner" title="Permalink to this headline">#</a></h3>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="deepexplaner">
-<h1>6. DeepExplaner<a class="headerlink" href="#deepexplaner" title="Permalink to this headline">#</a></h1>
+<section id="gradientexplaner">
+<h3>2.2. GradientExplaner<a class="headerlink" href="#gradientexplaner" title="Permalink to this headline">#</a></h3>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
+<section id="deepexplaner">
+<h3>2.3. DeepExplaner<a class="headerlink" href="#deepexplaner" title="Permalink to this headline">#</a></h3>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><em><a class="reference external" href="http://christophm.github.io">christophm.github.io</a> - <a class="reference external" href="https://christophm.github.io/interpretable-ml-book/shap.html">SHAP</a></em></p></li>
 </ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1912,7 +2543,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
     <a class='right-next' id="next-link" href="imblearn-targeted-modeling.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">1. Imbalanced learning</p>
+        <p class="prev-next-title">Imblearn: Targeted Modeling</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
