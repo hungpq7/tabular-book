@@ -1170,6 +1170,28 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="sklearn-machine-learning">
 <h1>Sklearn: Machine Learning<a class="headerlink" href="#sklearn-machine-learning" title="Permalink to this headline">#</a></h1>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Machine_learning">Machine Learning</a> is the study of computer algorithms that improve automatically through experience. Machine Learning algorithms build a <a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_model">mathematical model</a> based on sample data in order to make predictions or decisions. In Data Analytics, Machine Learning is referred to as <em>predictive analysis</em> (supervised learning) and <em>data mining</em> (unsupervised learning). There are many libraries in Python designed for Machine Learning, but we’ll start with the most basic one: <a class="reference external" href="https://scikit-learn.org/stable/modules/classes.html">Scikit-learn</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">fbeta_score</span><span class="p">,</span> <span class="n">make_scorer</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">r2_score</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Supervised Machine Learning refers to algorithms that learn a general <em>rule</em> from labeled data, then use that <em>rule</em> to predict labels for new, unlabeled data. The <em>rule</em> in this context can be understood as a function mapping input (features) to output (label). Supervised learning is all about predicting labels, containing:</p>
@@ -1263,7 +1285,7 @@ title="Print to PDF"
 </li>
 <li><p>Step 3: Fit the algorithm on the entire data to get the final model. Then calculate the average of the recorded scores as the overall performance metric for the model. The standard deviation of the scores should not be too high.</p></li>
 </ul>
-<img alt="chapter-06/image/cross_validation.png" src="chapter-06/image/cross_validation.png" />
+<a class="reference internal image-reference" href="../_images/cross_validation.png"><img alt="../_images/cross_validation.png" class="align-center" src="../_images/cross_validation.png" style="height: 300px;" /></a>
 </section>
 </section>
 <section id="testing">
@@ -1271,7 +1293,8 @@ title="Print to PDF"
 <section id="goodness-of-fit">
 <h4>Goodness of fit<a class="headerlink" href="#goodness-of-fit" title="Permalink to this headline">#</a></h4>
 <p>Generalization is the ability of a model to give sensible output when given the data is has never seen before. A model generalizes well if it is neither <em>underfitting</em> nor <em>overfitting</em>.</p>
-<img alt="chapter-06/image/goodness_of_fit.png" src="chapter-06/image/goodness_of_fit.png" />
+<a class="reference internal image-reference" href="../_images/goodness_of_fit.png"><img alt="../_images/goodness_of_fit.png" class="align-center" src="../_images/goodness_of_fit.png" style="height: 250px;" /></a>
+<br>
 <p><em>Overfitting</em> refers to the situation that the performance of a model is very good on the training set but drops significantly over the test set. This can be explained that the model has learned the noises and random fluctuations from the training data, which do not occur on new data. <em>Early stopping</em> and <em>regularization</em> are two popular techniques to reduce overfitting.</p>
 <p><em>Underfitting</em> can be recognized when the model performs poorly on both the test and the training set. The reason behind this is the model is not complex enough to capture patterns from the training data, so obviously there is no way it can work well on new data. The only thing that can be done to prevent underfitting is increasing the complexity of the model.</p>
 </section>
@@ -1301,24 +1324,7 @@ title="Print to PDF"
 <p>This section visualizes the performance of binary classification problems.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/credit_scoring.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/credit_scoring.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;bad_customer&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">bad_customer</span><span class="o">.</span><span class="n">values</span>
@@ -1365,15 +1371,16 @@ title="Print to PDF"
 <section id="confusion-matrix">
 <h4>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Confusion_matrix">Confusion matrix</a> is a visualization for the performance of classification algorithms. Each column represents the number of observations in an actual class and each row represents the number of observations in a predicted class.</p>
-<img alt="chapter-06/image/confusion_matrix_binary.png" src="chapter-06/image/confusion_matrix_binary.png" />
+<a class="reference internal image-reference" href="../_images/confusion_matrix_binary.png"><img alt="../_images/confusion_matrix_binary.png" class="align-center" src="../_images/confusion_matrix_binary.png" style="height: 250px;" /></a>
+<br>
 <p>However, in real-world problems, sometimes a class is more important than the others. From the perspective of that class (orange, for example), an observation may have the following statuses:</p>
 <ul class="simple">
 <li><p>Positive if the predicted class is orange, Negative if the predicted class is not orange</p></li>
 <li><p>True if the predicted class is correct, False if the predicted class is incorrect</p></li>
 </ul>
 <p>The combination of the statuses above are: TP (True Positive), TN (True Negative), FP (False Positive) and FN (False Negative), which are used to calculate metrics for classification algorithms. These terms are arranged in a single table:</p>
-<img alt="chapter-06/image/confusion_matrix_multiclass.png" src="chapter-06/image/confusion_matrix_multiclass.png" />
-<div class="cell docutils container">
+<a class="reference internal image-reference" href="../_images/confusion_matrix_multiclass.png"><img alt="../_images/confusion_matrix_multiclass.png" class="align-center" src="../_images/confusion_matrix_multiclass.png" style="height: 300px;" /></a>
+<br><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">yTrue</span><span class="p">,</span> <span class="n">yPred</span><span class="p">)</span>
 </pre></div>
@@ -1397,7 +1404,7 @@ title="Print to PDF"
 <section id="precision-recall-chart">
 <h4>Precision-Recall Chart<a class="headerlink" href="#precision-recall-chart" title="Permalink to this headline">#</a></h4>
 <p>PR Chart plots the values of Precision and Recall at different thresholds. Looking at this graph allows Data Scientists to understand deeply about the trade-off between Precision and Recall and can select an optimal threshold.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotPRChart</span><span class="p">(</span><span class="n">yTrue</span><span class="p">,</span> <span class="n">yProb</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_recall_curve</span>
@@ -1418,7 +1425,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-machine-learning_27_0.png" src="../_images/sklearn-machine-learning_27_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-machine-learning_28_0.png"><img alt="../_images/sklearn-machine-learning_28_0.png" class="align-center" src="../_images/sklearn-machine-learning_28_0.png" style="width: 357.5px; height: 343.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1437,7 +1444,7 @@ title="Print to PDF"
 <li><p>Determining the optimal threshold.</p></li>
 <li><p>Calculating the AUROC (Area Under the ROC), which is a single value that summarizes the overall performance of the model.</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotROC</span><span class="p">(</span><span class="n">yTrue</span><span class="p">,</span> <span class="n">yProb</span><span class="p">):</span>
     
@@ -1459,7 +1466,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-machine-learning_29_0.png" src="../_images/sklearn-machine-learning_29_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-machine-learning_30_0.png"><img alt="../_images/sklearn-machine-learning_30_0.png" class="align-center" src="../_images/sklearn-machine-learning_30_0.png" style="width: 348.0px; height: 343.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1467,7 +1474,7 @@ title="Print to PDF"
 <h4>Cumulative Gains<a class="headerlink" href="#cumulative-gains" title="Permalink to this headline">#</a></h4>
 <p>In many business problems, resources are limited, making only the most potential targets are visited. So it is really important for the model to cover a high ratio of positive instances only by visiting a small part of the dataset, and this is where Cumulative Gains is used.</p>
 <p>Cumulative Gains shows the overall positive percentage <em>gained</em> by targeting the top fraction of all observations. A popular method for determining the fractions of observations is <em>deciles</em> (10-quantiles). The diagonal in the chart represents the <em>baseline</em> model, which targets observations at random. A good model should have a high gain value at the very first deciles.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotCumulativeGains</span><span class="p">(</span><span class="n">yTrue</span><span class="p">,</span> <span class="n">yProb</span><span class="p">):</span>
     
@@ -1504,7 +1511,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-machine-learning_32_0.png" src="../_images/sklearn-machine-learning_32_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-machine-learning_33_0.png"><img alt="../_images/sklearn-machine-learning_33_0.png" class="align-center" src="../_images/sklearn-machine-learning_33_0.png" style="width: 348.0px; height: 343.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1512,7 +1519,7 @@ title="Print to PDF"
 <h4>Lift Curve<a class="headerlink" href="#lift-curve" title="Permalink to this headline">#</a></h4>
 <p>Besides Cumulative Gains, Lift Curve is also a powerful tool being widely used in marketing campaigns. It helps analyze the overall positive percentage in each bin, compared to bin size. Notice that bin size represents the expected percent of positive instances if targeted randomly. For example, assume there is a total of 70 positive instances and the bin size is chosen of 10% (<em>deciles</em>), then each bin is expected to contain <span class="math notranslate nohighlight">\(70\cdot 10\%=7\)</span> positive instances.</p>
 <p>The Lift Curve for an ideal model should have very high values at first, then drop significantly to the point that lift values are below the <em>baseline</em>. This proves that the vast majority of positive instances are in first bins.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotLiftCurve</span><span class="p">(</span><span class="n">yTrue</span><span class="p">,</span> <span class="n">yProb</span><span class="p">):</span>
     
@@ -1550,7 +1557,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-machine-learning_35_0.png" src="../_images/sklearn-machine-learning_35_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-machine-learning_36_0.png"><img alt="../_images/sklearn-machine-learning_36_0.png" class="align-center" src="../_images/sklearn-machine-learning_36_0.png" style="width: 492.5px; height: 343.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1559,25 +1566,7 @@ title="Print to PDF"
 <h3>2.2. Classification metrics<a class="headerlink" href="#classification-metrics" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">fbeta_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">classification_report</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/credit_scoring.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/credit_scoring.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;bad_customer&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">bad_customer</span><span class="o">.</span><span class="n">values</span>
@@ -1599,7 +1588,7 @@ title="Print to PDF"
 </div>
 <section id="accuracy">
 <h4>Accuracy<a class="headerlink" href="#accuracy" title="Permalink to this headline">#</a></h4>
-<p>Accuracy treats all the classes equally, since it calculates the True rate, which is the number of correct predictions over the total of predictions made. Accuracy is the default classification metric used in <code style='font-size:13px;'>sklearn</code>.</p>
+<p>Accuracy treats all the classes equally, since it calculates the True rate, which is the number of correct predictions over the total of predictions made. Accuracy is the default classification metric used in Scikit-learn.</p>
 <div class="math notranslate nohighlight">
 \[\mathrm{Accuracy} = \frac{\mathrm{T}}{\mathrm{T}+\mathrm{F}}\]</div>
 <p>Accuracy is a good measure when the classes are (nearly) balanced; however, it should never be used when the majority of the data falls into a single class. For example, there are 5 people have cancer out of 100 observations, and a predictive model classifies all 100 people have no cancer. So even it is very terrible at predicting cancer, such a bad model still has an Accuracy of 95%.</p>
@@ -1727,7 +1716,7 @@ F_{\beta} = \left(\frac{1}{1+\beta^2}\cdot\mathrm{Precision}^{-1} + \frac{\beta^
 </ul>
 <div class="math notranslate nohighlight">
 \[\mathrm{WeightedPrecision}=\sum{w_c\cdot\mathrm{Precision}_c}\]</div>
-<p>The Scikit-learn library provides the <code style='font-size:13px;'>classification_report</code> function that calculates both per-class metrics and overall metrics.</p>
+<p>The Scikit-learn library provides the <code class="docutils literal notranslate"><span class="pre">classification_report</span></code> function that calculates both per-class metrics and overall metrics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">yTrue</span><span class="p">,</span> <span class="n">yPred</span><span class="p">)</span>
@@ -1751,17 +1740,7 @@ weighted avg       0.96      0.96      0.95    150000
 </section>
 <section id="customized-metrics">
 <h4>Customized metrics<a class="headerlink" href="#customized-metrics" title="Permalink to this headline">#</a></h4>
-<p>The default metric used in Scikit-learn is Accuracy, however you can use another metric, or even a <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html#the-scoring-parameter-defining-model-evaluation-rules">customized one</a> using the <code style='font-size:13px;'>scoring</code> parameter. It takes a string as input, where available options can be found in the reference. For a complex metric, the function requires to define it first.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">make_scorer</span><span class="p">,</span> <span class="n">fbeta_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>The default metric used in Scikit-learn is Accuracy, however you can use another metric, or even a <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html#the-scoring-parameter-defining-model-evaluation-rules">customized one</a> using the <code class="docutils literal notranslate"><span class="pre">scoring</span></code> parameter. It takes a string as input, where available options can be found in the reference. For a complex metric, the function requires to define it first.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
@@ -1786,22 +1765,7 @@ weighted avg       0.96      0.96      0.95    150000
 <p>Let <span class="math notranslate nohighlight">\(\mathbf{y}=(y_1,y_2,\dots,y_N)\)</span> is the vector of true data labels and <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}=(\hat{y}_1,\hat{y}_2,\dots,\hat{y}_N)\)</span> is the vector of predicted values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">r2_score</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/boston.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/boston.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1903,8 +1867,6 @@ weighted avg       0.96      0.96      0.95    150000
 </div>
 </div>
 </div>
-<hr class="docutils" />
-<p><em>♥ By Quang Hung x Thuy Linh ♥</em></p>
 </section>
 </section>
 </section>

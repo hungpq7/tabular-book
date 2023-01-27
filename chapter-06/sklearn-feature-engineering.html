@@ -1208,6 +1208,42 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="sklearn-feature-engineering">
 <h1>Sklearn: Feature Engineering<a class="headerlink" href="#sklearn-feature-engineering" title="Permalink to this headline">#</a></h1>
 <p>As introducted in the topic <em>[Pandas] Data Cleaning</em>, clean data is used as the input for analytical tasks. However, to build a good predictive model (in both performance and computation), a lot more works need to be done in order to improve data quality. These kind of tasks are called <a class="reference external" href="https://en.wikipedia.org/wiki/Feature_engineering">feature engineering</a>, they get data into the appropriate format and reveal hidden insights. Feature engineering tasks are technically simple, but they do require some domain knowledge. This makes feature engineering more of an art than a science.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">janitor</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">Normalizer</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">FunctionTransformer</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">OrdinalEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span> 
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span><span class="p">,</span> <span class="n">KNNImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span>
+
+<span class="kn">from</span> <span class="nn">feature_engine.transformation</span> <span class="kn">import</span> <span class="n">LogCpTransformer</span><span class="p">,</span> <span class="n">PowerTransformer</span>
+<span class="kn">from</span> <span class="nn">feature_engine.transformation</span> <span class="kn">import</span> <span class="n">BoxCoxTransformer</span><span class="p">,</span> <span class="n">YeoJohnsonTransformer</span>
+<span class="kn">from</span> <span class="nn">feature_engine.wrappers</span> <span class="kn">import</span> <span class="n">SklearnTransformerWrapper</span>
+<span class="kn">from</span> <span class="nn">feature_engine.encoding</span> <span class="kn">import</span> <span class="n">RareLabelEncoder</span>
+
+<span class="kn">import</span> <span class="nn">category_encoders</span> <span class="k">as</span> <span class="nn">ce</span>
+<span class="kn">import</span> <span class="nn">featuretools</span> <span class="k">as</span> <span class="nn">ft</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
 <section id="data-preprocessing">
 <h2>1. Data preprocessing<a class="headerlink" href="#data-preprocessing" title="Permalink to this headline">#</a></h2>
 <section id="scaling">
@@ -1219,17 +1255,6 @@ title="Print to PDF"
 <li><p><em>Manhattan normalization</em>: to have the absolute values sum up to <span class="math notranslate nohighlight">\(1\)</span></p></li>
 <li><p><em>Euclidean normalization</em>: to have the squared values sum up to <span class="math notranslate nohighlight">\(1\)</span></p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">Normalizer</span><span class="p">,</span> <span class="n">StandardScaler</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="min-max-scaling">
 <h4>Min-max scaling<a class="headerlink" href="#min-max-scaling" title="Permalink to this headline">#</a></h4>
 <p>Many Machine Learning algorithms assume all variables are on the same scale, typically <span class="math notranslate nohighlight">\([0;1]\)</span>. The formula for rescaling to <span class="math notranslate nohighlight">\([a;b]\)</span> is:</p>
@@ -1404,7 +1429,7 @@ title="Print to PDF"
 </section>
 <section id="normalizing">
 <h4>Normalizing<a class="headerlink" href="#normalizing" title="Permalink to this headline">#</a></h4>
-<p>This technique ensures the vector has a total length of 1. The length can be either Manhattan distance (L1) <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_1 = |x_1|+|x_2|+\dots+|x_n|\)</span> or Euclidean distance (L2) <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2 = \sqrt{x_1^2+x_2^2+\dots+x_n^2}\)</span>. The formula for normalizing is:</p>
+<p>This technique ensures the vector has a total length of 1. The length can be either Manhattan distance (<span class="math notranslate nohighlight">\(L_1\)</span>) <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_1 = |x_1|+|x_2|+\dots+|x_n|\)</span> or Euclidean distance (<span class="math notranslate nohighlight">\(L_2\)</span>) <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2 = \sqrt{x_1^2+x_2^2+\dots+x_n^2}\)</span>. The formula for normalizing is:</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{x}'=\frac{\mathbf{x}}{\|\mathbf{x}\|}\]</div>
 <div class="cell docutils container">
@@ -1492,34 +1517,12 @@ title="Print to PDF"
 <section id="transformation">
 <h3>1.2. Transformation<a class="headerlink" href="#transformation" title="Permalink to this headline">#</a></h3>
 <p>Sometimes real world data distribute not very nice, while most transformation techiniques do not affect the distribution. Imagine the label in a regression problem is mostly small values, then Machine Learning algorithms will have a hard time <em>learning</em> higher values. By taking advantage of mathematical functions, Data Scientists can control the distribution of data to make them more <em>nature</em>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">feature_engine.transformation</span> <span class="kn">import</span> <span class="n">LogCpTransformer</span><span class="p">,</span> <span class="n">PowerTransformer</span>
-<span class="kn">from</span> <span class="nn">feature_engine.transformation</span> <span class="kn">import</span> <span class="n">BoxCoxTransformer</span><span class="p">,</span> <span class="n">YeoJohnsonTransformer</span>
-<span class="kn">from</span> <span class="nn">feature_engine.wrappers</span> <span class="kn">import</span> <span class="n">SklearnTransformerWrapper</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
 <section id="logarithm">
 <h4>Logarithm<a class="headerlink" href="#logarithm" title="Permalink to this headline">#</a></h4>
 <p>This popular technique has the ability to make right skewed data distribute normally. The formula of the transformation is:</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{x}'=\log_b{(\mathbf{x}+c)}\]</div>
-<p>Some notable tips when using
-<code style='font-size:13px'><a href='https://feature-engine.readthedocs.io/en/latest/api_doc/transformation/LogCpTransformer.html'>LogCpTransformer</a></code>:</p>
+<p>Some notable tips when using <a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/transformation/LogCpTransformer.html"><code class="docutils literal notranslate"><span class="pre">LogCpTransformer</span></code></a>:</p>
 <ul class="simple">
 <li><p>It works only on features contain all postive values.</p></li>
 <li><p>Different base values <span class="math notranslate nohighlight">\(b\)</span> can be used, the most common ones are: <span class="math notranslate nohighlight">\(e\)</span>, <span class="math notranslate nohighlight">\(2\)</span> and <span class="math notranslate nohighlight">\(10\)</span>.</p></li>
@@ -1551,7 +1554,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-feature-engineering_14_0.png" src="../_images/sklearn-feature-engineering_14_0.png" />
+<img alt="../_images/sklearn-feature-engineering_15_0.png" src="../_images/sklearn-feature-engineering_15_0.png" />
 </div>
 </div>
 </section>
@@ -1566,11 +1569,7 @@ title="Print to PDF"
     \log\mathbf{x}&amp;{\text{if }}\lambda=0
 \end{cases}
 \end{split}\]</div>
-<p>We implement this transformation via the class
-<code style='font-size:13px;'><a href='https://feature-engine.readthedocs.io/en/latest/api_doc/transformation/BoxCoxTransformer.html'>BoxCoxTransformer</a></code>.
-It wraps the function
-<code style='font-size:13px;'><a href='https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox.html'>scipy.stats.boxcox()</a></code>
-which estimates the value of <span class="math notranslate nohighlight">\(\lambda\)</span> that maximizes log-likelihood.</p>
+<p>We implement this transformation via the class <a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/transformation/BoxCoxTransformer.html"><code class="docutils literal notranslate"><span class="pre">BoxCoxTransformer</span></code></a>. It wraps the function <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox.html"><code class="docutils literal notranslate"><span class="pre">boxcox()</span></code></a> which estimates the value of <span class="math notranslate nohighlight">\(\lambda\)</span> that maximizes log-likelihood.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
@@ -1593,7 +1592,7 @@ which estimates the value of <span class="math notranslate nohighlight">\(\lambd
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-feature-engineering_17_0.png" src="../_images/sklearn-feature-engineering_17_0.png" />
+<img alt="../_images/sklearn-feature-engineering_18_0.png" src="../_images/sklearn-feature-engineering_18_0.png" />
 </div>
 </div>
 </section>
@@ -1610,8 +1609,7 @@ which estimates the value of <span class="math notranslate nohighlight">\(\lambd
     -\log(-\mathbf{x}+1)                              &amp; \text{if }\lambda=    0\text{ and }\mathbf{x}\geq 0 \\
 \end{cases}
 \end{split}\]</div>
-<p>It can be implemented via the class
-<code style='font-size:13px;'><a href='https://feature-engine.readthedocs.io/en/latest/api_doc/transformation/YeoJohnsonTransformer.html'>YeoJohnsonTransformer</a></code>.</p>
+<p>It can be implemented via the class <a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/transformation/YeoJohnsonTransformer.html"><code class="docutils literal notranslate"><span class="pre">YeoJohnsonTransformer</span></code></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
@@ -1634,7 +1632,7 @@ which estimates the value of <span class="math notranslate nohighlight">\(\lambd
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-feature-engineering_20_0.png" src="../_images/sklearn-feature-engineering_20_0.png" />
+<img alt="../_images/sklearn-feature-engineering_21_0.png" src="../_images/sklearn-feature-engineering_21_0.png" />
 </div>
 </div>
 </section>
@@ -1642,15 +1640,6 @@ which estimates the value of <span class="math notranslate nohighlight">\(\lambd
 <section id="bucketizing">
 <h3>1.2. Bucketizing<a class="headerlink" href="#bucketizing" title="Permalink to this headline">#</a></h3>
 <p>Bucketizing (or binning) refers to the tasks that put data into larger bins. Doing bucketizing means sacrifying information, however it makes data more regularized and thus prevents overfitting. Either numerical and categorical variables can be binned.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="discretizating">
 <h4>Discretizating<a class="headerlink" href="#discretizating" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
@@ -1901,18 +1890,9 @@ which estimates the value of <span class="math notranslate nohighlight">\(\lambd
 <section id="encoding">
 <h3>1.3. Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">#</a></h3>
 <p>Encoding is the technique that transforms a categorical variable to numerical variable(s). This is important because most modern Machine Learning algorithms require input features to be numerical.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">category_encoders</span> <span class="k">as</span> <span class="nn">ce</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="ordinal-encoding">
 <h4>Ordinal encoding<a class="headerlink" href="#ordinal-encoding" title="Permalink to this headline">#</a></h4>
-<p><code style='font-size:13px'><a href='https://contrib.scikit-learn.org/category_encoders/ordinal.html'>OrdinalEncoder</a></code>
+<p><a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/ordinal.html"><code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code></a>
 transforms categorical columns into unique numbers starting from 0. The disadvantage is that the categories are ordered randomly, which can add unexpected noises that hurt model performance. It also provides an option to pass a dictionary for custom order.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1982,7 +1962,7 @@ transforms categorical columns into unique numbers starting from 0. The disadvan
 </section>
 <section id="one-hot-encoding">
 <h4>One-hot encoding<a class="headerlink" href="#one-hot-encoding" title="Permalink to this headline">#</a></h4>
-<p><code style='font-size:13px'><a href='https://contrib.scikit-learn.org/category_encoders/onehot.html'>OneHotEncoder</a></code>
+<p><a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/onehot.html"><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code></a>
 generates a binary feature for each category. This technique will expand the dataset which can lead to curse of dimensionality and over memory because of storing sparse data. A variant is sometimes used, call Dummy Encoding which cuts the last feature and encode the corresponding class using vectors of <span class="math notranslate nohighlight">\(0\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2070,7 +2050,7 @@ generates a binary feature for each category. This technique will expand the dat
 </section>
 <section id="rare-encoding">
 <h4>Rare encoding<a class="headerlink" href="#rare-encoding" title="Permalink to this headline">#</a></h4>
-<p><code style='font-size:13px'><a href='https://feature-engine.readthedocs.io/en/1.0.x/encoding/RareLabelEncoder.html'>RareLabelEncoder</a></code>
+<p><a class="reference external" href="https://feature-engine.readthedocs.io/en/1.0.x/encoding/RareLabelEncoder.html"><code class="docutils literal notranslate"><span class="pre">RareLabelEncoder</span></code></a>
 is more of a preprocessing technique than an encoder, as it does not returns a numerical value, which is what we are expecting. However, it is still an useful method to gather rare categories into a single group to reduces noises.</p>
 <p>In this example, the data is about what phone operating system people are using. Beside popular Android and iOS, there are also low market share ones. As these observations are definitely not crucial to our model, and we want to focus on large categories (make more money, larger market), it would be better to group them into a single group.</p>
 <div class="cell docutils container">
@@ -2213,7 +2193,8 @@ is more of a preprocessing technique than an encoder, as it does not returns a n
 </section>
 <section id="helmert-encoding">
 <h4>Helmert encoding<a class="headerlink" href="#helmert-encoding" title="Permalink to this headline">#</a></h4>
-<p><code style='font-size:13px'><a href='https://contrib.scikit-learn.org/category_encoders/helmert.html'>HelmertEncoder</a></code> uses the occuring order of categories in a feature to performce encoding. It ignores the first category, and for each category starting from the second one, it create a feature so that:</p>
+<p><a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/helmert.html"><code class="docutils literal notranslate"><span class="pre">HelmertEncoder</span></code></a>
+uses the occuring order of categories in a feature to performce encoding. It ignores the first category, and for each category starting from the second one, it create a feature so that:</p>
 <ul class="simple">
 <li><p>Equals <span class="math notranslate nohighlight">\(-1\)</span> for all previous categories</p></li>
 <li><p>Equals a category’s own rank for itself</p></li>
@@ -2308,7 +2289,7 @@ is more of a preprocessing technique than an encoder, as it does not returns a n
 </section>
 <section id="count-encoding">
 <h4>Count encoding<a class="headerlink" href="#count-encoding" title="Permalink to this headline">#</a></h4>
-<p><code style='font-size:13px'><a href='https://contrib.scikit-learn.org/category_encoders/count.html'>CountEncoder</a></code> encodes each category using an integer of how many times or a float of how frequently it occurs in the dataset.</p>
+<p><a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/count.html"><code class="docutils literal notranslate"><span class="pre">CountEncoder</span></code></a> encodes each category using an integer of how many times or a float of how frequently it occurs in the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -2375,7 +2356,7 @@ is more of a preprocessing technique than an encoder, as it does not returns a n
 </section>
 <section id="target-encoding">
 <h4>Target encoding<a class="headerlink" href="#target-encoding" title="Permalink to this headline">#</a></h4>
-<p><code style='font-size:13px'><a href='https://contrib.scikit-learn.org/category_encoders/targetencoder.html'>TargetEncoder</a></code>
+<p><a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/targetencoder.html"><code class="docutils literal notranslate"><span class="pre">TargetEncoder</span></code></a>
 is the most popular encoder used in Kaggle competitions. The main idea is to replace each category <span class="math notranslate nohighlight">\(c\)</span> of a categorial feature <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> with the mean of target associated with that category, <span class="math notranslate nohighlight">\(y_c\)</span>. However, this encoding strategy suffers from <em>data leakage</em>, as we are kind of <em>leaking the answer before teaching our machinary student</em>. This is a significant disadvantage which leads to overfitting. To solve this, we smooth the encoded values by pushing it towards the population mean <span class="math notranslate nohighlight">\(\bar{y}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[x_c=wy_c+(1-w)\bar{y}\]</div>
@@ -2384,33 +2365,23 @@ is the most popular encoder used in Kaggle competitions. The main idea is to rep
 \[w=\frac{1}{1+\exp\left(-\dfrac{n_c-k}{f}\right)}\]</div>
 <p>We can see that, the weight of a very small category (when <span class="math notranslate nohighlight">\(n_c\ll k\)</span>) is approximately <span class="math notranslate nohighlight">\(0\)</span>. In the simple example below, our categories have only 2 or 3 observations; so if we set <span class="math notranslate nohighlight">\(k=10\)</span>, they will uniformally replaced with <span class="math notranslate nohighlight">\(\bar{y}=0.6\)</span>. And a higher value of <span class="math notranslate nohighlight">\(f\)</span> indicates a flatter logistic curve as well as stronger regularization effect.</p>
 <p>Another strategy to tackle <em>data leakage</em> is excluding the current row from the calculation of mean target, implemented via
-<code style='font-size:13px'><a href='https://contrib.scikit-learn.org/category_encoders/leaveoneout.html'>LeaveOneOutEncoder</a></code>
+<a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/leaveoneout.html"><code class="docutils literal notranslate"><span class="pre">LeaveOneOutEncoder</span></code></a>
 . Notice this will return different encoding values within a category.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">&#39;education&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Highschool&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Bachelor&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Master&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;PhD&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span>
     <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
 <span class="p">})</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder1</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">TargetEncoder</span><span class="p">(</span><span class="n">smoothing</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">encoder1</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">TargetEncoder</span><span class="p">(</span><span class="n">smoothing</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">encoder2</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">TargetEncoder</span><span class="p">(</span><span class="n">smoothing</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">encoder3</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">TargetEncoder</span><span class="p">(</span><span class="n">smoothing</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">encoder4</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">TargetEncoder</span><span class="p">(</span><span class="n">smoothing</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">encoder5</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">TargetEncoder</span><span class="p">(</span><span class="n">smoothing</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">encoder6</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">LeaveOneOutEncoder</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEncode1</span> <span class="o">=</span> <span class="n">encoder1</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">education</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+
+<span class="n">dfEncode1</span> <span class="o">=</span> <span class="n">encoder1</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">education</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
 <span class="n">dfEncode2</span> <span class="o">=</span> <span class="n">encoder2</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">education</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
 <span class="n">dfEncode3</span> <span class="o">=</span> <span class="n">encoder3</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">education</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
 <span class="n">dfEncode4</span> <span class="o">=</span> <span class="n">encoder4</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">education</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
@@ -2575,36 +2546,25 @@ is the most popular encoder used in Kaggle competitions. The main idea is to rep
 </section>
 <section id="m-estimate-encoding">
 <h4>M-estimate encoding<a class="headerlink" href="#m-estimate-encoding" title="Permalink to this headline">#</a></h4>
-<p><code style='font-size:13px'><a href='https://contrib.scikit-learn.org/category_encoders/mestimate.html'>MEstimateEncoder</a></code>
-is a simplified version of Target Encoder with same functionality but has only a tunable hyperparameter <span class="math notranslate nohighlight">\(m\)</span>, smoothing factor. We first define a mask vector that activates category <span class="math notranslate nohighlight">\(c\)</span>: <span class="math notranslate nohighlight">\(\mathbf{i}_c(n)=\mathbf{1}[x_n=x_c]\)</span>, the encoding formula is given as:</p>
+<p><a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/mestimate.html"><code class="docutils literal notranslate"><span class="pre">MEstimateEncoder</span></code></a> is a simplified version of Target Encoder with same functionality but has only a tunable hyperparameter <span class="math notranslate nohighlight">\(m\)</span>, smoothing factor. We first define a mask vector that activates category <span class="math notranslate nohighlight">\(c\)</span>: <span class="math notranslate nohighlight">\(\mathbf{i}_c(n)=\mathbf{1}[x_n=x_c]\)</span>, the encoding formula is given as:</p>
 <div class="math notranslate nohighlight">
 \[x_c=\frac
 {\mathbf{i}_c^\text{T}\mathbf{y} + m\bar{y}}
 {\mathbf{i}_c^\text{T}\mathbf{1} + m}
 \]</div>
 <p>Now let’s explain what do these ugly things mean. First, <span class="math notranslate nohighlight">\(\mathbf{i}_c^\text{T}\mathbf{y}\)</span> is the <a class="reference external" href="https://en.wikipedia.org/wiki/Dot_product">dot product</a> of the mask vector and the target, it computes the sum of target associated with category <span class="math notranslate nohighlight">\(c\)</span>. The part <span class="math notranslate nohighlight">\(\mathbf{i}_c^\text{T}\mathbf{1}\)</span> is another dot product, it counts the number of observations of category <span class="math notranslate nohighlight">\(c\)</span>. We can also add a small normal distributed noise into training data</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">&#39;education&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Highschool&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Bachelor&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Master&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;PhD&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span>
     <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
 <span class="p">})</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder1</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">MEstimateEncoder</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">encoder1</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">MEstimateEncoder</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">encoder2</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">MEstimateEncoder</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">encoder3</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">MEstimateEncoder</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEncode1</span> <span class="o">=</span> <span class="n">encoder1</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">education</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+
+<span class="n">dfEncode1</span> <span class="o">=</span> <span class="n">encoder1</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">education</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
 <span class="n">dfEncode2</span> <span class="o">=</span> <span class="n">encoder2</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">education</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
 <span class="n">dfEncode3</span> <span class="o">=</span> <span class="n">encoder3</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">education</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
 
@@ -2677,9 +2637,7 @@ is a simplified version of Target Encoder with same functionality but has only a
 </section>
 <section id="weight-of-evidence">
 <h4>Weight of Evidence<a class="headerlink" href="#weight-of-evidence" title="Permalink to this headline">#</a></h4>
-<p>Weight of Evidence is a concept exists in credit scoring and risk management, being generally described as a measure of separation between good and bad things. When applied in Machine Learning, this method is used exclusively on binary target, implemented as
-<code style='font-size:13px'><a href='https://contrib.scikit-learn.org/category_encoders/woe.html'>WOEEncoder</a></code>.
-It has the following formula:</p>
+<p>Weight of Evidence is a concept exists in credit scoring and risk management, being generally described as a measure of separation between good and bad things. When applied in Machine Learning, this method is used exclusively on binary target, implemented as <a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/woe.html"><code class="docutils literal notranslate"><span class="pre">WOEEncoder</span></code></a>. It has the following formula:</p>
 <div class="math notranslate nohighlight">
 \[x_c=\log\frac{\text{P}(x=x_c|y=1)}{\text{P}(x=x_c|y=0)}\]</div>
 <p>It’s clear to see in this equation, the numerator is the probability of observing category <span class="math notranslate nohighlight">\(c\)</span> considering only postitive labeled data, and thus it refers to <em>good things</em>. The same inference can also be applied to the denominator. One thing to notice is that when calculating these probabilities, a small quantity is add to the denominators to (1) prevent zero division error and (2) add regularization effect.</p>
@@ -2765,17 +2723,6 @@ It has the following formula:</p>
 <p>The first problem is exactly what <a class="reference external" href="https://featuretools.alteryx.com/en/stable/index.html">Featuretools</a> solves, via an algorithm called <a class="reference external" href="https://featuretools.alteryx.com/en/stable/getting_started/afe.html">Deep Feature Synthesis</a> (DFS). It has the abiliy to generate new features from a single table or from a number of related tables, automatically and efficiency.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">janitor</span>
-<span class="kn">import</span> <span class="nn">featuretools</span> <span class="k">as</span> <span class="nn">ft</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ft</span><span class="o">.</span><span class="n">list_primitives</span><span class="p">()</span>\
     <span class="o">.</span><span class="n">remove_columns</span><span class="p">([</span><span class="s1">&#39;spark_compatible&#39;</span><span class="p">,</span> <span class="s1">&#39;dask_compatible&#39;</span><span class="p">])</span>\
     <span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;output/featuretools_primitives.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -2788,7 +2735,7 @@ It has the following formula:</p>
 <p>In the most basic level of DFS, it allows us to specify a list of transformations (by class or string identifier), each can automatically find valid columns and transform them. Transformations in Featuretools can process one or many input columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/youtube_trending.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfYoutube</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/youtube_trending.csv&#39;</span><span class="p">)</span>
 <span class="n">dfYoutube</span> <span class="o">=</span> <span class="p">(</span><span class="n">dfYoutube</span>
     <span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;trending_date&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;publish_time&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S.</span><span class="si">%f</span><span class="s1">Z&#39;</span><span class="p">)</span>
@@ -2828,7 +2775,7 @@ dtype: object
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRich</span><span class="p">,</span> <span class="n">definitions</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">dfs</span><span class="p">(</span>
     <span class="n">entityset</span><span class="o">=</span><span class="n">es</span><span class="p">,</span>
@@ -3072,13 +3019,7 @@ The square root of the &quot;views&quot;.
 <p>This is the true power of DFS, working on multiple tables in a relation database to create features. We are going through all concepts to get this done: entity set and transmitives.</p>
 <section id="entity-set">
 <h4>Entity set<a class="headerlink" href="#entity-set" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://featuretools.alteryx.com/en/stable/getting_started/using_entitysets.html">Entity set</a> is how Featuretools represents a relation database, in which each dataframe is an entity. The best practice to work with
-<code style='font-size:13px'><a href='https://featuretools.alteryx.com/en/stable/generated/featuretools.EntitySet.html'>EntitySet</a></code>
-is to first create an empty one, then add dataframes and relationships once at a time. Here are some notices when calling
-<code style='font-size:13px'><a href='https://featuretools.alteryx.com/en/stable/generated/featuretools.EntitySet.add_dataframe.html'>add_dataframe()</a></code>
-and
-<code style='font-size:13px'><a href='https://featuretools.alteryx.com/en/stable/generated/featuretools.EntitySet.add_relationship.html'>add_relationship()</a></code>
-methods:</p>
+<p><a class="reference external" href="https://featuretools.alteryx.com/en/stable/getting_started/using_entitysets.html">Entity set</a> is how Featuretools represents a relation database, in which each dataframe is an entity. The best practice to work with <a class="reference external" href="https://featuretools.alteryx.com/en/stable/generated/featuretools.EntitySet.html"><code class="docutils literal notranslate"><span class="pre">EntitySet</span></code></a> is to first create an empty one, then add dataframes and relationships once at a time. Here are some notices when calling <a class="reference external" href="https://featuretools.alteryx.com/en/stable/generated/featuretools.EntitySet.add_dataframe.html"><code class="docutils literal notranslate"><span class="pre">add_dataframe()</span></code></a> and <a class="reference external" href="https://featuretools.alteryx.com/en/stable/generated/featuretools.EntitySet.add_relationship.html"><code class="docutils literal notranslate"><span class="pre">add_relationship()</span></code></a> methods:</p>
 <ul class="simple">
 <li><p>Each entity must have a name (id), an index column (primary key), and can optionally have a datetime index column.</p></li>
 <li><p>Relationships between entities are expected to be one-to-many, or parent-child. For example, a customer (parent) may have many transactions (children).</p></li>
@@ -3305,9 +3246,7 @@ methods:</p>
 <li><p><span class="math notranslate nohighlight">\(\text{Aggregation}:\text{vector}\rightarrow\text{scalar}\)</span></p></li>
 </ul>
 <p>We can see their applications here: transformations process one or more existing columns and return a new one, while aggregations handle one-to-many relationships by grouping children then return a representative statistic for the parent. The full documentation of primitives can be found in <a class="reference external" href="https://primitives.featurelabs.com/">Featurelabs</a> or <a class="reference external" href="https://featuretools.alteryx.com/en/stable/api_reference.html#feature-primitives">API reference</a>.</p>
-<p>During implementation via the function
-<code style='font-size:13px'><a href='https://featuretools.alteryx.com/en/stable/generated/featuretools.dfs.html'>dfs()</a></code>
-, we specify a maximum depth to control how many primitives can be stacked.</p>
+<p>During implementation via the function <a class="reference external" href="https://featuretools.alteryx.com/en/stable/generated/featuretools.dfs.html"><code class="docutils literal notranslate"><span class="pre">dfs()</span></code></a>, we specify a maximum depth to control how many primitives can be stacked.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRich</span><span class="p">,</span> <span class="n">definitions</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">dfs</span><span class="p">(</span>
@@ -3380,7 +3319,7 @@ methods:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTitanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/titanic_train.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTitanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/titanic_train.csv&#39;</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfTitanic</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Survived&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfTitanic</span><span class="o">.</span><span class="n">Survived</span>
@@ -3505,10 +3444,8 @@ methods:</p>
 </div>
 <section id="simple-pipeline">
 <h4>Simple pipeline<a class="headerlink" href="#simple-pipeline" title="Permalink to this headline">#</a></h4>
-<p>A simple preprocesing pipeline applies transformers to all columns. Provided via the class
-<code style='font-size:13px'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html'>Pipeline</a></code>,
-the main component we would care about is the steps, which is constructed using a list of tuples with the signature
-<code style='font-size:13px'>(name, transformer)</code>.</p>
+<p>A simple preprocesing pipeline applies transformers to all columns. Provided via the class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html"><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a>, the main component we would care about is the steps, which is constructed using a list of tuples with the signature
+<code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">transformer)</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
@@ -3535,12 +3472,9 @@ the main component we would care about is the steps, which is constructed using 
 </section>
 <section id="column-transformer">
 <h4>Column transformer<a class="headerlink" href="#column-transformer" title="Permalink to this headline">#</a></h4>
-<p>The problem arises when we would probably want to apply diffrent pipelines to different subsets of features such as categorical and numerical. To tackle this, Scikit-learn provides the class
-<code style='font-size:13px'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html'>ColumnTransformer</a></code>
-which accepts a list of tuples with the signature
-<code style='font-size:13px'>(name, transformer, columns)</code>.</p>
+<p>The problem arises when we would probably want to apply diffrent pipelines to different subsets of features such as categorical and numerical. To tackle this, Scikit-learn provides the class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code></a> which accepts a list of tuples with the signature <code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">transformer,</span> <span class="pre">columns)</span></code>.</p>
 <p>We can use any Scikit-learn’s transformer stand alone as well as a pipeline. To specify columns, the best practice is using column names, but the class also accepts column indices. Also note that if a feature appears in different steps, only the first step takes effect.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name1</span> <span class="o">=</span> <span class="s1">&#39;Categorical1&#39;</span>
 <span class="n">cols1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ticket&#39;</span><span class="p">,</span> <span class="s1">&#39;Cabin&#39;</span><span class="p">]</span>
@@ -3648,7 +3582,7 @@ which accepts a list of tuples with the signature
 </section>
 <section id="modeling">
 <h3>3.2. Modeling<a class="headerlink" href="#modeling" title="Permalink to this headline">#</a></h3>
-<p>A <code style='font-size:13px'>Pipeline</code> is very useful for data preprocessing, but it can also be used for modeling.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> is very useful for data preprocessing, but it can also be used for modeling.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
@@ -3672,7 +3606,7 @@ which accepts a list of tuples with the signature
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTitanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/titanic_train.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTitanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/titanic_train.csv&#39;</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfTitanic</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Survived&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfTitanic</span><span class="o">.</span><span class="n">Survived</span>
@@ -3795,7 +3729,7 @@ which accepts a list of tuples with the signature
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name1</span> <span class="o">=</span> <span class="s1">&#39;Categorical1&#39;</span>
 <span class="n">cols1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ticket&#39;</span><span class="p">,</span> <span class="s1">&#39;Cabin&#39;</span><span class="p">]</span>
@@ -4051,9 +3985,9 @@ which accepts a list of tuples with the signature
 <section id="saving-a-model">
 <h4>Saving a model<a class="headerlink" href="#saving-a-model" title="Permalink to this headline">#</a></h4>
 <p>The built-in package <a class="reference external" href="https://docs.python.org/3/library/pickle.html">Pickle</a> in python let us save the model into a file and load it again to make prediction. This helps us saving the time to train the model from the begin each time we use it. In case the model is too big, <a class="reference external" href="https://joblib.readthedocs.io/en/latest/">Joblib</a> is a good alternative. The extension of pickle files can be anything, but is usually
-<code style='font-size:13px'>.p</code>
-<code style='font-size:13px'>.pkl</code>
-<code style='font-size:13px'>.pickle</code>
+<code class="docutils literal notranslate"><span class="pre">.p</span></code>
+<code class="docutils literal notranslate"><span class="pre">.pkl</span></code>
+<code class="docutils literal notranslate"><span class="pre">.pickle</span></code>
 as Pickle uses Pickle protocol to read the data inside the file and ignores the extension.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

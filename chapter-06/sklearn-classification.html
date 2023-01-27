@@ -1165,6 +1165,30 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="sklearn-classification">
 <h1>Sklearn: Classification<a class="headerlink" href="#sklearn-classification" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span><span class="p">,</span> <span class="n">CategoricalNB</span><span class="p">,</span> <span class="n">BernoulliNB</span><span class="p">,</span> <span class="n">MultinomialNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span><span class="p">,</span> <span class="n">fbeta_score</span> <span class="k">as</span> <span class="n">FScore</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">paired_cosine_distances</span><span class="p">,</span> <span class="n">cosine_distances</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
 <section id="k-nearest-neighbors">
 <h2>1. K-Nearest Neighbors<a class="headerlink" href="#k-nearest-neighbors" title="Permalink to this headline">#</a></h2>
 <section id="algorithm">
@@ -1187,23 +1211,7 @@ title="Print to PDF"
 </section>
 <section id="implementation">
 <h3>1.2. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
-<p>Scikit-learn implements K-NN via the
-<code style='font-size:13px;'><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html">KNeighborsClassifier</a></code>
-class.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">GridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">fbeta_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">paired_cosine_distances</span><span class="p">,</span> <span class="n">cosine_distances</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Scikit-learn implements K-NN via the class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"><code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
@@ -1220,15 +1228,15 @@ class.</p>
 <section id="hyperparameters">
 <h4>Hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>n_neighbors</code>: the number of neighbors who vote for the label (<span class="math notranslate nohighlight">\(K\)</span>), defaults to <em>5</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>weights</code>: the voting strategy, defaults to <em>uniform</em> (majority voting). Can be set to <em>distance</em> for weighted voting.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>metrics</code>: the type of distance metric, defaults to <em>euclidean</em>. Other options are <em>manhattan</em>, <em>mahalanobis</em>, <em>minkowski</em> and <em>chebyshev</em>. Also accepts customized metrics with the signature
-<code style='font-size:13px;'>funcDistance(x, y) -&gt; distance</code>,
+<li><p><code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>: the number of neighbors who vote for the label (<span class="math notranslate nohighlight">\(K\)</span>), defaults to <em>5</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weights</span></code>: the voting strategy, defaults to <em>uniform</em> (majority voting). Can be set to <em>distance</em> for weighted voting.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metrics</span></code>: the type of distance metric, defaults to <em>euclidean</em>. Other options are <em>manhattan</em>, <em>mahalanobis</em>, <em>minkowski</em> and <em>chebyshev</em>. Also accepts customized metrics with the signature
+<code class="docutils literal notranslate"><span class="pre">funcDistance(x,</span> <span class="pre">y)</span> <span class="pre">-&gt;</span> <span class="pre">distance</span></code>,
 beside <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.DistanceMetric.html">bulit-in ones</a>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
 <span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1297,7 +1305,7 @@ beside <a class="reference external" href="https://scikit-learn.org/stable/modul
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yTestPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)[:,</span> <span class="n">model</span><span class="o">.</span><span class="n">classes_</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">aucTest</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
+<span class="n">aucTest</span> <span class="o">=</span> <span class="n">AUC</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
 <span class="n">modelName</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">aucTest</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">modelName</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
@@ -1315,10 +1323,8 @@ beside <a class="reference external" href="https://scikit-learn.org/stable/modul
 <h4>Model structure<a class="headerlink" href="#model-structure" title="Permalink to this headline">#</a></h4>
 <p>Here are the information you can extract from a K-NN model fit by Scikit-learn:</p>
 <ul class="simple">
-<li><p><code style="font-size:13px;"><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier.kneighbors">kneighbors()</a></code>
-method: find the <span class="math notranslate nohighlight">\(K\)</span> neighbors and their corresponding distances of query points.</p></li>
-<li><p><code style="font-size:13px;"><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier.kneighbors_graph">kneighbors_graph()</a></code>
-method: compute the weighted graph of <span class="math notranslate nohighlight">\(K\)</span> neighbors for query points.</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier.kneighbors"><code class="docutils literal notranslate"><span class="pre">kneighbors()</span></code></a> method: find the <span class="math notranslate nohighlight">\(K\)</span> neighbors and their corresponding distances of query points.</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier.kneighbors_graph"><code class="docutils literal notranslate"><span class="pre">kneighbors_graph()</span></code></a> method: compute the weighted graph of <span class="math notranslate nohighlight">\(K\)</span> neighbors for query points.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1369,7 +1375,7 @@ method: compute the weighted graph of <span class="math notranslate nohighlight"
 <li><p>Edge: the specific criterion to split a node</p></li>
 <li><p>Branch: represents a sub-tree which considers an internal node as root node</p></li>
 </ul>
-<img alt="chapter-06/image/tree_components.png" src="chapter-06/image/tree_components.png" />
+<a class="reference internal image-reference" href="../_images/tree_components.png"><img alt="../_images/tree_components.png" class="align-center" src="../_images/tree_components.png" style="height: 200px;" /></a>
 </section>
 <section id="measures-of-impurity">
 <h4>Measures of impurity<a class="headerlink" href="#measures-of-impurity" title="Permalink to this headline">#</a></h4>
@@ -1380,7 +1386,7 @@ method: compute the weighted graph of <span class="math notranslate nohighlight"
 <li><p><span class="math notranslate nohighlight">\(\displaystyle{\text{Gini} = 1-\sum_{m=1}^{M}{p_m^2}}\)</span></p></li>
 </ul>
 <p>Now let’s graph these functions for the most simple case: binary classification. Despite that there are 2 classes, we only need to plot against the ratio of positive class.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1406,7 +1412,7 @@ method: compute the weighted graph of <span class="math notranslate nohighlight"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-classification_19_0.png" src="../_images/sklearn-classification_19_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-classification_20_0.png"><img alt="../_images/sklearn-classification_20_0.png" class="align-center" src="../_images/sklearn-classification_20_0.png" style="width: 481.5px; height: 329.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1445,42 +1451,21 @@ method: compute the weighted graph of <span class="math notranslate nohighlight"
 </section>
 <section id="id2">
 <h3>2.2. Implementation<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
-<p>Scikit-learn implements Decision Tree via the class
-<code style='font-size:13px;'><a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html">DecisionTreeClassifier</a></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span> <span class="k">as</span> <span class="n">f</span><span class="p">,</span> <span class="n">px</span> <span class="k">as</span> <span class="n">p</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span><span class="p">,</span> <span class="n">fbeta_score</span> <span class="k">as</span> <span class="n">FScore</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
+<p>Scikit-learn implements Decision Tree via the class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html"><code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code></a>.</p>
 <section id="id3">
 <h4>Hyperparameters<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>criterion</code>: the measure of quality of a split, defaults to <em>gini</em>. The other option is <em>entropy</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>max_depth</code>: the maximum depth of the tree, defaults to <em>None</em> (no limitations).</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>max_leaf_nodes</code>: the maximum number of leaf nodes, defaults to <em>None</em> (no limitations).</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>min_samples_split</code>: the minimum number (if integer) or ratio (if float) of instances in a node to split, defautls to <em>2</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>min_samples_leaf</code>: the minimum number (integer) or ratio (float) of instances a leaf node must have, deafaults to <em>1</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>min_weight_fraction_leaf</code>: the minimum sum of instance weights a node must have, defaults to <em>0</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>min_impurity_decrease</code>: a split will be performed if its information gain is not less than this value, defaults to <em>0</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">criterion</span></code>: the measure of quality of a split, defaults to <em>gini</em>. The other option is <em>entropy</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_depth</span></code>: the maximum depth of the tree, defaults to <em>None</em> (no limitations).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>: the maximum number of leaf nodes, defaults to <em>None</em> (no limitations).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code>: the minimum number (if integer) or ratio (if float) of instances in a node to split, defautls to <em>2</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>: the minimum number (integer) or ratio (float) of instances a leaf node must have, deafaults to <em>1</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_weight_fraction_leaf</span></code>: the minimum sum of instance weights a node must have, defaults to <em>0</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_impurity_decrease</span></code>: a split will be performed if its information gain is not less than this value, defaults to <em>0</em>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
 <span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1528,7 +1513,7 @@ method: compute the weighted graph of <span class="math notranslate nohighlight"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yTestPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)[:,</span> <span class="n">model</span><span class="o">.</span><span class="n">classes_</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">aucTest</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
+<span class="n">aucTest</span> <span class="o">=</span> <span class="n">AUC</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
 <span class="n">modelName</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">aucTest</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">modelName</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
@@ -1544,9 +1529,7 @@ method: compute the weighted graph of <span class="math notranslate nohighlight"
 </section>
 <section id="feature-importances">
 <h4>Feature importances<a class="headerlink" href="#feature-importances" title="Permalink to this headline">#</a></h4>
-<p>Decision Tree supports computing feature importances by taking the total information gain brought by each feature. This can be extracted using the
-<code style='font-size:13px;'><a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier.feature_importances_">feature_importances_</a></code>
-attribute.</p>
+<p>Decision Tree supports computing feature importances by taking the total information gain brought by each feature. This can be extracted using the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier.feature_importances_"><code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code></a> attribute.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nTop</span> <span class="o">=</span> <span class="mi">10</span>
@@ -1563,21 +1546,17 @@ attribute.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-classification_29_0.png" src="../_images/sklearn-classification_29_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-classification_30_0.png"><img alt="../_images/sklearn-classification_30_0.png" class="align-center" src="../_images/sklearn-classification_30_0.png" style="width: 414.5px; height: 180.5px;" /></a>
 </div>
 </div>
 </section>
 <section id="interpretation">
 <h4>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this headline">#</a></h4>
-<p>The Scikit-learn’s
-<code style="font-size:13px;"><a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.plot_tree.html">plot_tree()</a></code>
-function plots the entire structure of a Decision Tree model. In this example, I use a max depth of 3 for better visualization. Each color represents a class, the darker the color a node has, the purer it is. In contrast, it’s very hard to make a decision for bright nodes.</p>
+<p>The Scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.plot_tree.html"><code class="docutils literal notranslate"><span class="pre">plot_tree()</span></code></a> function plots the entire structure of a Decision Tree model. In this example, I use a max depth of 3 for better visualization. Each color represents a class, the darker the color a node has, the purer it is. In contrast, it’s very hard to make a decision for bright nodes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1586,16 +1565,14 @@ function plots the entire structure of a Decision Tree model. In this example, I
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-classification_31_0.png" src="../_images/sklearn-classification_31_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-classification_32_0.png"><img alt="../_images/sklearn-classification_32_0.png" class="align-center" src="../_images/sklearn-classification_32_0.png" style="width: 794.9000000000001px; height: 322.0px;" /></a>
 </div>
 </div>
 </section>
 <section id="tree-structure">
 <h4>Tree structure<a class="headerlink" href="#tree-structure" title="Permalink to this headline">#</a></h4>
-<p>In this section, we discuss the underlying <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html">tree structure</a> and how to use the
-<code style="font-size:13px;"><a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier.decision_path">decision_path()</a></code>
-method to get access to the predicting process.</p>
-<div class="cell docutils container">
+<p>In this section, we discuss the underlying <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html">tree structure</a> and how to use the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier.decision_path"><code class="docutils literal notranslate"><span class="pre">decision_path()</span></code></a> method to get access to the predicting process.</p>
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_tree_structure</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="n">nNode</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tree_</span><span class="o">.</span><span class="n">node_count</span>
@@ -1732,8 +1709,8 @@ NODE=0 (internal): mean_radius=106.05, node1, node12
 <p>Decision Tree, as well as some other tree-based algorithms, can be extended to <em>multi-label</em> problems, including both regression and classification. The term <em>multi-label</em> is also known as <em>multi-output</em>, but is different from <em>multi-class</em>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEmotionTrain</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/emotions_train.csv&#39;</span><span class="p">)</span>
-<span class="n">dfEmotionTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/emotions_test.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEmotionTrain</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/emotions_train.csv&#39;</span><span class="p">)</span>
+<span class="n">dfEmotionTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/emotions_test.csv&#39;</span><span class="p">)</span>
 
 <span class="n">xTrain</span> <span class="o">=</span> <span class="n">dfEmotionTrain</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">6</span><span class="p">]</span>
 <span class="n">yTrain</span> <span class="o">=</span> <span class="n">dfEmotionTrain</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">6</span><span class="p">:]</span>
@@ -1837,35 +1814,18 @@ NODE=0 (internal): mean_radius=106.05, node1, node12
 </section>
 <section id="id5">
 <h3>3.2. Implementation<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span><span class="p">,</span> <span class="n">CategoricalNB</span><span class="p">,</span> <span class="n">BernoulliNB</span><span class="p">,</span> <span class="n">MultinomialNB</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">fbeta_score</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="tabular-data">
 <h4>Tabular data<a class="headerlink" href="#tabular-data" title="Permalink to this headline">#</a></h4>
 <p>This section uses the breast cancer dataset, where input variables are continuous. For a mixed types dataset, we independently train</p>
 <ul class="simple">
-<li><p><code style='font-size:13px;'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html'>GaussianNB</a></code> for continuous features</p></li>
-<li><p><code style='font-size:13px;'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.CategoricalNB.html'>CategoricalNB</a></code> for categorical features</p></li>
-<li><p><code style='font-size:13px;'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.BernoulliNB.html'>BernoulliNB</a></code> for binary features</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html"><code class="docutils literal notranslate"><span class="pre">GaussianNB</span></code></a> for continuous features</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.CategoricalNB.html"><code class="docutils literal notranslate"><span class="pre">CategoricalNB</span></code></a> for categorical features</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.BernoulliNB.html"><code class="docutils literal notranslate"><span class="pre">BernoulliNB</span></code></a> for binary features</p></li>
 </ul>
 <p>then stack their results by multiplication.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
 <span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1899,7 +1859,7 @@ NODE=0 (internal): mean_radius=106.05, node1, node12
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yTestPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)[:,</span> <span class="n">model</span><span class="o">.</span><span class="n">classes_</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">aucTest</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
+<span class="n">aucTest</span> <span class="o">=</span> <span class="n">AUC</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
 <span class="n">modelName</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">aucTest</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">modelName</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
@@ -1915,9 +1875,7 @@ NODE=0 (internal): mean_radius=106.05, node1, node12
 </section>
 <section id="text-data">
 <h4>Text data<a class="headerlink" href="#text-data" title="Permalink to this headline">#</a></h4>
-<p>Text data is preprocessed so that columns represent words and row represents their number of occurrences (also known as count vectorization).
-<code style='font-size:13px;'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html'>MultinomialNB</a></code>
-is suitable in this case.</p>
+<p>Text data is preprocessed so that columns represent words and row represents their number of occurrences (also known as count vectorization). <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html"><code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code></a> is suitable in this case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xTrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
@@ -1966,7 +1924,8 @@ is suitable in this case.</p>
 <section id="the-loss-function">
 <h4>The loss function<a class="headerlink" href="#the-loss-function" title="Permalink to this headline">#</a></h4>
 <p>Assume the equation of the separating hyperplane is <span class="math notranslate nohighlight">\(w_0+w_1\mathbf{x}_1+w_2\mathbf{x}_2+\dots=0\)</span>. Denote <span class="math notranslate nohighlight">\(\mathbf{w}=(w_1,w_2,\dots)\)</span> and <span class="math notranslate nohighlight">\(\mathbf{X}=(\mathbf{x}_1,\mathbf{x}_2,\dots)\)</span>, the boundary can be rewritten as <span class="math notranslate nohighlight">\(w_0+\mathbf{w}\mathbf{X}=0\)</span>. Now do some transformations so that the equations of the two edges (hyperplanes that are parallel to the boundary and go through the support vectors) are <span class="math notranslate nohighlight">\(w_0+\mathbf{w}\mathbf{X}=1\)</span> and <span class="math notranslate nohighlight">\(w_0+\mathbf{w}\mathbf{X}=-1\)</span>.</p>
-<img alt="chapter-06/image/svm_hard.png" src="chapter-06/image/svm_hard.png" />
+<a class="reference internal image-reference" href="../_images/svm_hard.png"><img alt="../_images/svm_hard.png" class="align-center" src="../_images/svm_hard.png" style="height: 300px;" /></a>
+<br>
 <p>By assigning suitable class values (for example, <span class="math notranslate nohighlight">\(\mathbf{y}=1\)</span> for blue class and <span class="math notranslate nohighlight">\(\mathbf{y}=-1\)</span> for red class), we have the following important property, which becomes the constraint for the margin formula:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(|w_0+\mathbf{w}\mathbf{s}_n|=y_n\,(w_0+\mathbf{w}\mathbf{s}_n)=1\)</span> for a support vector</p></li>
@@ -1994,7 +1953,8 @@ is suitable in this case.</p>
 <li><p><span class="math notranslate nohighlight">\(\xi_n=|w_0+\mathbf{w}\mathbf{s}_n-y_n|&lt;1\)</span> if a data point is correctly classified but lies within the margin</p></li>
 <li><p><span class="math notranslate nohighlight">\(\xi_n=|w_0+\mathbf{w}\mathbf{s}_n-y_n|\geq1\)</span> if a data point is in the wrong side of separating hyperplane</p></li>
 </ul>
-<img alt="chapter-06/image/svm_soft.png" src="chapter-06/image/svm_soft.png" />
+<a class="reference internal image-reference" href="../_images/svm_soft.png"><img alt="../_images/svm_soft.png" class="align-center" src="../_images/svm_soft.png" style="height: 300px;" /></a>
+<br>
 <p>The objective function of Soft Margin SVM adds a regularization amount to the loss function:</p>
 <div class="math notranslate nohighlight">
 \[\mathcal{O}(w_0,\mathbf{w}) = ||\mathbf{w}||_2+C\sum_{n=1}^{N}{\xi_n}
@@ -2004,7 +1964,8 @@ is suitable in this case.</p>
 <section id="kernel-svm">
 <h4>Kernel SVM<a class="headerlink" href="#kernel-svm" title="Permalink to this headline">#</a></h4>
 <p>Soft Margin SVM only works on linear separable data. When the data is non-linear, we project the data to a higher dimensional space. For example, mapping <span class="math notranslate nohighlight">\((\mathbf{x}_1,\mathbf{x}_2)\)</span> to <span class="math notranslate nohighlight">\((\mathbf{x}_1,\mathbf{x}_2,\mathbf{x}_3)\)</span> where <span class="math notranslate nohighlight">\(\mathbf{x}_3=\mathbf{x}_1^2+\mathbf{x}_2^2\)</span> seems a good strategy.</p>
-<img alt="chapter-06/image/svm_kernel.png" src="chapter-06/image/svm_kernel.png" />
+<a class="reference internal image-reference" href="../_images/svm_kernel.png"><img alt="../_images/svm_kernel.png" class="align-center" src="../_images/svm_kernel.png" style="height: 300px;" /></a>
+<br>
 <p>However, transforming data directly may require a lot of computation, and becomes impossible when infinite dimensional is used. This problem can be avoided thanks to a technique called the kernel trick. It calculates the dot product of two transformed vectors, which represents their relationship in higher dimensional space. Depending on the problem, there are many kernel functions can be used:</p>
 <ul class="simple">
 <li><p>Linear kernel: <span class="math notranslate nohighlight">\(\kappa(\mathbf{a},\mathbf{b})=\mathbf{a}\mathbf{b}\)</span></p></li>
@@ -2016,38 +1977,19 @@ is suitable in this case.</p>
 </section>
 <section id="id7">
 <h3>4.2. Implementation<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
-<p>Scikit-learn implements Support Vector Classifier via the class
-<code style='font-size:13px;'><a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html">SVC</a></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">fbeta_score</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Scikit-learn implements Support Vector Classifier via the class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html"><code class="docutils literal notranslate"><span class="pre">SVC</span></code></a>.</p>
 <section id="id8">
 <h4>Hyperparameters<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>C</code>: the signicicance of the penalty, defaults to <em>1</em>. Common values are <span class="math notranslate nohighlight">\(10^k\)</span> for <span class="math notranslate nohighlight">\(k\in\{-2,-1,0,1,2\}\)</span>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>kernel</code>: the kernel function to be used, defaults to <em>rbf</em>. Other options are <em>poly</em> and <em>sigmoid</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>gamma</code>: the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> in some kernel functions, defaults to <em>scale</em>. Common values are <span class="math notranslate nohighlight">\(10^k\)</span> for <span class="math notranslate nohighlight">\(k\in\{-2,-1,0,1,2\}\)</span>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>coef0</code>: the paremeter <span class="math notranslate nohighlight">\(r\)</span> in some kernel functions, defautls to <em>0</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>degree</code>: the parameter <span class="math notranslate nohighlight">\(d\)</span> in polynomial kernel, defaults to <em>3</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code>: the signicicance of the penalty, defaults to <em>1</em>. Common values are <span class="math notranslate nohighlight">\(10^k\)</span> for <span class="math notranslate nohighlight">\(k\in\{-2,-1,0,1,2\}\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kernel</span></code>: the kernel function to be used, defaults to <em>rbf</em>. Other options are <em>poly</em> and <em>sigmoid</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gamma</span></code>: the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> in some kernel functions, defaults to <em>scale</em>. Common values are <span class="math notranslate nohighlight">\(10^k\)</span> for <span class="math notranslate nohighlight">\(k\in\{-2,-1,0,1,2\}\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coef0</span></code>: the paremeter <span class="math notranslate nohighlight">\(r\)</span> in some kernel functions, defautls to <em>0</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">degree</span></code>: the parameter <span class="math notranslate nohighlight">\(d\)</span> in polynomial kernel, defaults to <em>3</em>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfCancer</span><span class="o">.</span><span class="n">target</span>
 <span class="n">xTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -2114,7 +2056,7 @@ is suitable in this case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yTestPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">xTest</span><span class="p">)[:,</span> <span class="n">model</span><span class="o">.</span><span class="n">classes_</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">aucTest</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
+<span class="n">aucTest</span> <span class="o">=</span> <span class="n">AUC</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
 <span class="n">modelName</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">aucTest</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">modelName</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
@@ -2130,7 +2072,7 @@ is suitable in this case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yTestPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">xTest</span><span class="p">)</span>
-<span class="n">aucTest</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
+<span class="n">aucTest</span> <span class="o">=</span> <span class="n">AUC</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
 <span class="n">modelName</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;AUC = </span><span class="si">{</span><span class="n">aucTest</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">modelName</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
@@ -2143,8 +2085,6 @@ is suitable in this case.</p>
 </div>
 </div>
 </div>
-<hr class="docutils" />
-<p><em>♥ By Quang Hung x Thuy Linh ♥</em></p>
 </section>
 </section>
 </section>
