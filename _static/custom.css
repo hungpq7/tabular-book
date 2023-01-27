@@ -2,10 +2,10 @@ th, td {
     font-size:12px
 }
 
-p, div.highlight {
-    font-size:14px
-}
-
 .pre {
     font-size:13px
+}
+
+.math, p, div.highlight {
+    font-size:14px
 }
