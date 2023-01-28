@@ -940,11 +940,6 @@ title="Print to PDF"
      3.2. Change detection
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#outlier-detection">
-     3.3. Outlier detection
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1135,11 +1130,6 @@ title="Print to PDF"
      3.2. Change detection
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#outlier-detection">
-     3.3. Outlier detection
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1159,18 +1149,34 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="statsmodels-temporal-analysis">
 <h1>Statsmodels: Temporal Analysis<a class="headerlink" href="#statsmodels-temporal-analysis" title="Permalink to this headline">#</a></h1>
-<section id="time-series-manipulation">
-<h2>1. Time series manipulation<a class="headerlink" href="#time-series-manipulation" title="Permalink to this headline">#</a></h2>
-<section id="datetime-manipulation">
-<h3>1.1. Datetime manipulation<a class="headerlink" href="#datetime-manipulation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pmdarima</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">ruptures</span> <span class="k">as</span> <span class="nn">rpt</span>
+
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
+<span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
+<span class="kn">from</span> <span class="nn">sktime.datasets</span> <span class="kn">import</span> <span class="n">load_airline</span><span class="p">,</span> <span class="n">load_macroeconomic</span>
+<span class="kn">from</span> <span class="nn">pmdarima.arima</span> <span class="kn">import</span> <span class="n">ndiffs</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">argrelmin</span><span class="p">,</span> <span class="n">argrelmax</span><span class="p">,</span> <span class="n">find_peaks</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
 </pre></div>
 </div>
 </div>
 </div>
+<section id="time-series-manipulation">
+<h2>1. Time series manipulation<a class="headerlink" href="#time-series-manipulation" title="Permalink to this headline">#</a></h2>
+<section id="datetime-manipulation">
+<h3>1.1. Datetime manipulation<a class="headerlink" href="#datetime-manipulation" title="Permalink to this headline">#</a></h3>
 <section id="standard-format">
 <h4>Standard format<a class="headerlink" href="#standard-format" title="Permalink to this headline">#</a></h4>
 <p>The complete datetime has the data type of <code class="docutils literal notranslate"><span class="pre">datetime64</span></code> and the format can be either <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span></code> or <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span> <span class="pre">hh:mm:ss</span></code>. This column can be used to detach year, quarter, month,… and the cyclic fields.</p>
@@ -1882,14 +1888,6 @@ title="Print to PDF"
 <p>A time series may have no existing blank value, however, it doesn’t mean that date column is completed. A completed time series requires all data points to be equally spaced. In other words, the date or time frequency should be a constant across the dataset. Interpolation (the process of inferring new values from given ones) is a great technique filling missing time series.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfPrice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span>
         <span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2020-01-03&#39;</span><span class="p">,</span> <span class="s1">&#39;2020-01-04&#39;</span><span class="p">,</span> <span class="s1">&#39;2020-01-05&#39;</span><span class="p">,</span>
@@ -2199,14 +2197,6 @@ title="Print to PDF"
 </section>
 <section id="time-series-calculation">
 <h3>1.3. Time series calculation<a class="headerlink" href="#time-series-calculation" title="Permalink to this headline">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="cumulative-sum">
 <h4>Cumulative sum<a class="headerlink" href="#cumulative-sum" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Running_total">Cumulative sum</a> is the discrete version of <a class="reference external" href="https://en.wikipedia.org/wiki/Antiderivative">antiderivative</a>, the transformed series <span class="math notranslate nohighlight">\(\mathbf{y}'\)</span> satisfies:</p>
@@ -2333,14 +2323,6 @@ title="Print to PDF"
 \[y_t'=y_t-y_{t-1}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfPurchase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">12</span><span class="p">),</span>
     <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">]</span>
@@ -2450,15 +2432,7 @@ title="Print to PDF"
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRate</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/exchange_rate.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRate</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/exchange_rate.csv&#39;</span><span class="p">)</span>
 
 <span class="n">dfRate</span><span class="p">[</span><span class="s1">&#39;rate_smooth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfRate</span><span class="o">.</span><span class="n">rate</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">dfRate</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -2557,7 +2531,7 @@ title="Print to PDF"
 <p>Notice that there will be <span class="math notranslate nohighlight">\(N-K+1\)</span> rolling mean points and <span class="math notranslate nohighlight">\(K-1\)</span> null values. Therefore, if <span class="math notranslate nohighlight">\(K\)</span> is even, then the rolling mean cannot be centered. To avoid this problem, calculate the rolling mean once again with the order of 2.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRate</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/exchange_rate.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRate</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/exchange_rate.csv&#39;</span><span class="p">)</span>
 
 <span class="n">rate</span> <span class="o">=</span> <span class="n">dfRate</span><span class="o">.</span><span class="n">rate</span>
 <span class="n">ma6</span> <span class="o">=</span> <span class="n">rate</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -2663,14 +2637,6 @@ title="Print to PDF"
 <p>The formula for growth rate is given by:</p>
 <div class="math notranslate nohighlight">
 \[r_t=\frac{y_t-y_{t-1}}{y_{t-1}}\]</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCpi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -2809,32 +2775,6 @@ title="Print to PDF"
 <li><p><em>Seasonality</em>, the pattern that repeats after a specific period.</p></li>
 <li><p><em>Cyclic</em>, very much like seasonality but the length of each cycle is not fixed.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">pmdarima</span> <span class="k">as</span> <span class="nn">pm</span>
-
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
-<span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
-
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima_model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.sarimax</span> <span class="kn">import</span> <span class="n">SARIMAX</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.api</span> <span class="kn">import</span> <span class="n">VAR</span><span class="p">,</span> <span class="n">SVAR</span><span class="p">,</span> <span class="n">VARMAX</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.holtwinters</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span> <span class="k">as</span> <span class="n">ES</span>
-<span class="kn">from</span> <span class="nn">prophet</span> <span class="kn">import</span> <span class="n">Prophet</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
 <section id="notation">
 <h3>2.1. Notation<a class="headerlink" href="#notation" title="Permalink to this headline">#</a></h3>
 <section id="time-series-notation">
@@ -2881,22 +2821,6 @@ PACF describes the direct effect <span class="math notranslate nohighlight">\(\b
 <p>Both ACF and PACF include a <span class="math notranslate nohighlight">\(95\%\)</span> confidence band indicating the correlation coefficient is not significant if it falls into that band.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span>
-<span class="kn">from</span> <span class="nn">sktime.datasets</span> <span class="kn">import</span> <span class="n">load_airline</span><span class="p">,</span> <span class="n">load_macroeconomic</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_time_series</span><span class="p">(</span><span class="n">series</span><span class="p">):</span>
     <span class="n">mosaic</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">,</span>  <span class="s1">&#39;ts&#39;</span>  <span class="p">],</span>
@@ -2914,7 +2838,7 @@ PACF describes the direct effect <span class="math notranslate nohighlight">\(\b
 <p>In the next part, we are plotting the time series plot along with ACF and PACF for some different series. They help us finding possible trends or seasonality in the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/purchase_quantity.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
 <span class="n">dfQty</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64[ns]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
 <span class="c1"># dfQty = dfQty.asfreq(&#39;D&#39;)</span>
 
@@ -2923,7 +2847,7 @@ PACF describes the direct effect <span class="math notranslate nohighlight">\(\b
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/statsmodels-temporal-analysis_54_0.png" src="../_images/statsmodels-temporal-analysis_54_0.png" />
+<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_55_0.png"><img alt="../_images/statsmodels-temporal-analysis_55_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_55_0.png" style="width: 728.0px; height: 440.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -2934,7 +2858,7 @@ PACF describes the direct effect <span class="math notranslate nohighlight">\(\b
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/statsmodels-temporal-analysis_55_0.png" src="../_images/statsmodels-temporal-analysis_55_0.png" />
+<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_56_0.png"><img alt="../_images/statsmodels-temporal-analysis_56_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_56_0.png" style="width: 728.0px; height: 440.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -2945,7 +2869,7 @@ PACF describes the direct effect <span class="math notranslate nohighlight">\(\b
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/statsmodels-temporal-analysis_56_0.png" src="../_images/statsmodels-temporal-analysis_56_0.png" />
+<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_57_0.png"><img alt="../_images/statsmodels-temporal-analysis_57_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_57_0.png" style="width: 728.0px; height: 440.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2954,20 +2878,7 @@ PACF describes the direct effect <span class="math notranslate nohighlight">\(\b
 <p>Time series decompostion is a statistical technique that factorizes data into three components: trend, residual and noise. There are two approaches to achieve this, using an additive model or a multiplicative model, where the original data equals to the sum or the product of its componennts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/purchase_quantity.csv&#39;</span><span class="p">)</span>
 <span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">dfQuantity</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">))</span>
 <span class="n">dfQuantity</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-6</span>
 <span class="n">dfQuantity</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -3038,7 +2949,7 @@ PACF describes the direct effect <span class="math notranslate nohighlight">\(\b
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/statsmodels-temporal-analysis_60_0.png" src="../_images/statsmodels-temporal-analysis_60_0.png" />
+<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_61_0.png"><img alt="../_images/statsmodels-temporal-analysis_61_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_61_0.png" style="width: 568.5px; height: 389.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -3071,7 +2982,8 @@ Name: seasonal, dtype: float64
 <li><p>No seasonality</p></li>
 </ul>
 <p>To check whether a time series is stationary, we can look at its line chart. Let’s plot some examples:</p>
-<img alt="chapter-08/image/stationary.png" src="chapter-08/image/stationary.png" />
+<a class="reference internal image-reference" href="../_images/stationary.png"><img alt="../_images/stationary.png" class="align-center" src="../_images/stationary.png" style="height: 500px;" /></a>
+<br>
 <ul class="simple">
 <li><p>Series (d), (h), (i) have seasonality</p></li>
 <li><p>Series (a), ©, (e), (f), (i) have trends, thus their means at different periods are not constants</p></li>
@@ -3088,20 +3000,7 @@ Name: seasonal, dtype: float64
 <p>The decision making process is: if either p-value &lt; significance level or test statistic &lt; critical value, we reject <span class="math notranslate nohighlight">\(H_0\)</span> and conclude that our data is stationary.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/purchase_quantity.csv&#39;</span><span class="p">)</span>
 <span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">dfQuantity</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">))</span>
 <span class="n">dfQuantity</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-6</span>
 <span class="n">quantity</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
@@ -3166,16 +3065,7 @@ Name: seasonal, dtype: float64
 <h4>Differencing estimation<a class="headerlink" href="#differencing-estimation" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pmdarima.arima</span> <span class="kn">import</span> <span class="n">ndiffs</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/purchase_quantity.csv&#39;</span><span class="p">)</span>
 <span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">dfQuantity</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">))</span>
 <span class="n">dfQuantity</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-6</span>
 <span class="n">quantity</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
@@ -3202,27 +3092,10 @@ Name: seasonal, dtype: float64
 <h2>3. Annotation<a class="headerlink" href="#annotation" title="Permalink to this headline">#</a></h2>
 <section id="peaks-finding">
 <h3>3.1. Peaks finding<a class="headerlink" href="#peaks-finding" title="Permalink to this headline">#</a></h3>
-<p>The functions
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.argrelmin.html'&gt;argrelmin()&lt;/a&gt;</span></code>
-and
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.argrelmax.html'&gt;argrelmax()&lt;/a&gt;</span></code>
-find the <em>relative</em> or <em>local</em> extrema in a sequence, consider a number of points in each side for comparison.</p>
+<p>The functions <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.argrelmin.html"><code class="docutils literal notranslate"><span class="pre">argrelmin()</span></code></a> and <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.argrelmax.html"><code class="docutils literal notranslate"><span class="pre">argrelmax()</span></code></a> find the <em>relative</em> or <em>local</em> extrema in a sequence, consider a number of points in each side for comparison.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">argrelmin</span><span class="p">,</span> <span class="n">argrelmax</span><span class="p">,</span> <span class="n">find_peaks</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/purchase_quantity.csv&#39;</span><span class="p">)</span>
 <span class="n">dfQty</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dfQty</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y&#39;</span><span class="p">)</span>
 <span class="n">dfQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">sQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">quantity</span><span class="p">[</span><span class="mi">150</span><span class="p">:]</span>
@@ -3244,17 +3117,9 @@ find the <em>relative</em> or <em>local</em> extrema in a sequence, consider a n
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/statsmodels-temporal-analysis_78_0.png" src="../_images/statsmodels-temporal-analysis_78_0.png" />
+<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_79_0.png"><img alt="../_images/statsmodels-temporal-analysis_79_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_79_0.png" style="width: 880.5px; height: 328.5px;" /></a>
 </div>
 </div>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/deepcharles/ruptures">https://github.com/deepcharles/ruptures</a></p></li>
-<li><p><a class="reference external" href="https://github.com/rob-med/awesome-TS-anomaly-detection">https://github.com/rob-med/awesome-TS-anomaly-detection</a></p></li>
-<li><p><a class="reference external" href="https://datascience.stackexchange.com/questions/32126/looking-for-a-good-package-for-anomaly-detection-in-time-series">https://datascience.stackexchange.com/questions/32126/looking-for-a-good-package-for-anomaly-detection-in-time-series</a></p></li>
-<li><p><a class="reference external" href="https://github.com/yzhao062/anomaly-detection-resources#34-time-series-outlier-detection">https://github.com/yzhao062/anomaly-detection-resources#34-time-series-outlier-detection</a></p></li>
-<li><p><a class="reference external" href="https://pro.arcgis.com/en/pro-app/2.9/tool-reference/space-time-pattern-mining/how-change-point-detection-works.htm">https://pro.arcgis.com/en/pro-app/2.9/tool-reference/space-time-pattern-mining/how-change-point-detection-works.htm</a></p></li>
-<li><p><a class="reference external" href="https://www.iese.fraunhofer.de/blog/change-point-detection/">https://www.iese.fraunhofer.de/blog/change-point-detection/</a></p></li>
-</ul>
 </section>
 <section id="change-detection">
 <h3>3.2. Change detection<a class="headerlink" href="#change-detection" title="Permalink to this headline">#</a></h3>
@@ -3265,16 +3130,7 @@ find the <em>relative</em> or <em>local</em> extrema in a sequence, consider a n
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">ruptures</span> <span class="k">as</span> <span class="nn">rpt</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/purchase_quantity.csv&#39;</span><span class="p">)</span>
 <span class="n">dfQty</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dfQty</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y&#39;</span><span class="p">)</span>
 <span class="n">dfQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">sQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">quantity</span>
@@ -3311,7 +3167,7 @@ find the <em>relative</em> or <em>local</em> extrema in a sequence, consider a n
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/statsmodels-temporal-analysis_85_0.png" src="../_images/statsmodels-temporal-analysis_85_0.png" />
+<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_85_0.png"><img alt="../_images/statsmodels-temporal-analysis_85_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_85_0.png" style="width: 712.5px; height: 281.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -3347,13 +3203,9 @@ find the <em>relative</em> or <em>local</em> extrema in a sequence, consider a n
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/statsmodels-temporal-analysis_87_0.png" src="../_images/statsmodels-temporal-analysis_87_0.png" />
+<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_87_0.png"><img alt="../_images/statsmodels-temporal-analysis_87_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_87_0.png" style="width: 720.5px; height: 428.0px;" /></a>
 </div>
 </div>
-</section>
-<section id="outlier-detection">
-<h3>3.3. Outlier detection<a class="headerlink" href="#outlier-detection" title="Permalink to this headline">#</a></h3>
-<p>Luminare is a python package which provides many outlier detection methods. Beside offline models, Luminare also provide a online model to detect outlier in streaming data.</p>
 </section>
 </section>
 <section id="references">
@@ -3361,6 +3213,10 @@ find the <em>relative</em> or <em>local</em> extrema in a sequence, consider a n
 <ul class="simple">
 <li><p><em><a class="reference external" href="http://otexts.com">otexts.com</a> - <a class="reference external" href="https://otexts.com/fpp3/">Forecasting: Principles and Practice</a></em></p></li>
 <li><p><em><a class="reference external" href="http://laurentoudre.fr">laurentoudre.fr</a> - <a class="reference external" href="http://www.laurentoudre.fr/publis/TOG-SP-19.pdf">Selective review of offline change point detection methods</a></em></p></li>
+<li><p><em><a class="reference external" href="http://github.com">github.com</a> - <a class="reference external" href="https://github.com/rob-med/awesome-TS-anomaly-detection">Awesome TS anomaly detection</a></em></p></li>
+<li><p><em><a class="reference external" href="http://github.com">github.com</a> - <a class="reference external" href="https://github.com/yzhao062/anomaly-detection-resources#34-time-series-outlier-detection">Anomaly detection resources</a></em></p></li>
+<li><p><a class="reference external" href="https://datascience.stackexchange.com/questions/32126/looking-for-a-good-package-for-anomaly-detection-in-time-series">https://datascience.stackexchange.com/questions/32126/looking-for-a-good-package-for-anomaly-detection-in-time-series</a></p></li>
+<li><p><a class="reference external" href="https://pro.arcgis.com/en/pro-app/2.9/tool-reference/space-time-pattern-mining/how-change-point-detection-works.htm">https://pro.arcgis.com/en/pro-app/2.9/tool-reference/space-time-pattern-mining/how-change-point-detection-works.htm</a></p></li>
 </ul>
 </section>
 </section>

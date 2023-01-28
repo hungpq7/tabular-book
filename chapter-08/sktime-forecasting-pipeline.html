@@ -468,7 +468,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-09/pyod-anomaly-detection.html">
-     Pyod: Anomaly Detection
+     PyOD: Anomaly Detection
     </a>
    </li>
   </ul>
@@ -1092,45 +1092,69 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="sktime-forecasting-pipeline">
 <h1>Sktime: Forecasting Pipeline<a class="headerlink" href="#sktime-forecasting-pipeline" title="Permalink to this headline">#</a></h1>
 <p>The famous ARIMA model is basically a Linear Regression model on a time series’ own lags. So what if we replace the simple Linear Regression with a state-of-the-art tabular learning algorithm? This (known under the term <em>reduction</em>) is one example of useful features in <a class="reference external" href="https://www.sktime.org/en/stable/index.html">Sktime</a>. In this topic, we are going to use this library to implement a lot of forecasting tasks such as reduction, forecasting, backtesting and evaluation, in an unified way.</p>
-<section id="forecasting-interface">
-<h2>1. Forecasting interface<a class="headerlink" href="#forecasting-interface" title="Permalink to this headline">#</a></h2>
-<section id="basic-workflow">
-<h3>1.1. Basic workflow<a class="headerlink" href="#basic-workflow" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">logging</span><span class="p">;</span> <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">janitor</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
 <span class="kn">from</span> <span class="nn">sktime.forecasting.base</span> <span class="kn">import</span> <span class="n">ForecastingHorizon</span> <span class="k">as</span> <span class="n">FH</span>
 <span class="kn">from</span> <span class="nn">sktime.forecasting.arima</span> <span class="kn">import</span> <span class="n">AutoARIMA</span>
 <span class="kn">from</span> <span class="nn">sktime.forecasting.ets</span> <span class="kn">import</span> <span class="n">AutoETS</span>
-<span class="kn">from</span> <span class="nn">sktime.transformations.series.lag</span> <span class="kn">import</span> <span class="n">Lag</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.compose</span> <span class="kn">import</span> <span class="n">make_reduction</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.conformal</span> <span class="kn">import</span> <span class="n">ConformalIntervals</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.naive</span> <span class="kn">import</span> <span class="n">NaiveVariance</span>
 
+<span class="kn">from</span> <span class="nn">sktime.transformations.series.lag</span> <span class="kn">import</span> <span class="n">Lag</span>
 <span class="kn">from</span> <span class="nn">sktime.utils.plotting</span> <span class="kn">import</span> <span class="n">plot_series</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.compose</span> <span class="kn">import</span> <span class="n">MultiplexForecaster</span><span class="p">,</span> <span class="n">TransformedTargetForecaster</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.model_selection</span> <span class="kn">import</span> <span class="n">ExpandingWindowSplitter</span><span class="p">,</span> <span class="n">SlidingWindowSplitter</span><span class="p">,</span> <span class="n">CutoffSplitter</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.model_selection</span> <span class="kn">import</span> <span class="n">ForecastingRandomizedSearchCV</span><span class="p">,</span> <span class="n">ForecastingGridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.model_selection</span> <span class="kn">import</span> <span class="n">temporal_train_test_split</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.model_evaluation</span> <span class="kn">import</span> <span class="n">evaluate</span>
+<span class="kn">from</span> <span class="nn">sktime.performance_metrics.forecasting</span> <span class="kn">import</span> <span class="n">MeanAbsolutePercentageError</span> <span class="k">as</span> <span class="n">MAPE</span>
+<span class="kn">from</span> <span class="nn">sktime.performance_metrics.forecasting</span> <span class="kn">import</span> <span class="n">MeanAbsoluteScaledError</span> <span class="k">as</span> <span class="n">MASE</span>
+<span class="kn">from</span> <span class="nn">sktime.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sktime.transformations.series.detrend</span> <span class="kn">import</span> <span class="n">Detrender</span><span class="p">,</span> <span class="n">Deseasonalizer</span>
+<span class="kn">from</span> <span class="nn">sktime.transformations.series.difference</span> <span class="kn">import</span> <span class="n">Differencer</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.trend</span> <span class="kn">import</span> <span class="n">PolynomialTrendForecaster</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.naive</span> <span class="kn">import</span> <span class="n">NaiveVariance</span>
+
+<span class="kn">from</span> <span class="nn">skforecast.ForecasterAutoreg</span> <span class="kn">import</span> <span class="n">ForecasterAutoreg</span>
+<span class="kn">from</span> <span class="nn">skforecast.ForecasterAutoregCustom</span> <span class="kn">import</span> <span class="n">ForecasterAutoregCustom</span>
+<span class="kn">from</span> <span class="nn">skforecast.model_selection</span> <span class="kn">import</span> <span class="n">grid_search_forecaster</span><span class="p">,</span> <span class="n">backtesting_forecaster</span>
+<span class="kn">from</span> <span class="nn">skforecast.ForecasterAutoregMultiSeries</span> <span class="kn">import</span> <span class="n">ForecasterAutoregMultiSeries</span>
+
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBRegressor</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span> <span class="nn">catboost</span> <span class="kn">import</span> <span class="n">CatBoostRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
 <span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
 </pre></div>
 </div>
 </div>
 </div>
+<section id="forecasting-interface">
+<h2>1. Forecasting interface<a class="headerlink" href="#forecasting-interface" title="Permalink to this headline">#</a></h2>
+<section id="basic-workflow">
+<h3>1.1. Basic workflow<a class="headerlink" href="#basic-workflow" title="Permalink to this headline">#</a></h3>
 <section id="input-format">
 <h4>Input format<a class="headerlink" href="#input-format" title="Permalink to this headline">#</a></h4>
-<p>The appropriate format of input data for Sktime is a Pandas Series or DataFrame with
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DatetimeIndex.html&gt;DatetimeIndex&lt;/a&gt;</span></code> and
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.PeriodIndex.html&gt;PeriodIndex&lt;/a&gt;</span></code>.
-There are different date and time <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#dateoffset-objects">frequencies</a> available, but in this section we will demonstrate with a practical use case: business day frequency.
-For non-time-series sequential data, Sktime also accepts integer index.</p>
+<p>The appropriate format of input data for Sktime is a Pandas Series or DataFrame with <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DatetimeIndex.html"><code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code></a> and <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.PeriodIndex.html"><code class="docutils literal notranslate"><span class="pre">PeriodIndex</span></code></a>. There are different date and time <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#dateoffset-objects">frequencies</a> available, but in this section we will demonstrate with a practical use case: business day frequency. For non-time-series sequential data, Sktime also accepts integer index.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/weekly_quantity.csv&#39;</span><span class="p">)</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/weekly_quantity.csv&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;date = date.astype(&#39;datetime64&#39;)&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -1193,10 +1217,10 @@ For non-time-series sequential data, Sktime also accepts integer index.</p>
 <section id="forecasters">
 <h4>Forecasters<a class="headerlink" href="#forecasters" title="Permalink to this headline">#</a></h4>
 <p>A pain point occurs in forecasting tasks is that different Python packages such as Statsmodels, PmdArima and Prophet use different fit and predict syntaxes. Sktime serves the role of an unified framework that wraps forecasting models so that Data Scientists can try different forecasters with ease. Sktime supports all popular models, some with an automated version:
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.arima.AutoARIMA.html&gt;AutoARIMA&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.ets.AutoETS.html&gt;AutoETS&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.tbats.TBATS.html&gt;TBATS&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.fbprophet.Prophet.html&gt;Prophet&lt;/a&gt;</span></code>.</p>
+<a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.arima.AutoARIMA.html"><code class="docutils literal notranslate"><span class="pre">AutoARIMA</span></code></a>,
+<a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.ets.AutoETS.html"><code class="docutils literal notranslate"><span class="pre">AutoETS</span></code></a>,
+<a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.tbats.TBATS.html"><code class="docutils literal notranslate"><span class="pre">TBATS</span></code></a>, and
+<a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.fbprophet.Prophet.html"><code class="docutils literal notranslate"><span class="pre">Prophet</span></code></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">AutoARIMA</span><span class="p">(</span><span class="n">sp</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -1219,11 +1243,13 @@ For non-time-series sequential data, Sktime also accepts integer index.</p>
 </div>
 </div>
 </div>
-<p><b style='color:navy'><i class="fa fa-info-circle"></i>  Note</b><br></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>Once the model is fitted, the last observed value is call the <em>offset</em>, indexed 0. It can be thought as the <em>now</em> state of the time series.</p></li>
 <li><p>We can either request future forecasts (<em>out-of-sample forecasting</em>) with the indices start from 1, or request historical fitted values (<em>in-sample prediction</em>) with negative indices. However, some models will return NA for in-sample prediction.</p></li>
 </ul>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fh</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
@@ -1277,9 +1303,7 @@ For non-time-series sequential data, Sktime also accepts integer index.</p>
 </section>
 <section id="forecasting-horizon">
 <h4>Forecasting horizon<a class="headerlink" href="#forecasting-horizon" title="Permalink to this headline">#</a></h4>
-<p>The most simple way to request forecasts is using integer indices as above, but sometimes, we need a more pwerful tool. Sktime has a
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=1&gt;ForecastingHorizon&lt;/a&gt;</span></code>
-class allowing us to specifiy either relative or absolute horizon.</p>
+<p>The most simple way to request forecasts is using integer indices as above, but sometimes, we need a more pwerful tool. Sktime has a <a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.base.ForecastingHorizon.html"><code class="docutils literal notranslate"><span class="pre">ForecastingHorizon</span></code></a> class allowing us to specifiy either relative or absolute horizon.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fhRel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">FH</span><span class="p">)</span>
@@ -1613,7 +1637,7 @@ For forecasters who don’t support probabilistic prediction, Sktime supports so
 <p>However, in the inference phase, it requres values of the exogeneous variables at future time steps that we are requesting forecast. This makes only special variables with appointed time (such as holidays and special events) a viable option. There is a workaround solution to involve economical data (which is much more useful), which is using their lags. For example, to forecast a variable <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> for the next 7 days, we can use <span class="math notranslate nohighlight">\(\mathbf{x}_{t-7}\)</span> for training and leave <span class="math notranslate nohighlight">\(7\)</span> latest values of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> for inference.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/air_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/air_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">dfTemp</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">dfTemp</span>
     <span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
@@ -1778,34 +1802,10 @@ For forecasters who don’t support probabilistic prediction, Sktime supports so
 </section>
 <section id="forecasting-reduction">
 <h3>1.2. Forecasting reduction<a class="headerlink" href="#forecasting-reduction" title="Permalink to this headline">#</a></h3>
-<p>In order to reduce a forecasting problem to a regression problem, we need to re-arrange the time series into a table so that itself (<span class="math notranslate nohighlight">\(\mathbf{y}_t\)</span>) becomes the label and its lags (<span class="math notranslate nohighlight">\(\mathbf{y}_{t-1},\mathbf{y}_{t-2},\dots\)</span>) become the features. There are three approaches to make prediction to multiple future time steps: recursive reduction, direct reduction and a hybrid between them, implemented in a single function,
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.compose.make_reduction.html'&gt;make_reduction()&lt;/a&gt;</span></code>.</p>
+<p>In order to reduce a forecasting problem to a regression problem, we need to re-arrange the time series into a table so that itself (<span class="math notranslate nohighlight">\(\mathbf{y}_t\)</span>) becomes the label and its lags (<span class="math notranslate nohighlight">\(\mathbf{y}_{t-1},\mathbf{y}_{t-2},\dots\)</span>) become the features. There are three approaches to make prediction to multiple future time steps: recursive reduction, direct reduction and a hybrid between them, implemented in a single function, <a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.compose.make_reduction.html"><code class="docutils literal notranslate"><span class="pre">make_reduction()</span></code></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">janitor</span>
-<span class="kn">import</span> <span class="nn">sktime</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.compose</span> <span class="kn">import</span> <span class="n">make_reduction</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.conformal</span> <span class="kn">import</span> <span class="n">ConformalIntervals</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.naive</span> <span class="kn">import</span> <span class="n">NaiveVariance</span>
-<span class="kn">from</span> <span class="nn">sktime.utils.plotting</span> <span class="kn">import</span> <span class="n">plot_series</span>
-<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBRegressor</span>
-<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
-<span class="kn">from</span> <span class="nn">catboost</span> <span class="kn">import</span> <span class="n">CatBoostRegressor</span>
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/air_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/air_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">dfTemp</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">dfTemp</span>
     <span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
@@ -1874,7 +1874,7 @@ For forecasters who don’t support probabilistic prediction, Sktime supports so
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/weekly_quantity.csv&#39;</span><span class="p">)</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/weekly_quantity.csv&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;date = date.astype(&#39;datetime64&#39;)&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -1936,8 +1936,8 @@ For forecasters who don’t support probabilistic prediction, Sktime supports so
 <section id="recursive-strategy">
 <h4>Recursive strategy<a class="headerlink" href="#recursive-strategy" title="Permalink to this headline">#</a></h4>
 <p>This is the strategy used in traditional models such as ARIMA and ETS, it trains a model <span class="math notranslate nohighlight">\(f:\mathbf{y}_{t-1},\mathbf{y}_{t-2},\ldots\mapsto\mathbf{y}_t\)</span>. Denote the last observed value <span class="math notranslate nohighlight">\(y_T\)</span>, the model first predicts <span class="math notranslate nohighlight">\(\hat{y}_{T+1|T}\)</span>, then appends it to the original series to predict <span class="math notranslate nohighlight">\(\hat{y}_{T+2|T+1}\)</span>. This behaviour is repeated until all future time steps have been forecasted. This strategy has a significant weakness, is that it accumulates error each time it makes prediction to a new time step. Hence, requesting forecasts for a large horizon using this strategy is not a good idea, as it can saturate/converge and is no longer accurate.</p>
-<img alt="chapter-08/image/forecast_reduction_recursive.png" src="chapter-08/image/forecast_reduction_recursive.png" />
-<div class="cell docutils container">
+<a class="reference internal image-reference" href="../_images/forecast_reduction_recursive.png"><img alt="../_images/forecast_reduction_recursive.png" class="align-center" src="../_images/forecast_reduction_recursive.png" style="height: 300px;" /></a>
+<br><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nLags</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">()</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">make_reduction</span><span class="p">,</span> <span class="n">window_length</span><span class="o">=</span><span class="n">nLags</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;recursive&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">NaiveVariance</span><span class="p">)</span>
@@ -2040,15 +2040,15 @@ For forecasters who don’t support probabilistic prediction, Sktime supports so
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sktime-forecasting-pipeline_35_0.png" src="../_images/sktime-forecasting-pipeline_35_0.png" />
+<a class="reference internal image-reference" href="../_images/sktime-forecasting-pipeline_36_0.png"><img alt="../_images/sktime-forecasting-pipeline_36_0.png" class="align-center" src="../_images/sktime-forecasting-pipeline_36_0.png" style="width: 333.0px; height: 126.0px;" /></a>
 </div>
 </div>
 </section>
 <section id="direct-strategy">
 <h4>Direct strategy<a class="headerlink" href="#direct-strategy" title="Permalink to this headline">#</a></h4>
 <p>This strategy, in the other hand, trains a separate model for each time step: <span class="math notranslate nohighlight">\(f_h:\mathbf{y}_{t-h},\mathbf{y}_{t-(h+1)},\ldots\mapsto\mathbf{y}_t\)</span>. As the number of models need to be train equals to the length of the forecasting horizon, this method is more computationally expensive but more accurate than recursive reduction. Keep in mind that making forecast to a far time step prevents using recent lags (<span class="math notranslate nohighlight">\(y_{t-1},\ldots,y_{t-(h-1)}\)</span>). In other the words, if <span class="math notranslate nohighlight">\(h\)</span> is large then <span class="math notranslate nohighlight">\(f_h\)</span> is trained on less features and thus has less prediction power. Also note that because this method is a combination of multiple models, we must specify the forecasting horizon when fitting it to the data.</p>
-<img alt="chapter-08/image/forecast_reduction_direct.png" src="chapter-08/image/forecast_reduction_direct.png" />
-<div class="cell docutils container">
+<a class="reference internal image-reference" href="../_images/forecast_reduction_direct.png"><img alt="../_images/forecast_reduction_direct.png" class="align-center" src="../_images/forecast_reduction_direct.png" style="height: 300px;" /></a>
+<br><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nLags</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_reduction</span><span class="p">(</span><span class="n">LGBMRegressor</span><span class="p">(),</span> <span class="n">window_length</span><span class="o">=</span><span class="n">nLags</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;direct&#39;</span><span class="p">,</span> <span class="n">scitype</span><span class="o">=</span><span class="s1">&#39;tabular-regressor&#39;</span><span class="p">)</span>
@@ -2120,7 +2120,7 @@ For forecasters who don’t support probabilistic prediction, Sktime supports so
 </section>
 <section id="hybrid-strategy">
 <h4>Hybrid strategy<a class="headerlink" href="#hybrid-strategy" title="Permalink to this headline">#</a></h4>
-<p>Sktime also develops a hybrid method that combines two above strategies, call <em>dir-rec</em>. It also has a recursive behaviour, but after appending <span class="math notranslate nohighlight">\(\hat{y}_{T+h|T+(h-1)}\)</span>, it trains a new model to predict the next step <span class="math notranslate nohighlight">\(\hat{y}_{T+(h+1)|T+h}\)</span>. However, because both recursion reduction and direct reduction are not good at forecasting far horizons, <em>dir-rec</em> also suffers from this problem.</p>
+<p>Sktime also develops a hybrid method that combines two above strategies, called <em>dir-rec</em>. It also has a recursive behaviour, but after appending <span class="math notranslate nohighlight">\(\hat{y}_{T+h|T+(h-1)}\)</span>, it trains a new model to predict the next step <span class="math notranslate nohighlight">\(\hat{y}_{T+(h+1)|T+h}\)</span>. However, because both recursion reduction and direct reduction are not good at forecasting far horizons, <em>dir-rec</em> also suffers from this problem.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nLags</span> <span class="o">=</span> <span class="mi">10</span>
@@ -2136,39 +2136,11 @@ For forecasters who don’t support probabilistic prediction, Sktime supports so
 </section>
 <section id="multivariate-reducer">
 <h4>Multivariate reducer<a class="headerlink" href="#multivariate-reducer" title="Permalink to this headline">#</a></h4>
-<p>As Sktime currently does not support forecasting reduction for multivariate time series (where multiple time series grow together), we are going to use Skforecast’s <a class="reference external" href="https://joaquinamatrodrigo.github.io/skforecast/0.5.1/user_guides/multi-time-series-forecasting.html">multivariate forecasting</a> instead. Its class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://joaquinamatrodrigo.github.io/skforecast/0.5.1/api/ForecasterMultiSeries.html'&gt;ForecasterAutoregMultiSeries&lt;/a&gt;</span></code>
-assumes multiple time series are independent but follow the same patterns (for example, the sales of different products in the same store).</p>
+<p>As Sktime currently does not support forecasting reduction for multivariate time series (where multiple time series grow together), we are going to use Skforecast’s <a class="reference external" href="https://joaquinamatrodrigo.github.io/skforecast/0.5.1/user_guides/multi-time-series-forecasting.html">multivariate forecasting</a> instead. Its class <a class="reference external" href="https://joaquinamatrodrigo.github.io/skforecast/0.5.1/api/ForecasterMultiSeries.html"><code class="docutils literal notranslate"><span class="pre">ForecasterAutoregMultiSeries</span></code></a> assumes multiple time series are independent but follow the same patterns (for example, the sales of different products in the same store).</p>
 <p>Another reducer being capable of modeling relationship between different time series are being developed. Its assumption is that, each time series depends not only on its own past values, but also on past values of other time series.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">janitor</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-
-<span class="kn">from</span> <span class="nn">skforecast.ForecasterAutoreg</span> <span class="kn">import</span> <span class="n">ForecasterAutoreg</span>
-<span class="kn">from</span> <span class="nn">skforecast.ForecasterAutoregCustom</span> <span class="kn">import</span> <span class="n">ForecasterAutoregCustom</span>
-<span class="kn">from</span> <span class="nn">skforecast.model_selection</span> <span class="kn">import</span> <span class="n">grid_search_forecaster</span>
-<span class="kn">from</span> <span class="nn">skforecast.model_selection</span> <span class="kn">import</span> <span class="n">backtesting_forecaster</span>
-<span class="kn">from</span> <span class="nn">skforecast.ForecasterAutoregMultiSeries</span> <span class="kn">import</span> <span class="n">ForecasterAutoregMultiSeries</span>
-
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/air_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/air_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">dfTemp</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">dfTemp</span>
     <span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
@@ -2416,8 +2388,7 @@ assumes multiple time series are independent but follow the same patterns (for e
 <p>For summary, all types of error present in this section have the term <span class="math notranslate nohighlight">\(y_t-\hat{y}_t\)</span> in their nominator, so that they are all <em>lower-is-better</em>. Their ranges are <span class="math notranslate nohighlight">\((0,\infty)\)</span>, and their best values are <span class="math notranslate nohighlight">\(0\)</span>.</p>
 <section id="baseline-forecasters">
 <h4>Baseline forecasters<a class="headerlink" href="#baseline-forecasters" title="Permalink to this headline">#</a></h4>
-<p>Many evaluation metrics for time series forecasting involve a <a class="reference external" href="https://en.wikipedia.org/wiki/Forecasting#Categories_of_forecasting_methods">baseline model</a> (also known as benchmark model) in its calculation. The reason is very simple: because these baseline forecasters really make sense. Sktime implements all three strategies via the class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.naive.NaiveForecaster.html&gt;NaiveForecaster&lt;/a&gt;</span></code>.</p>
+<p>Many evaluation metrics for time series forecasting involve a <a class="reference external" href="https://en.wikipedia.org/wiki/Forecasting#Categories_of_forecasting_methods">baseline model</a> (also known as benchmark model) in its calculation. The reason is very simple: because these baseline forecasters really make sense. Sktime implements all three strategies via the class <a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.naive.NaiveForecaster.html"><code class="docutils literal notranslate"><span class="pre">NaiveForecaster</span></code></a>.</p>
 <ul class="simple">
 <li><p><em>Average model</em>: the forecast for all future values are equal to the average of observed values:</p></li>
 </ul>
@@ -2539,30 +2510,6 @@ Same as the case of relative error, this behaviour can make the validation phase
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">janitor</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.base</span> <span class="kn">import</span> <span class="n">ForecastingHorizon</span> <span class="k">as</span> <span class="n">FH</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.arima</span> <span class="kn">import</span> <span class="n">AutoARIMA</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.ets</span> <span class="kn">import</span> <span class="n">AutoETS</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.naive</span> <span class="kn">import</span> <span class="n">NaiveForecaster</span>
-
-<span class="kn">from</span> <span class="nn">sktime.utils.plotting</span> <span class="kn">import</span> <span class="n">plot_series</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sktime.performance_metrics.forecasting</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">mean_absolute_error</span> <span class="k">as</span> <span class="n">MAE</span><span class="p">,</span>
     <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span><span class="p">,</span>
@@ -2604,7 +2551,7 @@ Same as the case of relative error, this behaviour can make the validation phase
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/air_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTemp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/air_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">dfTemp</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">dfTemp</span>
     <span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
@@ -2736,46 +2683,6 @@ Same as the case of relative error, this behaviour can make the validation phase
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Backtesting">Backtesting</a> is the validation strategy dedicated for time series forecasting. The idea is to go back to the past, try different forecasters to decide which one best fits to our data. Backtesting can be either holdout validation or cross validation, but holdout validation is significantly biased for time series becasue data changes over time, so we highly recommend using cross validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span><span class="p">;</span> <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">janitor</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-
-<span class="kn">from</span> <span class="nn">sktime.utils.plotting</span> <span class="kn">import</span> <span class="n">plot_series</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.compose</span> <span class="kn">import</span> <span class="n">make_reduction</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.model_selection</span> <span class="kn">import</span> <span class="n">ExpandingWindowSplitter</span><span class="p">,</span> <span class="n">SlidingWindowSplitter</span><span class="p">,</span> <span class="n">CutoffSplitter</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.model_selection</span> <span class="kn">import</span> <span class="n">ForecastingRandomizedSearchCV</span><span class="p">,</span> <span class="n">ForecastingGridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.model_selection</span> <span class="kn">import</span> <span class="n">temporal_train_test_split</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.model_evaluation</span> <span class="kn">import</span> <span class="n">evaluate</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.base</span> <span class="kn">import</span> <span class="n">ForecastingHorizon</span> <span class="k">as</span> <span class="n">FH</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.arima</span> <span class="kn">import</span> <span class="n">AutoARIMA</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.ets</span> <span class="kn">import</span> <span class="n">AutoETS</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.compose</span> <span class="kn">import</span> <span class="n">MultiplexForecaster</span>
-<span class="kn">from</span> <span class="nn">sktime.performance_metrics.forecasting</span> <span class="kn">import</span> <span class="n">MeanAbsolutePercentageError</span> <span class="k">as</span> <span class="n">MAPE</span>
-<span class="kn">from</span> <span class="nn">sktime.performance_metrics.forecasting</span> <span class="kn">import</span> <span class="n">MeanAbsoluteScaledError</span> <span class="k">as</span> <span class="n">MASE</span>
-<span class="kn">from</span> <span class="nn">sktime.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.compose</span> <span class="kn">import</span> <span class="n">TransformedTargetForecaster</span>
-<span class="kn">from</span> <span class="nn">sktime.transformations.series.detrend</span> <span class="kn">import</span> <span class="n">Detrender</span>
-<span class="kn">from</span> <span class="nn">sktime.transformations.series.detrend</span> <span class="kn">import</span> <span class="n">Deseasonalizer</span>
-<span class="kn">from</span> <span class="nn">sktime.transformations.series.difference</span> <span class="kn">import</span> <span class="n">Differencer</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.trend</span> <span class="kn">import</span> <span class="n">PolynomialTrendForecaster</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.naive</span> <span class="kn">import</span> <span class="n">NaiveVariance</span>
-<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
-
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAPE</span> <span class="o">=</span> <span class="n">MAPE</span><span class="p">()</span>
 <span class="n">MASE</span> <span class="o">=</span> <span class="n">MASE</span><span class="p">()</span>
 </pre></div>
@@ -2785,7 +2692,7 @@ Same as the case of relative error, this behaviour can make the validation phase
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/weekly_quantity.csv&#39;</span><span class="p">)</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/weekly_quantity.csv&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;date = date.astype(&#39;datetime64&#39;)&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -2848,14 +2755,11 @@ Same as the case of relative error, this behaviour can make the validation phase
 <h4>Cross validation<a class="headerlink" href="#cross-validation" title="Permalink to this headline">#</a></h4>
 <p>Currently, Sktime supports three splitting strategies for rolling backtesting:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.CutoffSplitter.html&gt;CutoffSplitter&lt;/a&gt;</span></code>
-splits the time series at provided cutoff points with a fixed training window length.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.SlidingWindowSplitter.html&gt;SlidingWindowSplitter&lt;/a&gt;</span></code>
-is very much like cutoff splitter, but it uses all possible cutoffs rather than requires users to explicitly specify the locations. Visually, we can think about this strategy as <em>sliding</em> the observed window incrementally. There can be a large number of splits returned by this strategy, we can easily reduce it by setting a high sliding velocity.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.ExpandingWindowSplitter.html&gt;ExpandingWindowSplitter&lt;/a&gt;</span></code>
-is like sliding window strategy, but the origin of the training window is fixed rather than its length. So, the training window is more likely of <em>expanding</em> rather than <em>sliding</em>, thus the name of the strategy.</p></li>
+<li><p><a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.CutoffSplitter.html"><code class="docutils literal notranslate"><span class="pre">CutoffSplitter</span></code></a> splits the time series at provided cutoff points with a fixed training window length.</p></li>
+<li><p><a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.SlidingWindowSplitter.html"><code class="docutils literal notranslate"><span class="pre">SlidingWindowSplitter</span></code></a> is very much like cutoff splitter, but it uses all possible cutoffs rather than requires users to explicitly specify the locations. Visually, we can think about this strategy as <em>sliding</em> the observed window incrementally. There can be a large number of splits returned by this strategy, we can easily reduce it by setting a high sliding velocity.</p></li>
+<li><p><a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.ExpandingWindowSplitter.html"><code class="docutils literal notranslate"><span class="pre">ExpandingWindowSplitter</span></code></a> is like sliding window strategy, but the origin of the training window is fixed rather than its length. So, the training window is more likely of <em>expanding</em> rather than <em>sliding</em>, thus the name of the strategy.</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">printSplitIndex</span><span class="p">(</span><span class="n">splitter</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
     <span class="n">splitter</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">splitter</span><span class="p">)[:</span><span class="n">limit</span><span class="p">]</span>
@@ -3067,13 +2971,9 @@ Split #4: train [0, 110], valid [111, 113]
 </section>
 <section id="hyperparameter-tuning">
 <h4>Hyperparameter tuning<a class="headerlink" href="#hyperparameter-tuning" title="Permalink to this headline">#</a></h4>
-<p>Like in Scikit-learn, Sktime provides two convinient classes that combine hyperparameter tuning with cross validation,
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.ForecastingRandomizedSearchCV.html&gt;ForecastingRandomizedSearchCV&lt;/a&gt;</span></code> and
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.ForecastingGridSearchCV.html&gt;ForecastingGridSearchCV&lt;/a&gt;</span></code>.
-When implementing, there are some points to notice:</p>
+<p>Like in Scikit-learn, Sktime provides two convinient classes that combine hyperparameter tuning with cross validation, <a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.ForecastingRandomizedSearchCV.html"><code class="docutils literal notranslate"><span class="pre">ForecastingRandomizedSearchCV</span></code></a> and <a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.ForecastingGridSearchCV.html"><code class="docutils literal notranslate"><span class="pre">ForecastingGridSearchCV</span></code></a>. When implementing, there are some points to notice:</p>
 <ul class="simple">
-<li><p>Before performing validation splitting, we need to define a test set first. This is supported in Sktime using
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.temporal_train_test_split.html&gt;temporal_train_test_split()&lt;/a&gt;</span></code>, a wrapper function of Sklearn’s counterpart without shuffling.</p></li>
+<li><p>Before performing validation splitting, we need to define a test set first. This is supported in Sktime using <a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.model_selection.temporal_train_test_split.html"><code class="docutils literal notranslate"><span class="pre">temporal_train_test_split()</span></code></a>, a wrapper function of Sklearn’s counterpart without shuffling.</p></li>
 <li><p>As time series data will be quickly outdated, it is necessary to perform either refitting (more accurate) or updating (faster) after each time moving to a new training window. Implemented in both validators via the paramter <code class="docutils literal notranslate"><span class="pre">strategy</span></code>.</p></li>
 <li><p>The way we provide scoring strategy to the validators is a bit different from Scikit-learn’s counterparts. While Scikit-learn validators accept a scoring function which is always higher-is-better, Sktime’s validators use its own scoring classes with lower-is-better tag.</p></li>
 </ul>
@@ -3145,7 +3045,7 @@ When implementing, there are some points to notice:</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">validator</span><span class="o">.</span><span class="n">cv_results_</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;rank_test_MeanAbsolutePercentageError&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
@@ -3258,7 +3158,7 @@ When implementing, there are some points to notice:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sktime-forecasting-pipeline_87_0.png" src="../_images/sktime-forecasting-pipeline_87_0.png" />
+<a class="reference internal image-reference" href="../_images/sktime-forecasting-pipeline_88_0.png"><img alt="../_images/sktime-forecasting-pipeline_88_0.png" class="align-center" src="../_images/sktime-forecasting-pipeline_88_0.png" style="width: 740.0px; height: 198.4px;" /></a>
 </div>
 </div>
 </section>

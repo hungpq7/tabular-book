@@ -1181,6 +1181,31 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="prophet-forecasting-algorithms">
 <h1>Prophet: Forecasting Algorithms<a class="headerlink" href="#prophet-forecasting-algorithms" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima.model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.sarimax</span> <span class="kn">import</span> <span class="n">SARIMAX</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.varmax</span> <span class="kn">import</span> <span class="n">VARMAX</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.exponential_smoothing.ets</span> <span class="kn">import</span> <span class="n">ETSModel</span> <span class="k">as</span> <span class="n">ETS</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.holtwinters</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span> <span class="k">as</span> <span class="n">HW</span>
+<span class="kn">from</span> <span class="nn">sktime.forecasting.fbprophet</span> <span class="kn">import</span> <span class="n">Prophet</span>
+<span class="kn">from</span> <span class="nn">prophet</span> <span class="kn">import</span> <span class="n">Prophet</span> <span class="k">as</span> <span class="n">FBProphet</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span><span class="p">,</span> <span class="n">mean_absolute_error</span> <span class="k">as</span> <span class="n">MAE</span><span class="p">,</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
 <section id="arima">
 <h2>1. ARIMA<a class="headerlink" href="#arima" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average">ARIMA</a> (AutoRegressive Integrated Moving Average) is an statistical model aiming to demonstrate the auto-correlations in time series data. The term <em>auto</em> means we are examining the relationship between our series with historical versions of itself (lagged series).</p>
@@ -1224,10 +1249,8 @@ title="Print to PDF"
 <h4>Model selection<a class="headerlink" href="#model-selection" title="Permalink to this headline">#</a></h4>
 <p>Model selection (also known as hyperparameters tuning) for ARIMA is the process of choosing appropriate values for <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span> and <span class="math notranslate nohighlight">\(d\)</span>. While the selection of <span class="math notranslate nohighlight">\(d\)</span> is very straightforward, we would want to put more focus on tuning <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span>. As described earlier, viable values for <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> can be obtained by looking at PACF and ACF charts of the differenced series, respectively. However, this method usually returns a number of choices rather than guarantees a single optimal selection. Thus we treat it as a tool for limiting potential candidates, then perform greedy search. The objective of exhausted search in ARIMA is to minimize an <em>information criterion</em>, which has several options:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike’s Information Criterion</a>:
-<span class="math notranslate nohighlight">\(\text{AIC} = -2 \log(L) + 2(p+q+k+1)\)</span></p></li>
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Bayesian_information_criterion">Bayesian Information Criterion</a>:
-<span class="math notranslate nohighlight">\(\text{BIC} = \text{AIC} + [\log(T)-2](p+q+k+1)\)</span></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike’s Information Criterion</a>, <span class="math notranslate nohighlight">\(\text{AIC} = -2 \log(L) + 2(p+q+k+1)\)</span></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Bayesian_information_criterion">Bayesian Information Criterion</a>, <span class="math notranslate nohighlight">\(\text{BIC} = \text{AIC} + [\log(T)-2](p+q+k+1)\)</span></p></li>
 <li><p>AICc, a corrected version of AIC for small data, in which time series is usually the case. When <span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>, AICc converges to AIC.</p></li>
 </ul>
 <p>All the above information criteria are constructed of the <em>loss</em> part and the <em>regularization</em> part. The regularization part prevents the model from adding too many explanatory variables and makes sure the model has a good forecasting power. It is recommended to use AICc in real-world tasks.</p>
@@ -1280,39 +1303,16 @@ title="Print to PDF"
 </section>
 <section id="implementation">
 <h3>1.3. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima.model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.sarimax</span> <span class="kn">import</span> <span class="n">SARIMAX</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.varmax</span> <span class="kn">import</span> <span class="n">VARMAX</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span><span class="p">,</span> <span class="n">mean_absolute_error</span> <span class="k">as</span> <span class="n">MAE</span><span class="p">,</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span>
-
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="sarimax-implementation">
 <h4>SARIMAX implementation<a class="headerlink" href="#sarimax-implementation" title="Permalink to this headline">#</a></h4>
-<p>We are going to implement SARIMAX’s original form via class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/devel/generated/statsmodels.tsa.arima.model.ARIMA.html'&gt;ARIMA&lt;/a&gt;</span></code>
-or state space form via class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/dev/generated/statsmodels.tsa.statespace.sarimax.SARIMAX.html'&gt;SARIMAX&lt;/a&gt;</span></code>.
-They both use the same hyperparameters; the earlier class is useful in extracting model components while the later supports forecasting better.</p>
+<p>We are going to implement SARIMAX’s original form via class <a class="reference external" href="https://www.statsmodels.org/devel/generated/statsmodels.tsa.arima.model.ARIMA.html"><code class="docutils literal notranslate"><span class="pre">ARIMA</span></code></a> or state space form via class <a class="reference external" href="https://www.statsmodels.org/dev/generated/statsmodels.tsa.statespace.sarimax.SARIMAX.html"><code class="docutils literal notranslate"><span class="pre">SARIMAX</span></code></a>. They both use the same hyperparameters; the earlier class is useful in extracting model components while the later supports forecasting better.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">order</span></code>: the non-seasonal orders in the form of a tuple <span class="math notranslate nohighlight">\((p,d,q)\)</span>, defaults to <em>(1, 0, 0)</em>. <span class="math notranslate nohighlight">\(d\)</span> must be an integer, while <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> can be an integer (using all lagged series up to that value) or a list (using only specific lags).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">seasonal_order</span></code>: the seasonal orders in the form of a tuple <span class="math notranslate nohighlight">\((P,D,Q,m)\)</span>, defaults to <em>(0, 0, 0, 0)</em>. <span class="math notranslate nohighlight">\(D\)</span> and <span class="math notranslate nohighlight">\(m\)</span> must be an integer; <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> can be either an integer or a list.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/purchase_quantity.csv&#39;</span><span class="p">)</span>
 <span class="n">dfQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">dfQty</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">))</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
 <span class="n">y</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1413,7 +1413,10 @@ Freq: D, Name: quantity, dtype: float64
 </tr>
 </table></div></div>
 </div>
-<p>Note that Statsmodels distinguishes <em>forecast</em> (for future values) and <em>prediction</em> (for observed values). Thus, we will work on 2 separated methods.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Statsmodels distinguishes <em>forecast</em> (for future values) and <em>prediction</em> (for observed values). Thus, we will work on two separated methods.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">forecaster</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_forecast</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
@@ -1625,8 +1628,7 @@ Freq: D, Name: quantity, dtype: float64
 </section>
 <section id="var-implementation">
 <h4>VAR implementation<a class="headerlink" href="#var-implementation" title="Permalink to this headline">#</a></h4>
-<p>Statsmodels implements VAR’s statespace form via class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/dev/generated/statsmodels.tsa.statespace.varmax.VARMAX.html'&gt;VARMAX&lt;/a&gt;</span></code>.</p>
+<p>Statsmodels implements VAR’s statespace form via class <a class="reference external" href="https://www.statsmodels.org/dev/generated/statsmodels.tsa.statespace.varmax.VARMAX.html"><code class="docutils literal notranslate"><span class="pre">VARMAX</span></code></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">StationaryTest</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
@@ -1645,7 +1647,7 @@ Freq: D, Name: quantity, dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCpi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/cpi.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCpi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/cpi.csv&#39;</span><span class="p">)</span>
 <span class="n">dfCpi</span> <span class="o">=</span> <span class="n">dfCpi</span><span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s1">&#39;month&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime64&#39;</span><span class="p">})</span>
 <span class="n">dfCpi</span> <span class="o">=</span> <span class="n">dfCpi</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">)</span>
 <span class="n">dfCpi</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1903,7 +1905,7 @@ p-value=0.000007 &lt; 0.05 | data is stationary
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/prophet-forecasting-algorithms_27_0.png" src="../_images/prophet-forecasting-algorithms_27_0.png" />
+<a class="reference internal image-reference" href="../_images/prophet-forecasting-algorithms_28_0.png"><img alt="../_images/prophet-forecasting-algorithms_28_0.png" class="align-center" src="../_images/prophet-forecasting-algorithms_28_0.png" style="width: 640.5px; height: 496.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -2246,10 +2248,7 @@ p-value=0.000007 &lt; 0.05 | data is stationary
 </section>
 <section id="id3">
 <h3>2.3. Implementation<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
-<p>We can implement Holt-Winters’ model via class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/devel/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html'&gt;ExponentialSmoothing&lt;/a&gt;</span></code>
-or ETS model via class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.statsmodels.org/devel/generated/statsmodels.tsa.exponential_smoothing.ets.ETSModel.html'&gt;ETSModel&lt;/a&gt;</span></code>. Both classes share the same hyperparameters, the later class sacrifies the capability of extracting model components (level, trend and season) in trade-off for generalization.</p>
+<p>We can implement Holt-Winters’ model via class <a class="reference external" href="https://www.statsmodels.org/devel/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html"><code class="docutils literal notranslate"><span class="pre">ExponentialSmoothing</span></code></a> or ETS model via class <a class="reference external" href="https://www.statsmodels.org/devel/generated/statsmodels.tsa.exponential_smoothing.ets.ETSModel.html"><code class="docutils literal notranslate"><span class="pre">ETSModel</span></code></a>. Both classes share the same hyperparameters, the later class sacrifies the capability of extracting model components (level, trend and season) in trade-off for generalization.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">error</span></code>: the type of error model, defaults to <em>add</em>. The other option is <em>mul</em>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">trend</span></code>: the type of trend model, defaults to <em>None</em>. Other options are <em>add</em> and <em>mul</em>.</p></li>
@@ -2259,30 +2258,7 @@ or ETS model via class
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.exponential_smoothing.ets</span> <span class="kn">import</span> <span class="n">ETSModel</span> <span class="k">as</span> <span class="n">ETS</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.holtwinters</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span> <span class="k">as</span> <span class="n">HW</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span><span class="p">,</span> <span class="n">mean_absolute_error</span> <span class="k">as</span> <span class="n">MAE</span><span class="p">,</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span>
-
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
-    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/purchase_quantity.csv&#39;</span><span class="p">)</span>
 <span class="n">dfQuantity</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">dfQuantity</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">))</span>
 <span class="n">s</span> <span class="o">=</span> <span class="n">dfQuantity</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">quantity</span>
 <span class="n">s</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -2375,7 +2351,7 @@ Name: quantity, dtype: float64
 </tr>
 </table></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">forecaster</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_prediction</span><span class="p">(</span><span class="n">cutTest</span><span class="p">,</span> <span class="n">cutEnd</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">yTestPred</span> <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">predicted_mean</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;forecast&#39;</span><span class="p">)</span>
@@ -2505,7 +2481,7 @@ Name: quantity, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/prophet-forecasting-algorithms_48_0.png" src="../_images/prophet-forecasting-algorithms_48_0.png" />
+<a class="reference internal image-reference" href="../_images/prophet-forecasting-algorithms_49_0.png"><img alt="../_images/prophet-forecasting-algorithms_49_0.png" class="align-center" src="../_images/prophet-forecasting-algorithms_49_0.png" style="width: 1145.0px; height: 373.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2533,9 +2509,7 @@ s'_{k,t} &amp;= -s_{k,t-1}\sin(w) + s'_{k,t-1}\cos(w) + \gamma_2d_t
 </section>
 <section id="id4">
 <h3>3.2. Implementation<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
-<p>TBATS is implemented in Sktime via class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.tbats.TBATS.html'&gt;TBATS&lt;/a&gt;</span></code>.
-The hyperparameters are:</p>
+<p>TBATS is implemented in Sktime via class <a class="reference external" href="https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.tbats.TBATS.html"><code class="docutils literal notranslate"><span class="pre">TBATS</span></code></a>. The hyperparameters are:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">use_box_cox</span></code>: whether to use Box-Cox transform, defaults to <em>None</em> (automated). Other options are <em>True</em> and <em>Fasle</em>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">use_trend</span></code>: the type of trend model, defaults to <em>None</em>. Other options are <em>add</em> and <em>mul</em>.</p></li>
@@ -2615,34 +2589,13 @@ m &amp;\leftarrow m+\mathbf{a}(t)^{\text{T}}\boldsymbol{\gamma}
 <li><p><code class="docutils literal notranslate"><span class="pre">n_changepoints</span></code>: the number of initial change-points, defaults to <em>25</em>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">changepoint_range</span></code>: the proportion of history data in which potential change-points are initialized on, defaults to <em>0.8</em> (for the first 80% historical data).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">changepoint_prior_scale</span></code>: the value of <span class="math notranslate nohighlight">\(\tau\)</span>, defaults to <em>0.05</em>. Larger values allow more change-points but can lead to overfitting.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">yearly_seasonality</span></code>
-<code class="docutils literal notranslate"><span class="pre">weekly_seasonality</span></code>
-<code class="docutils literal notranslate"><span class="pre">daily_seasonality</span></code>: how the respective seasonality is fitted, all default to <em>auto</em>. Other options are <em>True</em>, <em>False</em> or an integer representing <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yearly_seasonality</span></code>, <code class="docutils literal notranslate"><span class="pre">weekly_seasonality</span></code> and <code class="docutils literal notranslate"><span class="pre">daily_seasonality</span></code>: how the respective seasonality is fitted, all default to <em>auto</em>. Other options are <em>True</em>, <em>False</em> or an integer representing <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">seasonality_mode</span></code>: the type of seasonality model, defaults to <em>additive</em>. The other option is <em>multiplicative</em>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">holidays_prior_scale</span></code>: the value of <span class="math notranslate nohighlight">\(\nu\)</span>, defaults to <em>10</em>. This parameter indicates the strength of the holiday model, reducing it dampens holiday effects.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">prophet</span> <span class="kn">import</span> <span class="n">Prophet</span> <span class="k">as</span> <span class="n">FBProphet</span>
-<span class="kn">from</span> <span class="nn">sktime.forecasting.fbprophet</span> <span class="kn">import</span> <span class="n">Prophet</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span><span class="p">,</span> <span class="n">mean_absolute_error</span> <span class="k">as</span> <span class="n">MAE</span><span class="p">,</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span>
-
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/purchase_quantity.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/purchase_quantity.csv&#39;</span><span class="p">)</span>
 <span class="n">dfQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">dfQty</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;datetime64&#39;</span><span class="p">))</span>
 <span class="c1"># dfQty = dfQty.rename(columns={&#39;date&#39;: &#39;ds&#39;, &#39;quantity&#39;: &#39;y&#39;})</span>
 <span class="n">sQty</span> <span class="o">=</span> <span class="n">dfQty</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">)</span>

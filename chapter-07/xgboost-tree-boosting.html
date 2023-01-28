@@ -1502,7 +1502,7 @@ By enforcing such a relationship, we are helping our model to learn patterns bet
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/xgboost-tree-boosting_22_0.png"><img alt="../_images/xgboost-tree-boosting_22_0.png" class="align-center" src="../_images/xgboost-tree-boosting_22_0.png" style="width: 4690.0px; height: 1202.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/xgboost-tree-boosting_22_0.png"><img alt="../_images/xgboost-tree-boosting_22_0.png" class="align-center" src="../_images/xgboost-tree-boosting_22_0.png" style="width: 938.0px; height: 240.4px;" /></a>
 </div>
 </div>
 </section>
@@ -2132,20 +2132,6 @@ the list of indices or names of categorical/text features, default to <em>None</
 <a class="reference external" href="https://catboost.ai/en/docs/concepts/python-reference_catboostclassifier_get_object_importance">object importance</a>.</p></li>
 <li><p>It supports <a class="reference external" href="https://catboost.ai/en/docs/features/snapshots">snapshotting</a>, which periodically saves the current state of the model. This allows recovering training after an interuption by launching the training in the same folder with the same parameters.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span>
-<span class="kn">import</span> <span class="nn">catboost</span> <span class="k">as</span> <span class="nn">cgb</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfCancer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>

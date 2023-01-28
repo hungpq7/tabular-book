@@ -1119,6 +1119,36 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="lenskit-recommendation">
 <h1>Lenskit: Recommendation<a class="headerlink" href="#lenskit-recommendation" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">ml_metrics</span> <span class="kn">import</span> <span class="n">mapk</span>
+<span class="kn">from</span> <span class="nn">recmetrics</span> <span class="kn">import</span> <span class="n">mark</span><span class="p">,</span> <span class="n">prediction_coverage</span><span class="p">,</span> <span class="n">personalization</span><span class="p">,</span> <span class="n">intra_list_similarity</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">ndcg_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span><span class="p">,</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span><span class="p">,</span> <span class="n">linear_kernel</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+<span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">batch</span><span class="p">,</span> <span class="n">Recommender</span>
+<span class="kn">from</span> <span class="nn">lenskit.algorithms.als</span> <span class="kn">import</span> <span class="n">BiasedMF</span><span class="p">,</span> <span class="n">ImplicitMF</span>
+<span class="kn">from</span> <span class="nn">lenskit.algorithms.funksvd</span> <span class="kn">import</span> <span class="n">FunkSVD</span>
+<span class="kn">from</span> <span class="nn">lenskit.algorithms.item_knn</span> <span class="kn">import</span> <span class="n">ItemItem</span>
+<span class="kn">from</span> <span class="nn">lenskit.algorithms.user_knn</span> <span class="kn">import</span> <span class="n">UserUser</span>
+
+<span class="kn">from</span> <span class="nn">surprise</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Reader</span><span class="p">,</span> <span class="n">accuracy</span>
+<span class="kn">from</span> <span class="nn">surprise</span> <span class="kn">import</span> <span class="n">SVD</span><span class="p">,</span> <span class="n">KNNBasic</span><span class="p">,</span> <span class="n">KNNWithMeans</span><span class="p">,</span> <span class="n">KNNWithZScore</span><span class="p">,</span> <span class="n">KNNBaseline</span>
+<span class="kn">from</span> <span class="nn">surprise.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="recommendation-concepts">
 <h2>1. Recommendation concepts<a class="headerlink" href="#recommendation-concepts" title="Permalink to this headline">#</a></h2>
 <p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Recommender_system">recommender system</a> or recommendation engine is a program that aims to suggest the most relevant <em>items</em> to each <em>user</em>. With the rise of digital services, recommender systems have taken more and more places in human’s life. Some successful recommender systems are of large companies such as Netflix, Google and Amazon.</p>
@@ -1206,15 +1236,7 @@ title="Print to PDF"
 <p>In this topic, we use the famous <a class="reference external" href="https://grouplens.org/datasets/movielens/100k/">MovieLens 100k dataset</a> containing 100,000 ratings from 943 users on 1682 movies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfUser</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/user.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfUser</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/user.csv&#39;</span><span class="p">)</span>
 <span class="n">dfUser</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1284,9 +1306,9 @@ title="Print to PDF"
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfItem</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/item.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;movie_title&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfItem</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/item.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;movie_title&#39;</span><span class="p">)</span>
 <span class="n">dfItem</span> <span class="o">=</span> <span class="n">dfItem</span><span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s1">&#39;movie_id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">})</span>
 <span class="n">dfItem</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -1455,8 +1477,8 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
-<span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
+<span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
 <span class="n">dfRatingBase</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1526,20 +1548,7 @@ title="Print to PDF"
 <p>Depends on how we build a recommendation system, there are two types of metric can be used to assess its quality. If we have predicted the ratings, then <a class="reference external" href="https://nbviewer.org/github/hungpq7/data-science/blob/main/26.%20%5BScikit-learn%5D%20Machine%20Learning.ipynb#3.3.-Regression-metrics">regression metrics</a>, especially RMSE, are usually chosen. This section mainly focuses on metrics that help us evaluate how well we have sorted the recommended items. For illustration purpose, we assess the performance of a simple baseline model run on the MovieLens dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">batch</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="kn">import</span> <span class="n">Recommender</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms.als</span> <span class="kn">import</span> <span class="n">BiasedMF</span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRating</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRating</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
 <span class="n">dfRating</span> <span class="o">=</span> <span class="n">dfRating</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;movie_id&#39;</span><span class="p">:</span> <span class="s1">&#39;item&#39;</span><span class="p">})</span>
 
 <span class="c1"># fit the Matrix Factorization model</span>
@@ -1642,7 +1651,7 @@ title="Print to PDF"
 <div class="math notranslate nohighlight">
 \[\text{AP&#64;k}=\frac{1}{k}\sum_{k=1}^{K}\text{P&#64;k}\cdot \text{rel}_k\]</div>
 <p>In this formula, the higher rank a relevant item has, the more times it will appear in the calculation of P&#64;i, and the more value it contributes to AP&#64;k. The example below computes P&#64;k, R&#64;k, AP&#64;k and AR&#64;k for a recommendation of 8 items to a single user.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">relevant</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
@@ -1800,7 +1809,7 @@ title="Print to PDF"
 <h4>MAP&#64;k and MAR&#64;k<a class="headerlink" href="#map-k-and-mar-k" title="Permalink to this headline">#</a></h4>
 <p>Now we have already known AP&#64;k and AR&#64;k is defined for a single user, there should be an aggregation for all available users. This gives us Mean Average Precision/Recall up to cutoff <span class="math notranslate nohighlight">\(K\)</span> (MAP&#64;k and MAR&#64;k), calculated by taking the mean of all AP&#64;k or AR&#64;k. MAR&#64;k seems not very trustworthy since the number of actual relevant items (<span class="math notranslate nohighlight">\(\text{TP}+\text{FN}\)</span>) fluctuates dramatically from user to user, which makes the vector of AR&#64;k have low values and a high variance.</p>
 <p>To calculate MAP&#64;k and MAR&#64;k, it is required to have the binary relevance status. Let’s assume if a user rated an item higher than his average rating, that item is considered relevant.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingMean</span> <span class="o">=</span> <span class="n">dfPredict</span>\
     <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>\
@@ -1962,7 +1971,7 @@ title="Print to PDF"
 <p>3 rows × 546 columns</p>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRecommend</span> <span class="o">=</span> <span class="n">dfPredict</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;rank&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>
 
@@ -2149,7 +2158,7 @@ title="Print to PDF"
 <div class="math notranslate nohighlight">
 \[\text{DCG}=\sum_{k=1}^{K}\frac{\text{rel}_k}{\log_2(k+1)}\]</div>
 <p>The final step is dividing the metric by the <em>ideal DCG</em>, in order to <em>normalize</em> it ranging from 0 to 1.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRelevant</span> <span class="o">=</span> <span class="n">dfPredict</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;rank&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;rating&#39;</span><span class="p">)</span>
 <span class="n">dfRelevant</span> <span class="o">=</span> <span class="n">dfRelevant</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -2301,7 +2310,7 @@ title="Print to PDF"
 <p>3 rows × 943 columns</p>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRecommend</span> <span class="o">=</span> <span class="n">dfPredict</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;rank&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;prediction&#39;</span><span class="p">)</span>
 <span class="n">dfRecommend</span> <span class="o">=</span> <span class="n">dfRecommend</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -2774,33 +2783,19 @@ title="Print to PDF"
 =\sum_{u=1,i=1}^{U,I}(r_{ui}-\hat{r}_{ui})^2
 +\lambda\,(\|\mathbf{p}_u\|^2+\|\mathbf{q}_i\|^2+b_i^2+b_u^2)\]</div>
 <p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is the regularization coefficient and <span class="math notranslate nohighlight">\(\|\bullet\|_{\text{F}}\)</span> denotes the <a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm">Frobenius norm</a> of a matrix. An intuitive illustration of the factorization process is shown below:</p>
-<img alt="chapter-06/image/matrix_factorization.png" src="chapter-06/image/matrix_factorization.png" />
+<a class="reference internal image-reference" href="../_images/matrix_factorization.png"><img alt="../_images/matrix_factorization.png" class="align-center" src="../_images/matrix_factorization.png" style="height: 250px;" /></a>
 </section>
 <section id="implementation-lenskit">
 <h4>Implementation: Lenskit<a class="headerlink" href="#implementation-lenskit" title="Permalink to this headline">#</a></h4>
 <p>This section implements <a class="reference external" href="https://lkpy.readthedocs.io/en/stable/mf.html">Lenskit’s Matrix Factorization</a>. The hyperparameters are:</p>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>features</code>: the number of latent features (<span class="math notranslate nohighlight">\(k\)</span>), defaults to <em>30</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>reg</code>: the regularization coefficient (<span class="math notranslate nohighlight">\(\lambda\)</span>), defaults to <em>0.1</em>. Can be a tuple with the size of 2 to specify user and item regularization terms separately.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">features</span></code>: the number of latent features (<span class="math notranslate nohighlight">\(k\)</span>), defaults to <em>30</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reg</span></code>: the regularization coefficient (<span class="math notranslate nohighlight">\(\lambda\)</span>), defaults to <em>0.1</em>. Can be a tuple with the size of 2 to specify user and item regularization terms separately.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span><span class="p">,</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span>
-
-<span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">batch</span><span class="p">,</span> <span class="n">Recommender</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms.als</span> <span class="kn">import</span> <span class="n">BiasedMF</span><span class="p">,</span> <span class="n">ImplicitMF</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms.funksvd</span> <span class="kn">import</span> <span class="n">FunkSVD</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
 <span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">dfRatingBase</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;movie_id&#39;</span><span class="p">:</span> <span class="s1">&#39;item&#39;</span><span class="p">})</span>
-
 <span class="n">dfRatingBase</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2875,7 +2870,7 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
 <span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">dfRatingTest</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;movie_id&#39;</span><span class="p">:</span> <span class="s1">&#39;item&#39;</span><span class="p">})</span>
 
 <span class="n">dfPredict</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">dfRatingTest</span><span class="p">)</span>
@@ -2999,19 +2994,8 @@ RMSE = 0.9438
 <p>This section implements <a class="reference external" href="https://surprise.readthedocs.io/en/stable/matrix_factorization.html">Surprise’s Matrix Factorization</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span><span class="p">,</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span>
-<span class="kn">from</span> <span class="nn">surprise</span> <span class="kn">import</span> <span class="n">SVD</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Reader</span><span class="p">,</span> <span class="n">accuracy</span>
-<span class="kn">from</span> <span class="nn">surprise.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
-<span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
+<span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
 <span class="n">dfRatingBase</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -3087,12 +3071,7 @@ RMSE = 0.9438
 </div>
 </div>
 </div>
-<p>After the model has been trained, we can call 4 attributes
-<code style='font-size:13px;'>pu</code>
-<code style='font-size:13px;'>qi</code>
-<code style='font-size:13px;'>bu</code>
-<code style='font-size:13px;'>bi</code>
-to get the value of <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>, user bias and item bias.</p>
+<p>After the model has been trained, we can call four attributes <code class="docutils literal notranslate"><span class="pre">pu</span></code>, <code class="docutils literal notranslate"><span class="pre">qi</span></code>, <code class="docutils literal notranslate"><span class="pre">bu</span></code> and <code class="docutils literal notranslate"><span class="pre">bi</span></code> to get the value of <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>, user bias and item bias.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span><span class="o">.</span><span class="n">pu</span><span class="o">.</span><span class="n">shape</span>
@@ -3308,20 +3287,7 @@ RMSE = 0.9509
 <p>This section implements <a class="reference external" href="https://lkpy.readthedocs.io/en/stable/knn.html">Lenskit’s K-NN Collaborative Filtering</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span><span class="p">,</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span>
-
-<span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">batch</span><span class="p">,</span> <span class="n">Recommender</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms.item_knn</span> <span class="kn">import</span> <span class="n">ItemItem</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms.user_knn</span> <span class="kn">import</span> <span class="n">UserUser</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
 <span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">dfRatingBase</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;movie_id&#39;</span><span class="p">:</span> <span class="s1">&#39;item&#39;</span><span class="p">})</span>
 <span class="n">dfRatingBase</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -3397,7 +3363,7 @@ RMSE = 0.9509
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
 <span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">dfRatingTest</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;movie_id&#39;</span><span class="p">:</span> <span class="s1">&#39;item&#39;</span><span class="p">})</span>
 
 <span class="n">dfPredict</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">kni</span><span class="p">,</span> <span class="n">dfRatingTest</span><span class="p">)</span>
@@ -3509,29 +3475,18 @@ RMSE = 0.9329
 <p>In this section we implement <a class="reference external" href="https://surprise.readthedocs.io/en/stable/knn_inspired.html">Surprise’s K-NN inspired algorithms</a>. The hyperparameters are:</p>
 <ul class="simple">
 <li><p>Aggregating strategy, using one of the classes
-<code style='font-size:13px;'>KNNBasic</code>
-<code style='font-size:13px;'>KNNWithMeans</code>
-<code style='font-size:13px;'>KNNWithZScore</code>
-<code style='font-size:13px;'>KNNBaseline</code></p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>k</code>: the number of neighbors to consider (<span class="math notranslate nohighlight">\(k\)</span>), defaults to <em>40</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>sim_options.user_base</code>: whether to use user-based or item-based approach, defaults to <em>True</em> (user-based).</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>sim_options.name</code>: the similarity metric, defaults to <em>msd</em> (mean squared difference). Other options are <em>cosine</em>, <em>pearson</em> and <em>pearson_baseline</em>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">KNNBasic</span></code>
+<code class="docutils literal notranslate"><span class="pre">KNNWithMeans</span></code>
+<code class="docutils literal notranslate"><span class="pre">KNNWithZScore</span></code>
+<code class="docutils literal notranslate"><span class="pre">KNNBaseline</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">k</span></code>: the number of neighbors to consider (<span class="math notranslate nohighlight">\(k\)</span>), defaults to <em>40</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sim_options.user_base</span></code>: whether to use user-based or item-based approach, defaults to <em>True</em> (user-based).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sim_options.name</span></code>: the similarity metric, defaults to <em>msd</em> (mean squared difference). Other options are <em>cosine</em>, <em>pearson</em> and <em>pearson_baseline</em>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span><span class="p">,</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span>
-<span class="kn">from</span> <span class="nn">surprise</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Reader</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">KNNBasic</span><span class="p">,</span> <span class="n">KNNWithMeans</span><span class="p">,</span> <span class="n">KNNWithZScore</span><span class="p">,</span> <span class="n">KNNBaseline</span>
-<span class="kn">from</span> <span class="nn">surprise.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
-<span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
+<span class="n">dfRatingTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_test.csv&#39;</span><span class="p">)</span>
 <span class="n">dfRatingBase</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -3737,18 +3692,7 @@ RMSE = 0.9950
 <p>In a content-based system, we take metadata of items and the utility matrix as input. If the utility matrix is made using explicit ratings, we <em>center</em> it by subtracting the mean ratings of users.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span><span class="p">,</span> <span class="n">linear_kernel</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingBase</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/rating_base.csv&#39;</span><span class="p">)</span>
 
 <span class="n">dfRatingMean</span> <span class="o">=</span> <span class="n">dfRatingBase</span>\
     <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span>\
@@ -3824,7 +3768,7 @@ RMSE = 0.9950
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfItem</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/item.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfItem</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/item.csv&#39;</span><span class="p">)</span>
 <span class="n">dfItem</span> <span class="o">=</span> <span class="n">dfItem</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;movie_title&#39;</span><span class="p">)</span>
 <span class="n">dfItem</span> <span class="o">=</span> <span class="n">dfItem</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;release_year&#39;</span><span class="p">:</span> <span class="n">dfItem</span><span class="o">.</span><span class="n">release_year</span><span class="o">.</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">]})</span>
 <span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">(</span><span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
@@ -3834,7 +3778,7 @@ RMSE = 0.9950
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">item_features</span> <span class="o">=</span> <span class="n">dfItem</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
 <span class="n">dfUserProfile</span> <span class="o">=</span> <span class="n">dfRatingNorm</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dfItem</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;movie_id&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
@@ -4006,7 +3950,7 @@ RMSE = 0.9950
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">dfUserProfile</span><span class="p">[</span><span class="n">item_features</span><span class="p">]</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="n">dfItem</span><span class="p">[</span><span class="n">item_features</span><span class="p">]</span>
@@ -4325,7 +4269,7 @@ RMSE = 0.9950
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">user_id</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">935</span><span class="p">)</span>
 
@@ -4526,23 +4470,9 @@ RMSE = 0.9950
 </section>
 <section id="regression-approach">
 <h3>3.3. Regression approach<a class="headerlink" href="#regression-approach" title="Permalink to this headline">#</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span><span class="p">,</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:,.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfUser</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/user.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfUser</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/user.csv&#39;</span><span class="p">)</span>
 <span class="n">df1</span> <span class="o">=</span> <span class="n">dfUser</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;occupation&#39;</span><span class="p">])</span>
 <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">dfUser</span><span class="o">.</span><span class="n">sex</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">dfUser</span><span class="o">.</span><span class="n">occupation</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -4721,7 +4651,7 @@ RMSE = 0.9950
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfItem</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/movielens/item.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfItem</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/movielens/item.csv&#39;</span><span class="p">)</span>
 <span class="n">dfItem</span> <span class="o">=</span> <span class="n">dfItem</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;movie_title&#39;</span><span class="p">)</span>
 <span class="n">dfItem</span> <span class="o">=</span> <span class="n">dfItem</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;release_year&#39;</span><span class="p">:</span> <span class="n">dfItem</span><span class="o">.</span><span class="n">release_year</span><span class="o">.</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">]})</span>
 <span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">(</span><span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
@@ -4807,8 +4737,6 @@ RMSE = 1.0394
 </div>
 </div>
 </div>
-<hr class="docutils" />
-<p><em>♥ By Quang Hung x Thuy Linh ♥</em></p>
 </section>
 </section>
 </section>

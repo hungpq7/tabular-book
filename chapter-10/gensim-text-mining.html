@@ -57,7 +57,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Opencv: Image Processing" href="opencv-image-processing.html" />
+    <link rel="next" title="OpenCV: Image Processing" href="opencv-image-processing.html" />
     <link rel="prev" title="10. Deep Learning" href="_intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -468,7 +468,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-09/pyod-anomaly-detection.html">
-     Pyod: Anomaly Detection
+     PyOD: Anomaly Detection
     </a>
    </li>
   </ul>
@@ -971,6 +971,11 @@ title="Print to PDF"
    References
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -1185,6 +1190,11 @@ title="Print to PDF"
    References
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -1200,6 +1210,39 @@ title="Print to PDF"
 <p>So far, we have been familiar in dealing with <a class="reference external" href="https://en.wikipedia.org/wiki/Cross-sectional_data">cross-sectional</a> data and <a class="reference external" href="https://en.wikipedia.org/wiki/Time_series">time series</a> data, which are all structured data. However, most real-world data are <a class="reference external" href="https://en.wikipedia.org/wiki/Unstructured_data">unstructured</a>, such as text. So we would want to <a class="reference external" href="https://en.wikipedia.org/wiki/Text_mining">mine text data</a> to identify meaningful patterns and insights. This goal is achieved in <a class="reference external" href="https://en.wikipedia.org/wiki/Natural_language_processing">Natural Language Processing</a> (NLP), a sub-field of <a class="reference external" href="https://en.wikipedia.org/wiki/Artificial_intelligence">Artificial Intelligence</a> aiming to help computers understand human language.</p>
 <p>NLP is applied in a huge number of problems, some high-level applications appear in daily life are: autocomplete (like in Google Search), machine translation (like Google Translate), grammar error detection and correction (like in Microsoft Word) and virtual assistant (like Apple’s Siri and Amazon’s Alexa). In terms of data mining, common NLP tasks are: <a class="reference external" href="https://en.wikipedia.org/wiki/Keyword_extraction">keyword extraction</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Sentiment_analysis">sentiment analysis</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Named-entity_recognition">named-entity recognition</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Document_classification">document classification</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Email_filtering">email filtering</a>.</p>
 <p>In order to <em>teach</em> machines to <em>understand</em> human language, there are usually two tasks need to be done: (1) text vectorization, including cleaning text data and (2) modeling. This topic covers the first task, which the ultimate goal is to represent text numerically. The featuring libraries in this topic are <a class="reference external" href="https://github.com/nltk/nltk">NLTK</a> (Natural Language Toolkit), <a class="reference external" href="https://github.com/explosion/spaCy">Spacy</a> and <a class="reference external" href="https://github.com/RaRe-Technologies/gensim">Gensim</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">unicodedata</span>
+<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span><span class="p">,</span> <span class="n">TfidfVectorizer</span>
+
+<span class="kn">import</span> <span class="nn">gensim</span>
+<span class="kn">import</span> <span class="nn">gensim.downloader</span> <span class="k">as</span> <span class="nn">api</span>
+<span class="kn">from</span> <span class="nn">gensim.parsing.preprocessing</span> <span class="kn">import</span> <span class="n">remove_stopwords</span><span class="p">,</span> <span class="n">STOPWORDS</span>
+<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">Word2Vec</span><span class="p">,</span> <span class="n">FastText</span><span class="p">,</span> <span class="n">KeyedVectors</span>
+
+<span class="kn">import</span> <span class="nn">underthesea</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+<span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">displacy</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow.keras</span> <span class="k">as</span> <span class="nn">keras</span>
+<span class="kn">import</span> <span class="nn">tensorflow.keras.layers</span> <span class="k">as</span> <span class="nn">layers</span>
+<span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="k">as</span> <span class="nn">hub</span>
+<span class="kn">import</span> <span class="nn">tensorflow_text</span> <span class="k">as</span> <span class="nn">text</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="lexical-analysis">
 <h2>1. Lexical analysis<a class="headerlink" href="#lexical-analysis" title="Permalink to this headline">#</a></h2>
 <p>Lexical analysis is the process of converting a sequence of characters into a sequence of tokens (strings with an assigned and thus identified meaning). A program that performs lexical analysis may be termed a lexer or tokenizer. A lexer is the first step of NLP project that its output is the input of parsing process - helping the parsing more easier.</p>
@@ -1214,15 +1257,6 @@ title="Print to PDF"
 <li><p>Removal of URLs</p></li>
 <li><p>Removal of punctuations</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">string</span>
-<span class="kn">import</span> <span class="nn">re</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doc</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Once a Spark session is created, its running jobs can be monitored at http://localhost:4040/jobs/.</span>
@@ -1299,15 +1333,6 @@ Read the &lt;b&gt;paper&lt;/b&gt; of Word2Vec at https://arxiv.org/pdf/1301.3781
 <p>Tokenization is the process of separating a piece of text into smaller units called tokens, where tokens can be characters, words or sentences. For example, consider the sentence “Never give up”. The most common way of tokenizing is using white spaces. Assuming space as a delimiter, the tokenization of the sentence results in 3 tokens: “Never”, “give” and “up”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;punkt&#39;</span><span class="p">)</span>
 <span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;wordnet&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1339,11 +1364,8 @@ Read the &lt;b&gt;paper&lt;/b&gt; of Word2Vec at https://arxiv.org/pdf/1301.3781
 <h4>Word tokenization<a class="headerlink" href="#word-tokenization" title="Permalink to this headline">#</a></h4>
 <p>Word tokenization is the most commonly used tokenization approach. It splits a piece of text into individual words based on certain delimiters (whitespaces, puntuations). Depending upon delimiters, different word-level tokens are formed. In NLTK, we can split a text piece into words using many strategies, most noticable:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.nltk.org/api/nltk.tokenize.treebank.html'&gt;word_tokenize()&lt;/a&gt;</span></code>
-implements the Treebank pre-trained model.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.nltk.org/api/nltk.tokenize.regexp.html'&gt;regexp_tokenize()&lt;/a&gt;</span></code>
-whichsplits text using a custom regex pattern. There are other convinent functions too, such as
-<code class="docutils literal notranslate"><span class="pre">wordpunct_tokenize()</span></code>.</p></li>
+<li><p><a class="reference external" href="https://www.nltk.org/api/nltk.tokenize.treebank.html"><code class="docutils literal notranslate"><span class="pre">word_tokenize()</span></code></a> implements the Treebank pre-trained model.</p></li>
+<li><p><a class="reference external" href="https://www.nltk.org/api/nltk.tokenize.regexp.html"><code class="docutils literal notranslate"><span class="pre">regexp_tokenize()</span></code></a> whichsplits text using a custom regex pattern. There are other convinent functions too, such as <code class="docutils literal notranslate"><span class="pre">wordpunct_tokenize()</span></code>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1368,13 +1390,6 @@ whichsplits text using a custom regex pattern. There are other convinent functio
 <section id="word-normalization">
 <h3>1.3. Word normalization<a class="headerlink" href="#word-normalization" title="Permalink to this headline">#</a></h3>
 <p>English documents use different forms of a word, such as the <a class="reference external" href="https://en.wikipedia.org/wiki/Inflection">inflected word</a> “historical” is derived from the <a class="reference external" href="https://en.wikipedia.org/wiki/Root_(linguistics)">root word</a> “history”. Words in each family are usually related and have similar meanings, so in many situations, it is useful to use a word as a replacement for other words in the family. This technique is called <em>word normalization</em>; it has two approaches, <em>stemming</em> and <em>lemmatization</em>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="stemming">
 <h4>Stemming<a class="headerlink" href="#stemming" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Stemming">Stemming</a> is a <em>logical</em> normalization technique that removes common prefixes and suffixes from an inflected word. The result is called a <a class="reference external" href="https://en.wikipedia.org/wiki/Word_stem">stem</a>; a stem can be meaningless. For example, the word “studying” has its stem “studi” because the stemmer has a step that removes the “-ing” suffix and another step that substitues “-y” with “-i”. NLTK supports two stemming algorithms, <a class="reference external" href="https://www.nltk.org/api/nltk.stem.porter.html">Porter stemmer</a> (1980) and <a class="reference external" href="https://www.nltk.org/api/nltk.stem.lancaster.html">Lancaster stemmer</a> (1990).</p>
@@ -1491,14 +1506,6 @@ better    -&gt; good
 <p>Another interesting preprocessing technique for text data is removing <a class="reference external" href="https://en.wikipedia.org/wiki/Stop_word">stop words</a>. They are common words but have a very little meaning (such as “the”, “a” and “in”), and are usually filtered out by search engines while fetching results from the database. In NLP, specifically for mining tasks such as keyword extraction, sentiment analysis and document classification, it makes sense to remove stop words. But for AI applications like machine translation and question answering, stop words serve an important role and should not be discarded.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gensim.parsing.preprocessing</span> <span class="kn">import</span> <span class="n">remove_stopwords</span><span class="p">,</span> <span class="n">STOPWORDS</span>
-<span class="kn">import</span> <span class="nn">nltk</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1572,40 +1579,22 @@ better    -&gt; good
 </section>
 <section id="implementation-sklearn">
 <h4>Implementation: Sklearn<a class="headerlink" href="#implementation-sklearn" title="Permalink to this headline">#</a></h4>
-<p>Scikit-learn implements BoW via the class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html&gt;CountVectorizer&lt;/a&gt;</span></code>
-and TF-IDF via the class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html&gt;TfidfVectorizer&lt;/a&gt;</span></code>.
-Both classes are very powerful as they already integrate tokenization, stop words removal and other customization for steps like word normalization. The later class is highly recommended in practice because it can be easily transformed to BoW by removing both IDF re-weighting and normalization. It has the following hyperparameters:</p>
+<p>Scikit-learn implements BoW via the class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"><code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code></a> and TF-IDF via the class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html"><code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code></a>. Both classes are very powerful as they already integrate tokenization, stop words removal and other customization for steps like word normalization. The later class is highly recommended in practice because it can be easily transformed to BoW by removing both IDF re-weighting and normalization. It has the following hyperparameters:</p>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>prepocessor`: the function that processes raw text, suites for tasks like lowercasing and HTML tags removal.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>tokenizer`: the custom tokenizer; the easiest way to think about it is NLTK’s tokenization functions.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>stop_words`: the list of stop words.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>ngram_range`: the tuple containing lower and upper bounds of <span class="math notranslate nohighlight">\(n\)</span> in N-gram. For example, <em>(2,3)</em> means using bigram and trigram.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>max_df<code class="docutils literal notranslate"> <span class="pre">and</span> <span class="pre">&lt;code</span> <span class="pre">style='font-size:13px;</span> <span class="pre">color:firebrick;'&gt;min_df</span></code>:
+<li><p><code class="docutils literal notranslate"><span class="pre">prepocessor</span></code>: the function that processes raw text, suites for tasks like lowercasing and HTML tags removal.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tokenizer</span></code>: the custom tokenizer; the easiest way to think about it is NLTK’s tokenization functions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stop_words</span></code>: the list of stop words.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ngram_range</span></code>: the tuple containing lower and upper bounds of <span class="math notranslate nohighlight">\(n\)</span> in N-gram. For example, <em>(2,3)</em> means using bigram and trigram.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_df</span></code> and
+<code class="docutils literal notranslate"><span class="pre">min_df</span></code>:
 the thresholds for filtering very frequent and very rare words.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>max_features`: the maximum vocabulary size, default to <em>None</em>. Features are removed based on their rank of term frequency across the corpus.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>binary`: whether to use binary TF, defaults to <em>False</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>sublinear_tf`: whether to apply log transformation to TF, defaults to <em>False</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>use_idf`: whether to divide the result by IDF, defaults to <em>True</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>smooth_idf`: whether to add smoothing term to IDF calculation, defaults to <em>True</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>norm`: whether to normalize the final result, defaults to <em>l2</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code>: the maximum vocabulary size, default to <em>None</em>. Features are removed based on their rank of term frequency across the corpus.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary</span></code>: whether to use binary TF, defaults to <em>False</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sublinear_tf</span></code>: whether to apply log transformation to TF, defaults to <em>False</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_idf</span></code>: whether to divide the result by IDF, defaults to <em>True</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">smooth_idf</span></code>: whether to add smoothing term to IDF calculation, defaults to <em>True</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">norm</span></code>: whether to normalize the final result, defaults to <em>l2</em>.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">import</span> <span class="nn">gensim</span>
-<span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span><span class="p">,</span> <span class="n">TfidfVectorizer</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span>
@@ -1641,7 +1630,7 @@ the thresholds for filtering very frequent and very rare words.</p></li>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
     <span class="n">tokenizer</span><span class="o">=</span><span class="n">LemmaTokenizer</span><span class="p">(),</span>
@@ -1830,30 +1819,17 @@ the thresholds for filtering very frequent and very rare words.</p></li>
 </section>
 <section id="implementation-keras">
 <h4>Implementation: Keras<a class="headerlink" href="#implementation-keras" title="Permalink to this headline">#</a></h4>
-<p>While Scikit-learn interface is good for Machine Learning, the TensorFlow’s class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/layers/TextVectorization&gt;TextVectorization&lt;/a&gt;</span></code>
-provides suitable input for Deep Learning. It has the following configurations:</p>
+<p>While Scikit-learn interface is good for Machine Learning, the TensorFlow’s class <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/TextVectorization"><code class="docutils literal notranslate"><span class="pre">TextVectorization</span></code></a> provides suitable input for Deep Learning. It has the following configurations:</p>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>standardize<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">the</span> <span class="pre">strategy</span> <span class="pre">to</span> <span class="pre">preprocess</span> <span class="pre">text,</span> <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">*lower_and_strip_punctuation*.</span> <span class="pre">Can</span> <span class="pre">be</span> <span class="pre">a</span> <span class="pre">user-defined</span> <span class="pre">function</span> <span class="pre">using</span> </code><a href=https://www.tensorflow.org/api_docs/python/tf/strings>tf.strings</a>`
-functions.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>split`: the pattern to tokenize text, defaults to <em>whitespace</em>. Can be a user-defined function.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>max_tokens`: the vocabulary maximum size, defaults to <em>None</em> (no limit). If set to a number, low frequency words will be truncated.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>ngrams`: the tuple containing values of <span class="math notranslate nohighlight">\(n\)</span> in N-gram, defaults to <em>None</em> (uni-gram). For example, <em>(1,3)</em> means using unigram and trigram.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>output_mode`: how the output will be returned, defaults to <em>int</em> (integer indices). Other options are <em>multi_hot</em>, <em>count</em> and <em>tf_tdf</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>output_sequence_length`: the length of each document regardless how many tokens it has, defaults to <em>None</em> (not set). If set, documents will be either padded or truncated to satisfy this constraint.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>ragged`: whether the output is a normal tensor or a ragged tensor (where sequences may have different lengths), defaults to <em>False</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">standardize</span></code>: the strategy to preprocess text, defaults to <em>lower_and_strip_punctuation</em>. Can be a user-defined function using <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/strings"><code class="docutils literal notranslate"><span class="pre">tf.strings</span></code></a> functions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">split</span></code>: the pattern to tokenize text, defaults to <em>whitespace</em>. Can be a user-defined function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_tokens</span></code>: the vocabulary maximum size, defaults to <em>None</em> (no limit). If set to a number, low frequency words will be truncated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ngrams</span></code>: the tuple containing values of <span class="math notranslate nohighlight">\(n\)</span> in N-gram, defaults to <em>None</em> (uni-gram). For example, <em>(1,3)</em> means using unigram and trigram.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_mode</span></code>: how the output will be returned, defaults to <em>int</em> (integer indices). Other options are <em>multi_hot</em>, <em>count</em> and <em>tf_tdf</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_sequence_length</span></code>: the length of each document regardless how many tokens it has, defaults to <em>None</em> (not set). If set, documents will be either padded or truncated to satisfy this constraint.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ragged</span></code>: whether the output is a normal tensor or a ragged tensor (where sequences may have different lengths), defaults to <em>False</em>.</p></li>
 </ul>
 <p>This processor is mainly used for text generation tasks such as neural machine translation, which require integer-encoded tokens. Note that there are special tokens in the vocabulary like <code class="docutils literal notranslate"><span class="pre">[UNK]</span></code> (out-of-vocabulary word) and sometimes we might want to add <code class="docutils literal notranslate"><span class="pre">[START]</span></code> and <code class="docutils literal notranslate"><span class="pre">[END]</span></code>. After initialize the processor, we call the <code class="docutils literal notranslate"><span class="pre">adapt()</span></code> method to fit it to the data.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tensorflow.keras</span> <span class="k">as</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">tensorflow.keras.layers</span> <span class="k">as</span> <span class="nn">layers</span>
-<span class="kn">import</span> <span class="nn">re</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span>
@@ -1923,16 +1899,17 @@ array([[ 3,  9, 26,  5, 18, 10, 42, 19, 17, 15, 57, 36, 65, 54, 39],
 <section id="word-embedding">
 <h3>2.2. Word embedding<a class="headerlink" href="#word-embedding" title="Permalink to this headline">#</a></h3>
 <p>Text vectorization techniques have proven to be too naive for complicated tasks. This leads to the idea of representing words by vectors, in order to increase the capability of capturing hidden information. There are existing methods to encode words as vectors such as one-hot encoding, but it wastes a lot of memory because of its sparsity. With such an expensive representation, we would want word vectors to be more dense and to have the ability to capture semantics.</p>
-<p>To efficiently perform word embedding, there need to be two components: a good learning algorithm and a lot of text to train a pre-trained model. In most popular word embedding methods, who you associated with tell you who your are. In this section, we are going to learn about three word embedding techniques, <a class="reference external" href="https://en.wikipedia.org/wiki/Word2vec">Word2Vec</a> (by Google in 2013), <a class="reference external" href="https://en.wikipedia.org/wiki/GloVe">GloVe</a> (by Stanford in 2014) and <a class="reference external" href="https://en.wikipedia.org/wiki/FastText">FastText</a> (by Facebook in 2015), and how to implement them using <a class="reference external" href="https://github.com/RaRe-Technologies/gensim">Gensim</a>.</p>
+<p>To efficiently perform word embedding, there need to be two components: a good learning algorithm and a lot of text to train a pre-trained model. In most popular word embedding methods, who you associated with tell you who your are. In this section, we are going to learn about three word embedding techniques, <a class="reference external" href="https://en.wikipedia.org/wiki/Word2vec">Word2Vec</a> (by Google in 2013), <a class="reference external" href="https://en.wikipedia.org/wiki/GloVe">GloVe</a> (by Stanford in 2014) and <a class="reference external" href="https://en.wikipedia.org/wiki/FastText">FastText</a> (by Facebook in 2015), and how to implement them using <a class="reference external" href="https://radimrehurek.com/gensim/">Gensim</a>.</p>
 <section id="word2vec">
 <h4>Word2Vec<a class="headerlink" href="#word2vec" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Word2vec">Word2Vec</a> is a pre-trained probabilistic word embedding model based on simple Neural Networks. It relies on conditional probabilities that predict words using the their surrounding neighbors. For example, in the sentence “The quick brown fox jumps over the lazy dog”, consider the <em>center word</em> “fox” and a <em>context window</em> of size <span class="math notranslate nohighlight">\(2\)</span>, then the <em>context words</em> will be “quick”, “brown”, “jumps” and “over”. They will be one-hot encoded so that we have a vector for the center word and another vector for the context words, with <span class="math notranslate nohighlight">\(1\)</span> in the positions of words they are meant to present and <span class="math notranslate nohighlight">\(0\)</span> where else. If the vocabulary has <span class="math notranslate nohighlight">\(V=10\,000\)</span> words, then both the <em>center vector</em> and the <em>context vector</em> also have the size of <span class="math notranslate nohighlight">\(10\,000\)</span>.</p>
+<p><a class="reference external" href="https://code.google.com/archive/p/word2vec/">Word2Vec</a> is a pre-trained probabilistic word embedding model based on simple Neural Networks. It relies on conditional probabilities that predict words using the their surrounding neighbors. For example, in the sentence “The quick brown fox jumps over the lazy dog”, consider the <em>center word</em> “fox” and a <em>context window</em> of size <span class="math notranslate nohighlight">\(2\)</span>, then the <em>context words</em> will be “quick”, “brown”, “jumps” and “over”. They will be one-hot encoded so that we have a vector for the center word and another vector for the context words, with <span class="math notranslate nohighlight">\(1\)</span> in the positions of words they are meant to present and <span class="math notranslate nohighlight">\(0\)</span> where else. If the vocabulary has <span class="math notranslate nohighlight">\(V=10\,000\)</span> words, then both the <em>center vector</em> and the <em>context vector</em> also have the size of <span class="math notranslate nohighlight">\(10\,000\)</span>.</p>
 <p>The Word2Vec model can be obtained via two self-supervised algorithms, Skip-Gram and CBOW (Continuous Bag Of Words). The Skip-Gram algorithm models the probability that <em>context words</em> occur given a <em>center word</em>, for example:
 <span class="math notranslate nohighlight">\(\text{P}(\text{quick, brown, jumps, over}\mid\text{fox})\)</span>.
 CBOW, in contrast, predicts the <em>center word</em> when seeing some <em>context words</em>:
 <span class="math notranslate nohighlight">\(\text{P}(\text{fox}\mid\text{quick, brown, jumps, over})\)</span>.
 Each pair of a center vector and a context vector will contribute an observation to our training data.</p>
-<img alt="chapter-10/image/skip_gram_architecture.png" src="chapter-10/image/skip_gram_architecture.png" />
+<a class="reference internal image-reference" href="../_images/skip_gram_architecture.png"><img alt="../_images/skip_gram_architecture.png" class="align-center" src="../_images/skip_gram_architecture.png" style="height: 270px;" /></a>
+<br>
 <p>Both algorithms use the same Neural Network architecture with only a single hidden layer, but switch the input and output layers. We are going to describe only Skip-Gram, as the same logic also applies to CBOW.</p>
 <ul class="simple">
 <li><p>The input layer is constructed by <em>center vectors</em>. Because they are one-hot vectors, multiplying the input layer with any matrix is like looking up the corresponding information from a table.</p></li>
@@ -1943,7 +1920,7 @@ Each pair of a center vector and a context vector will contribute an observation
 </section>
 <section id="fasttext">
 <h4>FastText<a class="headerlink" href="#fasttext" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/FastText">FastText</a> use the same training algorithm as Word2Vec, but it treats each center word as a composed of n-gram characters. For example, for <span class="math notranslate nohighlight">\(n=3\)</span>, the word “train” will get you a <span class="math notranslate nohighlight">\(n\)</span>-gram sub-word for each character (“tr”, “tra”, “rai”, “ain”, “in”). In practice, <span class="math notranslate nohighlight">\(n\)</span> is set to be in range <span class="math notranslate nohighlight">\([3,6]\)</span> so that the model can capture all types of prefixes and suffixes. This design gives two advantages over Word2Vec:</p>
+<p><a class="reference external" href="https://fasttext.cc/docs/en/support.html">FastText</a> use the same training algorithm as Word2Vec, but it treats each center word as a composed of n-gram characters. For example, for <span class="math notranslate nohighlight">\(n=3\)</span>, the word “train” will get you a <span class="math notranslate nohighlight">\(n\)</span>-gram sub-word for each character (“tr”, “tra”, “rai”, “ain”, “in”). In practice, <span class="math notranslate nohighlight">\(n\)</span> is set to be in range <span class="math notranslate nohighlight">\([3,6]\)</span> so that the model can capture all types of prefixes and suffixes. This design gives two advantages over Word2Vec:</p>
 <ul class="simple">
 <li><p><em>Capturing morphology</em>. For words such as “train” and “trained”, FastText can understand they are similar beacause of both internal structures and contexts. Word2Vec only considers contexts and is likely to be less accurate.</p></li>
 <li><p><em>Handling out-of-vocabulary words</em>. The embedding for a word in FastText is computed as the sum of all subword vectors.</p></li>
@@ -1951,7 +1928,7 @@ Each pair of a center vector and a context vector will contribute an observation
 </section>
 <section id="glove">
 <h4>GloVe<a class="headerlink" href="#glove" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/GloVe">GloVe</a> (Global Vectors) is an embedding algorithm makes use of the <a class="reference external" href="https://en.wikipedia.org/wiki/Co-occurrence_matrix">co-occurrance matrix</a> <span class="math notranslate nohighlight">\(\mathbf{X}\in\mathbb{R}^{V\times V}\)</span> (<span class="math notranslate nohighlight">\(V\)</span> is the vocabulary size). The algorithm takes into account global statistics and thus neutralize the effect of frequent words. To understand how GloVe works, let’s denote:</p>
+<p><a class="reference external" href="https://nlp.stanford.edu/projects/glove/">GloVe</a> (Global Vectors) is an embedding algorithm makes use of the <a class="reference external" href="https://en.wikipedia.org/wiki/Co-occurrence_matrix">co-occurrance matrix</a> <span class="math notranslate nohighlight">\(\mathbf{X}\in\mathbb{R}^{V\times V}\)</span> (<span class="math notranslate nohighlight">\(V\)</span> is the vocabulary size). The algorithm takes into account global statistics and thus neutralize the effect of frequent words. To understand how GloVe works, let’s denote:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(x_{ik}\)</span> the number of times the pair of words <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(k\)</span> occurs</p></li>
 <li><p><span class="math notranslate nohighlight">\(x_i=\sum_k x_{ik}\)</span> the number of times any word <span class="math notranslate nohighlight">\(k\)</span> appears in the context of word <span class="math notranslate nohighlight">\(i\)</span></p></li>
@@ -1959,26 +1936,14 @@ Each pair of a center vector and a context vector will contribute an observation
 <li><p><span class="math notranslate nohighlight">\(\mathbf{w}_i\)</span> the vector representation of word <span class="math notranslate nohighlight">\(i\)</span>, which is what we want to learn</p></li>
 </ul>
 <p>The underlying idea of GloVe is about the ratio <span class="math notranslate nohighlight">\(P_{ik}:P_{jk}\)</span>, where <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(j\)</span> are indices of context words and <span class="math notranslate nohighlight">\(k\)</span> is the index of out-of-context words. In the example below, we examine the relationship between two words <span class="math notranslate nohighlight">\(i=\text{ice}\)</span> and <span class="math notranslate nohighlight">\(j=\text{steam}\)</span>, by studying the ratio of their co-occurrance probabilities with different <em>probe words</em>, <span class="math notranslate nohighlight">\(k\)</span>. We observe that this ratio is extremely large or small when word <span class="math notranslate nohighlight">\(k\)</span> is related to one of <span class="math notranslate nohighlight">\(i,j\)</span>; and is very close to <span class="math notranslate nohighlight">\(1\)</span> when the probe word is related to both <span class="math notranslate nohighlight">\(i,j\)</span> or neither.</p>
-<img alt="chapter-10/image/co_occurance_probabilities.png" src="chapter-10/image/co_occurance_probabilities.png" />
+<a class="reference internal image-reference" href="../_images/co_occurance_probabilities.png"><img alt="../_images/co_occurance_probabilities.png" class="align-center" src="../_images/co_occurance_probabilities.png" style="height: 100px;" /></a>
+<br>
 <p>Based on this insight, GloVe constructs its loss function as the squared error between the dot product of two embedding vectors <span class="math notranslate nohighlight">\(\mathbf{x}_i^\text{T}\mathbf{x}_j \)</span> and the probability of co-occurrance <span class="math notranslate nohighlight">\(\log P(x_{ij})\)</span>.</p>
 </section>
 <section id="pre-trained-embeddings">
 <h4>Pre-trained embeddings<a class="headerlink" href="#pre-trained-embeddings" title="Permalink to this headline">#</a></h4>
-<p>Gensim integrates all pre-trained embedding vectors from Word2Vec, GloVe and FastText, physically. When you load a specific package, Gensim will download it and load to a
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors&gt;KeyedVectors&lt;/a&gt;</span></code>.
-Note that this object is a <em>physical</em> collection of word vectors, not a <em>logical</em> model. You can use this object to extract embedded vectors and compute word similarities in different ways.</p>
+<p>Gensim integrates all pre-trained embedding vectors from Word2Vec, GloVe and FastText, physically. When you load a specific package, Gensim will download it and load to a <a class="reference external" href="https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors"><code class="docutils literal notranslate"><span class="pre">KeyedVectors</span></code></a>. Note that this object is a <em>physical</em> collection of word vectors, not a <em>logical</em> model. You can use this object to extract embedded vectors and compute word similarities in different ways.</p>
 <p>All methods relates to <em>similarity</em> of this object, by default, use cosine similarity, which enables an interesting feature, <em>word calculation</em>. For example, if we remove <em>man</em> from <em>king</em> and then add <em>woman</em>, we should get something very close to <em>queen</em>. This is completely achievable using cosine similarity and will be demonstrated later.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">gensim.downloader</span> <span class="k">as</span> <span class="nn">api</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">info</span><span class="p">()[</span><span class="s1">&#39;models&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -2081,34 +2046,19 @@ Note that this object is a <em>physical</em> collection of word vectors, not a <
 </section>
 <section id="custom-training">
 <h4>Custom training<a class="headerlink" href="#custom-training" title="Permalink to this headline">#</a></h4>
-<p>An important thing we should be sure to distinguish, is a pre-trained model and a learning algorithm. All the mathematics above are learning algorithms, they will be useful when we want to train our custom embedding model for unpopular languages such as Vietnamese. We can intialize a new model and train from scratch with our own dataset via two Gensim classes,
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec&gt;Word2Vec&lt;/a&gt;</span></code> and
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText&gt;FastText&lt;/a&gt;</span></code>.
-They have the following hyperparameters:</p>
+<p>An important thing we should be sure to distinguish, is a pre-trained model and a learning algorithm. All the mathematics above are learning algorithms, they will be useful when we want to train our custom embedding model for unpopular languages such as Vietnamese. We can intialize a new model and train from scratch with our own dataset via two Gensim classes, <a class="reference external" href="https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec"><code class="docutils literal notranslate"><span class="pre">Word2Vec</span></code></a> and <a class="reference external" href="https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText"><code class="docutils literal notranslate"><span class="pre">FastText</span></code></a>. They have the following hyperparameters:</p>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>vector_size`: the size of each embedding vector, defaults to <em>100</em>. Usually higher is better.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>sg`: whether to use Skip-Gram, otherwise use CBOW, defaults to <em>True</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>window`: the context window size, defaults to <em>5</em>. Recommended values are <em>10</em> for Skip-Gram and <em>5</em> for CBOW.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>negative`: the number of noisy words drawn for negative sampling, defaults to <em>5</em>. Should be in range <span class="math notranslate nohighlight">\([5,20]\)</span>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>sample`: the sub-sampling rate of frequent words, defaults to <em>0.001</em>. Recommended values are in range <span class="math notranslate nohighlight">\([10^{-5},10^{-3}]\)</span>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>shrink_windows`: whether to shrink context window, defaults to <em>True</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>min_n<code class="docutils literal notranslate"> <span class="pre">and</span> <span class="pre">&lt;code</span> <span class="pre">style='font-size:13px;</span> <span class="pre">color:firebrick;'&gt;max_n</span></code>: the range of <span class="math notranslate nohighlight">\(n\)</span> in FastText’s N-gram, defaults to <em>3</em> and <em>6</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vector_size</span></code>: the size of each embedding vector, defaults to <em>100</em>. Usually higher is better.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sg</span></code>: whether to use Skip-Gram, otherwise use CBOW, defaults to <em>True</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">window</span></code>: the context window size, defaults to <em>5</em>. Recommended values are <em>10</em> for Skip-Gram and <em>5</em> for CBOW.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">negative</span></code>: the number of noisy words drawn for negative sampling, defaults to <em>5</em>. Should be in range <span class="math notranslate nohighlight">\([5,20]\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sample</span></code>: the sub-sampling rate of frequent words, defaults to <em>0.001</em>. Recommended values are in range <span class="math notranslate nohighlight">\([10^{-5},10^{-3}]\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shrink_windows</span></code>: whether to shrink context window, defaults to <em>True</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_n</span></code> and
+<code class="docutils literal notranslate"><span class="pre">max_n</span></code>: the range of <span class="math notranslate nohighlight">\(n\)</span> in FastText’s N-gram, defaults to <em>3</em> and <em>6</em>.</p></li>
 </ul>
 <p>The appropriate format for these two classes is a list of lists (tokenized sentences). When our custom model has been intialized successfully on a corpus, you can keep teaching it using more and more data by calling the
 <code class="docutils literal notranslate"><span class="pre">train()</span></code> method. You can also call the <code class="docutils literal notranslate"><span class="pre">wv</span></code> (word vectors) method to access the embedding vectors via a <code class="docutils literal notranslate"><span class="pre">KeyedVectors</span></code> object. A good practice which is highly recommended by Gensim is only using the embedded vectors (<em>physical</em>) instead of the full model (<em>logical</em>) because the physical option spends less memory and can extract vectors much faster.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">gensim</span>
-<span class="kn">import</span> <span class="nn">gensim.downloader</span> <span class="k">as</span> <span class="nn">api</span>
-<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">Word2Vec</span><span class="p">,</span> <span class="n">FastText</span><span class="p">,</span> <span class="n">KeyedVectors</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">info</span><span class="p">()[</span><span class="s1">&#39;corpora&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -2201,15 +2151,6 @@ They have the following hyperparameters:</p>
 <code class="docutils literal notranslate"><span class="pre">pooled_output</span></code> which represents the whole sequence a vector.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="k">as</span> <span class="nn">hub</span>
-<span class="kn">import</span> <span class="nn">tensorflow_text</span> <span class="k">as</span> <span class="nn">text</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bertProcessor</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="s1">&#39;https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3&#39;</span><span class="p">)</span>
 <span class="n">bertEncoder</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="s1">&#39;https://tfhub.dev/tensorflow/small_bert/bert_en_uncased_L-4_H-512_A-8/1&#39;</span><span class="p">)</span>
 </pre></div>
@@ -2262,15 +2203,6 @@ They have the following hyperparameters:</p>
 <section id="syntactic-analysis">
 <h3>3.1. Syntactic analysis<a class="headerlink" href="#syntactic-analysis" title="Permalink to this headline">#</a></h3>
 <p>Syntactic analysis is the process of analyzing word roles and relationship. We are going to implement three most common analyses of this type using SpaCy.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">spacy</span>
-<span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">displacy</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="part-of-speech">
 <h4>Part of speech<a class="headerlink" href="#part-of-speech" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Part_of_speech">Part-of-speech</a> (POS, somtimes called POS tag) is the grammatical category of words. The problem of finding POS of words is call <em>POS tagging</em>. It is the simplest sequence labeling problem, as each word has only one POS tag. The complete list of POS tags can be found <a class="reference external" href="https://github.com/explosion/spaCy/blob/master/spacy/glossary.py#L23">here</a>.</p>
@@ -2394,7 +2326,7 @@ They have the following hyperparameters:</p>
 <section id="dependency">
 <h4>Dependency<a class="headerlink" href="#dependency" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Dependency_grammar">Dependency</a> parsing is the process of analyzing the sentence structures and word relationships. It can be used to examine phrasal nouns and verbs. The full list of dependency labels can be found <a class="reference external" href="https://github.com/explosion/spaCy/blob/master/spacy/glossary.py#L205">here</a>.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
 <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;I&#39;m hungry, but there is nothing in the fridge&quot;</span><span class="p">)</span>
@@ -2589,9 +2521,7 @@ Discriminative classifier - they model the decision boundary between the differe
 <h2>4. NLP for Vietnamese<a class="headerlink" href="#nlp-for-vietnamese" title="Permalink to this headline">#</a></h2>
 <section id="character-normalization">
 <h3>4.1. Character normalization<a class="headerlink" href="#character-normalization" title="Permalink to this headline">#</a></h3>
-<p>There are two types of Vietnamese characters being widely used, <a class="reference external" href="https://en.wikipedia.org/wiki/Combining_character">decomposed</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Precomposed_character">composed</a>. They are visually identical, but are constructed from different Unicode code-points. We can see the the difference in the example below for the word “Tiếng Việt”. Because of this, we use the
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://docs.python.org/3/library/unicodedata.html#unicodedata.normalize&gt;unicodedata.normalize()&lt;/a&gt;</span></code>
-function to convert between the two forms, with the corresponding names NFD and NFC. As the composed (NFC) form takes less memory, it will be the go-to choice.</p>
+<p>There are two types of Vietnamese characters being widely used, <a class="reference external" href="https://en.wikipedia.org/wiki/Combining_character">decomposed</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Precomposed_character">composed</a>. They are visually identical, but are constructed from different Unicode code-points. We can see the the difference in the example below for the word “Tiếng Việt”. Because of this, we use the <a class="reference external" href="https://docs.python.org/3/library/unicodedata.html#unicodedata.normalize"><code class="docutils literal notranslate"><span class="pre">unicodedata.normalize()</span></code></a> function to convert between the two forms, with the corresponding names NFD and NFC. As the composed (NFC) form takes less memory, it will be the go-to choice.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">strNFC</span> <span class="o">=</span> <span class="s1">&#39;Tiếng Việt&#39;</span>
@@ -2680,13 +2610,6 @@ b&#39;Ti\\u1ebfng Vi\\u1ec7t&#39;
 <section id="underthesea">
 <h3>4.2. Underthesea<a class="headerlink" href="#underthesea" title="Permalink to this headline">#</a></h3>
 <p>This section uses <a class="reference external" href="https://github.com/undertheseanlp/underthesea">Underthesea</a> for Vietnamese NLP. Other resources, <a class="reference external" href="https://github.com/vncorenlp/VnCoreNLP">VNCoreNLP</a> and <a class="reference external" href="https://github.com/trungtv/pyvi">PyVi</a>, are available as well. Compared to English, processing Vietnames requires no stemming and lemmatization, but there will be additional tasks.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">underthesea</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">underthesea</span><span class="o">.</span><span class="n">text_normalize</span><span class="p">(</span><span class="s1">&#39;Ðảm baỏ chất lựơng phòng thí nghịêm hoá học&#39;</span><span class="p">)</span>
@@ -2815,6 +2738,9 @@ b&#39;Ti\\u1ebfng Vi\\u1ec7t&#39;
 <li><p><a class="reference external" href="https://towardsdatascience.com/bert-to-the-rescue-17671379687f">https://towardsdatascience.com/bert-to-the-rescue-17671379687f</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/pdf/2011.06727.pdf">https://arxiv.org/pdf/2011.06727.pdf</a></p></li>
 </ul>
+</section>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">gensim</span> <span class="o">--</span><span class="n">upgrade</span>
@@ -2888,7 +2814,7 @@ b&#39;Ti\\u1ebfng Vi\\u1ec7t&#39;
     <a class='right-next' id="next-link" href="opencv-image-processing.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Opencv: Image Processing</p>
+        <p class="prev-next-title">OpenCV: Image Processing</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
