@@ -467,7 +467,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-09/pyod-anomaly-detection.html">
-     Pyod: Anomaly Detection
+     PyOD: Anomaly Detection
     </a>
    </li>
   </ul>
@@ -491,7 +491,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-10/opencv-image-processing.html">
-     (w) Opencv: Image Processing
+     (w) OpenCV: Image Processing
     </a>
    </li>
    <li class="toctree-l2">
@@ -810,33 +810,40 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-hypotheses">
-     The hypotheses
+    <a class="reference internal nav-link" href="#terminology">
+     2.1. Terminology
     </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#significance-level">
-     Significance level
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-statistic">
-     Test statistic
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#p-value">
-     p-value
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Descriptive statistics
-    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-hypotheses">
+       The hypotheses
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#significance-level">
+       Significance level
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#test-statistic">
+       Test statistic
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#p-value">
+       p-value
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Descriptive statistics
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#z-test">
-     2.1. Z-test
+     2.2. Z-test
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -853,51 +860,51 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#f-test">
-     2.2. F-test
+     2.3. F-test
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#t-test">
-     2.3. T-test
+     2.4. T-test
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#one-sample-mean-t-test">
-       One-sample mean t-test
+      <a class="reference internal nav-link" href="#one-sample-mean">
+       One-sample mean
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#independent-samples-mean-t-test">
-       Independent samples mean t-test
+      <a class="reference internal nav-link" href="#independent-samples">
+       Independent samples
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#paired-samples-mean-t-test">
-       Paired samples mean t-test
+      <a class="reference internal nav-link" href="#paired-samples">
+       Paired samples
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#chi-squared-test">
-     2.4. Chi-squared test
+     2.5. Chi-squared test
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#dependence-chi-squared-test">
-       Dependence chi-squared test
+      <a class="reference internal nav-link" href="#dependence-test">
+       Dependence test
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#propotion-chi-squared-test">
-       Propotion chi-squared test
+      <a class="reference internal nav-link" href="#propotion-test">
+       Propotion test
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#anova">
-     2.5. ANOVA
+     2.6. ANOVA
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -909,7 +916,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#distribution-test">
-     2.6. Distribution test
+     2.7. Distribution test
     </a>
    </li>
   </ul>
@@ -925,13 +932,13 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#simple-linear-regression">
-     3.1. Simple linear regression
+    <a class="reference internal nav-link" href="#univariate">
+     3.1. Univariate
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#multivariate-linear-regression">
-     3.2. Multivariate linear regression
+    <a class="reference internal nav-link" href="#multivariate">
+     3.2. Multivariate
     </a>
    </li>
   </ul>
@@ -990,33 +997,40 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-hypotheses">
-     The hypotheses
+    <a class="reference internal nav-link" href="#terminology">
+     2.1. Terminology
     </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#significance-level">
-     Significance level
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-statistic">
-     Test statistic
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#p-value">
-     p-value
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Descriptive statistics
-    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-hypotheses">
+       The hypotheses
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#significance-level">
+       Significance level
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#test-statistic">
+       Test statistic
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#p-value">
+       p-value
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Descriptive statistics
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#z-test">
-     2.1. Z-test
+     2.2. Z-test
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -1033,51 +1047,51 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#f-test">
-     2.2. F-test
+     2.3. F-test
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#t-test">
-     2.3. T-test
+     2.4. T-test
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#one-sample-mean-t-test">
-       One-sample mean t-test
+      <a class="reference internal nav-link" href="#one-sample-mean">
+       One-sample mean
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#independent-samples-mean-t-test">
-       Independent samples mean t-test
+      <a class="reference internal nav-link" href="#independent-samples">
+       Independent samples
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#paired-samples-mean-t-test">
-       Paired samples mean t-test
+      <a class="reference internal nav-link" href="#paired-samples">
+       Paired samples
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#chi-squared-test">
-     2.4. Chi-squared test
+     2.5. Chi-squared test
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#dependence-chi-squared-test">
-       Dependence chi-squared test
+      <a class="reference internal nav-link" href="#dependence-test">
+       Dependence test
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#propotion-chi-squared-test">
-       Propotion chi-squared test
+      <a class="reference internal nav-link" href="#propotion-test">
+       Propotion test
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#anova">
-     2.5. ANOVA
+     2.6. ANOVA
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -1089,7 +1103,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#distribution-test">
-     2.6. Distribution test
+     2.7. Distribution test
     </a>
    </li>
   </ul>
@@ -1105,13 +1119,13 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#simple-linear-regression">
-     3.1. Simple linear regression
+    <a class="reference internal nav-link" href="#univariate">
+     3.1. Univariate
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#multivariate-linear-regression">
-     3.2. Multivariate linear regression
+    <a class="reference internal nav-link" href="#multivariate">
+     3.2. Multivariate
     </a>
    </li>
   </ul>
@@ -1140,33 +1154,16 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;tidyverse&#39; was built under R version 4.0.4&quot;
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">Error</span>: package or namespace load failed for &#39;tidyverse&#39; in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
- <span class="n">namespace</span> <span class="s1">&#39;rlang&#39;</span> <span class="mf">0.4</span><span class="o">.</span><span class="mi">7</span> <span class="ow">is</span> <span class="n">already</span> <span class="n">loaded</span><span class="p">,</span> <span class="n">but</span> <span class="o">&gt;=</span> <span class="mf">0.4</span><span class="o">.</span><span class="mi">10</span> <span class="ow">is</span> <span class="n">required</span>
-<span class="ne">Traceback</span>:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>── <span class=" -Color -Color-Bold">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.1 ──
 
-<span class="mi">1</span><span class="o">.</span> <span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
-<span class="mi">2</span><span class="o">.</span> <span class="n">tryCatch</span><span class="p">({</span>
- <span class="o">.</span>     <span class="n">attr</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="s2">&quot;LibPath&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">loc</span>
- <span class="o">.</span>     <span class="n">ns</span> <span class="o">&lt;-</span> <span class="n">loadNamespace</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">lib</span><span class="o">.</span><span class="n">loc</span><span class="p">)</span>
- <span class="o">.</span>     <span class="n">env</span> <span class="o">&lt;-</span> <span class="n">attachNamespace</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="p">,</span> <span class="n">deps</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">include</span><span class="o">.</span><span class="n">only</span><span class="p">)</span>
- <span class="o">.</span> <span class="p">},</span> <span class="n">error</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
- <span class="o">.</span>     <span class="n">P</span> <span class="o">&lt;-</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span>is.null<span class="o">(</span>cc &lt;- conditionCall<span class="o">(</span>e<span class="o">)))</span> 
- <span class="o">.</span>         <span class="n">paste</span><span class="p">(</span><span class="s2">&quot; in&quot;</span><span class="p">,</span> <span class="n">deparse</span><span class="p">(</span><span class="n">cc</span><span class="p">)[</span><span class="mi">1</span><span class="n">L</span><span class="p">])</span>
- <span class="o">.</span>     <span class="k">else</span> <span class="s2">&quot;&quot;</span>
- <span class="o">.</span>     <span class="n">msg</span> <span class="o">&lt;-</span> <span class="n">gettextf</span><span class="p">(</span><span class="s2">&quot;package or namespace load failed for </span><span class="si">%s%s</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> 
- <span class="o">.</span>         <span class="n">sQuote</span><span class="p">(</span><span class="n">package</span><span class="p">),</span> <span class="n">P</span><span class="p">,</span> <span class="n">conditionMessage</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
- <span class="o">.</span>     <span class="k">if</span> <span class="p">(</span><span class="n">logical</span><span class="o">.</span><span class="k">return</span><span class="p">)</span> 
- <span class="o">.</span>         <span class="n">message</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">&quot;Error:&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">),</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
- <span class="o">.</span>     <span class="k">else</span> <span class="n">stop</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">call</span><span class="o">.</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
- <span class="o">.</span> <span class="p">})</span>
-<span class="mi">3</span><span class="o">.</span> <span class="n">tryCatchList</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">parentenv</span><span class="p">,</span> <span class="n">handlers</span><span class="p">)</span>
-<span class="mi">4</span><span class="o">.</span> <span class="n">tryCatchOne</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">parentenv</span><span class="p">,</span> <span class="n">handlers</span><span class="p">[[</span><span class="mi">1</span><span class="n">L</span><span class="p">]])</span>
-<span class="mi">5</span><span class="o">.</span> <span class="n">value</span><span class="p">[[</span><span class="mi">3</span><span class="n">L</span><span class="p">]](</span><span class="n">cond</span><span class="p">)</span>
-<span class="mi">6</span><span class="o">.</span> <span class="n">stop</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">call</span><span class="o">.</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">ggplot2</span> 3.3.6     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">purrr  </span> 0.3.4
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">tibble </span> 3.1.7     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">dplyr  </span> 1.0.9
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">tidyr  </span> 1.2.0     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">stringr</span> 1.4.0
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">readr  </span> 2.1.2     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">forcats</span> 0.5.1
+
+── <span class=" -Color -Color-Bold">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──
+<span class=" -Color -Color-Red">✖</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">filter()</span> masks <span class=" -Color -Color-Blue">stats</span>::filter()
+<span class=" -Color -Color-Red">✖</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">lag()</span>    masks <span class=" -Color -Color-Blue">stats</span>::lag()
 </pre></div>
 </div>
 </div>
@@ -1250,7 +1247,7 @@ title="Print to PDF"
 <p>Pearson’s correlation assesses linear relationship between two variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">correlation</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/correlation.csv&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">correlation</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/correlation.csv&#39;</span><span class="p">)</span>
 <span class="nf">cor</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1286,7 +1283,7 @@ title="Print to PDF"
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;
 </pre></div>
 </div>
-<img alt="../_images/r-statistics_13_1.png" src="../_images/r-statistics_13_1.png" />
+<a class="reference internal image-reference" href="../_images/r-statistics_13_1.png"><img alt="../_images/r-statistics_13_1.png" class="align-center" src="../_images/r-statistics_13_1.png" style="width: 420.0px; height: 420.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1343,23 +1340,25 @@ title="Print to PDF"
 <section id="hypothesis-testing">
 <h2>2. Hypothesis testing<a class="headerlink" href="#hypothesis-testing" title="Permalink to this headline">#</a></h2>
 <p>Hypothesis testing is a method of statistical inference which is built upon distributions. The approach of this technique is to test the validity of a claim about the population using sample data. Hypothesis testing takes into account the following concepts:</p>
+<section id="terminology">
+<h3>2.1. Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">#</a></h3>
 <section id="the-hypotheses">
-<h3>The hypotheses<a class="headerlink" href="#the-hypotheses" title="Permalink to this headline">#</a></h3>
+<h4>The hypotheses<a class="headerlink" href="#the-hypotheses" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
 <li><p>The null hypothesis (denoted <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>): the common view whose validity needs to be tested.</p></li>
 <li><p>The alternative hypothesis (denoted <span class="math notranslate nohighlight">\(\mbox{H}_1\)</span>): what will be believed if <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span> is rejected. <span class="math notranslate nohighlight">\(H_1\)</span> can be either <span class="math notranslate nohighlight">\(x\neq x_0\)</span>, <span class="math notranslate nohighlight">\(x&lt;x_0\)</span> or <span class="math notranslate nohighlight">\(x&gt;x_0\)</span>.</p></li>
 </ul>
 </section>
 <section id="significance-level">
-<h3>Significance level<a class="headerlink" href="#significance-level" title="Permalink to this headline">#</a></h3>
+<h4>Significance level<a class="headerlink" href="#significance-level" title="Permalink to this headline">#</a></h4>
 <p>Significant level (denoted <span class="math notranslate nohighlight">\(\alpha\)</span>) is the probability of rejecting the null hypothesis. Common values for significant level are <span class="math notranslate nohighlight">\(\alpha=0.05\)</span> or <span class="math notranslate nohighlight">\(\alpha=0.01\)</span>. A related concept is the confidence level (<span class="math notranslate nohighlight">\(\gamma=1-\alpha\)</span>).</p>
 </section>
 <section id="test-statistic">
-<h3>Test statistic<a class="headerlink" href="#test-statistic" title="Permalink to this headline">#</a></h3>
+<h4>Test statistic<a class="headerlink" href="#test-statistic" title="Permalink to this headline">#</a></h4>
 <p>Test statistic is a number calculated from the data, which is used to perform the test. The math behind the computing of test statistic ensures it follows a specific dsitribution. Each test statistic is represented by a fraction where the numerator is the signal and the denominator is the noise.</p>
 </section>
 <section id="p-value">
-<h3>p-value<a class="headerlink" href="#p-value" title="Permalink to this headline">#</a></h3>
+<h4>p-value<a class="headerlink" href="#p-value" title="Permalink to this headline">#</a></h4>
 <p>Using test statistic <span class="math notranslate nohighlight">\(t\)</span> and its probability disribution function <span class="math notranslate nohighlight">\(f(x)\)</span>, p-value can be calculated as either <span class="math notranslate nohighlight">\(2P(x&gt;|t|)\)</span>, <span class="math notranslate nohighlight">\(P(x&lt;-t)\)</span> or <span class="math notranslate nohighlight">\(P(x&gt;t)\)</span> depends on <span class="math notranslate nohighlight">\(\mbox{H}_1\)</span>. p-value is the evidence against <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>; the smaller the p-value is, the stronger evidence that you should reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span>.</p>
 <ul class="simple">
 <li><p>A p-value less than 0.05 indicates the difference is significant, meaning there is a probability of less than 5% that the null hypothesis is correct. Therefore, we reject <span class="math notranslate nohighlight">\(\mbox{H}_0\)</span> and accept <span class="math notranslate nohighlight">\(\mbox{H}_1\)</span>.</p></li>
@@ -1367,7 +1366,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="id1">
-<h3>Descriptive statistics<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<h4>Descriptive statistics<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <p>For populations:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(N\)</span>: population size</p></li>
@@ -1385,8 +1384,9 @@ title="Print to PDF"
 <li><p><span class="math notranslate nohighlight">\(\hat p\)</span>: propotion of successes in sample</p></li>
 </ul>
 </section>
+</section>
 <section id="z-test">
-<h3>2.1. Z-test<a class="headerlink" href="#z-test" title="Permalink to this headline">#</a></h3>
+<h3>2.2. Z-test<a class="headerlink" href="#z-test" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
@@ -1395,9 +1395,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;../data/hypothesis.xlsx&#39;</span><span class="p">)</span>
 <span class="nf">head</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1541,7 +1541,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="f-test">
-<h3>2.2. F-test<a class="headerlink" href="#f-test" title="Permalink to this headline">#</a></h3>
+<h3>2.3. F-test<a class="headerlink" href="#f-test" title="Permalink to this headline">#</a></h3>
 <p>Usage:</p>
 <ul class="simple">
 <li><p>Comparing the variances of two populations</p></li>
@@ -1563,7 +1563,7 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;../data/hypothesis.xlsx&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
 </pre></div>
 </div>
@@ -1604,7 +1604,7 @@ ratio of variances
 </div>
 </section>
 <section id="t-test">
-<h3>2.3. T-test<a class="headerlink" href="#t-test" title="Permalink to this headline">#</a></h3>
+<h3>2.4. T-test<a class="headerlink" href="#t-test" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
@@ -1613,9 +1613,9 @@ ratio of variances
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;../data/hypothesis.xlsx&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
 </pre></div>
 </div>
@@ -1638,8 +1638,8 @@ ratio of variances
 </table>
 </div></div>
 </div>
-<section id="one-sample-mean-t-test">
-<h4>One-sample mean t-test<a class="headerlink" href="#one-sample-mean-t-test" title="Permalink to this headline">#</a></h4>
+<section id="one-sample-mean">
+<h4>One-sample mean<a class="headerlink" href="#one-sample-mean" title="Permalink to this headline">#</a></h4>
 <p>Usage: To compare the mean of a population when its variance is unknown.</p>
 <p>Assumption:</p>
 <ul class="simple">
@@ -1678,8 +1678,8 @@ mean of x
 </div>
 </div>
 </section>
-<section id="independent-samples-mean-t-test">
-<h4>Independent samples mean t-test<a class="headerlink" href="#independent-samples-mean-t-test" title="Permalink to this headline">#</a></h4>
+<section id="independent-samples">
+<h4>Independent samples<a class="headerlink" href="#independent-samples" title="Permalink to this headline">#</a></h4>
 <p>Usage: To compare the means of two population using their independent samples. A f-test should be used first to check the equality of the two population variances.</p>
 <p>Assumptions:</p>
 <ul class="simple">
@@ -1793,8 +1793,8 @@ mean in group FALSE  mean in group TRUE
 </div>
 </div>
 </section>
-<section id="paired-samples-mean-t-test">
-<h4>Paired samples mean t-test<a class="headerlink" href="#paired-samples-mean-t-test" title="Permalink to this headline">#</a></h4>
+<section id="paired-samples">
+<h4>Paired samples<a class="headerlink" href="#paired-samples" title="Permalink to this headline">#</a></h4>
 <p>Usage: Comparing two population means, given their dependent samples. A paired samples t-test calculates the diffrence between paired observation and then performs a one-sample t-test.</p>
 <p>Assumptions:</p>
 <ul class="simple">
@@ -1853,7 +1853,7 @@ mean of the differences
 </section>
 </section>
 <section id="chi-squared-test">
-<h3>2.4. Chi-squared test<a class="headerlink" href="#chi-squared-test" title="Permalink to this headline">#</a></h3>
+<h3>2.5. Chi-squared test<a class="headerlink" href="#chi-squared-test" title="Permalink to this headline">#</a></h3>
 <p>Usage:</p>
 <ul class="simple">
 <li><p>Comparing the propotions of two or more populations</p></li>
@@ -1871,9 +1871,9 @@ mean of the differences
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;../data/hypothesis.xlsx&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
 </pre></div>
 </div>
@@ -1896,8 +1896,8 @@ mean of the differences
 </table>
 </div></div>
 </div>
-<section id="dependence-chi-squared-test">
-<h4>Dependence chi-squared test<a class="headerlink" href="#dependence-chi-squared-test" title="Permalink to this headline">#</a></h4>
+<section id="dependence-test">
+<h4>Dependence test<a class="headerlink" href="#dependence-test" title="Permalink to this headline">#</a></h4>
 <p><strong>Problem</strong>: Is there a relationship between <code class="docutils literal notranslate"><span class="pre">age_group</span></code> and <code class="docutils literal notranslate"><span class="pre">degree</span></code>?</p>
 <p>The hypotheses:</p>
 <ul class="simple">
@@ -1924,8 +1924,8 @@ X-squared = 84.746, df = 4, p-value &lt; 2.2e-16
 </div>
 </div>
 </section>
-<section id="propotion-chi-squared-test">
-<h4>Propotion chi-squared test<a class="headerlink" href="#propotion-chi-squared-test" title="Permalink to this headline">#</a></h4>
+<section id="propotion-test">
+<h4>Propotion test<a class="headerlink" href="#propotion-test" title="Permalink to this headline">#</a></h4>
 <p><strong>Problem</strong>: The number of officer is equal to the number of salesperson and 5 times greater than the number of managers, true or false?</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\mbox{H}_0: p_1=1/11, p_2=p_3=5/11\)</span></p></li>
@@ -1985,7 +1985,7 @@ prop 1 prop 2 prop 3
 </section>
 </section>
 <section id="anova">
-<h3>2.5. ANOVA<a class="headerlink" href="#anova" title="Permalink to this headline">#</a></h3>
+<h3>2.6. ANOVA<a class="headerlink" href="#anova" title="Permalink to this headline">#</a></h3>
 <p>ANOVA (Analysis of Variance) is a technique involving a collection of statistical tests analyzing the difference of the means of two or more groups. The means is calculated from a quantitative variable; the groups are determined using qualitative variables.</p>
 <section id="one-factor-anova">
 <h4>One-factor ANOVA<a class="headerlink" href="#one-factor-anova" title="Permalink to this headline">#</a></h4>
@@ -2026,9 +2026,9 @@ prop 1 prop 2 prop 3
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;../data/hypothesis.xlsx&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
 </pre></div>
 </div>
@@ -2253,7 +2253,7 @@ Warning message:
 </section>
 </section>
 <section id="distribution-test">
-<h3>2.6. Distribution test<a class="headerlink" href="#distribution-test" title="Permalink to this headline">#</a></h3>
+<h3>2.7. Distribution test<a class="headerlink" href="#distribution-test" title="Permalink to this headline">#</a></h3>
 <p>The Kolmogorov-Smirnov test (KS test) is used to test whether a random variable follows a specific distribution or not. The test statistic is calculated as the difference between the empirical CDF of the observed variable and the CDF of the reference distribution. In R, the <code class="docutils literal notranslate"><span class="pre">ks.test()</span></code> function performs Kolmogorov-Smirnov test.</p>
 <p>Here are the popular distributions that <code class="docutils literal notranslate"><span class="pre">ks.test()</span></code> supports:</p>
 <table class="colwidths-auto table">
@@ -2377,14 +2377,14 @@ Warning message:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/hypothesis.xlsx&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;../data/hypothesis.xlsx&#39;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="simple-linear-regression">
-<h3>3.1. Simple linear regression<a class="headerlink" href="#simple-linear-regression" title="Permalink to this headline">#</a></h3>
+<section id="univariate">
+<h3>3.1. Univariate<a class="headerlink" href="#univariate" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">income</span> <span class="o">~</span> <span class="n">year_of_school</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
@@ -2403,8 +2403,8 @@ Warning message:
 </div>
 </div>
 </section>
-<section id="multivariate-linear-regression">
-<h3>3.2. Multivariate linear regression<a class="headerlink" href="#multivariate-linear-regression" title="Permalink to this headline">#</a></h3>
+<section id="multivariate">
+<h3>3.2. Multivariate<a class="headerlink" href="#multivariate" title="Permalink to this headline">#</a></h3>
 <p><strong>Problem:</strong></p>
 <ol class="simple">
 <li><p>Wrtie the regression function representing how the two variables <code class="docutils literal notranslate"><span class="pre">year_of_school</span></code> and <code class="docutils literal notranslate"><span class="pre">age</span></code> affect <code class="docutils literal notranslate"><span class="pre">income</span></code>.</p></li>

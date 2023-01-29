@@ -468,7 +468,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-09/pyod-anomaly-detection.html">
-     Pyod: Anomaly Detection
+     PyOD: Anomaly Detection
     </a>
    </li>
   </ul>
@@ -492,7 +492,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="opencv-image-processing.html">
-     (w) Opencv: Image Processing
+     (w) OpenCV: Image Processing
     </a>
    </li>
    <li class="toctree-l2">
@@ -856,6 +856,11 @@ title="Print to PDF"
    References
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -955,6 +960,11 @@ title="Print to PDF"
    References
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -973,27 +983,31 @@ title="Print to PDF"
 <li><p>PyTorch is prefered by research community with more customizations, as we normally see newly published architectures written in PyTorch.</p></li>
 <li><p>TensorFlow/Keras is better for production due to high-level interface and large deployment ecosystem.</p></li>
 </ul>
-<section id="data-manipulation">
-<h2>1. Data manipulation<a class="headerlink" href="#data-manipulation" title="Permalink to this headline">#</a></h2>
-<section id="computation">
-<h3>1.1. Computation<a class="headerlink" href="#computation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">janitor</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
 </pre></div>
 </div>
 </div>
 </div>
+<section id="data-manipulation">
+<h2>1. Data manipulation<a class="headerlink" href="#data-manipulation" title="Permalink to this headline">#</a></h2>
+<section id="computation">
+<h3>1.1. Computation<a class="headerlink" href="#computation" title="Permalink to this headline">#</a></h3>
 <section id="tensor">
 <h4>Tensor<a class="headerlink" href="#tensor" title="Permalink to this headline">#</a></h4>
-<p>In PyTorch, we work most of the time with
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/tensors.html&gt;Tensor&lt;/a&gt;</span></code>
-whose operations are very much like NumPy’s array. Being very natural to PyTorch, tensor operations are provided directly in the <a class="reference external" href="https://pytorch.org/docs/stable/torch.html">mother package</a>. One thing to notice is that PyTorch requires tensors to be of the same data type so mathematical computation can be performed on them. When error occurs, we should check all input data and make sure they are <code class="docutils literal notranslate"><span class="pre">torch.float32</span></code>, as this is the default data type in PyTorch.</p>
+<p>In PyTorch, we work most of the time with <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a> whose operations are very much like NumPy’s array. Being very natural to PyTorch, tensor operations are provided directly in the <a class="reference external" href="https://pytorch.org/docs/stable/torch.html">mother package</a>. One thing to notice is that PyTorch requires tensors to be of the same data type so mathematical computation can be performed on them. When error occurs, we should check all input data and make sure they are <code class="docutils literal notranslate"><span class="pre">torch.float32</span></code>, as this is the default data type in PyTorch.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span>
@@ -1020,11 +1034,7 @@ whose operations are very much like NumPy’s array. Being very natural to PyTor
 </section>
 <section id="autograd">
 <h4>Autograd<a class="headerlink" href="#autograd" title="Permalink to this headline">#</a></h4>
-<p>PyTorch provides automatic differentiation via the sub-module
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/autograd.html&gt;autograd&lt;/a&gt;</span></code>,
-with functions implemented as
-<code class="docutils literal notranslate"><span class="pre">Tensor</span></code>
-methods. Being a mathematical module, it distinguishes two types of tensor, <em>constant</em> and <em>variable</em>, indicated via the flag <code class="docutils literal notranslate"><span class="pre">requires_grad</span></code>. All tensors are constants by default, and become variables when this flag is enabled. Autograd is designed to work on a computational graph, where:</p>
+<p>PyTorch provides automatic differentiation via the sub-module <a class="reference external" href="https://pytorch.org/docs/stable/autograd.html"><code class="docutils literal notranslate"><span class="pre">autograd</span></code></a>, with functions implemented as <code class="docutils literal notranslate"><span class="pre">Tensor</span></code> methods. Being a mathematical module, it distinguishes two types of tensor, <em>constant</em> and <em>variable</em>, indicated via the flag <code class="docutils literal notranslate"><span class="pre">requires_grad</span></code>. All tensors are constants by default, and become variables when this flag is enabled. Autograd is designed to work on a computational graph, where:</p>
 <ul class="simple">
 <li><p>The <em>foward</em> pass requires inputs to be tensors and output to be a scalar. This pass is done using normal tensor operations.</p></li>
 <li><p>During <em>backward</em> pass (by calling the <code class="docutils literal notranslate"><span class="pre">backward()</span></code> method on the output), PyTorch will compute and accumulate partial derivatives for leaf nodes. This information can be accessed via the <code class="docutils literal notranslate"><span class="pre">grad</span></code> attribute of input variables.</p></li>
@@ -1065,10 +1075,8 @@ methods. Being a mathematical module, it distinguishes two types of tensor, <em>
 </section>
 <section id="optimization">
 <h4>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline">#</a></h4>
-<p>The sub-module <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/optim.html&gt;optim&lt;/a&gt;</span></code>
-implements various optimization algorithms from the basic SGD to the standard Adam. We are going to demonstrate
-<code class="docutils literal notranslate"><span class="pre">autograd</span></code> and <code class="docutils literal notranslate"><span class="pre">optim</span></code>
-combining together using a simple problem, finding <span class="math notranslate nohighlight">\(\min\bar{\mathbf{y}}\)</span> where <span class="math notranslate nohighlight">\(\mathbf{y}=(\mathbf{x}_1-0.3)^2+(\mathbf{x}_2-0.7)^2\)</span>. Recall that all gradient descent algorithms share three components:</p>
+<p>The sub-module <a class="reference external" href="https://pytorch.org/docs/stable/optim.html"><code class="docutils literal notranslate"><span class="pre">optim</span></code></a>
+implements various optimization algorithms from the basic SGD to the standard Adam. We are going to demonstrate <code class="docutils literal notranslate"><span class="pre">autograd</span></code> and <code class="docutils literal notranslate"><span class="pre">optim</span></code> combining together using a simple problem, finding <span class="math notranslate nohighlight">\(\min\bar{\mathbf{y}}\)</span> where <span class="math notranslate nohighlight">\(\mathbf{y}=(\mathbf{x}_1-0.3)^2+(\mathbf{x}_2-0.7)^2\)</span>. Recall that all gradient descent algorithms share three components:</p>
 <ul class="simple">
 <li><p>(1) configurations such as learning rate <span class="math notranslate nohighlight">\(\eta\)</span>, momentum <span class="math notranslate nohighlight">\(\gamma\)</span> and weight decay <span class="math notranslate nohighlight">\(\rho\)</span></p></li>
 <li><p>(2) the variable <span class="math notranslate nohighlight">\(x_t\)</span> and its gradient <span class="math notranslate nohighlight">\(g_t\)</span> at each iteration <span class="math notranslate nohighlight">\(t\)</span></p></li>
@@ -1133,33 +1141,7 @@ var1 = 0.6950, grad1 = -0.0251
 </section>
 <section id="data-loader">
 <h3>1.2. Data loader<a class="headerlink" href="#data-loader" title="Permalink to this headline">#</a></h3>
-<p>The sub-module
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/data.html&gt;utils.data&lt;/a&gt;</span></code>
-provides abstract interface helping Data Scientists to work with different types of data. First, we create a dataset class by inherting
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset&gt;Dataset&lt;/a&gt;</span></code>
-and overriding two methods
-<code class="docutils literal notranslate"><span class="pre">&amp;lowbar;&amp;lowbar;len&amp;lowbar;&amp;lowbar;()</span></code> and
-<code class="docutils literal notranslate"><span class="pre">&amp;lowbar;&amp;lowbar;getitem&amp;lowbar;&amp;lowbar;()</span></code>.
-Then we pass this dataset to
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader&gt;DataLoader&lt;/a&gt;</span></code>
-to enable batch behaviour.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">janitor</span>
-
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
+<p>The sub-module <a class="reference external" href="https://pytorch.org/docs/stable/data.html"><code class="docutils literal notranslate"><span class="pre">utils.data</span></code></a> provides abstract interface helping Data Scientists to work with different types of data. First, we create a dataset class by inherting <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a> and overriding two methods <code class="docutils literal notranslate"><span class="pre">__len__()</span></code> and <code class="docutils literal notranslate"><span class="pre">__getitem__()</span></code>. Then we pass this dataset to <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader"><code class="docutils literal notranslate"><span class="pre">DataLoader</span></code></a> to enable batch behaviour.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TabularData</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -1177,7 +1159,7 @@ to enable batch behaviour.</p>
         <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">sample</span><span class="p">,</span> <span class="n">label</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/boston.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/boston.csv&#39;</span><span class="p">)</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">TabularData</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">)</span>
 <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -1223,7 +1205,7 @@ to enable batch behaviour.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/pytorch-deep-learning_21_0.png" src="../_images/pytorch-deep-learning_21_0.png" />
+<a class="reference internal image-reference" href="../_images/pytorch-deep-learning_22_0.png"><img alt="../_images/pytorch-deep-learning_22_0.png" class="align-center" src="../_images/pytorch-deep-learning_22_0.png" style="width: 483.5px; height: 248.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1317,7 +1299,7 @@ grad1=3.0 grad2=4.0
         <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">sample</span><span class="p">,</span> <span class="n">label</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/boston.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/boston.csv&#39;</span><span class="p">)</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">TabularData</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">)</span>
 <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -1377,43 +1359,25 @@ grad1=3.0 grad2=4.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/pytorch-deep-learning_30_0.png" src="../_images/pytorch-deep-learning_30_0.png" />
+<a class="reference internal image-reference" href="../_images/pytorch-deep-learning_31_0.png"><img alt="../_images/pytorch-deep-learning_31_0.png" class="align-center" src="../_images/pytorch-deep-learning_31_0.png" style="width: 483.5px; height: 248.0px;" /></a>
 </div>
 </div>
 </section>
 </section>
 <section id="w-language-processing">
 <h3>(w) Language processing<a class="headerlink" href="#w-language-processing" title="Permalink to this headline">#</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/text/stable/index.html&gt;torchtext&lt;/a&gt;</span></code></p>
+<p><a class="reference external" href="https://pytorch.org/text/stable/index.html"><code class="docutils literal notranslate"><span class="pre">torchtext</span></code></a></p>
 </section>
 <section id="w-image-processing">
 <h3>(w) Image processing<a class="headerlink" href="#w-image-processing" title="Permalink to this headline">#</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/vision/stable/index.html&gt;torchvision&lt;/a&gt;</span></code></p>
+<p><a class="reference external" href="https://pytorch.org/vision/stable/index.html"><code class="docutils literal notranslate"><span class="pre">torchvision</span></code></a></p>
 </section>
 </section>
 <section id="neural-networks">
 <h2>2. Neural networks<a class="headerlink" href="#neural-networks" title="Permalink to this headline">#</a></h2>
 <section id="modular-design">
 <h3>2.1. Modular design<a class="headerlink" href="#modular-design" title="Permalink to this headline">#</a></h3>
-<p>PyTorch has two APIs for creating models, where the recommended one is
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/generated/torch.nn.Module.html&gt;nn.Module&lt;/a&gt;</span></code>,
-being equivalent to functional API in Keras. To create a model, we inherit this class, define building blocks inside the
-<code class="docutils literal notranslate"><span class="pre">&amp;lowbar;&amp;lowbar;init&amp;lowbar;&amp;lowbar;()</span></code>
-method and design the neural network architecture with the <code class="docutils literal notranslate"><span class="pre">foward()</span></code> method. We don’t need to to specify the backward pass, as the submodule
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/autograd.html&gt;autograd&lt;/a&gt;</span></code>
-will handle it for us. The second API,
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/generated/torch.nn.Sequential.html&gt;nn.Sequential&lt;/a&gt;</span></code>,
-is good for simple architectures as well as small blocks in large networks.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">janitor</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>PyTorch has two APIs for creating models, where the recommended one is <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html"><code class="docutils literal notranslate"><span class="pre">nn.Module</span></code></a>, being equivalent to functional API in Keras. To create a model, we inherit this class, define building blocks inside the <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> method and design the neural network architecture with the <code class="docutils literal notranslate"><span class="pre">foward()</span></code> method. We don’t need to to specify the backward pass, as the submodule <code class="docutils literal notranslate"><span class="pre">autograd</span></code> will handle it for us. The second API, <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Sequential.html"><code class="docutils literal notranslate"><span class="pre">nn.Sequential</span></code></a>, is good for simple architectures as well as small blocks in large networks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LinearRegression</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1433,14 +1397,8 @@ is good for simple architectures as well as small blocks in large networks.</p>
 </div>
 <section id="layers">
 <h4>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">#</a></h4>
-<p>A neural network is a collection of layers, and each layer is a function. These functions can be simple (such as fully connected layer) or complicated (such as recurrent layers), but this fact does not change the nature of a layer. We can construct a layer completely by hand, as seen in the linear regression example above. With the help of the class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/generated/torch.nn.parameter.Parameter.html&gt;nn.Parameter&lt;/a&gt;</span></code>,
-we turn tensors into trainable parameters that are visible to model classes. This is used only on rare occasions, and most of the time we would want to use built-in layers of PyTorch.</p>
-<p>PyTorch has two APIs for accessing its layers,
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/nn.html&gt;nn&lt;/a&gt;</span></code>
-(abbreviated for <em>neural network</em>) and
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://pytorch.org/docs/stable/nn.functional.html&gt;nn.functional&lt;/a&gt;</span></code>.
-The first module provides object interface (that supports auto differentiation) and the second module provides function interface (easier to use). So, the best practice is using object interface for layers with trainable parameters such as recurrent or convolutional, and using function interface for loss functions or activation functions.</p>
+<p>A neural network is a collection of layers, and each layer is a function. These functions can be simple (such as fully connected layer) or complicated (such as recurrent layers), but this fact does not change the nature of a layer. We can construct a layer completely by hand, as seen in the linear regression example above. With the help of the class <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.parameter.Parameter.html"><code class="docutils literal notranslate"><span class="pre">nn.Parameter</span></code></a>, we turn tensors into trainable parameters that are visible to model classes. This is used only on rare occasions, and most of the time we would want to use built-in layers of PyTorch.</p>
+<p>PyTorch has two APIs for accessing its layers, <a class="reference external" href="https://pytorch.org/docs/stable/nn.html"><code class="docutils literal notranslate"><span class="pre">nn</span></code></a> (abbreviated for <em>neural network</em>) and <a class="reference external" href="https://pytorch.org/docs/stable/nn.functional.html"><code class="docutils literal notranslate"><span class="pre">nn.functional</span></code></a>. The first module provides object interface (that supports auto differentiation) and the second module provides function interface (easier to use). So, the best practice is using object interface for layers with trainable parameters such as recurrent or convolutional, and using function interface for loss functions or activation functions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LinearRegression</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1472,8 +1430,11 @@ The first module provides object interface (that supports auto differentiation) 
 <li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c75777377b">PyTorch vs TensorFlow - spotting the difference</a></em></p></li>
 <li><p><em><a class="reference external" href="http://blog.paperspace.com">blog.paperspace.com</a> - <a class="reference external" href="https://blog.paperspace.com/pytorch-101-advanced/">PyTorch 101 advanced</a></em></p></li>
 <li><p><em><a class="reference external" href="http://poloclub.github.io">poloclub.github.io</a> - <a class="reference external" href="https://poloclub.github.io/cnn-explainer/">CNN explainer</a></em></p></li>
-<li><p><a class="reference external" href="https://cs230.stanford.edu/blog/pytorch/">https://cs230.stanford.edu/blog/pytorch/</a></p></li>
+<li><p><em><a class="reference external" href="http://cs230.stanford.edu">cs230.stanford.edu</a> - <a class="reference external" href="https://cs230.stanford.edu/blog/pytorch/">Introduction to Pytorch Code Examples</a></em></p></li>
 </ul>
+</section>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">pytorch</span> <span class="n">torchvision</span> <span class="n">torchaudio</span> <span class="n">cpuonly</span> <span class="o">-</span><span class="n">c</span> <span class="n">pytorch</span>

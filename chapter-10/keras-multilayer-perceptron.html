@@ -492,7 +492,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="opencv-image-processing.html">
-     (w) Opencv: Image Processing
+     (w) OpenCV: Image Processing
     </a>
    </li>
    <li class="toctree-l2">
@@ -1315,6 +1315,23 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="keras-multilayer-perceptron">
 <h1>Keras: Multilayer Perceptron<a class="headerlink" href="#keras-multilayer-perceptron" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
 <section id="overview">
 <h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <section id="basic-concepts">
@@ -1322,17 +1339,17 @@ title="Print to PDF"
 <section id="nodes-and-edges">
 <h4>Nodes and edges<a class="headerlink" href="#nodes-and-edges" title="Permalink to this headline">#</a></h4>
 <p>Going back to familiar binary Logistic Regression, we visualize, let’s say, a model trained on the dataset having 3 features and a single label. On the graph, each feature/label (<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> or <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>) is represented by a <em>node</em> and each model weight (<span class="math notranslate nohighlight">\(w_1,w_2,w_3\)</span>) is represented by a <em>colored edge</em>. The bias <span class="math notranslate nohighlight">\(w_0\)</span> (or sometimes denoted <span class="math notranslate nohighlight">\(b\)</span>) is not showing on the graph, but keep in mind it is attached to the output node. This is the most basic architecture of a Neural Network with 4 parameters (3 weights + 1 bias).</p>
-<img alt="chapter-10/image/mlp_linear_simple.png" src="chapter-10/image/mlp_linear_simple.png" />
+<a class="reference internal image-reference" href="../_images/mlp_linear_simple.png"><img alt="../_images/mlp_linear_simple.png" class="align-center" src="../_images/mlp_linear_simple.png" style="height: 180px;" /></a>
 </section>
 <section id="layers">
 <h4>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">#</a></h4>
 <p>Now, we extend the problem to a Stacking model, where 5 base models and the meta model are all Logistic Regression. Beside an input layer and an output layer, there is a new layer between them, called the <em>hidden layer</em>. We can add more and more hidden layers for multilevel stacking design. By doing this, our Neural Network becomes <em>deeper</em> and can capture more complicated relationship in our data. This opens up a new branch of Machine Learning algorithms: Deep Learning.</p>
-<img alt="chapter-10/image/mlp_linear_stacking.png" src="chapter-10/image/mlp_linear_stacking.png" />
+<a class="reference internal image-reference" href="../_images/mlp_linear_stacking.png"><img alt="../_images/mlp_linear_stacking.png" class="align-center" src="../_images/mlp_linear_stacking.png" style="height: 300px;" /></a>
 </section>
 <section id="representation-learning">
 <h4>Representation learning<a class="headerlink" href="#representation-learning" title="Permalink to this headline">#</a></h4>
 <p>In the two examples above, the Neural Network is designed for a binary classification problem, where the target is a vector storing the probabilities of being classified to the positive class. For a multi-class classification problem, we need to contruct a vector of probabilities for each class. Below is an example Neural Network architecture with 2 hidden layers for the Iris data which has 4 features and 3 classes.</p>
-<img alt="chapter-10/image/mlp_iris.png" src="chapter-10/image/mlp_iris.png" />
+<a class="reference internal image-reference" href="../_images/mlp_iris.png"><img alt="../_images/mlp_iris.png" class="align-center" src="../_images/mlp_iris.png" style="height: 300px;" /></a>
 <p>This type of architecture is generally called Deep Neural Network of Multilayer Perceptron. Notice that each node represents a vector, we can think of nodes in the hidden layers as <em>latent features</em>, as they are automatically discovered by Deep Neural Networks. Such an approach is called <a class="reference external" href="https://en.wikipedia.org/wiki/Feature_learning">representation learning</a>, one of the benefits that Multilayer Perceptron offers.</p>
 </section>
 <section id="notation">
@@ -1385,13 +1402,10 @@ title="Print to PDF"
 \[y_n\leftarrow(1-\epsilon)y_n+\frac{\epsilon}{K}\]</div>
 <p>When implementing in TensorFlow, we may use several variants for different scenarios:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy'&gt;BinaryCrossentropy&lt;/a&gt;</span></code>
-is for binary classification, when the label is the probability of the positive class. It is recommended to use it either with Sigmoid activation function in the output layer, or with the <em>from_logit</em> parameter set to <em>True</em>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryFocalCrossentropy'&gt;BinaryFocalCrossentropy&lt;/a&gt;</span></code>
-has the same usecase as binary cross entropy, but is useful when the label is significantly imbalanced.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/losses/CategoricalCrossentropy'&gt;CategoricalCrossentropy&lt;/a&gt;</span></code>
-is for multi-class classification, when the label is one-hot encoded. It is recommended to use it either with Softmax activation function in the output layer or with the <em>from_logit</em> parameter set to <em>True</em>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/losses/SparseCategoricalCrossentropy'&gt;SparseCategoricalCrossentropy&lt;/a&gt;</span></code> is also for multi-class classfication, but the label is integer encoded.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy"><code class="docutils literal notranslate"><span class="pre">BinaryCrossentropy</span></code></a> is for binary classification, when the label is the probability of the positive class. It is recommended to use it either with Sigmoid activation function in the output layer, or with the <em>from_logit</em> parameter set to <em>True</em>.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryFocalCrossentropy"><code class="docutils literal notranslate"><span class="pre">BinaryFocalCrossentropy</span></code></a> has the same usecase as binary cross entropy, but is useful when the label is significantly imbalanced.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/CategoricalCrossentropy"><code class="docutils literal notranslate"><span class="pre">CategoricalCrossentropy</span></code></a> is for multi-class classification, when the label is one-hot encoded. It is recommended to use it either with Softmax activation function in the output layer or with the <em>from_logit</em> parameter set to <em>True</em>.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/SparseCategoricalCrossentropy"><code class="docutils literal notranslate"><span class="pre">SparseCategoricalCrossentropy</span></code></a> is also for multi-class classfication, but the label is integer encoded.</p></li>
 </ul>
 </section>
 <section id="kl-divergence">
@@ -1408,28 +1422,10 @@ is for multi-class classification, when the label is one-hot encoded. It is reco
 </section>
 <section id="tensorflow-and-keras">
 <h3>1.3. TensorFlow and Keras<a class="headerlink" href="#tensorflow-and-keras" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses">TensorFlow</a> is one of the most popular Deep Learning framework released in 2015, but it focuses on computation and thus have a low-level API. <a class="reference external" href="https://keras.io/about/">Keras</a>, in the other hand, is a high-level, easy-to-use framework with multiple backends (TensorFlow, Theano and CNTK). In the late 2019 to 2020, <a class="reference external" href="https://github.com/keras-team/keras/releases/tag/2.4.0">Keras 2.4</a> was released as a part of <a class="reference external" href="https://blog.tensorflow.org/2019/09/tensorflow-20-is-now-available.html">TensorFlow 2.0</a> and stopped supporting other backends. In this topic, we are going to use
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras'&gt;tensorflow.keras&lt;/a&gt;</span></code>
-to construct a Neural Network for the Iris example above.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p><a class="reference external" href="https://www.tensorflow.org/api_docs">TensorFlow</a> is one of the most popular Deep Learning framework released in 2015, but it focuses on computation and thus have a low-level API. <a class="reference external" href="https://keras.io/about/">Keras</a>, in the other hand, is a high-level, easy-to-use framework with multiple backends (TensorFlow, Theano and CNTK). In the late 2019 to 2020, <a class="reference external" href="https://github.com/keras-team/keras/releases/tag/2.4.0">Keras 2.4</a> was released as a part of <a class="reference external" href="https://blog.tensorflow.org/2019/09/tensorflow-20-is-now-available.html">TensorFlow 2.0</a> and stopped supporting other backends. In this topic, we are going to use <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras"><code class="docutils literal notranslate"><span class="pre">tf.keras</span></code></a> to construct a Neural Network for the Iris example above.</p>
 <section id="interfaces">
 <h4>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">#</a></h4>
-<p>There are two APIs that Keras supports: sequential and functional. In sequential interface, each layer has exactly one input tensor and one output tensor. We use a
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/Sequential&gt;Sequential&lt;/a&gt;</span></code>
-to add <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers">layers</a> successively to the network. There are so many types of layer, but we will start with the most basic one,
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense&gt;Dense&lt;/a&gt;</span></code>
-(also known as Fully Connected), indicating all nodes from the previous layers connect to the next layer. In the example below, we initialize the network with the first two layers, then add the rest.</p>
+<p>There are two APIs that Keras supports: sequential and functional. In sequential interface, each layer has exactly one input tensor and one output tensor. We use a <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Sequential"><code class="docutils literal notranslate"><span class="pre">Sequential</span></code></a> to add <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers">layers</a> successively to the network. There are so many types of layer, but we will start with the most basic one, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense"><code class="docutils literal notranslate"><span class="pre">Dense</span></code></a> (also known as Fully Connected), indicating all nodes from the previous layers connect to the next layer. In the example below, we initialize the network with the first two layers, then add the rest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
@@ -1504,20 +1500,7 @@ _________________________________________________________________
 </section>
 <section id="implementation">
 <h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
-<p>Once the model architecture is built, we use the
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/Model#compile&gt;compile()&lt;/a&gt;</span></code>
-method to specify the loss function, the optimization algorithm and evaluation metrics for our network. At this step, the model is ready to use by calling the
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit&gt;fit()&lt;/a&gt;</span></code>
-method.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Once the model architecture is built, we use the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a> method to specify the loss function, the optimization algorithm and evaluation metrics for our network. At this step, the model is ready to use by calling the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit"><code class="docutils literal notranslate"><span class="pre">fit()</span></code></a> method.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
@@ -1600,24 +1583,7 @@ _________________________________________________________________
 <li><p>computational cost</p></li>
 <li><p>differentiable</p></li>
 </ul>
-<p>In Keras, popular activation functions can either be used through an <a class="reference external" href="https://keras.io/api/layers/activation_layers/">activation layer</a>, or through the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/activations">activation parameter</a> supported by all forward layers. Each function of the second type has a string identifier. More advanced activation functions can be found in the add-on module of TensorFlow via
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/addons/api_docs/python/tfa/activations'&gt;tfa.activations&lt;/a&gt;</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>In Keras, popular activation functions can either be used through an <a class="reference external" href="https://keras.io/api/layers/activation_layers/">activation layer</a>, or through the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/activations">activation parameter</a> supported by all forward layers. Each function of the second type has a string identifier. More advanced activation functions can be found in the add-on module of TensorFlow via <a class="reference external" href="https://www.tensorflow.org/addons/api_docs/python/tfa/activations"><code class="docutils literal notranslate"><span class="pre">tfa.activations</span></code></a>.</p>
 <section id="s-curves">
 <h3>2.1. S-curves<a class="headerlink" href="#s-curves" title="Permalink to this headline">#</a></h3>
 <section id="sigmoid">
@@ -1657,7 +1623,7 @@ _________________________________________________________________
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/keras-multilayer-perceptron_30_0.png" src="../_images/keras-multilayer-perceptron_30_0.png" />
+<a class="reference internal image-reference" href="../_images/keras-multilayer-perceptron_31_0.png"><img alt="../_images/keras-multilayer-perceptron_31_0.png" class="align-center" src="../_images/keras-multilayer-perceptron_31_0.png" style="width: 370.0px; height: 248.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1718,7 +1684,7 @@ _________________________________________________________________
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/keras-multilayer-perceptron_35_0.png" src="../_images/keras-multilayer-perceptron_35_0.png" />
+<a class="reference internal image-reference" href="../_images/keras-multilayer-perceptron_36_0.png"><img alt="../_images/keras-multilayer-perceptron_36_0.png" class="align-center" src="../_images/keras-multilayer-perceptron_36_0.png" style="width: 381.5px; height: 248.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1738,7 +1704,7 @@ _________________________________________________________________
 \end{split}\]</div>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)">Rectified Linear Unit</a> (ReLU) was first used as an activation function in 2010. It comes to solve the problem that all S-shaped functions suffer from: gradient vanishing. ReLU is also very simple in computing, making it a very popular choice in the world of Deep Learning. It is recommended for Data Scientists to start with ReLU in their Neural Networks.</p>
 <p>But ReLU is not perfect, as it’s has a significant problem: <em>dead neurons</em>, or <em>dying ReLU</em>. This problem occurs when a neuron takes nagative input and returns <span class="math notranslate nohighlight">\(0\)</span>, making it inactive and the weights attached to it will never be updated. This issue is likely to be caused by large negative biases and high learning rate.  To effectively tackle this problem, many improved version of ReLU has be proposed. Below is a quick recap of ReLU and its modified versions, they are going to be discussed later.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="n">yRelu</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1778,7 +1744,7 @@ _________________________________________________________________
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/keras-multilayer-perceptron_38_0.png" src="../_images/keras-multilayer-perceptron_38_0.png" />
+<a class="reference internal image-reference" href="../_images/keras-multilayer-perceptron_39_0.png"><img alt="../_images/keras-multilayer-perceptron_39_0.png" class="align-center" src="../_images/keras-multilayer-perceptron_39_0.png" style="width: 712.5px; height: 352.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1824,7 +1790,7 @@ _________________________________________________________________
 \end{cases}
 \end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\text{ReLU6}(x)\)</span> is another activation function, it clips <span class="math notranslate nohighlight">\(x\)</span> at two boundaries <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(6\)</span>.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.nn</span> <span class="kn">import</span> <span class="n">relu6</span>
 <span class="kn">from</span> <span class="nn">tensorflow.keras.activations</span> <span class="kn">import</span> <span class="n">swish</span>
@@ -1840,7 +1806,7 @@ _________________________________________________________________
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/keras-multilayer-perceptron_42_0.png" src="../_images/keras-multilayer-perceptron_42_0.png" />
+<a class="reference internal image-reference" href="../_images/keras-multilayer-perceptron_43_0.png"><img alt="../_images/keras-multilayer-perceptron_43_0.png" class="align-center" src="../_images/keras-multilayer-perceptron_43_0.png" style="width: 361.5px; height: 248.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1919,7 +1885,8 @@ y &amp;= f(u)=u^2 \\
 u &amp;= g(v)=\sin(v) \\
 v &amp;= h(x)=5x \\
 \end{aligned}\end{split}\]</div>
-<img alt="chapter-10/image/function_composition_univariable.png" src="chapter-10/image/function_composition_univariable.png" />
+<a class="reference internal image-reference" href="../_images/function_composition_univariable.png"><img alt="../_images/function_composition_univariable.png" class="align-center" src="../_images/function_composition_univariable.png" style="width: 360px;" /></a>
+<br>
 <p>By computing <span class="math notranslate nohighlight">\(f'(u)\)</span>, <span class="math notranslate nohighlight">\(g'(v)\)</span> and <span class="math notranslate nohighlight">\(h'(x)\)</span> (which is very simple and is not what we are going to do here), the derivative of <span class="math notranslate nohighlight">\(y\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span> is calculated using the chain rule as follows:</p>
 <div class="math notranslate nohighlight">
 \[\frac{\partial y}{\partial x}
@@ -1934,7 +1901,8 @@ y &amp;= f(u,v)=uv \\
 u &amp;= g(x)=x^2 \\
 v &amp;= h(x)=\log(x) \\
 \end{aligned}\end{split}\]</div>
-<img alt="chapter-10/image/function_composition_multivariable.png" src="chapter-10/image/function_composition_multivariable.png" />
+<a class="reference internal image-reference" href="../_images/function_composition_multivariable.png"><img alt="../_images/function_composition_multivariable.png" class="align-center" src="../_images/function_composition_multivariable.png" style="width: 320px;" /></a>
+<br>
 <p>In this more general case, the chain rule is given by:</p>
 <div class="math notranslate nohighlight">
 \[\frac{\partial y}{\partial x}
@@ -1948,14 +1916,16 @@ v &amp;= h(x)=\log(x) \\
 <section id="computational-graph">
 <h4>Computational graph<a class="headerlink" href="#computational-graph" title="Permalink to this headline">#</a></h4>
 <p>The graphs in those examples are generally called <em>computational graph</em>, the descriptive language of mathematical expressions. This is a popular concept in Computer Science, and is the foundation of <a class="reference external" href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation</a>. In this section, we take the example from Christopher Olah <span class="math notranslate nohighlight">\(e=(a+b)\cdot(b+1)\)</span> to compute derivatives. Each node represents a variable, and each edge represents either a function or the derivative of that function, depends on computation purposes.</p>
-<img alt="chapter-10/image/computational_graph.png" src="chapter-10/image/computational_graph.png" />
+<a class="reference internal image-reference" href="../_images/computational_graph.png"><img alt="../_images/computational_graph.png" class="align-center" src="../_images/computational_graph.png" style="height: 200px;" /></a>
+<br>
 <p>The graph has a tree structure. The input variables are placed at leaf nodes, the output variable is placed at root node and intermediate variables are presented by terminal nodes. Using the chain rule, we can easily compute the partial derivatives: <span class="math notranslate nohighlight">\(\partial{e}/\partial{a}=b+1\)</span> and <span class="math notranslate nohighlight">\(\partial{e}/\partial{b}=2b+a+1\)</span>.</p>
 </section>
 <section id="numerical-derivatives">
 <h4>Numerical derivatives<a class="headerlink" href="#numerical-derivatives" title="Permalink to this headline">#</a></h4>
 <p>Now go back to the Neural Network, is it neccessary to compute the complete gradient function form, and then plug in numbers? So far, we have already known Neural Networks update their weights <em>step by step</em> using Gradient Descent. In other words, we only need to known the <em>slope</em> at the <em>current position</em>, so no need to compute the derivative function. The process of computing instantaneous velocity is refered to as <a class="reference external" href="https://en.wikipedia.org/wiki/Numerical_differentiation">numerical differentiation</a>.</p>
 <p>Let’s say in the above example, our Gradient Descent process is currently at <span class="math notranslate nohighlight">\((a,b)=(2,1)\)</span>. As we only care about how <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> affect <span class="math notranslate nohighlight">\(e\)</span> at this point, we only need to plug in numbers and apply the chain rule.</p>
-<img alt="chapter-10/image/numerical_differentiation.png" src="chapter-10/image/numerical_differentiation.png" />
+<a class="reference internal image-reference" href="../_images/numerical_differentiation.png"><img alt="../_images/numerical_differentiation.png" class="align-center" src="../_images/numerical_differentiation.png" style="height: 220px;" /></a>
+<br>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 \frac{\partial e}{\partial a} &amp;= 1\times2=2 \\
@@ -1976,18 +1946,12 @@ v &amp;= h(x)=\log(x) \\
 <p>In this section, we are going to discuss some great regulariztion techniques. But keep in mind that regularizations are already in every part of a Neural Network, from stochastic behaviour in the optimization algorithm to label smoothing in the loss function.</p>
 <section id="l1-and-l2">
 <h3>4.1. L1 and L2<a class="headerlink" href="#l1-and-l2" title="Permalink to this headline">#</a></h3>
-<p>These two famous techniques have been introduced as variants of Linear Regression (Ridge, Lasso and Elastic Net) as well as in Tree Boosting algorithms (XGBoost, LightGBM and CatBoost). In TensorFlow, it is implemented via the class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/regularizers/L1L2'&gt;L1L2&lt;/a&gt;</span></code>.</p>
+<p>These two famous techniques have been introduced as variants of Linear Regression (Ridge, Lasso and Elastic Net) as well as in Tree Boosting algorithms (XGBoost, LightGBM and CatBoost). In TensorFlow, it is implemented via the class <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/regularizers/L1L2"><code class="docutils literal notranslate"><span class="pre">L1L2</span></code></a>.</p>
 </section>
 <section id="dropout">
 <h3>4.2. Dropout<a class="headerlink" href="#dropout" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Dilution_(neural_networks)">Dropout</a> (2014) is a simple but efficient, one of the most popular regularization techniques especially in feed-foward networks. With a pre-defined drop rate <span class="math notranslate nohighlight">\(p\)</span>, it random sets input values to <span class="math notranslate nohighlight">\(0\)</span> with a probability of <span class="math notranslate nohighlight">\(p\)</span> during training phase to add noises to the model. Then, during the inference phase, it scales down input values by multiplying them with <span class="math notranslate nohighlight">\(1-p\)</span> but does not drop any node, to make sure input distribution remains unchanged.</p>
-<p>In the implementation of TensorFlow,
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dropout'&gt;Dropout&lt;/a&gt;</span></code>
-leaves the inference phase untouched, but scales up the remaining inputs after dropped in the training phase by multiplying with <span class="math notranslate nohighlight">\(1/(1-p)\)</span>. This small change optimizes inference time. There are also other variants of Dropout, namely:
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/layers/GaussianDropout'&gt;GaussianDropout&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://tensorlayer.readthedocs.io/en/latest/modules/layers.html#tensorlayer.layers.DropconnectDense'&gt;DropconnectDense&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/layers/SpatialDropout2D'&gt;SpatialDropout2D&lt;/a&gt;</span></code>.</p>
+<p>In the implementation of TensorFlow, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dropout"><code class="docutils literal notranslate"><span class="pre">Dropout</span></code></a> leaves the inference phase untouched, but scales up the remaining inputs after dropped in the training phase by multiplying with <span class="math notranslate nohighlight">\(1/(1-p)\)</span>. This small change optimizes inference time. There are also other variants of Dropout, namely: <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/GaussianDropout"><code class="docutils literal notranslate"><span class="pre">GaussianDropout</span></code></a>, <a class="reference external" href="https://tensorlayer.readthedocs.io/en/latest/modules/layers.html#tensorlayer.layers.DropconnectDense"><code class="docutils literal notranslate"><span class="pre">DropconnectDense</span></code></a> and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/SpatialDropout2D"><code class="docutils literal notranslate"><span class="pre">SpatialDropout2D</span></code></a>.</p>
 <p>For example, with the same input values <span class="math notranslate nohighlight">\(\{10,20,30,40,50\}\)</span></p>
 <ul class="simple">
 <li><p>Original implementation takes <span class="math notranslate nohighlight">\(\{10,20,30,0,50\}\)</span> as input during training and <span class="math notranslate nohighlight">\(\{8,16,24,32,40\}\)</span> as input during inference</p></li>
@@ -2009,20 +1973,15 @@ leaves the inference phase untouched, but scales up the remaining inputs after d
 \boldsymbol\mu' &amp;= \alpha\boldsymbol\mu' + (1-\alpha)\hat{\boldsymbol\mu}_t \\
 \boldsymbol\sigma' &amp;= \alpha\boldsymbol\sigma' + (1-\alpha)\hat{\boldsymbol\sigma}_t \\
 \end{aligned}\end{split}\]</div>
-<p>Moving average, or exponential smoothing is very powerful technique has been used in ETS (time series) and Adam (optimization). It has a weight decay <span class="math notranslate nohighlight">\(\alpha\)</span> (is usually set to <span class="math notranslate nohighlight">\(0.9\)</span> or <span class="math notranslate nohighlight">\(0.99\)</span>), which is implemented in <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/layers/BatchNormalization'&gt;BatchNormalization&lt;/a&gt;</span></code>
-under the name <em>momentum</em>. Using moving average makes Batch Normalization only needs to save the most recent value of <span class="math notranslate nohighlight">\(\boldsymbol\mu'\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol\sigma'\)</span> instead of all batches statistics.</p>
-<p>We can also find a lot of Batch Normalization variants such as
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/layers/GroupNormalization'&gt;GroupNormalization&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/layers/LayerNormalization'&gt;LayerNormalization&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/layers/UnitNormalization'&gt;UnitNormalization&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/probability/api_docs/python/tfp/layers/weight_norm/WeightNorm'&gt;WeightNorm&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/addons/api_docs/python/tfa/layers/SpectralNormalization'&gt;SpectralNormalization&lt;/a&gt;</span></code>.</p>
+<p>Moving average, or exponential smoothing is very powerful technique has been used in ETS (time series) and Adam (optimization). It has a weight decay <span class="math notranslate nohighlight">\(\alpha\)</span> (is usually set to <span class="math notranslate nohighlight">\(0.9\)</span> or <span class="math notranslate nohighlight">\(0.99\)</span>), which is implemented in <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/BatchNormalization"><code class="docutils literal notranslate"><span class="pre">BatchNormalization</span></code></a> under the name <em>momentum</em>. Using moving average makes Batch Normalization only needs to save the most recent value of <span class="math notranslate nohighlight">\(\boldsymbol\mu'\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol\sigma'\)</span> instead of all batches statistics.</p>
+<p>We can also find a lot of Batch Normalization variants such as <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/GroupNormalization"><code class="docutils literal notranslate"><span class="pre">GroupNormalization</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/LayerNormalization"><code class="docutils literal notranslate"><span class="pre">LayerNormalization</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/UnitNormalization"><code class="docutils literal notranslate"><span class="pre">UnitNormalization</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/probability/api_docs/python/tfp/layers/weight_norm/WeightNorm"><code class="docutils literal notranslate"><span class="pre">WeightNorm</span></code></a> and <a class="reference external" href="https://www.tensorflow.org/addons/api_docs/python/tfa/layers/SpectralNormalization"><code class="docutils literal notranslate"><span class="pre">SpectralNormalization</span></code></a>.</p>
 </section>
 <section id="internal-covariate-shift">
 <h4>Internal covariate shift<a class="headerlink" href="#internal-covariate-shift" title="Permalink to this headline">#</a></h4>
 <p>So far, we have known mathematical formulation of Batch Normalization, but why it works so well and quickly becomes a standard feature in many Deep Learning architectures? The most essential reason is, according to the original paper, it reduces <em>internal covariate shift</em> and thus makes Neural Networks converge faster.</p>
 <p>To understand <em>internal covariate shift</em>, let’s review the learning curve of SGD. Due to the <em>stochastic</em> behaviour, the ball controled by SGD ocsillates around a path, as each step is computed on a different batch, and batches can distribute far differently. By applying normalization, we bring data in batches to the same scale, which makes gradient steps smoother.</p>
-<img alt="chapter-10/image/internal_covariate_shift.png" src="chapter-10/image/internal_covariate_shift.png" />
+<a class="reference internal image-reference" href="../_images/internal_covariate_shift.png"><img alt="../_images/internal_covariate_shift.png" class="align-center" src="../_images/internal_covariate_shift.png" style="height: 300px;" /></a>
+<br>
 <p>Comparing SGD in two cases, with and without normalization, it’s obvious that normalization will make convergence faster and higher learning rate can be used without compromising accuracy. Batch Normalization even goes a step further in smoothening gradients with the introduction of scale and shift parameters. They are <em>trainable</em>, giving Batch Normalization the ability to find optimal values itself.</p>
 </section>
 <section id="other-benefits">
@@ -2033,9 +1992,7 @@ under the name <em>momentum</em>. Using moving average makes Batch Normalization
 </section>
 <section id="early-stopping">
 <h3>4.4. Early stopping<a class="headerlink" href="#early-stopping" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Early_stopping">Early stopping</a> (implemented in TensorFlow via the callback
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/EarlyStopping'&gt;EarlyStopping&lt;/a&gt;</span></code>)
-is a regularization technique dedicated to iterative learning algorithms such as Gradient Descent and Gradient Boosting. The working principle is very straight forward: it will break the training loop when model performance does not improve. This technique offers two benefits:</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Early_stopping">Early stopping</a> (implemented in TensorFlow via the callback <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/EarlyStopping"><code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a>) is a regularization technique dedicated to iterative learning algorithms such as Gradient Descent and Gradient Boosting. The working principle is very straight forward: it will break the training loop when model performance does not improve. This technique offers two benefits:</p>
 <ul class="simple">
 <li><p>Saving time, as the algorithm would not necessarily go through all expensive iterations</p></li>
 <li><p>Generalization, as at some points, keep training more iterations only improves validation score a little, then it is much likely that our model is learning noises</p></li>

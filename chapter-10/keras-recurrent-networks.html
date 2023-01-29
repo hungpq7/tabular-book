@@ -492,7 +492,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="opencv-image-processing.html">
-     (w) Opencv: Image Processing
+     (w) OpenCV: Image Processing
     </a>
    </li>
    <li class="toctree-l2">
@@ -895,6 +895,11 @@ title="Print to PDF"
    References
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installs">
+   Installs
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -1033,6 +1038,11 @@ title="Print to PDF"
    References
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installs">
+   Installs
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -1045,10 +1055,29 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="keras-recurrent-networks">
 <h1>Keras: Recurrent Networks<a class="headerlink" href="#keras-recurrent-networks" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow.keras</span> <span class="k">as</span> <span class="nn">keras</span>
+<span class="kn">import</span> <span class="nn">tensorflow.keras.layers</span> <span class="k">as</span> <span class="nn">layers</span>
+<span class="kn">import</span> <span class="nn">tensorflow_addons</span> <span class="k">as</span> <span class="nn">tfa</span>
+<span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="k">as</span> <span class="nn">hub</span>
+<span class="kn">import</span> <span class="nn">tensorflow_text</span> <span class="k">as</span> <span class="nn">text</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="recurrent-layers">
 <h2>1. Recurrent layers<a class="headerlink" href="#recurrent-layers" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Recurrent_neural_network">Recurrent Neural Network</a> (RNN) is a class of neural network architectures where nodes in a layers have internal connections, allowing to express temporal behaviour. There are many types of RNN layers, but they all share the same architecture. The image below shows the information flow for an observation, or for a document in the context of NLP.</p>
-<img alt="chapter-10/image/rnn_general.png" src="chapter-10/image/rnn_general.png" />
+<a class="reference internal image-reference" href="../_images/rnn_general.png"><img alt="../_images/rnn_general.png" class="align-center" src="../_images/rnn_general.png" style="height: 175px;" /></a>
+<br>
 <p>Each green cell <span class="math notranslate nohighlight">\(\mathbf{x}_t\in\mathbb{R}^{V\times1}\)</span> represents the embedding vector of a token, and each blue cell <span class="math notranslate nohighlight">\(\mathbf{h}_t\in\mathbb{R}^{D\times1}\)</span> represents an output vector. With the input sequence size fixed at <span class="math notranslate nohighlight">\(T\)</span>, RNN adjusts itself to match the input length. The most important part of a RNN layer is the grey cell <span class="math notranslate nohighlight">\(A\)</span> that repeats multiple times, being account for information processing. We can see that at a time step, the output value <span class="math notranslate nohighlight">\(\mathbf{h}_t\)</span> is influenced by all previous steps <span class="math notranslate nohighlight">\(\mathbf{h}_{t-1},\mathbf{h}_{t-2},\dots\)</span>, besides the input <span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span>. This design resembles <em>memory</em> and enables RNN to capture sequential relationship.</p>
 <p>There are many architectures for a recurrent layers, the only difference between them is how the cell <span class="math notranslate nohighlight">\(A\)</span> being desgined. In this article, we are going to learn the cell architectures of Simple RNN, LSTM and GRU.</p>
 <section id="building-blocks">
@@ -1056,7 +1085,7 @@ title="Print to PDF"
 <p>This section introduces common blocks in recurrent architectures. Knowing each of them separately helps us understanding compicated designs better.</p>
 <section id="concatenation">
 <h4>Concatenation<a class="headerlink" href="#concatenation" title="Permalink to this headline">#</a></h4>
-<img alt="chapter-10/image/rnn_concatenation.png" src="chapter-10/image/rnn_concatenation.png" />
+<a class="reference internal image-reference" href="../_images/rnn_concatenation.png"><img alt="../_images/rnn_concatenation.png" class="align-center" src="../_images/rnn_concatenation.png" style="height: 100px;" /></a>
 <p>Let’s say we want to transform two input vectors <span class="math notranslate nohighlight">\(\mathbf{u}\in\mathbb{R}^{U\times1}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\in\mathbb{R}^{V\times1}\)</span> into <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^{D\times1}\)</span>. Note that <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> are fixed dimensionalities of input, while <span class="math notranslate nohighlight">\(D\)</span> is the desired output size. With weight matrices
 <span class="math notranslate nohighlight">\(\mathbf{W}_{yu}\in\mathbb{R}^{D\times U},\mathbf{W}_{yv}\in\mathbb{R}^{D\times V}\)</span>
 and bias vector <span class="math notranslate nohighlight">\(\mathbf{b}_y\in\mathbb{R}^{D\times1}\)</span>,
@@ -1067,7 +1096,7 @@ the actual formula behind the above image is:</p>
 </section>
 <section id="gate">
 <h4>Gate<a class="headerlink" href="#gate" title="Permalink to this headline">#</a></h4>
-<img alt="chapter-10/image/rnn_gate.png" src="chapter-10/image/rnn_gate.png" />
+<a class="reference internal image-reference" href="../_images/rnn_gate.png"><img alt="../_images/rnn_gate.png" class="align-center" src="../_images/rnn_gate.png" style="height: 80px;" /></a>
 <p>A gate consists of two calculation steps, (1) passing a vector into sigmoid function and (2) using it as a percentage multiplier. The sigmoid function (denoted <span class="math notranslate nohighlight">\(\sigma\)</span>) is account for producing numbers in range <span class="math notranslate nohighlight">\((0,1)\)</span>. We can see the purpose of gates very clearly here: they control how much information should be let through.</p>
 </section>
 </section>
@@ -1076,7 +1105,8 @@ the actual formula behind the above image is:</p>
 <section id="architecture">
 <h4>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">#</a></h4>
 <p>We call the vanilla architecture <a class="reference external" href="https://en.wikipedia.org/wiki/Recurrent_neural_network#Fully_recurrent">Simple RNN</a> (1980s) to distinguish from the family name. Its cells is very simple, with only a concatenated value pass through an activation function. The activation function is usually <span class="math notranslate nohighlight">\(\tanh\)</span> which produces values within the range <span class="math notranslate nohighlight">\((-1,1)\)</span>, so that the network will be able to express <em>sentiment</em>. The cell architecture is described in the image and formula as follows:</p>
-<img alt="chapter-10/image/rnn_cell.png" src="chapter-10/image/rnn_cell.png" />
+<a class="reference internal image-reference" href="../_images/rnn_cell.png"><img alt="../_images/rnn_cell.png" class="align-center" src="../_images/rnn_cell.png" style="height: 160px;" /></a>
+<br>
 <div class="math notranslate nohighlight">
 \[\mathbf{h}_t=\phi(\mathbf{W}_{hx}\mathbf{x}_t+\mathbf{W}_{hh}\mathbf{h}_{t-1}+\mathbf{b}_h)\]</div>
 <p>A well-known issue with Simple RNN is that it only has <em>short-term memory</em>. This property is very easy to understand if you are familiar with the gradient vanishing problem of S-shaped activation functions. During <a class="reference external" href="https://en.wikipedia.org/wiki/Backpropagation_through_time">backpropagation through time</a> for a pair of words with large <span class="math notranslate nohighlight">\(\Delta t\)</span>, the product of partial derivatives may trigger saturation zones of <span class="math notranslate nohighlight">\(\tanh\)</span>, making the derivative of a word with respect to the other almost zero. As a result, Simple RNN fails to capture long-term memory.</p>
@@ -1094,7 +1124,7 @@ the actual formula behind the above image is:</p>
 <section id="id1">
 <h4>Architecture<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Long_short-term_memory">LSTM</a> (Long Short-Term Memory) is a recurrent architecture published in 1997 that does not suffer from the gradient vanishing/exploding problem. This means, the network is able to capture long-term memory. The image below illustrates the architecture of a LSTM <em>memory cell</em>.</p>
-<img alt="chapter-10/image/lstm_cell.png" src="chapter-10/image/lstm_cell.png" />
+<a class="reference internal image-reference" href="../_images/lstm_cell.png"><img alt="../_images/lstm_cell.png" class="align-center" src="../_images/lstm_cell.png" style="height: 320px;" /></a>
 <p>The ability to manipulate information of LSTM is regulated via three gates (green node): forget <span class="math notranslate nohighlight">\(\mathbf{f}_t\)</span>, input <span class="math notranslate nohighlight">\(\mathbf{i}_t\)</span> and output <span class="math notranslate nohighlight">\(\mathbf{o}_t\)</span>. Recall that a gate is a Sigmoid function (<span class="math notranslate nohighlight">\(\phi_1\)</span> in this picture) followed by a multiplication. These gates give LSTM the ability to learn when to remember and when to forget, based on previous <em>hidden state</em> <span class="math notranslate nohighlight">\(\mathbf{h}_{t-1}\)</span> and current input data <span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span>. They all share the same formula, but with different parameters:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
@@ -1117,7 +1147,8 @@ the actual formula behind the above image is:</p>
 </section>
 <section id="steps">
 <h4>Steps<a class="headerlink" href="#steps" title="Permalink to this headline">#</a></h4>
-<img alt="chapter-10/image/lstm_steps.png" src="chapter-10/image/lstm_steps.png" />
+<a class="reference internal image-reference" href="../_images/lstm_steps.png"><img alt="../_images/lstm_steps.png" class="align-center" src="../_images/lstm_steps.png" style="height: 450px;" /></a>
+<br>
 <p>Because it is quite hard to track what is going on by looking at the full architecture of LSTM, we will break it down into four steps:</p>
 <ul class="simple">
 <li><p>Step 1, construct the <em>forget gate</em> that decides how much old data should be kept.</p></li>
@@ -1132,7 +1163,7 @@ the actual formula behind the above image is:</p>
 <section id="id2">
 <h4>Architecture<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Gated_recurrent_unit">Gated Recurrent Units</a> (GRU) was published in 2014 as an alternative that retains key idea of LSTM but is faster in computation.</p>
-<img alt="chapter-10/image/gru_cell.png" src="chapter-10/image/gru_cell.png" />
+<a class="reference internal image-reference" href="../_images/gru_cell.png"><img alt="../_images/gru_cell.png" class="align-center" src="../_images/gru_cell.png" style="height: 320px;" /></a>
 <p>GRU comes with the two-gate mechanism, <em>reset</em> (<span class="math notranslate nohighlight">\(\mathbf{r}_t\)</span>) and <em>update</em> (<span class="math notranslate nohighlight">\(\mathbf{z}_t\)</span>), rather than three like LSTM. They are also based on previous <em>hidden state</em> <span class="math notranslate nohighlight">\(\mathbf{h}_{t-1}\)</span> and current input data <span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span> like LSTM’s gates.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
@@ -1149,26 +1180,19 @@ the actual formula behind the above image is:</p>
 </section>
 <section id="id3">
 <h4>Steps<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h4>
-<img alt="chapter-10/image/gru_steps.png" src="chapter-10/image/gru_steps.png" />
+<a class="reference internal image-reference" href="../_images/gru_steps.png"><img alt="../_images/gru_steps.png" class="align-center" src="../_images/gru_steps.png" style="height: 450px;" /></a>
 </section>
 </section>
 <section id="bi-directional">
 <h3>1.5. Bi-directional<a class="headerlink" href="#bi-directional" title="Permalink to this headline">#</a></h3>
 <p>All the recurrent layers have been introduced so far are uni-directional, i.e. going from the left to the right. In other words, our networks only model leftward context. This design works fine for time series data, but for text data, rightward context also matters. This problem is solved by generalizing recurrent layers to <a class="reference external" href="https://en.wikipedia.org/wiki/Bidirectional_recurrent_neural_networks">bi-directional</a>. The architecture is described in the following image:</p>
-<img alt="chapter-10/image/rnn_bidirectional.png" src="chapter-10/image/rnn_bidirectional.png" />
+<a class="reference internal image-reference" href="../_images/rnn_bidirectional.png"><img alt="../_images/rnn_bidirectional.png" class="align-center" src="../_images/rnn_bidirectional.png" style="height: 245px;" /></a>
+<br>
 <p>We can observe that a bi-directional layer is composed of a foward sub-layer and a backward sub-layer. They can be of the same type or not, and their cells are denoted <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(A'\)</span> respectively. Their corresponding outputs <span class="math notranslate nohighlight">\(\overrightarrow{\mathbf{h}}_t\)</span> and <span class="math notranslate nohighlight">\(\overleftarrow{\mathbf{h}}_t\)</span> are then merged into <span class="math notranslate nohighlight">\(\mathbf{h}_t\)</span> using various strategies, where the most common one is concatenating.</p>
 </section>
 <section id="implementation">
 <h3>1.6. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
-<p>TensorFlow implements all three recurrent layers via
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/layers/SimpleRNN&gt;SimpleRNN&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/layers/LSTM&gt;LSTM&lt;/a&gt;</span></code>
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/layers/GRU&gt;GRU&lt;/a&gt;</span></code>.
-Each has a cell-level counterpart that can be used with the abstract class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/layers/RNN&gt;RNN&lt;/a&gt;</span></code>.
-There is also
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/layers/Bidirectional&gt;Bidirectional&lt;/a&gt;</span></code>
-working as a wrapper around recurrent layers for bi-directional behaviour. They have the following hyperparameters:</p>
+<p>TensorFlow implements all three recurrent layers via <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/SimpleRNN"><code class="docutils literal notranslate"><span class="pre">SimpleRNN</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/LSTM"><code class="docutils literal notranslate"><span class="pre">LSTM</span></code></a> and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/GRU"><code class="docutils literal notranslate"><span class="pre">GRU</span></code></a>. Each has a cell-level counterpart that can be used with the abstract class <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/RNN"><code class="docutils literal notranslate"><span class="pre">RNN</span></code></a>. There is also <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Bidirectional"><code class="docutils literal notranslate"><span class="pre">Bidirectional</span></code></a> working as a wrapper around recurrent layers for bi-directional behaviour. They have the following hyperparameters:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">units</span></code>: the dimensionality of output space (<span class="math notranslate nohighlight">\(D\)</span>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">activation</span></code>: the activation function for processing data (<span class="math notranslate nohighlight">\(\phi\)</span> in Simple RNN and <span class="math notranslate nohighlight">\(\phi_2\)</span> in LSTM, GRU), defaults to <em>tanh</em>.</p></li>
@@ -1176,25 +1200,7 @@ working as a wrapper around recurrent layers for bi-directional behaviour. They 
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span>
-
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tensorflow.keras</span> <span class="k">as</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">tensorflow.keras.layers</span> <span class="k">as</span> <span class="nn">layers</span>
-<span class="kn">import</span> <span class="nn">tensorflow_addons</span> <span class="k">as</span> <span class="nn">tfa</span>
-<span class="c1"># import tensorflow_hub as hub</span>
-<span class="c1"># import tensorflow_text as text</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfSpam</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/spam_message.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfSpam</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/spam_message.csv&#39;</span><span class="p">)</span>
 <span class="n">xTrainRaw</span><span class="p">,</span> <span class="n">xTestRaw</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">dfSpam</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">dfSpam</span><span class="o">.</span><span class="n">spam</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1253,12 +1259,14 @@ working as a wrapper around recurrent layers for bi-directional behaviour. They 
 </div>
 </div>
 </div>
-<p><b style='color:navy'><i class="fa fa-info-circle"></i>  Note</b><br>
-When using RNN with other layers, there are two cases:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using RNN with other layers, there are two cases:</p>
 <ul class="simple">
 <li><p>The next layer being Fully Connected, then we only use the last hidden state, <span class="math notranslate nohighlight">\(\mathbf{h}_T\)</span>. The output shape in this case is  <span class="math notranslate nohighlight">\((N\times D)\)</span>.</p></li>
 <li><p>The next layer being another RNN layer (including LSTM and GRU), then we need to return the full sequence <span class="math notranslate nohighlight">\(\mathbf{h}_1,\mathbf{h}_2,\dots,\mathbf{h}_T\)</span>. This is done by specifying <code class="docutils literal notranslate"><span class="pre">return_sequences=True</span></code>. The output shape this time is <span class="math notranslate nohighlight">\((N\times T\times D)\)</span>.</p></li>
 </ul>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
@@ -1335,18 +1343,6 @@ _________________________________________________________________
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>keras.layers.core.embedding.Embedding
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span>
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,],</span>
     <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,],</span>
@@ -1415,22 +1411,6 @@ _________________________________________________________________
 <p>Because our goal is to take string input to predict string output, pre-trained embedding will not be used, at least for target text. Therefore, an embedding layer is used to process data in both encoder and decoder. This layer turns each word into a vector, just like Word2Vec or BERT do, but all embedding values are treated learnable parameters by our network.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span>
-
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tensorflow.keras</span> <span class="k">as</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">tensorflow.keras.layers</span> <span class="k">as</span> <span class="nn">layers</span>
-<span class="kn">import</span> <span class="nn">tensorflow_addons</span> <span class="k">as</span> <span class="nn">tfa</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfa</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">BasicDecoder</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">LSTMCell</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">sampler</span><span class="o">=</span><span class="n">tfa</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">TrainingSampler</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -1459,8 +1439,7 @@ _________________________________________________________________
 </section>
 <section id="attention">
 <h3>2.2. Attention<a class="headerlink" href="#attention" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Attention_(machine_learning)">Attention</a> implement
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=https://www.tensorflow.org/api_docs/python/tf/keras/layers/Attention&gt;Attention&lt;/a&gt;</span></code></p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Attention_(machine_learning)">Attention</a> implement <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Attention"><code class="docutils literal notranslate"><span class="pre">Attention</span></code></a></p>
 </section>
 <section id="transformer">
 <h3>2.2. Transformer<a class="headerlink" href="#transformer" title="Permalink to this headline">#</a></h3>
@@ -1495,6 +1474,9 @@ _________________________________________________________________
 <li><p><a class="reference external" href="https://towardsdatascience.com/seq2seq-model-in-tensorflow-ec0c557e560f">https://towardsdatascience.com/seq2seq-model-in-tensorflow-ec0c557e560f</a></p></li>
 <li><p><a class="reference external" href="https://storrs.io/attention/amp/">https://storrs.io/attention/amp/</a></p></li>
 </ul>
+</section>
+<section id="installs">
+<h2>Installs<a class="headerlink" href="#installs" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python3 -m pip --version
