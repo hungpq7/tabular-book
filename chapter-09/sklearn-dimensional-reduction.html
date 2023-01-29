@@ -556,7 +556,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-11/ggplot-data-visualization.html">
-     Ggplot: Data Visualizatio
+     Ggplot: Data Visualization
     </a>
    </li>
    <li class="toctree-l2">
@@ -906,8 +906,8 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#resources">
+   Resources
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1064,8 +1064,8 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#resources">
+   Resources
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1088,25 +1088,45 @@ title="Print to PDF"
 <p>Generalization refers to the property of a good dataset that has several observations for each combination of feature values. <a class="reference external" href="https://en.wikipedia.org/wiki/Curse_of_dimensionality">Curse of dimensionality</a> is a phenomenom arises in a high dimensional dataset, where the number of possible values is very huge so that the dataset fails to <em>generalize</em>.</p>
 <p>Imagine there are 10 <em>binary</em> features, then we need thousands of observations to generalize about 1000 combinations (<span class="math notranslate nohighlight">\(2^{10}=1024\)</span>). It’s not hard to see that: to construct a good dataset, we are going to need millions of observations for 20 features and billions of observations for 30 features. Of course, a lot of combinations in real world data never exist, making the actual number of combinations is much smaller. However, the data size required still grows exponentially, thus this example still provides a good explanation of how dimensionality curses us.</p>
 <p>The most challenging part in Machine Learning is to select the right set of features before traning any model. Irrelevant features may hurt the performance of our predictive model while they spend computing resources. Noises these features add to the dataset lead to overfitting and increase both training and predicting time. Thus, dimensionality reduction is an important task of Data Scientists.</p>
-<section id="feature-selection">
-<h2>1. Feature selection<a class="headerlink" href="#feature-selection" title="Permalink to this headline">#</a></h2>
-<p>Feature selection refers to the tasks that remove low quality data, hence keep informative features. It helps reduce noises and computational cost. Here are some feature selection techniques, they can be implemented very easily.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SelectByShuffling</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">DropCorrelatedFeatures</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SmartCorrelatedSelection</span>
+<span class="kn">from</span> <span class="nn">nni.algorithms.feature_engineering.gradient_selector</span> <span class="kn">import</span> <span class="n">FeatureGradientSelector</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <span class="n">LDA</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">VarianceThreshold</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">RFE</span><span class="p">,</span> <span class="n">RFECV</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectFromModel</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SequentialFeatureSelector</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">GenericUnivariateSelect</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">f_classif</span><span class="p">,</span> <span class="n">mutual_info_classif</span><span class="p">,</span> <span class="n">r_regression</span>
+<span class="kn">from</span> <span class="nn">umap</span> <span class="kn">import</span> <span class="n">UMAP</span>
+
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
 <span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<section id="feature-selection">
+<h2>1. Feature selection<a class="headerlink" href="#feature-selection" title="Permalink to this headline">#</a></h2>
+<p>Feature selection refers to the tasks that remove low quality data, hence keep informative features. It helps reduce noises and computational cost. Here are some feature selection techniques, they can be implemented very easily.</p>
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfMobile</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/train_mobile_price.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfMobile</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/train_mobile_price.csv&#39;</span><span class="p">)</span>
 <span class="n">dfMobile</span> <span class="o">=</span> <span class="n">dfMobile</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;priceRange&#39;</span><span class="p">:</span><span class="s1">&#39;target&#39;</span><span class="p">})</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfMobile</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
@@ -1292,15 +1312,26 @@ title="Print to PDF"
 <li><p><em>Feature interaction</em>. This approach analyzes feature pairs to examine if they bring the same information.</p></li>
 <li><p><em>Target interaction</em>. The idea of this technique is scoring how strong the relationship between each feature and the target is.</p></li>
 </ul>
-<section id="low-variance-filtering">
-<h4>Low variance filtering<a class="headerlink" href="#low-variance-filtering" title="Permalink to this headline">#</a></h4>
-<p>Think about a constant feature, whose all observations have the same value, it has no predictive power and cannot explain the target variable. Therefore, features with very low variance can be safely removed. Implemented via Scikit-learn’s
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html'&gt;VarianceThreshold&lt;/a&gt;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">VarianceThreshold</span>
-
-<span class="n">selector</span> <span class="o">=</span> <span class="n">VarianceThreshold</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SelectByShuffling</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">DropCorrelatedFeatures</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SmartCorrelatedSelection</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">GenericUnivariateSelect</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">f_classif</span><span class="p">,</span> <span class="n">mutual_info_classif</span><span class="p">,</span> <span class="n">r_regression</span>
+<span class="kn">from</span> <span class="nn">nni.algorithms.feature_engineering.gradient_selector</span> <span class="kn">import</span> <span class="n">FeatureGradientSelector</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="low-variance-filtering">
+<h4>Low variance filtering<a class="headerlink" href="#low-variance-filtering" title="Permalink to this headline">#</a></h4>
+<p>Think about a constant feature, whose all observations have the same value, it has no predictive power and cannot explain the target variable. Therefore, features with very low variance can be safely removed. Implemented via Scikit-learn’s
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html"><code class="docutils literal notranslate"><span class="pre">VarianceThreshold</span></code></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">VarianceThreshold</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1335,9 +1366,9 @@ title="Print to PDF"
 <section id="collinearity-filtering">
 <h4>Collinearity filtering<a class="headerlink" href="#collinearity-filtering" title="Permalink to this headline">#</a></h4>
 <p>A pair of features having a high Pearson’s correlation coefficient means they are very similar to each other, and they will bring the same information to the predictive model. Such a situation is called <a class="reference external" href="https://en.wikipedia.org/wiki/Multicollinearity">collinearity</a>, and it can mislead some Machine Learning algorithms. Therefore, only one variable in the highly correlated group should be used. This method is implemented in Feature-engine via the class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://feature-engine.readthedocs.io/en/latest/api_doc/selection/DropCorrelatedFeatures.html'&gt;DropCorrelatedFeatures&lt;/a&gt;</span></code>
+<a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/selection/DropCorrelatedFeatures.html"><code class="docutils literal notranslate"><span class="pre">DropCorrelatedFeatures</span></code></a>
 , which only keeps the first high correlated feature.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotCollinear</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">):</span>
     <span class="n">matCorr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
@@ -1360,14 +1391,12 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-dimensional-reduction_10_0.png" src="../_images/sklearn-dimensional-reduction_10_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_12_0.png"><img alt="../_images/sklearn-dimensional-reduction_12_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_12_0.png" style="width: 380.5px; height: 348.5px;" /></a>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">DropCorrelatedFeatures</span>
-
-<span class="n">selector</span> <span class="o">=</span> <span class="n">DropCorrelatedFeatures</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">DropCorrelatedFeatures</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1487,16 +1516,9 @@ title="Print to PDF"
 </div>
 </div>
 <p>Feature-engine also provides a synthetic class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://feature-engine.readthedocs.io/en/latest/api_doc/selection/SmartCorrelatedSelection.html'&gt;SmartCorrelatedSelection&lt;/a&gt;</span></code>
+<a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/selection/SmartCorrelatedSelection.html"><code class="docutils literal notranslate"><span class="pre">SmartCorrelatedSelection</span></code></a>
 that integrates multiple selection techniques at once: missing data, variance, collinearity and model-based.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SmartCorrelatedSelection</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">SmartCorrelatedSelection</span><span class="p">(</span><span class="n">selection_method</span><span class="o">=</span><span class="s1">&#39;missing_values&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -1618,7 +1640,7 @@ that integrates multiple selection techniques at once: missing data, variance, c
 <section id="target-based-selection">
 <h4>Target-based selection<a class="headerlink" href="#target-based-selection" title="Permalink to this headline">#</a></h4>
 <p>Another strategy is <a class="reference external" href="https://scikit-learn.org/stable/modules/feature_selection.html#univariate-feature-selection">univariate feature selection</a>, it measures the relationship between each feature and the target, then select best scored features. It is implemented in Scikit-learn’s via the class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.GenericUnivariateSelect.html'&gt;GenericUnivariateSelect&lt;/a&gt;</span></code>.
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.GenericUnivariateSelect.html"><code class="docutils literal notranslate"><span class="pre">GenericUnivariateSelect</span></code></a>.
 The scoring function can be choosen among:</p>
 <ul class="simple">
 <li><p>Pearson’s correlation coefficient</p></li>
@@ -1626,14 +1648,6 @@ The scoring function can be choosen among:</p>
 <li><p>Chi-squared test statistic</p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Mutual_information">Mutual information</a>, a metric can show non-linear relationship</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">GenericUnivariateSelect</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">f_classif</span><span class="p">,</span> <span class="n">mutual_info_classif</span><span class="p">,</span> <span class="n">r_regression</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">GenericUnivariateSelect</span><span class="p">(</span><span class="n">score_func</span><span class="o">=</span><span class="n">f_classif</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;percentile&#39;</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -1664,20 +1678,17 @@ The scoring function can be choosen among:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-dimensional-reduction_19_0.png" src="../_images/sklearn-dimensional-reduction_19_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_19_0.png"><img alt="../_images/sklearn-dimensional-reduction_19_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_19_0.png" style="width: 373.0px; height: 207.5px;" /></a>
 </div>
 </div>
 </section>
 <section id="gradient-selection">
 <h4>Gradient selection<a class="headerlink" href="#gradient-selection" title="Permalink to this headline">#</a></h4>
-<p>NNI’s
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://nni.readthedocs.io/en/stable/feature_engineering/gradient_feature_selector.html'&gt;GradientFeatureSelector&lt;/a&gt;</span></code>
+<p>NNI’s <a class="reference external" href="https://nni.readthedocs.io/en/stable/feature_engineering/gradient_feature_selector.html"><code class="docutils literal notranslate"><span class="pre">GradientFeatureSelector</span></code></a>
 is a cool algorithm with low computational complexity, high statistical efficiency that can detect higher-order feature interations for large datasets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nni.algorithms.feature_engineering.gradient_selector</span> <span class="kn">import</span> <span class="n">FeatureGradientSelector</span>
-
-<span class="n">selector</span> <span class="o">=</span> <span class="n">FeatureGradientSelector</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">FeatureGradientSelector</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1791,16 +1802,8 @@ is a cool algorithm with low computational complexity, high statistical efficien
 <section id="greedy-elimination">
 <h4>Greedy elimination<a class="headerlink" href="#greedy-elimination" title="Permalink to this headline">#</a></h4>
 <p>This method can be used in two directions: bottom-up (foward addition) or top-down (backward elimination). While considering a subset of features, it tries to add the best feature or to remove the worst feature based on cross-validated score. The process is repeated util the desired number of feature is reached. This technique is implemented via Scikit-learn’s
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html'&gt;SequentialFeatureSelector&lt;/a&gt;</span></code>
-, but should never be used in practice due to the huge number of models need to be trained.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SequentialFeatureSelector</span>
-</pre></div>
-</div>
-</div>
-</div>
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html"><code class="docutils literal notranslate"><span class="pre">SequentialFeatureSelector</span></code></a>,
+but should never be used in practice due to the huge number of models need to be trained.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
@@ -1827,16 +1830,8 @@ is a cool algorithm with low computational complexity, high statistical efficien
 <section id="importance-analysis">
 <h4>Importance analysis<a class="headerlink" href="#importance-analysis" title="Permalink to this headline">#</a></h4>
 <p>Some Machine Learning algorithms have the ability to return feature importances. For example, Linear Regression uses variable weights and Decision Tree uses information gains. Feature importances express how much information features contribute on predicting the target variable. We can take advantage of it to remove low important features. This selector can be found in Scikit-learn’s class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectFromModel.html'&gt;SelectFromModel&lt;/a&gt;</span></code>.</p>
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectFromModel.html"><code class="docutils literal notranslate"><span class="pre">SelectFromModel</span></code></a></p>
 <p>Importance analysis only requires a single model to be trained, thus it is not very expensive. But you should consider feature importances with a grain of salt, as it does not always resemble the true contribution.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectFromModel</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
@@ -1873,17 +1868,9 @@ is a cool algorithm with low computational complexity, high statistical efficien
 <section id="ranked-elimination">
 <h4>Ranked elimination<a class="headerlink" href="#ranked-elimination" title="Permalink to this headline">#</a></h4>
 <p>This selector is Scikit-learn’s combines greedy elimination with importance analysis and takes the best of both worlds. It firstly trains a model using all features, prunes worst scoring ones based on feature importances, then trains a new model using current subset, measures the importances again,… The process is repeated until the desired number of features is reached. The implementations of this method is found in Sckit-learn via the classes
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html'&gt;RFE&lt;/a&gt;</span></code> and
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFECV.html'&gt;RFECV&lt;/a&gt;</span></code>.</p>
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html"><code class="docutils literal notranslate"><span class="pre">RFE</span></code></a> and
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFECV.html"><code class="docutils literal notranslate"><span class="pre">RFECV</span></code></a>.</p>
 <p>There are some differences compared to the greedy method above. First, as we need to update feature importances at each iteration, bottom-up approach will not be used. Second, ranked elimination can discard more than one feature at a time, which significantly reduce the number of iterations required.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">RFE</span><span class="p">,</span> <span class="n">RFECV</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
@@ -1906,16 +1893,8 @@ is a cool algorithm with low computational complexity, high statistical efficien
 <section id="stochastic-prediction">
 <h4>Stochastic prediction<a class="headerlink" href="#stochastic-prediction" title="Permalink to this headline">#</a></h4>
 <p>Ranked elimiation is much faster than greedy elimiation, but it is still not enough to be popular in practical tasks. When talking about a Machine Learning model, notice that the predicting time is much less than the training time. A smart approach has been proposed to take advantage of this, it is implemented via Feature-engine’s
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://feature-engine.readthedocs.io/en/latest/api_doc/selection/SelectByShuffling.html'&gt;SelectByShuffling&lt;/a&gt;</span></code>.</p>
+<a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/selection/SelectByShuffling.html"><code class="docutils literal notranslate"><span class="pre">SelectByShuffling</span></code></a>.</p>
 <p>This technique first trains a model on the entire feature set, then measures performance drop when predicting when each feature is random shuffled. If a feature is importance, the model will witness a significant performance drop when that feature is shuffled. Stochastic prediction trains only once, and thus is much faster than elimination methods.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
-<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SelectByShuffling</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">SelectByShuffling</span><span class="p">(</span>
@@ -2002,30 +1981,13 @@ is a cool algorithm with low computational complexity, high statistical efficien
 </section>
 <section id="implementation">
 <h3>2.2. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
-<p>PCA is implemented in Scikit-learn via the classes
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html'&gt;PCA&lt;/a&gt;</span></code> (original version),
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.KernelPCA.html'&gt;KernelPCA&lt;/a&gt;</span></code> (non-linear reduction) and
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html'&gt;IncrementalPCA&lt;/a&gt;</span></code> (mini-batch processing).
-They all have a main hyperparameter:</p>
+<p>PCA is implemented in Scikit-learn via the classes <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html"><code class="docutils literal notranslate"><span class="pre">PCA</span></code></a> (original version), <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.KernelPCA.html"><code class="docutils literal notranslate"><span class="pre">KernelPCA</span></code></a> (non-linear reduction) and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html"><code class="docutils literal notranslate"><span class="pre">IncrementalPCA</span></code></a> (mini-batch processing). They all have a main hyperparameter:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: the number of principal components to keep, defaults to <em>None</em> (keep all components). It can accept (1) an integer for the number of components, (2) a float in the range <span class="math notranslate nohighlight">\((0,1)\)</span> for a minimum threshold that total percentage of explained variances must be greater that, or (3) <em>mle</em> for letting PCA guess the dimension. The number of components in PCA can be determined using a scree plot.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/iris.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
 <span class="n">dfIris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2123,7 +2085,7 @@ They all have a main hyperparameter:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-dimensional-reduction_42_0.png" src="../_images/sklearn-dimensional-reduction_42_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_39_0.png"><img alt="../_images/sklearn-dimensional-reduction_39_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_39_0.png" style="width: 314.0px; height: 208.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -2229,7 +2191,7 @@ They all have a main hyperparameter:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-dimensional-reduction_46_0.png" src="../_images/sklearn-dimensional-reduction_46_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_43_0.png"><img alt="../_images/sklearn-dimensional-reduction_43_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_43_0.png" style="width: 430.5px; height: 425.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2263,29 +2225,13 @@ They all have a main hyperparameter:</p>
 </section>
 <section id="id2">
 <h3>3.2. Implementation<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
-<p>Scikit-learn implements LDA and QDA via the classes
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html'&gt;LinearDiscriminantAnalysis&lt;/a&gt;</span></code> and
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis.html'&gt;QuadraticDiscriminantAnalysis&lt;/a&gt;</span></code>.
-They have only one hyperparameter like PCA:</p>
+<p>Scikit-learn implements LDA and QDA via the classes <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html"><code class="docutils literal notranslate"><span class="pre">LinearDiscriminantAnalysis</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis.html"><code class="docutils literal notranslate"><span class="pre">QuadraticDiscriminantAnalysis</span></code></a>. They have only one hyperparameter like PCA:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: the number of principal components to keep, defaults to <em>None</em> (keep all components).</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <span class="n">LDA</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/iris.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">species</span>
 <span class="n">dfIris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -2454,7 +2400,7 @@ They have only one hyperparameter like PCA:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-dimensional-reduction_55_0.png" src="../_images/sklearn-dimensional-reduction_55_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_52_0.png"><img alt="../_images/sklearn-dimensional-reduction_52_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_52_0.png" style="width: 422.0px; height: 425.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2500,7 +2446,8 @@ p'_{mn} &amp;= \phi'_{mn}\div\sum_{n=1}^{N}\sum_{m=1}^{N}\phi'_{mn}
 <section id="id4">
 <h3>4.2. Implementation<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
 <p>Scikit-learn implements t-SNE via the classes
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html'&gt;TSNE&lt;/a&gt;</span></code>. It has the following hyperparameters:</p>
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html"><code class="docutils literal notranslate"><span class="pre">TSNE</span></code></a>.
+It has the following hyperparameters:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: the dimension of the space to embed into, defaults to <em>2</em>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">perplexity</span></code>: the number of effective neighbors, defaults to <em>30</em>. Should be greater on large datasets.</p></li>
@@ -2510,22 +2457,7 @@ p'_{mn} &amp;= \phi'_{mn}\div\sum_{n=1}^{N}\sum_{m=1}^{N}\phi'_{mn}
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/iris.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">species</span>
 <span class="n">dfIris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -2675,7 +2607,7 @@ p'_{mn} &amp;= \phi'_{mn}\div\sum_{n=1}^{N}\sum_{m=1}^{N}\phi'_{mn}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-dimensional-reduction_62_0.png" src="../_images/sklearn-dimensional-reduction_62_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_59_0.png"><img alt="../_images/sklearn-dimensional-reduction_59_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_59_0.png" style="width: 427.5px; height: 425.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2725,7 +2657,7 @@ p'_{mn} &amp;= \phi'_{mn}\div\sum_{n=1}^{N}\sum_{m=1}^{N}\phi'_{mn}
 <section id="id6">
 <h3>5.2. Implementation<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
 <p>UMAP is implemented in its own <a class="reference external" href="https://umap-learn.readthedocs.io/en/latest/index.html">library</a> via the class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://umap-learn.readthedocs.io/en/latest/api.html'&gt;UMAP&lt;/a&gt;</span></code>. It has the following hyperparameters:</p>
+<a class="reference external" href="https://umap-learn.readthedocs.io/en/latest/api.html"><code class="docutils literal notranslate"><span class="pre">UMAP</span></code></a>. It has the following hyperparameters:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: the dimension of the space to embed into, defaults to <em>2</em>. Can increase up to 100.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>: the number of effective neighbors of each sample, defaults to <em>15</em>. Larger values result in more global views of the manifold, while smaller values result in more local data being preserved.</p></li>
@@ -2738,23 +2670,7 @@ p'_{mn} &amp;= \phi'_{mn}\div\sum_{n=1}^{N}\sum_{m=1}^{N}\phi'_{mn}
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">umap</span> <span class="kn">import</span> <span class="n">UMAP</span>
-
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/iris.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">species</span>
 <span class="n">dfIris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -2904,13 +2820,13 @@ p'_{mn} &amp;= \phi'_{mn}\div\sum_{n=1}^{N}\sum_{m=1}^{N}\phi'_{mn}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-dimensional-reduction_69_0.png" src="../_images/sklearn-dimensional-reduction_69_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_66_0.png"><img alt="../_images/sklearn-dimensional-reduction_66_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_66_0.png" style="width: 430.5px; height: 425.0px;" /></a>
 </div>
 </div>
 </section>
 </section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><em><a class="reference external" href="http://cs.toronto.edu">cs.toronto.edu</a> - <a class="reference external" href="https://www.cs.toronto.edu/~hinton/absps/sne.pdf">Stochastic Neighbor Embedding</a></em></p></li>
 <li><p><em><a class="reference external" href="http://jmlr.org">jmlr.org</a> - <a class="reference external" href="https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf">Visualizing data using t-SNE</a></em></p></li>

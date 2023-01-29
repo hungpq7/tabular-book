@@ -554,7 +554,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="ggplot-data-visualization.html">
-     Ggplot: Data Visualizatio
+     Ggplot: Data Visualization
     </a>
    </li>
    <li class="toctree-l2">
@@ -931,13 +931,11 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#date-and-time">
    7. Date and time
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#date-and-time-format-codes">
-     Date and time format codes
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
  </li>
 </ul>
 
@@ -1115,13 +1113,11 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#date-and-time">
    7. Date and time
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#date-and-time-format-codes">
-     Date and time format codes
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
  </li>
 </ul>
 
@@ -1135,7 +1131,6 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="r-basic-concepts">
 <h1>R: Basic Concepts<a class="headerlink" href="#r-basic-concepts" title="Permalink to this headline">#</a></h1>
-<p>Install R for Jupyter: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">r</span> <span class="pre">r-irkernel</span></code></p>
 <section id="objects">
 <h2>1. Objects<a class="headerlink" href="#objects" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
@@ -1266,7 +1261,7 @@ nickname       One Push-Up
 </section>
 <section id="built-in-datasets">
 <h3>1.3. Built-in datasets<a class="headerlink" href="#built-in-datasets" title="Permalink to this headline">#</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># all available datasets</span>
 <span class="nf">data</span><span class="p">()</span>
@@ -1698,9 +1693,9 @@ to list the data sets in all *available* packages.</p></div></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">readxl</span><span class="o">::</span><span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;data/mtcars.xlsx&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">readxl</span><span class="o">::</span><span class="nf">read_excel</span><span class="p">(</span><span class="s">&#39;../data/mtcars.xlsx&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2203,7 +2198,7 @@ to list the data sets in all *available* packages.</p></div></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/r-basic-concepts_99_0.png" src="../_images/r-basic-concepts_99_0.png" />
+<a class="reference internal image-reference" href="../_images/r-basic-concepts_99_0.png"><img alt="../_images/r-basic-concepts_99_0.png" class="align-center" src="../_images/r-basic-concepts_99_0.png" style="width: 420.0px; height: 420.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -2214,7 +2209,7 @@ to list the data sets in all *available* packages.</p></div></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/r-basic-concepts_100_0.png" src="../_images/r-basic-concepts_100_0.png" />
+<a class="reference internal image-reference" href="../_images/r-basic-concepts_100_0.png"><img alt="../_images/r-basic-concepts_100_0.png" class="align-center" src="../_images/r-basic-concepts_100_0.png" style="width: 420.0px; height: 420.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -2225,7 +2220,7 @@ to list the data sets in all *available* packages.</p></div></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/r-basic-concepts_101_0.png" src="../_images/r-basic-concepts_101_0.png" />
+<a class="reference internal image-reference" href="../_images/r-basic-concepts_101_0.png"><img alt="../_images/r-basic-concepts_101_0.png" class="align-center" src="../_images/r-basic-concepts_101_0.png" style="width: 420.0px; height: 420.0px;" /></a>
 </div>
 </div>
 </section>
@@ -2401,16 +2396,16 @@ to list the data sets in all *available* packages.</p></div></div>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:left"><p><strong>%s</strong></p></td>
+<tr class="row-even"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">%s</span></code></p></td>
 <td class="text-align:left"><p>string</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p><strong>%d</strong></p></td>
+<tr class="row-odd"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">%d</span></code></p></td>
 <td class="text-align:left"><p>integer</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p><strong>%02d</strong></p></td>
+<tr class="row-even"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">%02d</span></code></p></td>
 <td class="text-align:left"><p>an integer padded with 2 leading zeros</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p><strong>%.2f</strong></p></td>
+<tr class="row-odd"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">%.2f</span></code></p></td>
 <td class="text-align:left"><p>floating point number with 2 decimal places</p></td>
 </tr>
 </tbody>
@@ -2420,8 +2415,7 @@ to list the data sets in all *available* packages.</p></div></div>
 </section>
 <section id="date-and-time">
 <h2>7. Date and time<a class="headerlink" href="#date-and-time" title="Permalink to this headline">#</a></h2>
-<section id="date-and-time-format-codes">
-<h3>Date and time format codes<a class="headerlink" href="#date-and-time-format-codes" title="Permalink to this headline">#</a></h3>
+<p>Date and time format codes:</p>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="text-align:left head"><p>Code</p></th>
@@ -2522,6 +2516,15 @@ to list the data sets in all *available* packages.</p></div></div>
 </div>
 </div>
 </section>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">r</span> <span class="n">r</span><span class="o">-</span><span class="n">irkernel</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 

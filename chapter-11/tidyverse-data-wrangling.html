@@ -554,7 +554,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="ggplot-data-visualization.html">
-     Ggplot: Data Visualizatio
+     Ggplot: Data Visualization
     </a>
    </li>
    <li class="toctree-l2">
@@ -903,6 +903,11 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -1051,6 +1056,11 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -1067,7 +1077,7 @@ title="Print to PDF"
 <h2>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
 <section id="tidyverse">
 <h3>1.1. Tidyverse<a class="headerlink" href="#tidyverse" title="Permalink to this headline">#</a></h3>
-<p>This topic introduces the <code class="docutils literal notranslate"><span class="pre">tidyverse</span></code> library, which is a collection of R packages desgined for Data Science. <code class="docutils literal notranslate"><span class="pre">library(tidyverse)</span></code> will load the following core packages:</p>
+<p>This topic introduces the <a class="reference external" href="https://www.tidyverse.org/packages/"><code class="docutils literal notranslate"><span class="pre">tidyverse</span></code></a> library, which is a collection of R packages desgined for Data Science. <code class="docutils literal notranslate"><span class="pre">library(tidyverse)</span></code> will load the following core packages:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> for data visualization,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">dplyr</span></code> for data manipulation,</p></li>
@@ -1079,7 +1089,6 @@ title="Print to PDF"
 <li><p><code class="docutils literal notranslate"><span class="pre">forcats</span></code> for factors.</p></li>
 </ul>
 <p>Tidyverse also includes many other useful packages such as <code class="docutils literal notranslate"><span class="pre">lubridate</span></code> and <code class="docutils literal notranslate"><span class="pre">magrittr</span></code>, however each of them need to be loaded separately.</p>
-<p><em>Reference: <a class="reference external" href="https://www.tidyverse.org/packages/">Tidyverse</a></em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
@@ -1121,28 +1130,9 @@ Warning message:
 <section id="the-pipe">
 <h3>1.2. The pipe<a class="headerlink" href="#the-pipe" title="Permalink to this headline">#</a></h3>
 <p>The pipe <code class="docutils literal notranslate"><span class="pre">%&gt;%</span></code> from the <code class="docutils literal notranslate"><span class="pre">magrittr</span></code> library provides a brand new way writing functions. It uses an object as the first argument of a function, allowing you to read code from left to right insted of from inside to outside. Packages in Tidyverse automatically load the pipe for you, so it’s not required to use <code class="docutils literal notranslate"><span class="pre">magrittr</span></code> explicitly.</p>
-<p><em>Reference: <a class="reference external" href="https://r4ds.had.co.nz/">R for Data Science</a></em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">magrittr</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;magrittr&#39; was built under R version 3.6.3&quot;
-
-Attaching package: &#39;magrittr&#39;
-
-
-The following object is masked from &#39;package:purrr&#39;:
-
-    set_names
-
-
-The following object is masked from &#39;package:tidyr&#39;:
-
-    extract
 </pre></div>
 </div>
 </div>
@@ -1180,7 +1170,7 @@ The following object is masked from &#39;package:tidyr&#39;:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/mtcars.csv&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1270,7 +1260,7 @@ The following object is masked from &#39;package:tidyr&#39;:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/mtcars.csv&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1442,7 +1432,7 @@ The following object is masked from &#39;package:tidyr&#39;:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/mtcars.csv&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1516,7 +1506,7 @@ The following object is masked from &#39;package:tidyr&#39;:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/mtcars.csv&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1707,7 +1697,7 @@ The following object is masked from &#39;package:tidyr&#39;:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/mtcars.csv&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1812,7 +1802,7 @@ The following object is masked from &#39;package:tidyr&#39;:
 <h4>Basic grouping<a class="headerlink" href="#basic-grouping" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fish</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/us_fishery_foreign_trade.csv&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fish</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/us_fishery_foreign_trade.csv&#39;</span><span class="p">)</span>
 <span class="n">fish</span> <span class="o">%&gt;%</span> <span class="n">head</span>
 </pre></div>
 </div>
@@ -1893,7 +1883,7 @@ The following object is masked from &#39;package:tidyr&#39;:
 <h4>Advanced grouping<a class="headerlink" href="#advanced-grouping" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/mtcars.csv&#39;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
 <span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="n">head</span>
 </pre></div>
 </div>
@@ -1916,7 +1906,7 @@ The following object is masked from &#39;package:tidyr&#39;:
 </table>
 </div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the ranks for each group</span>
 <span class="n">mtcars</span> <span class="o">%&gt;%</span>
@@ -2257,7 +2247,7 @@ Call `lifecycle::last_warnings()` to see where this warning was generated.&quot;
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s">&#39;data/world_population.xlsx&#39;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s">&#39;../data/world_population.xlsx&#39;</span>
 <span class="n">sheets</span> <span class="o">=</span> <span class="nf">excel_sheets</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 <span class="n">sheets</span>
 </pre></div>
@@ -2436,6 +2426,12 @@ Call `lifecycle::last_warnings()` to see where this warning was generated.&quot;
 </div></div>
 </div>
 </section>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><em><a class="reference external" href="http://r4ds.had.co.nz">r4ds.had.co.nz</a> - <a class="reference external" href="https://r4ds.had.co.nz/">R for Data Science</a></em></p></li>
+</ul>
 </section>
 </section>
 

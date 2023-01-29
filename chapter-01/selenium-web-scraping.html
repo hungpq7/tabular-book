@@ -554,7 +554,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-11/ggplot-data-visualization.html">
-     Ggplot: Data Visualizatio
+     Ggplot: Data Visualization
     </a>
    </li>
    <li class="toctree-l2">
@@ -884,8 +884,8 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#resources">
+   Resources
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1022,8 +1022,8 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#resources">
+   Resources
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1067,13 +1067,13 @@ title="Print to PDF"
 <h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <p>There are basically two ways to scrape data from websites, one is via HTML responses (server-side) and the other is via JSON responses (client-side).</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="25b4c5a3-88c1-4e38-aaec-ad562be43d90" name="e4c959da-29ad-41f8-aee7-1349597b40d6" type="radio">
-</input><label class="sd-tab-label" for="25b4c5a3-88c1-4e38-aaec-ad562be43d90">
+<input checked="checked" id="96bae998-bfbe-48a5-bdc2-feab3d4ae2d4" name="91ba8cb6-2f65-47c6-8b6d-a60f209115a8" type="radio">
+</input><label class="sd-tab-label" for="96bae998-bfbe-48a5-bdc2-feab3d4ae2d4">
 Server-side</label><div class="sd-tab-content docutils">
 <p>We extract <em>unstructured</em> data from user interface, which is friendly for human eyes but not for computers. Data is availale most of the time except for cases when website owners protect their data intentionally. This crawling approach requires some basic knowledge of HTML.</p>
 </div>
-<input id="e2e4b747-5498-4480-8f80-557f407a91ff" name="e4c959da-29ad-41f8-aee7-1349597b40d6" type="radio">
-</input><label class="sd-tab-label" for="e2e4b747-5498-4480-8f80-557f407a91ff">
+<input id="59428eb7-4393-44e8-9d94-a33786147e0d" name="91ba8cb6-2f65-47c6-8b6d-a60f209115a8" type="radio">
+</input><label class="sd-tab-label" for="59428eb7-4393-44e8-9d94-a33786147e0d">
 Client-side</label><div class="sd-tab-content docutils">
 <p>We try to crawl <em>structured</em> REST API responses, which is only available in specific website that use this protocol. The advantage is that the returned data is in JSON format, so they can be easily extracted and processed. Crawling data this way is much easier, so we are going to start with it.</p>
 </div>
@@ -1193,7 +1193,8 @@ Client-side</label><div class="sd-tab-content docutils">
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!curl https://api.github.com/repos/hungpq7/courses/languages \
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+curl https://api.github.com/repos/hungpq7/courses/languages \
     -H &quot;Accept: application/vnd.github+json&quot; \
     -H &quot;Authorization: Bearer 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&quot; \
     -H &quot;X-GitHub-Api-Version: 2022-11-28&quot;
@@ -1961,8 +1962,8 @@ Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản)
 </section>
 </section>
 </section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><em><a class="reference external" href="http://gregreda.com">gregreda.com</a> - <a class="reference external" href="http://www.gregreda.com/2015/02/15/web-scraping-finding-the-api/">Web Scraping 201: finding the API</a></em></p></li>
 <li><p><em><a class="reference external" href="http://jovian.ai">jovian.ai</a> - <a class="reference external" href="https://jovian.ai/aakashns/python-web-scraping-and-rest-api">Introduction to Web Scraping and REST APIs</a></em></p></li>

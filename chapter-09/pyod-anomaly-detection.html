@@ -556,7 +556,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-11/ggplot-data-visualization.html">
-     Ggplot: Data Visualizatio
+     Ggplot: Data Visualization
     </a>
    </li>
    <li class="toctree-l2">
@@ -921,8 +921,8 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#resources">
+   Resources
   </a>
  </li>
 </ul>
@@ -1089,8 +1089,8 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#resources">
+   Resources
   </a>
  </li>
 </ul>
@@ -1115,7 +1115,7 @@ title="Print to PDF"
 <li><p><em>Dependency anomalies</em>: refer to the data points that do not follow the dependency structure which normal data follow. Example salary covariates with education but anomalies do not.</p></li>
 <li><p><em>Clustered anomalies</em>: is group of abnomalies, the data points are not scattered in space but appear in a group that are different from normal data</p></li>
 </ul>
-<img alt="chapter-09/image/types_of_anomaly.png" src="chapter-09/image/types_of_anomaly.png" />
+<a class="reference internal image-reference" href="../_images/types_of_anomaly.png"><img alt="../_images/types_of_anomaly.png" class="align-center" src="../_images/types_of_anomaly.png" style="height: 250px;" /></a>
 </section>
 <section id="approaches">
 <h3>1.2. Approaches<a class="headerlink" href="#approaches" title="Permalink to this headline">#</a></h3>
@@ -1137,14 +1137,6 @@ title="Print to PDF"
 <h2>2. Statistical approaches<a class="headerlink" href="#statistical-approaches" title="Permalink to this headline">#</a></h2>
 <p>An outlier is a data point that differs significantly from other observations. Outliers can cause serious problems in statistical analysis. Detecting outliers is more likely be an art rather than a science, therefore you need both quantitative and qualitative methods to identify outliers.</p>
 <p>However, there’s no best rule for handling outliers. You need to ask yourself <em>Why are they outliers?</em> and <em>How can they affect your analysis?</em>. In this section, we discuss how to detect and handle outliers using Feature-engine.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="stategies">
 <h3>2.1. Stategies<a class="headerlink" href="#stategies" title="Permalink to this headline">#</a></h3>
 <section id="z-score">
@@ -1154,7 +1146,7 @@ title="Print to PDF"
 \[z = \frac{x-\mu}{\sigma}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation.</p>
 <p>The approach of this method is to eliminate values of <span class="math notranslate nohighlight">\(z&lt;-3\)</span> and <span class="math notranslate nohighlight">\(z&gt;3\)</span>. You can also remove <span class="math notranslate nohighlight">\(x&lt;\mu-3\sigma\)</span> and <span class="math notranslate nohighlight">\(x&gt;\mu+3\sigma\)</span> which gives the same result. Notice that the coefficient can be changed to 2.5 or 3.5 depends on the problem.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">outliers_zscore</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
     <span class="s1">&#39;Return a new array has the outliers being replaced with NaN.&#39;</span>
@@ -1174,7 +1166,7 @@ title="Print to PDF"
 <section id="interquartile-range">
 <h4>Interquartile range<a class="headerlink" href="#interquartile-range" title="Permalink to this headline">#</a></h4>
 <p>This method considers eliminating values that is lower than <span class="math notranslate nohighlight">\(Q_1-1.5\times \text{IQR}\)</span> or higher than <span class="math notranslate nohighlight">\(Q_3+1.5\times \text{IQR}\)</span>, where: <span class="math notranslate nohighlight">\(Q_1\)</span>, <span class="math notranslate nohighlight">\(Q_2\)</span> and <span class="math notranslate nohighlight">\(Q_3\)</span> are the quartiles; <span class="math notranslate nohighlight">\(\text{IQR}=Q_3-Q_1\)</span> is the interquartile range.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">outliers_iqr</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1193,28 +1185,12 @@ title="Print to PDF"
 </section>
 <section id="handling">
 <h3>2.2. Handling<a class="headerlink" href="#handling" title="Permalink to this headline">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="kn">from</span> <span class="nn">feature_engine</span> <span class="kn">import</span> <span class="n">outliers</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
 <section id="clipping">
 <h4>Clipping<a class="headerlink" href="#clipping" title="Permalink to this headline">#</a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://feature-engine.readthedocs.io/en/latest/api_doc/outliers/Winsorizer.html'&gt;Winsorizer&lt;/a&gt;</span></code> detects outliers based on z-score, IQR and percentiles rule and replace these outliers by the maximum/minimum values at automatically determined values</p>
+<p>The class <a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/outliers/Winsorizer.html"><code class="docutils literal notranslate"><span class="pre">Winsorizer</span></code></a> detects outliers based on z-score, IQR and percentiles rule and replace these outliers by the maximum/minimum values at automatically determined values</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -1251,16 +1227,16 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;citric_acid&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/pyod-anomaly-detection_16_1.png" src="../_images/pyod-anomaly-detection_16_1.png" />
+<a class="reference internal image-reference" href="../_images/pyod-anomaly-detection_16_1.png"><img alt="../_images/pyod-anomaly-detection_16_1.png" class="align-center" src="../_images/pyod-anomaly-detection_16_1.png" style="width: 501.0px; height: 231.5px;" /></a>
 </div>
 </div>
 </section>
 <section id="trimming">
 <h4>Trimming<a class="headerlink" href="#trimming" title="Permalink to this headline">#</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://feature-engine.readthedocs.io/en/latest/api_doc/outliers/OutlierTrimmer.html'&gt;OutlierTrimmer&lt;/a&gt;</span></code> detects outliers based on z-score, IQR and percentiles rule and removes observations with outliers from the dataset.</p>
+<p><a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/outliers/OutlierTrimmer.html"><code class="docutils literal notranslate"><span class="pre">OutlierTrimmer</span></code></a> detects outliers based on z-score, IQR and percentiles rule and removes observations with outliers from the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -1299,15 +1275,6 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">7.46</span><span class="p">,</span> <span class="mf">6.77</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">7.11</span><span class="p">,</span> <span class="mf">7.81</span><span class="p">,</span> <span class="mf">8.84</span><span class="p">,</span> <span class="mf">6.08</span><span class="p">,</span> <span class="mf">5.39</span><span class="p">,</span> <span class="mf">8.15</span><span class="p">,</span> <span class="mf">6.42</span><span class="p">,</span> <span class="mf">5.73</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span><span class="p">;</span> <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Effect of ouliers&#39;</span><span class="p">)</span>
@@ -1318,7 +1285,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/pyod-anomaly-detection_23_0.png" src="../_images/pyod-anomaly-detection_23_0.png" />
+<a class="reference internal image-reference" href="../_images/pyod-anomaly-detection_22_0.png"><img alt="../_images/pyod-anomaly-detection_22_0.png" class="align-center" src="../_images/pyod-anomaly-detection_22_0.png" style="width: 875.0px; height: 263.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1326,29 +1293,14 @@ title="Print to PDF"
 </section>
 <section id="inspired-variants">
 <h2>3. Inspired variants<a class="headerlink" href="#inspired-variants" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="kn">from</span> <span class="nn">pyod.models</span> <span class="kn">import</span> <span class="n">pca</span><span class="p">,</span> <span class="n">cblof</span><span class="p">,</span> <span class="n">ocsvm</span><span class="p">,</span> <span class="n">knn</span>
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">DBSCAN</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
 <section id="dimensional-reduction">
 <h3>3.1. Dimensional reduction<a class="headerlink" href="#dimensional-reduction" title="Permalink to this headline">#</a></h3>
-<p>As far as we know, PCA is a technique which break down a matrix into vectors called principal components, then reconstruct the original data using just the first few principal components in a lower dimensional space. The reconstructed data points that are the most different from the corresponding original points are anomalous points - which is more obvious on the hyperplane constructed by the eigenvectors with small eigenvalues. Therefore, outlier scores can be obtained as the sum of the projected distance of a sample on all eigenvectors. The <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://pyod.readthedocs.io/en/latest/pyod.models.html#module-pyod.models.pca'&gt;PCA&lt;/a&gt;</span></code> model in Pyod can calculate the outlier scores and predict which observation is outlier</p>
-<div class="cell docutils container">
+<p>As far as we know, PCA is a technique which break down a matrix into vectors called principal components, then reconstruct the original data using just the first few principal components in a lower dimensional space. The reconstructed data points that are the most different from the corresponding original points are anomalous points - which is more obvious on the hyperplane constructed by the eigenvectors with small eigenvalues. Therefore, outlier scores can be obtained as the sum of the projected distance of a sample on all eigenvectors. The
+<a class="reference external" href="https://pyod.readthedocs.io/en/latest/pyod.models.html#module-pyod.models.pca"><code class="docutils literal notranslate"><span class="pre">PCA</span></code></a>
+model in Pyod can calculate the outlier scores and predict which observation is outlier</p>
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1502,10 +1454,10 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/pyod-anomaly-detection_30_0.png" src="../_images/pyod-anomaly-detection_30_0.png" />
+<a class="reference internal image-reference" href="../_images/pyod-anomaly-detection_29_0.png"><img alt="../_images/pyod-anomaly-detection_29_0.png" class="align-center" src="../_images/pyod-anomaly-detection_29_0.png" style="width: 512.0px; height: 343.5px;" /></a>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># outliers in dataset</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">outlier</span><span class="o">==</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1631,9 +1583,9 @@ title="Print to PDF"
 <section id="dbscan">
 <h4>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this headline">#</a></h4>
 <p>In clustering topic, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html">DBSCAN</a> can be used to detect outliers based on concept core points - edge points. If a point is neither a core point nor edge point, it will be considered as an outlier.</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1760,7 +1712,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -1908,9 +1860,9 @@ Assume the clustering algorithm split dataset into <span class="math notranslate
 |C_i| \cdot d(p,C_i) &amp; \text{ if } C_i \in \text{ LC }\\
 \end{cases}\end{split}\]</div>
 <p>The formula simplify states that score is equal to the distance to the nearest large cluster multiplie by the size of the cluster the object belong to</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2073,9 +2025,9 @@ Assume the clustering algorithm split dataset into <span class="math notranslate
 <h3>3.3. One-class SVM<a class="headerlink" href="#one-class-svm" title="Permalink to this headline">#</a></h3>
 <p>In classification, SVM is usually used in multi-class problems but in anomaly detection, there is just 1 class in all dataset, the algorithm must classify a new observation is in class or not. This is the idea of <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.OneClassSVM.html#sklearn.svm.OneClassSVM">One-class SVM</a>. Note that in feature space the inner product of every point with the origin is <span class="math notranslate nohighlight">\(0\)</span> - Hence there is low similarity between the points in the dataset and the origin. Therefore, OCSVM tries to find a hyperplane in feature space that maximizes the distances from the origin (outlier points) and minimizes the distance to the other datapoints (similar points)</p>
 <p>This algorithm is consider as <a class="reference external" href="https://scikit-learn.org/stable/modules/outlier_detection.html#novelty-and-outlier-detection">novelty detection</a> (a kind of semi-supervised) which the training data do not contain outliers, the algorithm only detects the new observation is an outlier or not. Thus, it not suitable if there are outliers in the training set</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2229,9 +2181,9 @@ Assume the clustering algorithm split dataset into <span class="math notranslate
 <li><p>Mean: use the average of all k neighbors as the outlier score</p></li>
 <li><p>Median: use the median of the distance to k neighbors as the outlier score</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data\wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2390,7 +2342,7 @@ Assume the clustering algorithm split dataset into <span class="math notranslate
 </ul>
 <div class="math notranslate nohighlight">
 \[\text{RD}(p_i,p_j) = \max(\text{K_distance}_{p_i}, d(p_i,p_j))\]</div>
-<img alt="chapter-09/image/local_outlier_factor.png" src="chapter-09/image/local_outlier_factor.png" />
+<a class="reference internal image-reference" href="../_images/local_outlier_factor.png"><img alt="../_images/local_outlier_factor.png" class="align-center" src="../_images/local_outlier_factor.png" style="height: 250px;" /></a>
 <ul class="simple">
 <li><p>Computes the <em>local reachability density (LRD)</em>. LRD is inverse of the average RD of <span class="math notranslate nohighlight">\(p_i\)</span> from its neighbors. The larger average RD leads to the smaller LRD - it means the density of <span class="math notranslate nohighlight">\(p_i\)</span> is quite low:</p></li>
 </ul>
@@ -2426,8 +2378,8 @@ c(n) &amp;= 2 \cdot (\log(n-1)+0.577) - \frac{2(n-1)}{n} \\
 <p>As same as LOF, COF firstly find <span class="math notranslate nohighlight">\(k\)</span> nearest neighbors of point <span class="math notranslate nohighlight">\(p\)</span> then arrange them in order of closest distance to <span class="math notranslate nohighlight">\(p\)</span>. Call <span class="math notranslate nohighlight">\(e_k\)</span> is the <em>edge distance</em>, equals to each pair of points distance, example <span class="math notranslate nohighlight">\(e_2\)</span> is the distance between <span class="math notranslate nohighlight">\(P_2\)</span> and <span class="math notranslate nohighlight">\(P_3\)</span>, we calculates average chain distance for each instance:</p>
 <div class="math notranslate nohighlight">
 \[\text{ACD}_p = \sum_{i=1}^k \frac{2(k+1-i)}{k(k+1)} e_i\]</div>
-<img src='image/connectivity_based_outlier_factor.png' style='height:180px; margin:0 auto 20px;'>
-At last, anomaly score is generated by ratio of average chaining distance of instance and the average of average chaining distance of $k$ nearest neighbor of this point. The higher the score, the easier it is to be an outlier.
+<a class="reference internal image-reference" href="../_images/connectivity_based_outlier_factor.png"><img alt="../_images/connectivity_based_outlier_factor.png" class="align-center" src="../_images/connectivity_based_outlier_factor.png" style="height: 180px;" /></a>
+<p>At last, anomaly score is generated by ratio of average chaining distance of instance and the average of average chaining distance of <span class="math notranslate nohighlight">\(k\)</span> nearest neighbor of this point. The higher the score, the easier it is to be an outlier.</p>
 <div class="math notranslate nohighlight">
 \[\text{COF}_p = \frac{\text{ACD}_p}{\frac{\sum ACD_k}{k}}\]</div>
 </section>
@@ -2440,7 +2392,7 @@ At last, anomaly score is generated by ratio of average chaining distance of ins
 </section>
 <section id="implementation">
 <h3>4.7. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
-<p>All unsupervised algorithms in Pyod have an importance hyperameter is <code style='font-size:13px; color:firebrick;'>contamination` which is ratio of anomaly in the dataset. Some notable hyperparams in each algorithm:</p>
+<p>All unsupervised algorithms in Pyod have an importance hyperameter is <code class="docutils literal notranslate"><span class="pre">contamination</span></code> which is ratio of anomaly in the dataset. Some notable hyperparams in each algorithm:</p>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="text-align:left head"><p>Algorithm</p></th>
@@ -2450,67 +2402,44 @@ At last, anomaly score is generated by ratio of average chaining distance of ins
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-align:left"><p>LOF</p></td>
-<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>n_neighbors`</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code></p></td>
 <td class="text-align:left"><p>20</p></td>
 </tr>
 <tr class="row-odd"><td class="text-align:left"><p>LOF</p></td>
-<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>metric`</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">metric</span></code></p></td>
 <td class="text-align:left"><p>minkowski</p></td>
 </tr>
 <tr class="row-even"><td class="text-align:left"><p>HBOS</p></td>
-<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>n_bins`</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">n_bins</span></code></p></td>
 <td class="text-align:left"><p>10</p></td>
 </tr>
 <tr class="row-odd"><td class="text-align:left"><p>HBOS</p></td>
-<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>alpha`</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">alpha</span></code></p></td>
 <td class="text-align:left"><p>0.1</p></td>
 </tr>
 <tr class="row-even"><td class="text-align:left"><p>IForest</p></td>
-<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>n_estimators`</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">n_estimators</span></code></p></td>
 <td class="text-align:left"><p>100</p></td>
 </tr>
 <tr class="row-odd"><td class="text-align:left"><p>IForest</p></td>
-<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>max_samples`</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">max_samples</span></code></p></td>
 <td class="text-align:left"><p>auto</p></td>
 </tr>
 <tr class="row-even"><td class="text-align:left"><p>IForest</p></td>
-<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>max_features`</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code></p></td>
 <td class="text-align:left"><p>1</p></td>
 </tr>
 <tr class="row-odd"><td class="text-align:left"><p>COF</p></td>
-<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>n_neighbors`</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code></p></td>
 <td class="text-align:left"><p>20</p></td>
 </tr>
 <tr class="row-even"><td class="text-align:left"><p>COF</p></td>
-<td class="text-align:left"><p><code style='font-size:13px; color:firebrick;'>method`</p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">method</span></code></p></td>
 <td class="text-align:left"><p>fast</p></td>
 </tr>
 </tbody>
 </table>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">logging</span><span class="p">;</span> <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ParameterGrid</span>
-<span class="kn">from</span> <span class="nn">pyod.models.iforest</span> <span class="kn">import</span> <span class="n">IForest</span>
-<span class="kn">from</span> <span class="nn">pyod.models.lof</span> <span class="kn">import</span> <span class="n">LOF</span>
-<span class="kn">from</span> <span class="nn">pyod.models.hbos</span> <span class="kn">import</span> <span class="n">HBOS</span>
-<span class="kn">from</span> <span class="nn">pyod.models.cof</span> <span class="kn">import</span> <span class="n">COF</span>
-<span class="kn">from</span> <span class="nn">pyod.models.copod</span> <span class="kn">import</span> <span class="n">COPOD</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfWine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">dfWine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -2650,13 +2579,13 @@ At last, anomaly score is generated by ratio of average chaining distance of ins
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/pyod-anomaly-detection_60_0.png" src="../_images/pyod-anomaly-detection_60_0.png" />
+<a class="reference internal image-reference" href="../_images/pyod-anomaly-detection_59_0.png"><img alt="../_images/pyod-anomaly-detection_59_0.png" class="align-center" src="../_images/pyod-anomaly-detection_59_0.png" style="width: 584.0px; height: 296.0px;" /></a>
 </div>
 </div>
 </section>
 </section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/openvinotoolkit/anomalib">https://github.com/openvinotoolkit/anomalib</a></p></li>
 <li><p><a class="reference external" href="https://github.com/SeldonIO/alibi-detect">https://github.com/SeldonIO/alibi-detect</a></p></li>

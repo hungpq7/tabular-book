@@ -556,7 +556,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-11/ggplot-data-visualization.html">
-     Ggplot: Data Visualizatio
+     Ggplot: Data Visualization
     </a>
    </li>
    <li class="toctree-l2">
@@ -860,8 +860,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#resources">
+   Resources
   </a>
  </li>
 </ul>
@@ -967,8 +967,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#resources">
+   Resources
   </a>
  </li>
 </ul>
@@ -992,7 +992,7 @@ title="Print to PDF"
 <p>Over-sampling is generating the new observations in minoriry class. This method should be used only when the data size is small, because of data leakage and model performance problem. The same data point can be shown up in both training and testing set, so always do it after splitting the data into training and validation folds. Over sampling can hurt model performance by training the operation points - it’s a bit different from real world data.</p>
 <section id="synthetic-minority">
 <h4>Synthetic Minority<a class="headerlink" href="#synthetic-minority" title="Permalink to this headline">#</a></h4>
-<p><span class="xref myst">Synthetic Minority Oversampling Techique (SMOTE)</span> uses the algorithm to generate new data points. It works by selecting points that are close in the feature space, drawing a line between the points and drawing a new sample as a point along that line. Called <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(x_j\)</span> are the points in minor class, <span class="math notranslate nohighlight">\(x_j\)</span> is one of <span class="math notranslate nohighlight">\(k\)</span> nearest neighbors of <span class="math notranslate nohighlight">\(x_i\)</span>. The new sample <span class="math notranslate nohighlight">\(x_n\)</span> will be computed by:</p>
+<p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html">SMOTE</a> (Synthetic Minority Oversampling Techique) uses the algorithm to generate new data points. It works by selecting points that are close in the feature space, drawing a line between the points and drawing a new sample as a point along that line. Called <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(x_j\)</span> are the points in minor class, <span class="math notranslate nohighlight">\(x_j\)</span> is one of <span class="math notranslate nohighlight">\(k\)</span> nearest neighbors of <span class="math notranslate nohighlight">\(x_i\)</span>. The new sample <span class="math notranslate nohighlight">\(x_n\)</span> will be computed by:</p>
 <div class="math notranslate nohighlight">
 \[x_n = x_i + \lambda (x_j-x_i)\]</div>
 <p>With <span class="math notranslate nohighlight">\(\lambda\)</span> is a random number in range <span class="math notranslate nohighlight">\([0,1]\)</span>. There are some variants of SMOTE:</p>
@@ -1129,7 +1129,7 @@ Counter({1: 357, 0: 50})
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/imblearn-targeted-modeling_13_0.png" src="../_images/imblearn-targeted-modeling_13_0.png" />
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_13_0.png"><img alt="../_images/imblearn-targeted-modeling_13_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_13_0.png" style="width: 856.5px; height: 426.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1192,7 +1192,7 @@ Counter({1: 357, 0: 50})
   warnings.warn(
 </pre></div>
 </div>
-<img alt="../_images/imblearn-targeted-modeling_21_1.png" src="../_images/imblearn-targeted-modeling_21_1.png" />
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_21_1.png"><img alt="../_images/imblearn-targeted-modeling_21_1.png" class="align-center" src="../_images/imblearn-targeted-modeling_21_1.png" style="width: 856.5px; height: 426.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1276,7 +1276,7 @@ Counter({1: 357, 0: 50})
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/imblearn-targeted-modeling_29_0.png" src="../_images/imblearn-targeted-modeling_29_0.png" />
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_29_0.png"><img alt="../_images/imblearn-targeted-modeling_29_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_29_0.png" style="width: 640.5px; height: 210.0px;" /></a>
 </div>
 </div>
 <section id="ensemble-method">
@@ -1291,8 +1291,8 @@ Counter({1: 357, 0: 50})
 <section id="ranking">
 <h2>3. Ranking<a class="headerlink" href="#ranking" title="Permalink to this headline">#</a></h2>
 </section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><em>Imbalance learn - <a class="reference external" href="https://imbalanced-learn.org/stable/user_guide.html">User guide</a></em></p></li>
 <li><p><em>Medium - <a class="reference external" href="https://medium.com/quantyca/oversampling-and-undersampling-adasyn-vs-enn-60828a58db39">Oversampling and undersampling: adasyn vs enn</a></em></p></li>

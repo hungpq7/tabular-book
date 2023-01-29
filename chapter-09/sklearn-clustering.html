@@ -58,7 +58,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Sklearn: Dimensional Reduction" href="sklearn-dimensional-reduction.html" />
-    <link rel="prev" title="Mlxtend: Association Rules" href="mlxtend-association-rules.html" />
+    <link rel="prev" title="MLxtend: Association Rules" href="mlxtend-association-rules.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -556,7 +556,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../chapter-11/ggplot-data-visualization.html">
-     Ggplot: Data Visualizatio
+     Ggplot: Data Visualization
     </a>
    </li>
    <li class="toctree-l2">
@@ -1101,6 +1101,27 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="sklearn-clustering">
 <h1>Sklearn: Clustering<a class="headerlink" href="#sklearn-clustering" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">MeanShift</span><span class="p">,</span> <span class="n">estimate_bandwidth</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">AgglomerativeClustering</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">DBSCAN</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">calinski_harabasz_score</span><span class="p">,</span> <span class="n">davies_bouldin_score</span><span class="p">,</span> <span class="n">silhouette_score</span>
+<span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">dendrogram</span><span class="p">,</span> <span class="n">linkage</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
 <section id="clustering-metrics">
 <h2>1. Clustering metrics<a class="headerlink" href="#clustering-metrics" title="Permalink to this headline">#</a></h2>
 <p>Despite being an unsupervised task, clustering has their own <a class="reference external" href="https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation">evaluation metrics</a>. They should be used with a grain of salt.</p>
@@ -1147,26 +1168,17 @@ title="Print to PDF"
 <li><p>Select <span class="math notranslate nohighlight">\(\displaystyle{D_k=\max_{i}{R_{ki}}}\)</span> being the worst case of <span class="math notranslate nohighlight">\(R_{ki}\)</span>.</p></li>
 </ul>
 </li>
-<li><p>Step 2: Calculate the Davies-Bouldin Index:
-$<span class="math notranslate nohighlight">\(\mathrm{DBI}=\frac{1}{K}\sum_{k=1}^{K}{D_k}\)</span>$</p></li>
+<li><p>Step 2: Calculate the Davies-Bouldin Index:</p></li>
 </ul>
+<div class="math notranslate nohighlight">
+\[\mathrm{DBI}=\frac{1}{K}\sum_{k=1}^{K}{D_k}\]</div>
 </section>
 </section>
 <section id="implementation">
 <h3>1.2. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">calinski_harabasz_score</span><span class="p">,</span> <span class="n">davies_bouldin_score</span><span class="p">,</span> <span class="n">silhouette_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/iris.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
 <span class="n">cluster</span> <span class="o">=</span> <span class="n">dfIris</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span>
@@ -1216,7 +1228,7 @@ $<span class="math notranslate nohighlight">\(\mathrm{DBI}=\frac{1}{K}\sum_{k=1}
 <h2>2. K-Means<a class="headerlink" href="#k-means" title="Permalink to this headline">#</a></h2>
 <section id="algorithm">
 <h3>2.1. Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">#</a></h3>
-<p>Given a dataset having <span class="math notranslate nohighlight">\(N\)</span> observations <span class="math notranslate nohighlight">\((\mathbf{s}_1,\mathbf{s}_2,\dots,\mathbf{s}_n)\)</span>, the <a class="reference external" href="https://scikit-learn.org/stable/modules/clustering.html#k-means">K-Means algorithm</a> is described in the following steps:</p>
+<p>Given a dataset having <span class="math notranslate nohighlight">\(N\)</span> observations <span class="math notranslate nohighlight">\((\mathbf{s}_1,\mathbf{s}_2,\dots,\mathbf{s}_n)\)</span>, the <a class="reference external" href="https://en.wikipedia.org/wiki/K-means_clustering">K-Means</a> algorithm is described in the following steps:</p>
 <ul class="simple">
 <li><p>Step 1: Initialize the centroid for <span class="math notranslate nohighlight">\(K\)</span> clusters by randomly selecting <span class="math notranslate nohighlight">\(K\)</span> points from the dataset.</p></li>
 <li><p>Step 2: Assign data points to the nearest centroid, using Euclidean distance. This is also known as the Expectation step.</p></li>
@@ -1226,32 +1238,15 @@ $<span class="math notranslate nohighlight">\(\mathrm{DBI}=\frac{1}{K}\sum_{k=1}
 </section>
 <section id="id1">
 <h3>2.2. Implementation<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
-<p>Scikit-learn implements K-Means via the
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html'&gt;KMeans&lt;/a&gt;</span></code>
-class, it has the following hyperparameters:</p>
+<p>Scikit-learn implements K-Means via the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html"><code class="docutils literal notranslate"><span class="pre">KMeans</span></code></a> class, it has the following hyperparameters:</p>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>n_clusters`: the number of clusters (<span class="math notranslate nohighlight">\(K\)</span>), defaults to <em>8</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>n_init`: the number of time initializing different centroids, defaults to <em>10</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>max_iter`: the maximum number of iterations for a single run, defaults to <em>300</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_clusters</span></code>: the number of clusters (<span class="math notranslate nohighlight">\(K\)</span>), defaults to <em>8</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_init</span></code>: the number of time initializing different centroids, defaults to <em>10</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: the maximum number of iterations for a single run, defaults to <em>300</em>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span><span class="p">,</span> <span class="n">davies_bouldin_score</span><span class="p">,</span> <span class="n">calinski_harabasz_score</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/mall_customers.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/mall_customers.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1423,13 +1418,13 @@ class, it has the following hyperparameters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-clustering_20_0.png" src="../_images/sklearn-clustering_20_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-clustering_21_0.png"><img alt="../_images/sklearn-clustering_21_0.png" class="align-center" src="../_images/sklearn-clustering_21_0.png" style="width: 442.5px; height: 316.5px;" /></a>
 </div>
 </div>
 <section id="determining-k">
 <h4>Determining K<a class="headerlink" href="#determining-k" title="Permalink to this headline">#</a></h4>
 <p>The Elbow method (which is actually grid search) plots the model evaluation score against different values of <span class="math notranslate nohighlight">\(K\)</span>. However, some evaluation metrics are monotonic functions with respect to <span class="math notranslate nohighlight">\(K\)</span>, and this leads to a situation that each cluster contains a single point only. When facing such a bad case, <span class="math notranslate nohighlight">\(K\)</span> should be chosen at the point that model score no longer changes dramatically.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">inertia_</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ks</span><span class="p">]</span>
@@ -1442,10 +1437,10 @@ class, it has the following hyperparameters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-clustering_22_0.png" src="../_images/sklearn-clustering_22_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-clustering_23_0.png"><img alt="../_images/sklearn-clustering_23_0.png" class="align-center" src="../_images/sklearn-clustering_23_0.png" style="width: 515.0px; height: 343.5px;" /></a>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1463,7 +1458,7 @@ class, it has the following hyperparameters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-clustering_23_0.png" src="../_images/sklearn-clustering_23_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-clustering_24_0.png"><img alt="../_images/sklearn-clustering_24_0.png" class="align-center" src="../_images/sklearn-clustering_24_0.png" style="width: 501.0px; height: 343.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1473,7 +1468,7 @@ class, it has the following hyperparameters:</p>
 <h2>3. Mean Shift<a class="headerlink" href="#mean-shift" title="Permalink to this headline">#</a></h2>
 <section id="id2">
 <h3>3.1. Algorithm<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://scikit-learn.org/stable/modules/clustering.html#mean-shift">Mean Shift</a> is a non-parametric, density-based algorithm which uses the concept of Kernel Density Estimation mentioned in the topic <em>[Seaborn] Data Visualization</em>. The main idea of Mean Shift is to place a Gaussian kernel (a special case of RBF function) on each data point and then add them up. This process results in <em>local maxima</em>, each represents a high density area and hence becomes a cluster centroid. The kernel function used in Mean Shift has the following equation:</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Mean_shift">Mean Shift</a> is a non-parametric, density-based algorithm which uses the concept of Kernel Density Estimation mentioned in the topic <em>Seaborn: Data Visualization</em>. The main idea of Mean Shift is to place a Gaussian kernel (a special case of RBF function) on each data point and then add them up. This process results in <em>local maxima</em>, each represents a high density area and hence becomes a cluster centroid. The kernel function used in Mean Shift has the following equation:</p>
 <div class="math notranslate nohighlight">
 \[K(x) = \frac{1}{h\sqrt{2\pi}}\cdot\exp{\left(-\frac{\parallel x-x_n\parallel_2^2}{h^2}\right)}\]</div>
 <p>Mean Shift does not require users to select the number of clusters, however, the value of bandwidth <span class="math notranslate nohighlight">\(h\)</span> needs to be set appropriately. A very small bandwidth represents peaked kernel curve and tends to make each data point a cluster its own, while a very large bandwidth results in a single cluster containing all data points.</p>
@@ -1486,36 +1481,19 @@ class, it has the following hyperparameters:</p>
 <li><p>Step 3. Repeat steps 1 and 2 until the centre no longer moves.</p></li>
 </ul>
 <p>Here is an illustration of how Mean Shift works:</p>
-<img alt="chapter-09/image/mean_shift.gif" src="chapter-09/image/mean_shift.gif" />
+<a class="reference internal image-reference" href="../_images/mean_shift.gif"><img alt="../_images/mean_shift.gif" class="align-center" src="../_images/mean_shift.gif" style="height: 300px;" /></a>
 </section>
 </section>
 <section id="id3">
 <h3>3.2. Implementation<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
-<p>Scikit-learn implements Mean Shift via the
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MeanShift.html'&gt;MeanShift&lt;/a&gt;</span></code>
-class, it has the following hyperparameters:</p>
+<p>Scikit-learn implements Mean Shift via the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MeanShift.html"><code class="docutils literal notranslate"><span class="pre">MeanShift</span></code></a> class, it has the following hyperparameters:</p>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>bandwidth`: bandwidth used in RBF, defaults to <em>None</em> (is estimated by Scikit-learn).</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>max_iter`: the maximum number of iterations for a single run, defaults to <em>300</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bandwidth</span></code>: bandwidth used in RBF, defaults to <em>None</em> (is estimated by Scikit-learn).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: the maximum number of iterations for a single run, defaults to <em>300</em>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">MeanShift</span><span class="p">,</span> <span class="n">estimate_bandwidth</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span><span class="p">,</span> <span class="n">davies_bouldin_score</span><span class="p">,</span> <span class="n">calinski_harabasz_score</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/mall_customers.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/mall_customers.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1675,7 +1653,7 @@ class, it has the following hyperparameters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-clustering_32_0.png" src="../_images/sklearn-clustering_32_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-clustering_33_0.png"><img alt="../_images/sklearn-clustering_33_0.png" class="align-center" src="../_images/sklearn-clustering_33_0.png" style="width: 442.5px; height: 316.5px;" /></a>
 </div>
 </div>
 <section id="estimating-bandwidth">
@@ -1717,32 +1695,15 @@ class, it has the following hyperparameters:</p>
 </section>
 <section id="id5">
 <h3>4.2. Implementation<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
-<p>Scikit-learn implements Hierarchical Clustering via the
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html'&gt;AgglomerativeClustering&lt;/a&gt;</span></code>
-class, it has the following hyperparameters:</p>
+<p>Scikit-learn implements Hierarchical Clustering via the class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html"><code class="docutils literal notranslate"><span class="pre">AgglomerativeClustering</span></code></a>, with the following hyperparameters:</p>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>n_clusters`: the number of clusters to find, defaults to <em>2</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>linkage`: the linkage criterion to use, defaults to <em>ward</em>. Other options are <em>single</em>, <em>average</em>, <em>complete</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>affinity`: the distance metric to compute the linkage, defaults to <em>euclidean</em>. Other options are <em>l1</em>, <em>l2</em>, <em>manhattan</em> and <em>cosine</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_clusters</span></code>: the number of clusters to find, defaults to <em>2</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linkage</span></code>: the linkage criterion to use, defaults to <em>ward</em>. Other options are <em>single</em>, <em>average</em>, <em>complete</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">affinity</span></code>: the distance metric to compute the linkage, defaults to <em>euclidean</em>. Other options are <em>l1</em>, <em>l2</em>, <em>manhattan</em> and <em>cosine</em>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">AgglomerativeClustering</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span><span class="p">,</span> <span class="n">davies_bouldin_score</span><span class="p">,</span> <span class="n">calinski_harabasz_score</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/mall_customers.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/mall_customers.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1902,7 +1863,7 @@ class, it has the following hyperparameters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-clustering_42_0.png" src="../_images/sklearn-clustering_42_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-clustering_43_0.png"><img alt="../_images/sklearn-clustering_43_0.png" class="align-center" src="../_images/sklearn-clustering_43_0.png" style="width: 442.5px; height: 316.5px;" /></a>
 </div>
 </div>
 <section id="interpretation">
@@ -1922,7 +1883,7 @@ class, it has the following hyperparameters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-clustering_44_0.png" src="../_images/sklearn-clustering_44_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-clustering_45_0.png"><img alt="../_images/sklearn-clustering_45_0.png" class="align-center" src="../_images/sklearn-clustering_45_0.png" style="width: 428.5px; height: 304.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1932,7 +1893,7 @@ class, it has the following hyperparameters:</p>
 <h2>5. DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this headline">#</a></h2>
 <section id="id6">
 <h3>5.1. Algorithm<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://scikit-learn.org/stable/modules/clustering.html#dbscan">DBSCAN</a>, (Density-Based Spatial Clustering of Applications with Noises), is an interesting clustering algorithm which has the ability to detect anomalies and to handle non-convex clusters. With a pre-selected value of max distance (<span class="math notranslate nohighlight">\(\epsilon\)</span>) and min instances, the algorithm classifies data points into three categories:</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/DBSCAN">DBSCAN</a>, (Density-Based Spatial Clustering of Applications with Noises), is an interesting clustering algorithm which has the ability to detect anomalies and to handle non-convex clusters. With a pre-selected value of max distance (<span class="math notranslate nohighlight">\(\epsilon\)</span>) and min instances, the algorithm classifies data points into three categories:</p>
 <ul class="simple">
 <li><p>Core point: a point having enough neighbors within a given radius.</p></li>
 <li><p>Edge point: a point not qualifying as a core, but being a neighbor of another core point.</p></li>
@@ -1945,16 +1906,14 @@ class, it has the following hyperparameters:</p>
 <li><p>Step 3: Repeat step 1 and 2 until all members of the current cluster have been revealed. Finish the cluster.</p></li>
 <li><p>Step 4: Randomize a new non-visited point, repeat step 1, 2 and 3 until all data points have been visited. At the end, each point may either belong to a cluster or be an outlier.</p></li>
 </ul>
-<img alt="chapter-09/image/dbscan.gif" src="chapter-09/image/dbscan.gif" />
+<a class="reference internal image-reference" href="../_images/dbscan.gif"><img alt="../_images/dbscan.gif" class="align-center" src="../_images/dbscan.gif" style="height: 300px;" /></a>
 </section>
 <section id="id7">
 <h3>5.2. Implementation<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
-<p>The class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html'&gt;DBSCAN&lt;/a&gt;</span></code>
-has the following hyperparameters:</p>
+<p>The class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html"><code class="docutils literal notranslate"><span class="pre">DBSCAN</span></code></a> has the following hyperparameters:</p>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>eps`: the radius of the neighborhood circle (<span class="math notranslate nohighlight">\(\epsilon\)</span>), defaults to <em>0.5</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>min_samples`: the minimum number of neighbors a sample must have to be treated as a core point, defaults to <em>5</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eps</span></code>: the radius of the neighborhood circle (<span class="math notranslate nohighlight">\(\epsilon\)</span>), defaults to <em>0.5</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples</span></code>: the minimum number of neighbors a sample must have to be treated as a core point, defaults to <em>5</em>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1973,7 +1932,7 @@ has the following hyperparameters:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/mall_customers.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/mall_customers.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2070,7 +2029,7 @@ has the following hyperparameters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-clustering_51_0.png" src="../_images/sklearn-clustering_51_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-clustering_52_0.png"><img alt="../_images/sklearn-clustering_52_0.png" class="align-center" src="../_images/sklearn-clustering_52_0.png" style="width: 442.5px; height: 316.5px;" /></a>
 </div>
 </div>
 </section>
@@ -2104,35 +2063,17 @@ has the following hyperparameters:</p>
 <li><p>Update new variance <span class="math notranslate nohighlight">\(\displaystyle{\sigma_k^2=\frac{p_{1k}(s_1-\mu_k)^2+p_{2k}(s_2-\mu_k)^2+\dots+p_{nk}(s_n-\mu_k)^2}{p_{1k}+p_{2k}+\dots+p_{nk}}}\)</span> for cluster <span class="math notranslate nohighlight">\(\mathcal{C}_k\)</span>.</p></li>
 </ul>
 <p>Finally, the expectation step and the maximization step are repeated until converged.</p>
-<p><em>Reference: <a class="reference external" href="https://brilliant.org/wiki/gaussian-mixture-model/">Brilliant - Gaussian Mixture Models</a></em></p>
 </section>
 <section id="id9">
 <h3>6.2. Implementation<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
-<p>The class
-<code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href='https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html'&gt;GaussianMixture&lt;/a&gt;</span></code>
-has the following hyperparameters:</p>
+<p>The class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html"><code class="docutils literal notranslate"><span class="pre">GaussianMixture</span></code></a> has the following hyperparameters:</p>
 <ul class="simple">
-<li><p><code style='font-size:13px; color:firebrick;'>n_components`: the number of clusters, defaults to <em>1</em>.</p></li>
-<li><p><code style='font-size:13px; color:firebrick;'>max_iter`: the maximum number of EM iterations to perform, defaults to <em>100</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: the number of clusters, defaults to <em>1</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: the maximum number of EM iterations to perform, defaults to <em>100</em>.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn-deep&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-
-<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span><span class="p">,</span> <span class="n">davies_bouldin_score</span><span class="p">,</span> <span class="n">calinski_harabasz_score</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/mall_customers.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/mall_customers.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2228,7 +2169,7 @@ has the following hyperparameters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/sklearn-clustering_58_0.png" src="../_images/sklearn-clustering_58_0.png" />
+<a class="reference internal image-reference" href="../_images/sklearn-clustering_60_0.png"><img alt="../_images/sklearn-clustering_60_0.png" class="align-center" src="../_images/sklearn-clustering_60_0.png" style="width: 442.5px; height: 316.5px;" /></a>
 </div>
 </div>
 </section>
@@ -2266,7 +2207,7 @@ has the following hyperparameters:</p>
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Mlxtend: Association Rules</p>
+            <p class="prev-next-title">MLxtend: Association Rules</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="sklearn-dimensional-reduction.html" title="next page">
