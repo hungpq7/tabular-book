@@ -1,0 +1,1575 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Keras: Recurrent Networks</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Keras: Convolutional Networks" href="keras-convolutional-networks.html" />
+    <link rel="prev" title="Keras: Multilayer Perceptron" href="keras-multilayer-perceptron.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../01-python-programing/_intro.html">
+   <b>
+    1. Python Programing
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-algorithms.html">
+     (w) Python: Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02-mathematics/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-linear-algebra.html">
+     NumPy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/sympy-calculus.html">
+     SymPy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-probability.html">
+     NumPy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-statistics.html">
+     NumPy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/scipy-hypothesis-testing.html">
+     SciPy: Hypothesis Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-applied-mathematics.html">
+     (w) NumPy: Applied Mathematics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/networkx-network-analysis.html">
+     (w) NetworkX: Network Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03-data-manipulation/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/numpy-arrays.html">
+     NumPy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04-big-data/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../05-data-visualization/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../06-machine-learning/_intro.html">
+   <b>
+    6. Machine Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-machine-learning.html">
+     Sklearn: Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-classification.html">
+     Sklearn: Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-regression.html">
+     Sklearn: Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
+     Sklearn: Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/lenskit-recommendation.html">
+     Lenskit: Recommendation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/pyspark-machine-learning.html">
+     PySpark: Machine Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../07-tabular-learning/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/ray-hyperparameter-optimization.html">
+     Ray: Hyperparam Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/shap-model-interpretation.html">
+     Shap: Model Interpretation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/imblearn-targeted-modeling.html">
+     (w) Imblearn: Targeted Modeling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../08-time-series/_intro.html">
+   <b>
+    8. Time Series
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/statsmodels-temporal-analysis.html">
+     Statsmodels: Temporal Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/prophet-forecasting-algorithms.html">
+     Prophet: Forecasting Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/sktime-forecasting-pipeline.html">
+     Sktime: Forecasting Pipeline
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
+     (w) Darts: Deep Forecasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../09-unsupervised-learning/_intro.html">
+   <b>
+    9. Unsupervised Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/mlxtend-association-rules.html">
+     (w) Mlxtend: Association Rules
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/sklearn-clustering.html">
+     Sklearn: Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/sklearn-dimensional-reduction.html">
+     Sklearn: Dimensional Reduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/pyod-anomaly-detection.html">
+     PyOD: Anomaly Detection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="gensim-text-mining.html">
+     Gensim: Text Mining
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="opencv-image-processing.html">
+     (w) OpenCV: Image Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="keras-multilayer-perceptron.html">
+     Keras: Multilayer Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Keras: Recurrent Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="keras-convolutional-networks.html">
+     (w) Keras: Convolutional Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pytorch-deep-learning.html">
+     PyTorch: Deep Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../11-r-programing/_intro.html">
+   <b>
+    11. R Programing
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-basic-concepts.html">
+     R: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-data-structures.html">
+     R: Data Structures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/tidyverse-data-wrangling.html">
+     Tidyverse: Data Wrangling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/dplyr-data-cleaning.html">
+     Dplyr: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/ggplot-data-visualization.html">
+     Ggplot: Data Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-statistics.html">
+     R: Statistics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/10-deep-learning/keras-recurrent-networks.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/10-deep-learning/keras-recurrent-networks.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/10-deep-learning/keras-recurrent-networks.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recurrent-layers">
+   1. Recurrent layers
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#building-blocks">
+     1.1. Building blocks
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#concatenation">
+       Concatenation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gate">
+       Gate
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simple-rnn">
+     1.2. Simple RNN
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#architecture">
+       Architecture
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sizing">
+       Sizing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lstm">
+     1.3. LSTM
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Architecture
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#steps">
+       Steps
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gru">
+     1.4. GRU
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Architecture
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Steps
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bi-directional">
+     1.5. Bi-directional
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     1.6. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recurrent-architectures">
+   2. Recurrent architectures
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#seq2seq">
+     2.1. Seq2Seq
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Architecture
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#attention">
+     2.2. Attention
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#transformer">
+     2.2. Transformer
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installs">
+   Installs
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Keras: Recurrent Networks</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recurrent-layers">
+   1. Recurrent layers
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#building-blocks">
+     1.1. Building blocks
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#concatenation">
+       Concatenation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gate">
+       Gate
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simple-rnn">
+     1.2. Simple RNN
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#architecture">
+       Architecture
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sizing">
+       Sizing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lstm">
+     1.3. LSTM
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Architecture
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#steps">
+       Steps
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gru">
+     1.4. GRU
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Architecture
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Steps
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bi-directional">
+     1.5. Bi-directional
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     1.6. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recurrent-architectures">
+   2. Recurrent architectures
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#seq2seq">
+     2.1. Seq2Seq
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Architecture
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#attention">
+     2.2. Attention
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#transformer">
+     2.2. Transformer
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installs">
+   Installs
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="keras-recurrent-networks">
+<h1>Keras: Recurrent Networks<a class="headerlink" href="#keras-recurrent-networks" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow.keras</span> <span class="k">as</span> <span class="nn">keras</span>
+<span class="kn">import</span> <span class="nn">tensorflow.keras.layers</span> <span class="k">as</span> <span class="nn">layers</span>
+<span class="kn">import</span> <span class="nn">tensorflow_addons</span> <span class="k">as</span> <span class="nn">tfa</span>
+<span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="k">as</span> <span class="nn">hub</span>
+<span class="kn">import</span> <span class="nn">tensorflow_text</span> <span class="k">as</span> <span class="nn">text</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="recurrent-layers">
+<h2>1. Recurrent layers<a class="headerlink" href="#recurrent-layers" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Recurrent_neural_network">Recurrent Neural Network</a> (RNN) is a class of neural network architectures where nodes in a layers have internal connections, allowing to express temporal behaviour. There are many types of RNN layers, but they all share the same architecture. The image below shows the information flow for an observation, or for a document in the context of NLP.</p>
+<a class="reference internal image-reference" href="../_images/rnn_general.png"><img alt="../_images/rnn_general.png" class="align-center" src="../_images/rnn_general.png" style="height: 175px;" /></a>
+<br>
+<p>Each green cell <span class="math notranslate nohighlight">\(\mathbf{x}_t\in\mathbb{R}^{V\times1}\)</span> represents the embedding vector of a token, and each blue cell <span class="math notranslate nohighlight">\(\mathbf{h}_t\in\mathbb{R}^{D\times1}\)</span> represents an output vector. With the input sequence size fixed at <span class="math notranslate nohighlight">\(T\)</span>, RNN adjusts itself to match the input length. The most important part of a RNN layer is the grey cell <span class="math notranslate nohighlight">\(A\)</span> that repeats multiple times, being account for information processing. We can see that at a time step, the output value <span class="math notranslate nohighlight">\(\mathbf{h}_t\)</span> is influenced by all previous steps <span class="math notranslate nohighlight">\(\mathbf{h}_{t-1},\mathbf{h}_{t-2},\dots\)</span>, besides the input <span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span>. This design resembles <em>memory</em> and enables RNN to capture sequential relationship.</p>
+<p>There are many architectures for a recurrent layers, the only difference between them is how the cell <span class="math notranslate nohighlight">\(A\)</span> being desgined. In this article, we are going to learn the cell architectures of Simple RNN, LSTM and GRU.</p>
+<section id="building-blocks">
+<h3>1.1. Building blocks<a class="headerlink" href="#building-blocks" title="Permalink to this headline">#</a></h3>
+<p>This section introduces common blocks in recurrent architectures. Knowing each of them separately helps us understanding compicated designs better.</p>
+<section id="concatenation">
+<h4>Concatenation<a class="headerlink" href="#concatenation" title="Permalink to this headline">#</a></h4>
+<a class="reference internal image-reference" href="../_images/rnn_concatenation.png"><img alt="../_images/rnn_concatenation.png" class="align-center" src="../_images/rnn_concatenation.png" style="height: 100px;" /></a>
+<p>Let’s say we want to transform two input vectors <span class="math notranslate nohighlight">\(\mathbf{u}\in\mathbb{R}^{U\times1}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\in\mathbb{R}^{V\times1}\)</span> into <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^{D\times1}\)</span>. Note that <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> are fixed dimensionalities of input, while <span class="math notranslate nohighlight">\(D\)</span> is the desired output size. With weight matrices
+<span class="math notranslate nohighlight">\(\mathbf{W}_{yu}\in\mathbb{R}^{D\times U},\mathbf{W}_{yv}\in\mathbb{R}^{D\times V}\)</span>
+and bias vector <span class="math notranslate nohighlight">\(\mathbf{b}_y\in\mathbb{R}^{D\times1}\)</span>,
+the actual formula behind the above image is:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y}=\mathbf{W}_{yu}\mathbf{u}+\mathbf{W}_{yv}\mathbf{v}+\mathbf{b}_y\]</div>
+<p>Here, all three terms have size <span class="math notranslate nohighlight">\((D\times1)\)</span>, same as <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. We can also view the above formula as concatenating <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> into a single input vector <span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbb{R}^{(U+V)\times1}\)</span>, then scale it using a bigger weight matrix <span class="math notranslate nohighlight">\(\mathbf{W}_{yx}\in\mathbb{R}^{D\times(U+V)}\)</span>. This explains why the formula is visualized as a concatenation.</p>
+</section>
+<section id="gate">
+<h4>Gate<a class="headerlink" href="#gate" title="Permalink to this headline">#</a></h4>
+<a class="reference internal image-reference" href="../_images/rnn_gate.png"><img alt="../_images/rnn_gate.png" class="align-center" src="../_images/rnn_gate.png" style="height: 80px;" /></a>
+<p>A gate consists of two calculation steps, (1) passing a vector into sigmoid function and (2) using it as a percentage multiplier. The sigmoid function (denoted <span class="math notranslate nohighlight">\(\sigma\)</span>) is account for producing numbers in range <span class="math notranslate nohighlight">\((0,1)\)</span>. We can see the purpose of gates very clearly here: they control how much information should be let through.</p>
+</section>
+</section>
+<section id="simple-rnn">
+<h3>1.2. Simple RNN<a class="headerlink" href="#simple-rnn" title="Permalink to this headline">#</a></h3>
+<section id="architecture">
+<h4>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">#</a></h4>
+<p>We call the vanilla architecture <a class="reference external" href="https://en.wikipedia.org/wiki/Recurrent_neural_network#Fully_recurrent">Simple RNN</a> (1980s) to distinguish from the family name. Its cells is very simple, with only a concatenated value pass through an activation function. The activation function is usually <span class="math notranslate nohighlight">\(\tanh\)</span> which produces values within the range <span class="math notranslate nohighlight">\((-1,1)\)</span>, so that the network will be able to express <em>sentiment</em>. The cell architecture is described in the image and formula as follows:</p>
+<a class="reference internal image-reference" href="../_images/rnn_cell.png"><img alt="../_images/rnn_cell.png" class="align-center" src="../_images/rnn_cell.png" style="height: 160px;" /></a>
+<br>
+<div class="math notranslate nohighlight">
+\[\mathbf{h}_t=\phi(\mathbf{W}_{hx}\mathbf{x}_t+\mathbf{W}_{hh}\mathbf{h}_{t-1}+\mathbf{b}_h)\]</div>
+<p>A well-known issue with Simple RNN is that it only has <em>short-term memory</em>. This property is very easy to understand if you are familiar with the gradient vanishing problem of S-shaped activation functions. During <a class="reference external" href="https://en.wikipedia.org/wiki/Backpropagation_through_time">backpropagation through time</a> for a pair of words with large <span class="math notranslate nohighlight">\(\Delta t\)</span>, the product of partial derivatives may trigger saturation zones of <span class="math notranslate nohighlight">\(\tanh\)</span>, making the derivative of a word with respect to the other almost zero. As a result, Simple RNN fails to capture long-term memory.</p>
+</section>
+<section id="sizing">
+<h4>Sizing<a class="headerlink" href="#sizing" title="Permalink to this headline">#</a></h4>
+<p><span class="math notranslate nohighlight">\(\mathbf{W}_{hx},\mathbf{W}_{hh}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}_h\)</span>, as explained earlier, are the weight matrices and bias vector. Their corresponding sizes are <span class="math notranslate nohighlight">\((D\times V)\)</span>, <span class="math notranslate nohighlight">\((D\times D)\)</span> and <span class="math notranslate nohighlight">\((D\times 1)\)</span>. Note that these parameters are used across cells, hence taking sum of their sizes gets us the total number of parameters need to be trained:</p>
+<div class="math notranslate nohighlight">
+\[D\times(D+V+1)\]</div>
+<p>For example, we use a BERT pretrained model to encode a corpus containing <span class="math notranslate nohighlight">\(N=10\,000\)</span> documents. The embedding dimension is <span class="math notranslate nohighlight">\(V=512\)</span> and documents are truncated to have <span class="math notranslate nohighlight">\(T=128\)</span> tokens. Then a RNN layer with <span class="math notranslate nohighlight">\(D=50\)</span> will require <span class="math notranslate nohighlight">\(50\times(50+512+1)=28\,150\)</span> parameters to process such input.</p>
+</section>
+</section>
+<section id="lstm">
+<h3>1.3. LSTM<a class="headerlink" href="#lstm" title="Permalink to this headline">#</a></h3>
+<section id="id1">
+<h4>Architecture<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Long_short-term_memory">LSTM</a> (Long Short-Term Memory) is a recurrent architecture published in 1997 that does not suffer from the gradient vanishing/exploding problem. This means, the network is able to capture long-term memory. The image below illustrates the architecture of a LSTM <em>memory cell</em>.</p>
+<a class="reference internal image-reference" href="../_images/lstm_cell.png"><img alt="../_images/lstm_cell.png" class="align-center" src="../_images/lstm_cell.png" style="height: 320px;" /></a>
+<p>The ability to manipulate information of LSTM is regulated via three gates (green node): forget <span class="math notranslate nohighlight">\(\mathbf{f}_t\)</span>, input <span class="math notranslate nohighlight">\(\mathbf{i}_t\)</span> and output <span class="math notranslate nohighlight">\(\mathbf{o}_t\)</span>. Recall that a gate is a Sigmoid function (<span class="math notranslate nohighlight">\(\phi_1\)</span> in this picture) followed by a multiplication. These gates give LSTM the ability to learn when to remember and when to forget, based on previous <em>hidden state</em> <span class="math notranslate nohighlight">\(\mathbf{h}_{t-1}\)</span> and current input data <span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span>. They all share the same formula, but with different parameters:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbf{f}_t &amp;= \phi_1(\mathbf{W}_{fh}\mathbf{h}_{t-1}+\mathbf{W}_{fx}\mathbf{x}_t+\mathbf{b}_f) \\
+\mathbf{i}_t &amp;= \phi_1(\mathbf{W}_{ih}\mathbf{h}_{t-1}+\mathbf{W}_{ix}\mathbf{x}_t+\mathbf{b}_i) \\
+\mathbf{o}_t &amp;= \phi_1(\mathbf{W}_{oh}\mathbf{h}_{t-1}+\mathbf{W}_{ox}\mathbf{x}_t+\mathbf{b}_o) \\
+\end{aligned}\end{split}\]</div>
+<p>The key component contributing to the long-term-memory ability of LSTM is the <em>internal state</em> <span class="math notranslate nohighlight">\(\mathbf{c}_t\)</span>. This variable works like a conveyor belt running straight through the entire chain, gathering <em>additional</em> information <span class="math notranslate nohighlight">\(\tilde{\mathbf{c}}_t\)</span> at each memory cell it goes through. Because new information is really mathematically added, we are assured the gradients can pass many times without vanishing or exploding.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\tilde{\mathbf{c}}_t &amp;= \phi_2(\mathbf{W}_{ch}\mathbf{h}_{t-1}+\mathbf{W}_{cx}\mathbf{x}_t+\mathbf{b}_c) \\
+\mathbf{c}_t &amp;= \mathbf{f}_t\odot\mathbf{c}_{t-1}+\mathbf{i}_t\odot\tilde{\mathbf{c}}_t \\
+\end{aligned}\end{split}\]</div>
+<p>Finally, the current <em>hidden state</em> <span class="math notranslate nohighlight">\(\mathbf{h}_t\)</span> is computed by <span class="math notranslate nohighlight">\(\tanh\)</span>-activating <span class="math notranslate nohighlight">\(\mathbf{c}_t\)</span> and scaling it down by the output gate <span class="math notranslate nohighlight">\(\mathbf{o}_t\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbf{h}_t &amp;= \mathbf{o}_t\odot\phi_2(\mathbf{c}_t) \\
+\end{aligned}\end{split}\]</div>
+<p>We can see LSTM has 4 concatenations between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{h}\)</span>, so its number of parameters will be <span class="math notranslate nohighlight">\(4\times D\times(D+V+1)\)</span>.</p>
+</section>
+<section id="steps">
+<h4>Steps<a class="headerlink" href="#steps" title="Permalink to this headline">#</a></h4>
+<a class="reference internal image-reference" href="../_images/lstm_steps.png"><img alt="../_images/lstm_steps.png" class="align-center" src="../_images/lstm_steps.png" style="height: 450px;" /></a>
+<br>
+<p>Because it is quite hard to track what is going on by looking at the full architecture of LSTM, we will break it down into four steps:</p>
+<ul class="simple">
+<li><p>Step 1, construct the <em>forget gate</em> that decides how much old data should be kept.</p></li>
+<li><p>Step 2, construct the <em>input gate</em> that decides what new data should be stored.</p></li>
+<li><p>Step 3, compute the <em>internal state</em> by combining two processes, <em>forgetting</em> and <em>receiving</em> information.</p></li>
+<li><p>Step 4, construct the <em>output gate</em> and compute the output value.</p></li>
+</ul>
+</section>
+</section>
+<section id="gru">
+<h3>1.4. GRU<a class="headerlink" href="#gru" title="Permalink to this headline">#</a></h3>
+<section id="id2">
+<h4>Architecture<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Gated_recurrent_unit">Gated Recurrent Units</a> (GRU) was published in 2014 as an alternative that retains key idea of LSTM but is faster in computation.</p>
+<a class="reference internal image-reference" href="../_images/gru_cell.png"><img alt="../_images/gru_cell.png" class="align-center" src="../_images/gru_cell.png" style="height: 320px;" /></a>
+<p>GRU comes with the two-gate mechanism, <em>reset</em> (<span class="math notranslate nohighlight">\(\mathbf{r}_t\)</span>) and <em>update</em> (<span class="math notranslate nohighlight">\(\mathbf{z}_t\)</span>), rather than three like LSTM. They are also based on previous <em>hidden state</em> <span class="math notranslate nohighlight">\(\mathbf{h}_{t-1}\)</span> and current input data <span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span> like LSTM’s gates.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbf{r}_t &amp;= \phi_1(\mathbf{W}_{rh}\mathbf{h}_{t-1}+\mathbf{W}_{rx}\mathbf{x}_t+\mathbf{b}_r) \\
+\mathbf{z}_t &amp;= \phi_1(\mathbf{W}_{zh}\mathbf{h}_{t-1}+\mathbf{W}_{zx}\mathbf{x}_t+\mathbf{b}_z) \\
+\end{aligned}\end{split}\]</div>
+<p>Next, the new information <span class="math notranslate nohighlight">\(\tilde{\mathbf{h}}_t\)</span> is computed by two processes, <em>receiving</em> new information <span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span> and <em>forgetting</em> old information <span class="math notranslate nohighlight">\(\mathbf{h}_{t-1}\)</span>. Then, it is added to the old state weightedly (weights are controled via the update gate) to get the current hidden state <span class="math notranslate nohighlight">\(\mathbf{h}_t\)</span>. Unlike LSTM, GRU does not maintain the <em>internal state</em> but resembles its behaviour.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\tilde{\mathbf{h}}_t &amp;= \phi_2(\mathbf{W}_{hx}\mathbf{x}_t+\mathbf{W}_{hh}(\mathbf{r}_t\odot\mathbf{h}_{t-1})+\mathbf{b}_h) \\
+\mathbf{h}_t &amp;= \mathbf{z}_t\odot\mathbf{h}_{t-1}+(1-\mathbf{z}_t)\odot\tilde{\mathbf{h}}_{t-1} \\
+\end{aligned}\end{split}\]</div>
+<p>The number of parameters of a GRU layer is <span class="math notranslate nohighlight">\(3\times D\times(D+V+1)\)</span>, as it has 3 concatenations of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{h}\)</span>.</p>
+</section>
+<section id="id3">
+<h4>Steps<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h4>
+<a class="reference internal image-reference" href="../_images/gru_steps.png"><img alt="../_images/gru_steps.png" class="align-center" src="../_images/gru_steps.png" style="height: 450px;" /></a>
+</section>
+</section>
+<section id="bi-directional">
+<h3>1.5. Bi-directional<a class="headerlink" href="#bi-directional" title="Permalink to this headline">#</a></h3>
+<p>All the recurrent layers have been introduced so far are uni-directional, i.e. going from the left to the right. In other words, our networks only model leftward context. This design works fine for time series data, but for text data, rightward context also matters. This problem is solved by generalizing recurrent layers to <a class="reference external" href="https://en.wikipedia.org/wiki/Bidirectional_recurrent_neural_networks">bi-directional</a>. The architecture is described in the following image:</p>
+<a class="reference internal image-reference" href="../_images/rnn_bidirectional.png"><img alt="../_images/rnn_bidirectional.png" class="align-center" src="../_images/rnn_bidirectional.png" style="height: 245px;" /></a>
+<br>
+<p>We can observe that a bi-directional layer is composed of a foward sub-layer and a backward sub-layer. They can be of the same type or not, and their cells are denoted <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(A'\)</span> respectively. Their corresponding outputs <span class="math notranslate nohighlight">\(\overrightarrow{\mathbf{h}}_t\)</span> and <span class="math notranslate nohighlight">\(\overleftarrow{\mathbf{h}}_t\)</span> are then merged into <span class="math notranslate nohighlight">\(\mathbf{h}_t\)</span> using various strategies, where the most common one is concatenating.</p>
+</section>
+<section id="implementation">
+<h3>1.6. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
+<p>TensorFlow implements all three recurrent layers via <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/SimpleRNN"><code class="docutils literal notranslate"><span class="pre">SimpleRNN</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/LSTM"><code class="docutils literal notranslate"><span class="pre">LSTM</span></code></a> and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/GRU"><code class="docutils literal notranslate"><span class="pre">GRU</span></code></a>. Each has a cell-level counterpart that can be used with the abstract class <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/RNN"><code class="docutils literal notranslate"><span class="pre">RNN</span></code></a>. There is also <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Bidirectional"><code class="docutils literal notranslate"><span class="pre">Bidirectional</span></code></a> working as a wrapper around recurrent layers for bi-directional behaviour. They have the following hyperparameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code>: the dimensionality of output space (<span class="math notranslate nohighlight">\(D\)</span>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">activation</span></code>: the activation function for processing data (<span class="math notranslate nohighlight">\(\phi\)</span> in Simple RNN and <span class="math notranslate nohighlight">\(\phi_2\)</span> in LSTM, GRU), defaults to <em>tanh</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">recurrent_activation</span></code>: the activation function for gates (<span class="math notranslate nohighlight">\(\phi_1\)</span>, only available for LSTM and GRU), defaults to <em>sigmoid</em>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfSpam</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/spam_message.csv&#39;</span><span class="p">)</span>
+<span class="n">xTrainRaw</span><span class="p">,</span> <span class="n">xTestRaw</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">yTest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">dfSpam</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">dfSpam</span><span class="o">.</span><span class="n">spam</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_feature</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
+    <span class="n">bertProcessor</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="s1">&#39;https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3&#39;</span><span class="p">)</span>
+    <span class="n">bertEncoder</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="s1">&#39;https://tfhub.dev/tensorflow/small_bert/bert_en_uncased_L-2_H-256_A-4/2&#39;</span><span class="p">)</span>
+    <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">corpus</span> <span class="o">=</span> <span class="n">bertProcessor</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+    <span class="n">corpus</span> <span class="o">=</span> <span class="n">bertEncoder</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+    <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">[</span><span class="s1">&#39;sequence_output&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">corpus</span>
+    
+<span class="n">xTrain</span> <span class="o">=</span> <span class="n">process_feature</span><span class="p">(</span><span class="n">xTrainRaw</span><span class="p">)</span>
+<span class="n">xTest</span> <span class="o">=</span> <span class="n">process_feature</span><span class="p">(</span><span class="n">xTestRaw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xTrain</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorShape([4457, 128, 256])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layers</span><span class="o">.</span><span class="n">SimpleRNN</span><span class="p">(</span><span class="mi">16</span><span class="p">)(</span><span class="n">xTrain</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorShape([4457, 16])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layers</span><span class="o">.</span><span class="n">SimpleRNN</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">xTrain</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorShape([4457, 128, 16])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using RNN with other layers, there are two cases:</p>
+<ul class="simple">
+<li><p>The next layer being Fully Connected, then we only use the last hidden state, <span class="math notranslate nohighlight">\(\mathbf{h}_T\)</span>. The output shape in this case is  <span class="math notranslate nohighlight">\((N\times D)\)</span>.</p></li>
+<li><p>The next layer being another RNN layer (including LSTM and GRU), then we need to return the full sequence <span class="math notranslate nohighlight">\(\mathbf{h}_1,\mathbf{h}_2,\dots,\mathbf{h}_T\)</span>. This is done by specifying <code class="docutils literal notranslate"><span class="pre">return_sequences=True</span></code>. The output shape this time is <span class="math notranslate nohighlight">\((N\times T\times D)\)</span>.</p></li>
+</ul>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">SimpleRNN</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">SimpleRNN</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>140/140 [==============================] - 5s 25ms/step - loss: 0.0793
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x7f9134fe7f40&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ simple_rnn (SimpleRNN)      (None, 128, 10)           2670      
+                                                                 
+ simple_rnn_1 (SimpleRNN)    (None, 5)                 80        
+                                                                 
+ dense (Dense)               (None, 1)                 6         
+                                                                 
+=================================================================
+Total params: 2,756
+Trainable params: 2,756
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yTestPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xTest</span><span class="p">)</span>
+<span class="n">AUC</span><span class="p">(</span><span class="n">yTest</span><span class="p">,</span> <span class="n">yTestPred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9789832918592251
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">weights</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(256, 10)
+(10, 10)
+(10,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,],</span>
+<span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">output_dim</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 221ms/step - loss: 0.5121
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x1eb544b3f70&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_11&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ embedding_19 (Embedding)    (None, None, 20)          200       
+                                                                 
+ dense_1 (Dense)             (None, None, 1)           21        
+                                                                 
+=================================================================
+Total params: 221
+Trainable params: 221
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="recurrent-architectures">
+<h2>2. Recurrent architectures<a class="headerlink" href="#recurrent-architectures" title="Permalink to this headline">#</a></h2>
+<section id="seq2seq">
+<h3>2.1. Seq2Seq<a class="headerlink" href="#seq2seq" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Seq2seq">Seq2Seq</a> (Sequence-to-Sequence) is a Deep Learning architecture published in 2014 mainly for <a class="reference external" href="https://en.wikipedia.org/wiki/Neural_machine_translation">neural machine translation</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Question_answering">question answering</a>. It aims to transform an input sequence to a new one, both can be of arbitrary lengths. Its design is very natural to translation problems, and has resolved the fixed-length constraint in standalone recurrent layers.</p>
+<section id="id4">
+<h4>Architecture<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
+<p>The Seq2Seq uses an encoder-decoder architecture, in which each process uses a recurrent layer(s) such as LSTM and GRU. With <span class="math notranslate nohighlight">\((\mathbf{x}_1,\dots,\mathbf{x}_M)\)</span> a source sentence and <span class="math notranslate nohighlight">\((\mathbf{y}_1,\dots,\mathbf{y}_N)\)</span> the target sentence, the architecture of Seq2Seq is described in the following image:</p>
+<p>The <em>encoder</em> is simply a recurrent layer where the hidden state at a time step is expressed by <span class="math notranslate nohighlight">\((\mathbf{x}_m,\mathbf{e}_{m-1})\mapsto\mathbf{e}_m\)</span>. The last hidden state will be used as the output, known under the name <em>context vector</em> <span class="math notranslate nohighlight">\(\mathbf{c}=\mathbf{e}_M\)</span> (sometimes called <em>sentence embedding</em> or <em>thought vector</em>).</p>
+<p>The <em>decoder</em> is a bit different, in which the hidden state has the signature <span class="math notranslate nohighlight">\((\mathbf{y}_{n-1},\mathbf{d}_{n-1})\mapsto\mathbf{d}_n\)</span>. Note that each hidden state <span class="math notranslate nohighlight">\(\mathbf{d}_n\)</span> must be computed using previous target token <span class="math notranslate nohighlight">\(\mathbf{y}_{n-1}\)</span> to prevent target leakage. We also include <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> as the initialization state.</p>
+<p>Because our goal is to take string input to predict string output, pre-trained embedding will not be used, at least for target text. Therefore, an embedding layer is used to process data in both encoder and decoder. This layer turns each word into a vector, just like Word2Vec or BERT do, but all embedding values are treated learnable parameters by our network.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfa</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">BasicDecoder</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">LSTMCell</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">sampler</span><span class="o">=</span><span class="n">tfa</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">TrainingSampler</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tensorflow_addons.seq2seq.basic_decoder.BasicDecoder at 0x7fa012776fa0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">units</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="attention">
+<h3>2.2. Attention<a class="headerlink" href="#attention" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Attention_(machine_learning)">Attention</a> implement <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Attention"><code class="docutils literal notranslate"><span class="pre">Attention</span></code></a></p>
+</section>
+<section id="transformer">
+<h3>2.2. Transformer<a class="headerlink" href="#transformer" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformer</a></p>
+</section>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><em><a class="reference external" href="http://bioinf.jku.at">bioinf.jku.at</a> - <a class="reference external" href="https://www.bioinf.jku.at/publications/older/2604.pdf">Long Short-Term Memory</a></em></p></li>
+<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1409.1259.pdf">On the Properties of Neural Machine Translation: Encoder–Decoder Approaches</a></em></p></li>
+<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1409.3215v3.pdf">Sequence to Sequence Learning with Neural Networks</a></em></p></li>
+<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1409.0473.pdf">Neural Machine Translation by Jointly Learning to Align and Translate</a></em></p></li>
+<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1508.04025.pdf">Effective Approaches to Attention-based Neural Machine Translation</a></em></p></li>
+<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1706.03762.pdf">Attention is All You Need</a></em></p></li>
+<li><p><em><a class="reference external" href="http://amitness.com">amitness.com</a> - <a class="reference external" href="https://amitness.com/2020/04/recurrent-layers-keras/">Recurrent Keras layer</a></em></p></li>
+<li><p><em><a class="reference external" href="http://colah.github.io">colah.github.io</a> - <a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></em></p></li>
+<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="https://d2l.ai/chapter_recurrent-neural-networks/rnn.html">Recurrent Neural Networks</a></em></p></li>
+<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="https://d2l.ai/chapter_recurrent-modern/lstm.html">Long Short-Term Memory</a></em></p></li>
+<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="https://d2l.ai/chapter_recurrent-modern/gru.html">Gated Recurrent Units</a></em></p></li>
+<li><p><em>distill.pub - <a class="reference external" href="https://distill.pub/2019/memorization-in-rnns/">Memorization in RNNs</a></em></p></li>
+<li><p><em>distill.pub - <a class="reference external" href="https://distill.pub/2016/augmented-rnns/">Augumented RNNs</a></em></p></li>
+<li><p><em><a class="reference external" href="http://lilianweng.github.io">lilianweng.github.io</a> - <a class="reference external" href="https://lilianweng.github.io/posts/2018-06-24-attention/">Attention? Attention!</a></em></p></li>
+<li><p><em><a class="reference external" href="http://blog.floydhub.com">blog.floydhub.com</a> - <a class="reference external" href="https://blog.floydhub.com/attention-mechanism/amp/">Attention mechanism</a></em></p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.kaggle.com/code/tanulsingh077/deep-learning-for-nlp-zero-to-transformers-bert">https://www.kaggle.com/code/tanulsingh077/deep-learning-for-nlp-zero-to-transformers-bert</a></p></li>
+<li><p><a class="reference external" href="https://github.com/bentrevett/pytorch-seq2seq">https://github.com/bentrevett/pytorch-seq2seq</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/analytics-vidhya/encoder-decoder-seq2seq-models-clearly-explained-c34186fbf49b">https://medium.com/analytics-vidhya/encoder-decoder-seq2seq-models-clearly-explained-c34186fbf49b</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/day-1-2-attention-seq2seq-models-65df3f49e263">https://towardsdatascience.com/day-1-2-attention-seq2seq-models-65df3f49e263</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/seq2seq-model-in-tensorflow-ec0c557e560f">https://towardsdatascience.com/seq2seq-model-in-tensorflow-ec0c557e560f</a></p></li>
+<li><p><a class="reference external" href="https://storrs.io/attention/amp/">https://storrs.io/attention/amp/</a></p></li>
+</ul>
+</section>
+<section id="installs">
+<h2>Installs<a class="headerlink" href="#installs" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python3 -m pip --version
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pip 22.3.1 from /opt/anaconda3/lib/python3.8/site-packages/pip (python 3.8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span> <span class="o">--</span><span class="n">upgrade</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">addons</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./10-deep-learning"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="keras-multilayer-perceptron.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Keras: Multilayer Perceptron</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="keras-convolutional-networks.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Keras: Convolutional Networks</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

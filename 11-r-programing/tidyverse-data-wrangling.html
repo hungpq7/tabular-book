@@ -1,0 +1,2504 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tidyverse: Data Wrangling</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Dplyr: Data Cleaning" href="dplyr-data-cleaning.html" />
+    <link rel="prev" title="R: Data Structures" href="r-data-structures.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../01-python-programing/_intro.html">
+   <b>
+    1. Python Programing
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-algorithms.html">
+     (w) Python: Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02-mathematics/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-linear-algebra.html">
+     NumPy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/sympy-calculus.html">
+     SymPy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-probability.html">
+     NumPy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-statistics.html">
+     NumPy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/scipy-hypothesis-testing.html">
+     SciPy: Hypothesis Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-applied-mathematics.html">
+     (w) NumPy: Applied Mathematics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/networkx-network-analysis.html">
+     (w) NetworkX: Network Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03-data-manipulation/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/numpy-arrays.html">
+     NumPy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04-big-data/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../05-data-visualization/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../06-machine-learning/_intro.html">
+   <b>
+    6. Machine Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-machine-learning.html">
+     Sklearn: Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-classification.html">
+     Sklearn: Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-regression.html">
+     Sklearn: Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
+     Sklearn: Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/lenskit-recommendation.html">
+     Lenskit: Recommendation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/pyspark-machine-learning.html">
+     PySpark: Machine Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../07-tabular-learning/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/ray-hyperparameter-optimization.html">
+     Ray: Hyperparam Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/shap-model-interpretation.html">
+     Shap: Model Interpretation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/imblearn-targeted-modeling.html">
+     (w) Imblearn: Targeted Modeling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../08-time-series/_intro.html">
+   <b>
+    8. Time Series
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/statsmodels-temporal-analysis.html">
+     Statsmodels: Temporal Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/prophet-forecasting-algorithms.html">
+     Prophet: Forecasting Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/sktime-forecasting-pipeline.html">
+     Sktime: Forecasting Pipeline
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
+     (w) Darts: Deep Forecasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../09-unsupervised-learning/_intro.html">
+   <b>
+    9. Unsupervised Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/mlxtend-association-rules.html">
+     (w) Mlxtend: Association Rules
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/sklearn-clustering.html">
+     Sklearn: Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/sklearn-dimensional-reduction.html">
+     Sklearn: Dimensional Reduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/pyod-anomaly-detection.html">
+     PyOD: Anomaly Detection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../10-deep-learning/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/gensim-text-mining.html">
+     Gensim: Text Mining
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/opencv-image-processing.html">
+     (w) OpenCV: Image Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/keras-multilayer-perceptron.html">
+     Keras: Multilayer Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/keras-recurrent-networks.html">
+     Keras: Recurrent Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/keras-convolutional-networks.html">
+     (w) Keras: Convolutional Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/pytorch-deep-learning.html">
+     PyTorch: Deep Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    11. R Programing
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="r-basic-concepts.html">
+     R: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="r-data-structures.html">
+     R: Data Structures
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Tidyverse: Data Wrangling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="dplyr-data-cleaning.html">
+     Dplyr: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ggplot-data-visualization.html">
+     Ggplot: Data Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="r-statistics.html">
+     R: Statistics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/11-r-programing/tidyverse-data-wrangling.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/11-r-programing/tidyverse-data-wrangling.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/11-r-programing/tidyverse-data-wrangling.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   1. Introduction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tidyverse">
+     1.1. Tidyverse
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-pipe">
+     1.2. The pipe
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-exploring">
+   2. Data exploring
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis-of-observations">
+     2.1. Analysis of observations
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#top-and-bottom-rows">
+       Top and bottom rows
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#slicing-specific-rows">
+       Slicing specific rows
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis-of-attributes">
+     1.2. Analysis of attributes
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#selecting-columns">
+       Selecting columns
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#unique-values">
+       Unique values
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basic-statistics">
+     1.3. Basic statistics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sorting-and-filtering">
+     1.4. Sorting and filtering
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sorting">
+       Sorting
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filtering-data">
+       Filtering data
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adding-columns">
+     1.5. Adding columns
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-tidying">
+   2. Data tidying
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-aggregation">
+     2.1. Data aggregation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#basic-grouping">
+       Basic grouping
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#advanced-grouping">
+       Advanced grouping
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unpivoting">
+     2.2. Unpivoting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pivot-table">
+     2.3. Pivot table
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#appending-data">
+     2.4. Appending data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#joining-dataframes">
+     2.5. Joining dataframes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tidyverse: Data Wrangling</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   1. Introduction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tidyverse">
+     1.1. Tidyverse
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-pipe">
+     1.2. The pipe
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-exploring">
+   2. Data exploring
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis-of-observations">
+     2.1. Analysis of observations
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#top-and-bottom-rows">
+       Top and bottom rows
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#slicing-specific-rows">
+       Slicing specific rows
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis-of-attributes">
+     1.2. Analysis of attributes
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#selecting-columns">
+       Selecting columns
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#unique-values">
+       Unique values
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basic-statistics">
+     1.3. Basic statistics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sorting-and-filtering">
+     1.4. Sorting and filtering
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sorting">
+       Sorting
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filtering-data">
+       Filtering data
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adding-columns">
+     1.5. Adding columns
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-tidying">
+   2. Data tidying
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-aggregation">
+     2.1. Data aggregation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#basic-grouping">
+       Basic grouping
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#advanced-grouping">
+       Advanced grouping
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unpivoting">
+     2.2. Unpivoting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pivot-table">
+     2.3. Pivot table
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#appending-data">
+     2.4. Appending data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#joining-dataframes">
+     2.5. Joining dataframes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="tidyverse-data-wrangling">
+<h1>Tidyverse: Data Wrangling<a class="headerlink" href="#tidyverse-data-wrangling" title="Permalink to this headline">#</a></h1>
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<section id="tidyverse">
+<h3>1.1. Tidyverse<a class="headerlink" href="#tidyverse" title="Permalink to this headline">#</a></h3>
+<p>This topic introduces the <a class="reference external" href="https://www.tidyverse.org/packages/"><code class="docutils literal notranslate"><span class="pre">tidyverse</span></code></a> library, which is a collection of R packages desgined for Data Science. <code class="docutils literal notranslate"><span class="pre">library(tidyverse)</span></code> will load the following core packages:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> for data visualization,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dplyr</span></code> for data manipulation,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tidyr</span></code> for data tidying,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readr</span></code> for data import,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">purrr</span></code> for functional programming,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tibble</span></code> for tibbles, a modern re-imagining of data frames,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stringr</span></code> for strings,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">forcats</span></code> for factors.</p></li>
+</ul>
+<p>Tidyverse also includes many other useful packages such as <code class="docutils literal notranslate"><span class="pre">lubridate</span></code> and <code class="docutils literal notranslate"><span class="pre">magrittr</span></code>, however each of them need to be loaded separately.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;package &#39;tidyverse&#39; was built under R version 3.6.3&quot;
+-- <span class=" -Color -Color-Bold">Attaching packages</span> --------------------------------------- tidyverse 1.3.0 --
+
+<span class=" -Color -Color-Green">v</span> <span class=" -Color -Color-Blue">ggplot2</span> 3.3.2     <span class=" -Color -Color-Green">v</span> <span class=" -Color -Color-Blue">purrr  </span> 0.3.4
+<span class=" -Color -Color-Green">v</span> <span class=" -Color -Color-Blue">tibble </span> 3.0.1     <span class=" -Color -Color-Green">v</span> <span class=" -Color -Color-Blue">dplyr  </span> 1.0.0
+<span class=" -Color -Color-Green">v</span> <span class=" -Color -Color-Blue">tidyr  </span> 1.1.0     <span class=" -Color -Color-Green">v</span> <span class=" -Color -Color-Blue">stringr</span> 1.4.0
+<span class=" -Color -Color-Green">v</span> <span class=" -Color -Color-Blue">readr  </span> 1.3.1     <span class=" -Color -Color-Green">v</span> <span class=" -Color -Color-Blue">forcats</span> 0.5.0
+
+Warning message:
+&quot;package &#39;ggplot2&#39; was built under R version 3.6.3&quot;
+Warning message:
+&quot;package &#39;tibble&#39; was built under R version 3.6.3&quot;
+Warning message:
+&quot;package &#39;tidyr&#39; was built under R version 3.6.3&quot;
+Warning message:
+&quot;package &#39;readr&#39; was built under R version 3.6.3&quot;
+Warning message:
+&quot;package &#39;purrr&#39; was built under R version 3.6.3&quot;
+Warning message:
+&quot;package &#39;dplyr&#39; was built under R version 3.6.3&quot;
+Warning message:
+&quot;package &#39;forcats&#39; was built under R version 3.6.3&quot;
+-- <span class=" -Color -Color-Bold">Conflicts</span> ------------------------------------------ tidyverse_conflicts() --
+<span class=" -Color -Color-Red">x</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">filter()</span> masks <span class=" -Color -Color-Blue">stats</span>::filter()
+<span class=" -Color -Color-Red">x</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">lag()</span>    masks <span class=" -Color -Color-Blue">stats</span>::lag()
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-pipe">
+<h3>1.2. The pipe<a class="headerlink" href="#the-pipe" title="Permalink to this headline">#</a></h3>
+<p>The pipe <code class="docutils literal notranslate"><span class="pre">%&gt;%</span></code> from the <code class="docutils literal notranslate"><span class="pre">magrittr</span></code> library provides a brand new way writing functions. It uses an object as the first argument of a function, allowing you to read code from left to right insted of from inside to outside. Packages in Tidyverse automatically load the pipe for you, so it’s not required to use <code class="docutils literal notranslate"><span class="pre">magrittr</span></code> explicitly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">magrittr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">floor</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="m">15</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">3</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">15</span> <span class="o">%&gt;%</span> <span class="n">sqrt</span> <span class="o">%&gt;%</span> <span class="n">floor</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">3</div></div>
+</div>
+</section>
+</section>
+<section id="data-exploring">
+<h2>2. Data exploring<a class="headerlink" href="#data-exploring" title="Permalink to this headline">#</a></h2>
+<section id="analysis-of-observations">
+<h3>2.1. Analysis of observations<a class="headerlink" href="#analysis-of-observations" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="top-and-bottom-rows">
+<h4>Top and bottom rows<a class="headerlink" href="#top-and-bottom-rows" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 12</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>Mazda RX4        </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.620</td><td>16.46</td><td>0</td><td>1</td><td>4</td><td>4</td></tr>
+	<tr><th scope=row>2</th><td>Mazda RX4 Wag    </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.875</td><td>17.02</td><td>0</td><td>1</td><td>4</td><td>4</td></tr>
+	<tr><th scope=row>3</th><td>Datsun 710       </td><td>22.8</td><td>4</td><td>108</td><td> 93</td><td>3.85</td><td>2.320</td><td>18.61</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><th scope=row>4</th><td>Hornet 4 Drive   </td><td>21.4</td><td>6</td><td>258</td><td>110</td><td>3.08</td><td>3.215</td><td>19.44</td><td>1</td><td>0</td><td>3</td><td>1</td></tr>
+	<tr><th scope=row>5</th><td>Hornet Sportabout</td><td>18.7</td><td>8</td><td>360</td><td>175</td><td>3.15</td><td>3.440</td><td>17.02</td><td>0</td><td>0</td><td>3</td><td>2</td></tr>
+	<tr><th scope=row>6</th><td>Valiant          </td><td>18.1</td><td>6</td><td>225</td><td>105</td><td>2.76</td><td>3.460</td><td>20.22</td><td>1</td><td>0</td><td>3</td><td>1</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">tail</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 3 × 12</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>30</th><td>Ferrari Dino </td><td>19.7</td><td>6</td><td>145</td><td>175</td><td>3.62</td><td>2.77</td><td>15.5</td><td>0</td><td>1</td><td>5</td><td>6</td></tr>
+	<tr><th scope=row>31</th><td>Maserati Bora</td><td>15.0</td><td>8</td><td>301</td><td>335</td><td>3.54</td><td>3.57</td><td>14.6</td><td>0</td><td>1</td><td>5</td><td>8</td></tr>
+	<tr><th scope=row>32</th><td>Volvo 142E   </td><td>21.4</td><td>4</td><td>121</td><td>109</td><td>4.11</td><td>2.78</td><td>18.6</td><td>1</td><td>1</td><td>4</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="slicing-specific-rows">
+<h4>Slicing specific rows<a class="headerlink" href="#slicing-specific-rows" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">slice</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 4 × 12</caption>
+<thead>
+	<tr><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Mazda RX4    </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.620</td><td>16.46</td><td>0</td><td>1</td><td>4</td><td>4</td></tr>
+	<tr><td>Mazda RX4 Wag</td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.875</td><td>17.02</td><td>0</td><td>1</td><td>4</td><td>4</td></tr>
+	<tr><td>Datsun 710   </td><td>22.8</td><td>4</td><td>108</td><td> 93</td><td>3.85</td><td>2.320</td><td>18.61</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><td>Valiant      </td><td>18.1</td><td>6</td><td>225</td><td>105</td><td>2.76</td><td>3.460</td><td>20.22</td><td>1</td><td>0</td><td>3</td><td>1</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="analysis-of-attributes">
+<h3>1.2. Analysis of attributes<a class="headerlink" href="#analysis-of-attributes" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="n">names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'model'</li><li>'mpg'</li><li>'cyl'</li><li>'disp'</li><li>'hp'</li><li>'drat'</li><li>'wt'</li><li>'qsec'</li><li>'vs'</li><li>'am'</li><li>'gear'</li><li>'carb'</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="n">dim</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>32</li><li>12</li></ol>
+</div></div>
+</div>
+<section id="selecting-columns">
+<h4>Selecting columns<a class="headerlink" href="#selecting-columns" title="Permalink to this headline">#</a></h4>
+<p>You can either select columns in a dataframe using their names or their indices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span><span class="o">$</span><span class="n">model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>Mazda RX4</li><li>Mazda RX4 Wag</li><li>Datsun 710</li><li>Hornet 4 Drive</li><li>Hornet Sportabout</li><li>Valiant</li><li>Duster 360</li><li>Merc 240D</li><li>Merc 230</li><li>Merc 280</li><li>Merc 280C</li><li>Merc 450SE</li><li>Merc 450SL</li><li>Merc 450SLC</li><li>Cadillac Fleetwood</li><li>Lincoln Continental</li><li>Chrysler Imperial</li><li>Fiat 128</li><li>Honda Civic</li><li>Toyota Corolla</li><li>Toyota Corona</li><li>Dodge Challenger</li><li>AMC Javelin</li><li>Camaro Z28</li><li>Pontiac Firebird</li><li>Fiat X1-9</li><li>Porsche 914-2</li><li>Lotus Europa</li><li>Ford Pantera L</li><li>Ferrari Dino</li><li>Maserati Bora</li><li>Volvo 142E</li></ol>
+
+<details>
+	<summary style=display:list-item;cursor:pointer>
+		<strong>Levels</strong>:
+	</summary>
+	<style>
+	.list-inline {list-style: none; margin:0; padding: 0}
+	.list-inline>li {display: inline-block}
+	.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+	</style>
+	<ol class=list-inline><li>'AMC Javelin'</li><li>'Cadillac Fleetwood'</li><li>'Camaro Z28'</li><li>'Chrysler Imperial'</li><li>'Datsun 710'</li><li>'Dodge Challenger'</li><li>'Duster 360'</li><li>'Ferrari Dino'</li><li>'Fiat 128'</li><li>'Fiat X1-9'</li><li>'Ford Pantera L'</li><li>'Honda Civic'</li><li>'Hornet 4 Drive'</li><li>'Hornet Sportabout'</li><li>'Lincoln Continental'</li><li>'Lotus Europa'</li><li>'Maserati Bora'</li><li>'Mazda RX4'</li><li>'Mazda RX4 Wag'</li><li>'Merc 230'</li><li>'Merc 240D'</li><li>'Merc 280'</li><li>'Merc 280C'</li><li>'Merc 450SE'</li><li>'Merc 450SL'</li><li>'Merc 450SLC'</li><li>'Pontiac Firebird'</li><li>'Porsche 914-2'</li><li>'Toyota Corolla'</li><li>'Toyota Corona'</li><li>'Valiant'</li><li>'Volvo 142E'</li></ol>
+</details></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># selecting specific columns</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">select</span><span class="p">(</span><span class="n">model</span><span class="o">:</span><span class="n">cyl</span><span class="p">,</span> <span class="n">gear</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 3 × 4</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>gear</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>Mazda RX4    </td><td>21.0</td><td>6</td><td>4</td></tr>
+	<tr><th scope=row>2</th><td>Mazda RX4 Wag</td><td>21.0</td><td>6</td><td>4</td></tr>
+	<tr><th scope=row>3</th><td>Datsun 710   </td><td>22.8</td><td>4</td><td>4</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># selecting specific columns</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">select</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">gear</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 6</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>gear</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>Mazda RX4        </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>4</td></tr>
+	<tr><th scope=row>2</th><td>Mazda RX4 Wag    </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>4</td></tr>
+	<tr><th scope=row>3</th><td>Datsun 710       </td><td>22.8</td><td>4</td><td>108</td><td> 93</td><td>4</td></tr>
+	<tr><th scope=row>4</th><td>Hornet 4 Drive   </td><td>21.4</td><td>6</td><td>258</td><td>110</td><td>3</td></tr>
+	<tr><th scope=row>5</th><td>Hornet Sportabout</td><td>18.7</td><td>8</td><td>360</td><td>175</td><td>3</td></tr>
+	<tr><th scope=row>6</th><td>Valiant          </td><td>18.1</td><td>6</td><td>225</td><td>105</td><td>3</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="unique-values">
+<h4>Unique values<a class="headerlink" href="#unique-values" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">select</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">unique</span> <span class="o">%&gt;%</span> <span class="nf">arrange</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 3 × 1</caption>
+<thead>
+	<tr><th scope=col>cyl</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>4</td></tr>
+	<tr><td>6</td></tr>
+	<tr><td>8</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">select</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">am</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">unique</span> <span class="o">%&gt;%</span> <span class="nf">arrange</span><span class="p">(</span><span class="n">am</span><span class="p">,</span> <span class="n">cyl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 2</caption>
+<thead>
+	<tr><th scope=col>cyl</th><th scope=col>am</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>4</td><td>0</td></tr>
+	<tr><td>6</td><td>0</td></tr>
+	<tr><td>8</td><td>0</td></tr>
+	<tr><td>4</td><td>1</td></tr>
+	<tr><td>6</td><td>1</td></tr>
+	<tr><td>8</td><td>1</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="basic-statistics">
+<h3>1.3. Basic statistics<a class="headerlink" href="#basic-statistics" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">select</span><span class="p">(</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      mpg             cyl             disp             hp       
+ Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0  
+ 1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8   1st Qu.: 96.5  
+ Median :19.20   Median :6.000   Median :196.3   Median :123.0  
+ Mean   :20.09   Mean   :6.188   Mean   :230.7   Mean   :146.7  
+ 3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0   3rd Qu.:180.0  
+ Max.   :33.90   Max.   :8.000   Max.   :472.0   Max.   :335.0  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span> <span class="o">%&gt;%</span> <span class="n">mean</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">20.090625</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span> <span class="o">%&gt;%</span> <span class="n">quantile</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style><dl class=dl-inline><dt>0%</dt><dd>10.4</dd><dt>25%</dt><dd>15.425</dd><dt>50%</dt><dd>19.2</dd><dt>75%</dt><dd>22.8</dd><dt>100%</dt><dd>33.9</dd></dl>
+</div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">describe()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">Hmisc</span></code> library provides even more details about each column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Hmisc</span><span class="o">::</span><span class="nf">describe</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Hmisc</span><span class="o">::</span><span class="nf">describe</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sorting-and-filtering">
+<h3>1.4. Sorting and filtering<a class="headerlink" href="#sorting-and-filtering" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="sorting">
+<h4>Sorting<a class="headerlink" href="#sorting" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">arrange</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">mpg</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 12</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>Volvo 142E   </td><td>21.4</td><td>4</td><td>121.0</td><td>109</td><td>4.11</td><td>2.780</td><td>18.60</td><td>1</td><td>1</td><td>4</td><td>2</td></tr>
+	<tr><th scope=row>2</th><td>Toyota Corona</td><td>21.5</td><td>4</td><td>120.1</td><td> 97</td><td>3.70</td><td>2.465</td><td>20.01</td><td>1</td><td>0</td><td>3</td><td>1</td></tr>
+	<tr><th scope=row>3</th><td>Datsun 710   </td><td>22.8</td><td>4</td><td>108.0</td><td> 93</td><td>3.85</td><td>2.320</td><td>18.61</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><th scope=row>4</th><td>Merc 230     </td><td>22.8</td><td>4</td><td>140.8</td><td> 95</td><td>3.92</td><td>3.150</td><td>22.90</td><td>1</td><td>0</td><td>4</td><td>2</td></tr>
+	<tr><th scope=row>5</th><td>Merc 240D    </td><td>24.4</td><td>4</td><td>146.7</td><td> 62</td><td>3.69</td><td>3.190</td><td>20.00</td><td>1</td><td>0</td><td>4</td><td>2</td></tr>
+	<tr><th scope=row>6</th><td>Porsche 914-2</td><td>26.0</td><td>4</td><td>120.3</td><td> 91</td><td>4.43</td><td>2.140</td><td>16.70</td><td>0</td><td>1</td><td>5</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">arrange</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="nf">desc</span><span class="p">(</span><span class="n">mpg</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 12</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>Toyota Corolla</td><td>33.9</td><td>4</td><td> 71.1</td><td> 65</td><td>4.22</td><td>1.835</td><td>19.90</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><th scope=row>2</th><td>Fiat 128      </td><td>32.4</td><td>4</td><td> 78.7</td><td> 66</td><td>4.08</td><td>2.200</td><td>19.47</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><th scope=row>3</th><td>Honda Civic   </td><td>30.4</td><td>4</td><td> 75.7</td><td> 52</td><td>4.93</td><td>1.615</td><td>18.52</td><td>1</td><td>1</td><td>4</td><td>2</td></tr>
+	<tr><th scope=row>4</th><td>Lotus Europa  </td><td>30.4</td><td>4</td><td> 95.1</td><td>113</td><td>3.77</td><td>1.513</td><td>16.90</td><td>1</td><td>1</td><td>5</td><td>2</td></tr>
+	<tr><th scope=row>5</th><td>Fiat X1-9     </td><td>27.3</td><td>4</td><td> 79.0</td><td> 66</td><td>4.08</td><td>1.935</td><td>18.90</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><th scope=row>6</th><td>Porsche 914-2 </td><td>26.0</td><td>4</td><td>120.3</td><td> 91</td><td>4.43</td><td>2.140</td><td>16.70</td><td>0</td><td>1</td><td>5</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">mpg</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 12</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>Hornet Sportabout </td><td>18.7</td><td>8</td><td>360.0</td><td>175</td><td>3.15</td><td>3.44</td><td>17.02</td><td>0</td><td>0</td><td>3</td><td>2</td></tr>
+	<tr><th scope=row>2</th><td>Duster 360        </td><td>14.3</td><td>8</td><td>360.0</td><td>245</td><td>3.21</td><td>3.57</td><td>15.84</td><td>0</td><td>0</td><td>3</td><td>4</td></tr>
+	<tr><th scope=row>3</th><td>Merc 450SE        </td><td>16.4</td><td>8</td><td>275.8</td><td>180</td><td>3.07</td><td>4.07</td><td>17.40</td><td>0</td><td>0</td><td>3</td><td>3</td></tr>
+	<tr><th scope=row>4</th><td>Merc 450SL        </td><td>17.3</td><td>8</td><td>275.8</td><td>180</td><td>3.07</td><td>3.73</td><td>17.60</td><td>0</td><td>0</td><td>3</td><td>3</td></tr>
+	<tr><th scope=row>5</th><td>Merc 450SLC       </td><td>15.2</td><td>8</td><td>275.8</td><td>180</td><td>3.07</td><td>3.78</td><td>18.00</td><td>0</td><td>0</td><td>3</td><td>3</td></tr>
+	<tr><th scope=row>6</th><td>Cadillac Fleetwood</td><td>10.4</td><td>8</td><td>472.0</td><td>205</td><td>2.93</td><td>5.25</td><td>17.98</td><td>0</td><td>0</td><td>3</td><td>4</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="filtering-data">
+<h4>Filtering data<a class="headerlink" href="#filtering-data" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">mpg</span><span class="o">&gt;=</span><span class="m">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 4 × 12</caption>
+<thead>
+	<tr><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Fiat 128      </td><td>32.4</td><td>4</td><td>78.7</td><td> 66</td><td>4.08</td><td>2.200</td><td>19.47</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><td>Honda Civic   </td><td>30.4</td><td>4</td><td>75.7</td><td> 52</td><td>4.93</td><td>1.615</td><td>18.52</td><td>1</td><td>1</td><td>4</td><td>2</td></tr>
+	<tr><td>Toyota Corolla</td><td>33.9</td><td>4</td><td>71.1</td><td> 65</td><td>4.22</td><td>1.835</td><td>19.90</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><td>Lotus Europa  </td><td>30.4</td><td>4</td><td>95.1</td><td>113</td><td>3.77</td><td>1.513</td><td>16.90</td><td>1</td><td>1</td><td>5</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">mpg</span><span class="o">&gt;=</span><span class="m">30</span> <span class="o">&amp;</span> <span class="n">carb</span><span class="o">==</span><span class="m">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 2 × 12</caption>
+<thead>
+	<tr><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Honda Civic </td><td>30.4</td><td>4</td><td>75.7</td><td> 52</td><td>4.93</td><td>1.615</td><td>18.52</td><td>1</td><td>1</td><td>4</td><td>2</td></tr>
+	<tr><td>Lotus Europa</td><td>30.4</td><td>4</td><td>95.1</td><td>113</td><td>3.77</td><td>1.513</td><td>16.90</td><td>1</td><td>1</td><td>5</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">mpg</span><span class="o">&gt;=</span><span class="m">30</span> <span class="o">|</span> <span class="n">disp</span><span class="o">&lt;=</span><span class="m">90</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 5 × 12</caption>
+<thead>
+	<tr><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Fiat 128      </td><td>32.4</td><td>4</td><td>78.7</td><td> 66</td><td>4.08</td><td>2.200</td><td>19.47</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><td>Honda Civic   </td><td>30.4</td><td>4</td><td>75.7</td><td> 52</td><td>4.93</td><td>1.615</td><td>18.52</td><td>1</td><td>1</td><td>4</td><td>2</td></tr>
+	<tr><td>Toyota Corolla</td><td>33.9</td><td>4</td><td>71.1</td><td> 65</td><td>4.22</td><td>1.835</td><td>19.90</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><td>Fiat X1-9     </td><td>27.3</td><td>4</td><td>79.0</td><td> 66</td><td>4.08</td><td>1.935</td><td>18.90</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><td>Lotus Europa  </td><td>30.4</td><td>4</td><td>95.1</td><td>113</td><td>3.77</td><td>1.513</td><td>16.90</td><td>1</td><td>1</td><td>5</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> 
+    <span class="nf">filter</span><span class="p">(</span><span class="n">disp</span><span class="o">&gt;</span><span class="m">300</span><span class="p">)</span> <span class="o">%&gt;%</span> 
+    <span class="nf">filter</span><span class="p">(</span><span class="n">cyl</span><span class="o">==</span><span class="m">6</span> <span class="o">|</span> <span class="n">cyl</span><span class="o">==</span><span class="m">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 11 × 12</caption>
+<thead>
+	<tr><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Hornet Sportabout  </td><td>18.7</td><td>8</td><td>360</td><td>175</td><td>3.15</td><td>3.440</td><td>17.02</td><td>0</td><td>0</td><td>3</td><td>2</td></tr>
+	<tr><td>Duster 360         </td><td>14.3</td><td>8</td><td>360</td><td>245</td><td>3.21</td><td>3.570</td><td>15.84</td><td>0</td><td>0</td><td>3</td><td>4</td></tr>
+	<tr><td>Cadillac Fleetwood </td><td>10.4</td><td>8</td><td>472</td><td>205</td><td>2.93</td><td>5.250</td><td>17.98</td><td>0</td><td>0</td><td>3</td><td>4</td></tr>
+	<tr><td>Lincoln Continental</td><td>10.4</td><td>8</td><td>460</td><td>215</td><td>3.00</td><td>5.424</td><td>17.82</td><td>0</td><td>0</td><td>3</td><td>4</td></tr>
+	<tr><td>Chrysler Imperial  </td><td>14.7</td><td>8</td><td>440</td><td>230</td><td>3.23</td><td>5.345</td><td>17.42</td><td>0</td><td>0</td><td>3</td><td>4</td></tr>
+	<tr><td>Dodge Challenger   </td><td>15.5</td><td>8</td><td>318</td><td>150</td><td>2.76</td><td>3.520</td><td>16.87</td><td>0</td><td>0</td><td>3</td><td>2</td></tr>
+	<tr><td>AMC Javelin        </td><td>15.2</td><td>8</td><td>304</td><td>150</td><td>3.15</td><td>3.435</td><td>17.30</td><td>0</td><td>0</td><td>3</td><td>2</td></tr>
+	<tr><td>Camaro Z28         </td><td>13.3</td><td>8</td><td>350</td><td>245</td><td>3.73</td><td>3.840</td><td>15.41</td><td>0</td><td>0</td><td>3</td><td>4</td></tr>
+	<tr><td>Pontiac Firebird   </td><td>19.2</td><td>8</td><td>400</td><td>175</td><td>3.08</td><td>3.845</td><td>17.05</td><td>0</td><td>0</td><td>3</td><td>2</td></tr>
+	<tr><td>Ford Pantera L     </td><td>15.8</td><td>8</td><td>351</td><td>264</td><td>4.22</td><td>3.170</td><td>14.50</td><td>0</td><td>1</td><td>5</td><td>4</td></tr>
+	<tr><td>Maserati Bora      </td><td>15.0</td><td>8</td><td>301</td><td>335</td><td>3.54</td><td>3.570</td><td>14.60</td><td>0</td><td>1</td><td>5</td><td>8</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="adding-columns">
+<h3>1.5. Adding columns<a class="headerlink" href="#adding-columns" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">new</span><span class="o">=</span><span class="m">0</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 13</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th><th scope=col>new</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>Mazda RX4        </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.620</td><td>16.46</td><td>0</td><td>1</td><td>4</td><td>4</td><td>0</td></tr>
+	<tr><th scope=row>2</th><td>Mazda RX4 Wag    </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.875</td><td>17.02</td><td>0</td><td>1</td><td>4</td><td>4</td><td>0</td></tr>
+	<tr><th scope=row>3</th><td>Datsun 710       </td><td>22.8</td><td>4</td><td>108</td><td> 93</td><td>3.85</td><td>2.320</td><td>18.61</td><td>1</td><td>1</td><td>4</td><td>1</td><td>0</td></tr>
+	<tr><th scope=row>4</th><td>Hornet 4 Drive   </td><td>21.4</td><td>6</td><td>258</td><td>110</td><td>3.08</td><td>3.215</td><td>19.44</td><td>1</td><td>0</td><td>3</td><td>1</td><td>0</td></tr>
+	<tr><th scope=row>5</th><td>Hornet Sportabout</td><td>18.7</td><td>8</td><td>360</td><td>175</td><td>3.15</td><td>3.440</td><td>17.02</td><td>0</td><td>0</td><td>3</td><td>2</td><td>0</td></tr>
+	<tr><th scope=row>6</th><td>Valiant          </td><td>18.1</td><td>6</td><td>225</td><td>105</td><td>2.76</td><td>3.460</td><td>20.22</td><td>1</td><td>0</td><td>3</td><td>1</td><td>0</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">new1</span><span class="o">=</span><span class="n">gear</span><span class="o">+</span><span class="n">carb</span><span class="p">,</span> <span class="n">new2</span><span class="o">=</span><span class="s">&#39;nothing&#39;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 14</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th><th scope=col>new1</th><th scope=col>new2</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>Mazda RX4        </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.620</td><td>16.46</td><td>0</td><td>1</td><td>4</td><td>4</td><td>8</td><td>nothing</td></tr>
+	<tr><th scope=row>2</th><td>Mazda RX4 Wag    </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.875</td><td>17.02</td><td>0</td><td>1</td><td>4</td><td>4</td><td>8</td><td>nothing</td></tr>
+	<tr><th scope=row>3</th><td>Datsun 710       </td><td>22.8</td><td>4</td><td>108</td><td> 93</td><td>3.85</td><td>2.320</td><td>18.61</td><td>1</td><td>1</td><td>4</td><td>1</td><td>5</td><td>nothing</td></tr>
+	<tr><th scope=row>4</th><td>Hornet 4 Drive   </td><td>21.4</td><td>6</td><td>258</td><td>110</td><td>3.08</td><td>3.215</td><td>19.44</td><td>1</td><td>0</td><td>3</td><td>1</td><td>4</td><td>nothing</td></tr>
+	<tr><th scope=row>5</th><td>Hornet Sportabout</td><td>18.7</td><td>8</td><td>360</td><td>175</td><td>3.15</td><td>3.440</td><td>17.02</td><td>0</td><td>0</td><td>3</td><td>2</td><td>5</td><td>nothing</td></tr>
+	<tr><th scope=row>6</th><td>Valiant          </td><td>18.1</td><td>6</td><td>225</td><td>105</td><td>2.76</td><td>3.460</td><td>20.22</td><td>1</td><td>0</td><td>3</td><td>1</td><td>4</td><td>nothing</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># mutate with case/when</span>
+<span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">%&gt;%</span>
+    <span class="nf">mutate</span><span class="p">(</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="nf">case_when</span><span class="p">(</span>
+            <span class="n">number</span><span class="o">&lt;=</span><span class="m">5</span> <span class="o">~</span> <span class="s">&#39;group 1&#39;</span><span class="p">,</span>
+            <span class="n">number</span><span class="o">&gt;</span><span class="m">5</span> <span class="o">&amp;</span> <span class="n">number</span><span class="o">&lt;</span><span class="m">8</span> <span class="o">~</span> <span class="s">&#39;group 2&#39;</span><span class="p">,</span>
+            <span class="kc">TRUE</span> <span class="o">~</span> <span class="s">&#39;group 3&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 10 × 2</caption>
+<thead>
+	<tr><th scope=col>number</th><th scope=col>group</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td> 1</td><td>group 1</td></tr>
+	<tr><td> 2</td><td>group 1</td></tr>
+	<tr><td> 3</td><td>group 1</td></tr>
+	<tr><td> 4</td><td>group 1</td></tr>
+	<tr><td> 5</td><td>group 1</td></tr>
+	<tr><td> 6</td><td>group 2</td></tr>
+	<tr><td> 7</td><td>group 2</td></tr>
+	<tr><td> 8</td><td>group 3</td></tr>
+	<tr><td> 9</td><td>group 3</td></tr>
+	<tr><td>10</td><td>group 3</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="data-tidying">
+<h2>2. Data tidying<a class="headerlink" href="#data-tidying" title="Permalink to this headline">#</a></h2>
+<section id="data-aggregation">
+<h3>2.1. Data aggregation<a class="headerlink" href="#data-aggregation" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="basic-grouping">
+<h4>Basic grouping<a class="headerlink" href="#basic-grouping" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fish</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/us_fishery_foreign_trade.csv&#39;</span><span class="p">)</span>
+<span class="n">fish</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 7</caption>
+<thead>
+	<tr><th></th><th scope=col>year</th><th scope=col>month</th><th scope=col>product</th><th scope=col>country</th><th scope=col>value</th><th scope=col>feature</th><th scope=col>unit</th></tr>
+	<tr><th></th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;fct&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>2010</td><td>1</td><td>SABLEFISH FRESH</td><td>UNITED ARAB EMIRATES</td><td> 2297</td><td>EXP Quantity</td><td>kg</td></tr>
+	<tr><th scope=row>2</th><td>2010</td><td>1</td><td>SABLEFISH FRESH</td><td>JAPAN               </td><td>16025</td><td>EXP Quantity</td><td>kg</td></tr>
+	<tr><th scope=row>3</th><td>2010</td><td>1</td><td>SABLEFISH FRESH</td><td>JAPAN               </td><td>63437</td><td>EXP Quantity</td><td>kg</td></tr>
+	<tr><th scope=row>4</th><td>2010</td><td>1</td><td>MONKFISH FRESH </td><td>CANADA              </td><td>  579</td><td>EXP Quantity</td><td>kg</td></tr>
+	<tr><th scope=row>5</th><td>2010</td><td>1</td><td>MONKFISH FRESH </td><td>CANADA              </td><td> 7975</td><td>EXP Quantity</td><td>kg</td></tr>
+	<tr><th scope=row>6</th><td>2010</td><td>1</td><td>MONKFISH FRESH </td><td>NETHERLANDS         </td><td>  389</td><td>EXP Quantity</td><td>kg</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fish</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarise</span><span class="p">(</span><span class="n">mean_value</span><span class="o">=</span><span class="nf">mean</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`summarise()` ungrouping output (override with `.groups` argument)
+</pre></div>
+</div>
+<div class="output text_html"><table>
+<caption>A tibble: 4 × 2</caption>
+<thead>
+	<tr><th scope=col>feature</th><th scope=col>mean_value</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>EXP Quantity</td><td> 38093.38</td></tr>
+	<tr><td>EXP Value   </td><td>273375.80</td></tr>
+	<tr><td>IMP Quantity</td><td> 28478.83</td></tr>
+	<tr><td>IMP Value   </td><td>215764.03</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># number of rows each group</span>
+<span class="n">fish</span> <span class="o">%&gt;%</span>
+    <span class="nf">group_by</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">summarise</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="nf">n</span><span class="p">(),</span> <span class="n">sum_value</span><span class="o">=</span><span class="nf">sum</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`summarise()` regrouping output by &#39;feature&#39; (override with `.groups` argument)
+</pre></div>
+</div>
+<div class="output text_html"><table>
+<caption>A grouped_df: 4 × 4</caption>
+<thead>
+	<tr><th scope=col>feature</th><th scope=col>unit</th><th scope=col>count</th><th scope=col>sum_value</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>EXP Quantity</td><td>kg </td><td>4007</td><td> 152640167</td></tr>
+	<tr><td>EXP Value   </td><td>USD</td><td>4007</td><td>1095416826</td></tr>
+	<tr><td>IMP Quantity</td><td>kg </td><td>4730</td><td> 134704872</td></tr>
+	<tr><td>IMP Value   </td><td>USD</td><td>4730</td><td>1020563847</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="advanced-grouping">
+<h4>Advanced grouping<a class="headerlink" href="#advanced-grouping" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;../data/mtcars.csv&#39;</span><span class="p">)</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 6 × 12</caption>
+<thead>
+	<tr><th></th><th scope=col>model</th><th scope=col>mpg</th><th scope=col>cyl</th><th scope=col>disp</th><th scope=col>hp</th><th scope=col>drat</th><th scope=col>wt</th><th scope=col>qsec</th><th scope=col>vs</th><th scope=col>am</th><th scope=col>gear</th><th scope=col>carb</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>Mazda RX4        </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.620</td><td>16.46</td><td>0</td><td>1</td><td>4</td><td>4</td></tr>
+	<tr><th scope=row>2</th><td>Mazda RX4 Wag    </td><td>21.0</td><td>6</td><td>160</td><td>110</td><td>3.90</td><td>2.875</td><td>17.02</td><td>0</td><td>1</td><td>4</td><td>4</td></tr>
+	<tr><th scope=row>3</th><td>Datsun 710       </td><td>22.8</td><td>4</td><td>108</td><td> 93</td><td>3.85</td><td>2.320</td><td>18.61</td><td>1</td><td>1</td><td>4</td><td>1</td></tr>
+	<tr><th scope=row>4</th><td>Hornet 4 Drive   </td><td>21.4</td><td>6</td><td>258</td><td>110</td><td>3.08</td><td>3.215</td><td>19.44</td><td>1</td><td>0</td><td>3</td><td>1</td></tr>
+	<tr><th scope=row>5</th><td>Hornet Sportabout</td><td>18.7</td><td>8</td><td>360</td><td>175</td><td>3.15</td><td>3.440</td><td>17.02</td><td>0</td><td>0</td><td>3</td><td>2</td></tr>
+	<tr><th scope=row>6</th><td>Valiant          </td><td>18.1</td><td>6</td><td>225</td><td>105</td><td>2.76</td><td>3.460</td><td>20.22</td><td>1</td><td>0</td><td>3</td><td>1</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the ranks for each group</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span>
+    <span class="nf">select</span><span class="p">(</span><span class="n">vs</span><span class="p">,</span> <span class="n">mpg</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">group_by</span><span class="p">(</span><span class="n">vs</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">mutate</span><span class="p">(</span><span class="n">rank_mpg</span><span class="o">=</span><span class="nf">dense_rank</span><span class="p">(</span><span class="n">mpg</span><span class="p">))</span> <span class="o">%&gt;%</span>
+    <span class="nf">arrange</span><span class="p">(</span><span class="n">vs</span><span class="p">,</span> <span class="n">mpg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A grouped_df: 32 × 3</caption>
+<thead>
+	<tr><th scope=col>vs</th><th scope=col>mpg</th><th scope=col>rank_mpg</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>0</td><td>10.4</td><td> 1</td></tr>
+	<tr><td>0</td><td>10.4</td><td> 1</td></tr>
+	<tr><td>0</td><td>13.3</td><td> 2</td></tr>
+	<tr><td>0</td><td>14.3</td><td> 3</td></tr>
+	<tr><td>0</td><td>14.7</td><td> 4</td></tr>
+	<tr><td>0</td><td>15.0</td><td> 5</td></tr>
+	<tr><td>0</td><td>15.2</td><td> 6</td></tr>
+	<tr><td>0</td><td>15.2</td><td> 6</td></tr>
+	<tr><td>0</td><td>15.5</td><td> 7</td></tr>
+	<tr><td>0</td><td>15.8</td><td> 8</td></tr>
+	<tr><td>0</td><td>16.4</td><td> 9</td></tr>
+	<tr><td>0</td><td>17.3</td><td>10</td></tr>
+	<tr><td>0</td><td>18.7</td><td>11</td></tr>
+	<tr><td>0</td><td>19.2</td><td>12</td></tr>
+	<tr><td>0</td><td>19.7</td><td>13</td></tr>
+	<tr><td>0</td><td>21.0</td><td>14</td></tr>
+	<tr><td>0</td><td>21.0</td><td>14</td></tr>
+	<tr><td>0</td><td>26.0</td><td>15</td></tr>
+	<tr><td>1</td><td>17.8</td><td> 1</td></tr>
+	<tr><td>1</td><td>18.1</td><td> 2</td></tr>
+	<tr><td>1</td><td>19.2</td><td> 3</td></tr>
+	<tr><td>1</td><td>21.4</td><td> 4</td></tr>
+	<tr><td>1</td><td>21.4</td><td> 4</td></tr>
+	<tr><td>1</td><td>21.5</td><td> 5</td></tr>
+	<tr><td>1</td><td>22.8</td><td> 6</td></tr>
+	<tr><td>1</td><td>22.8</td><td> 6</td></tr>
+	<tr><td>1</td><td>24.4</td><td> 7</td></tr>
+	<tr><td>1</td><td>27.3</td><td> 8</td></tr>
+	<tr><td>1</td><td>30.4</td><td> 9</td></tr>
+	<tr><td>1</td><td>30.4</td><td> 9</td></tr>
+	<tr><td>1</td><td>32.4</td><td>10</td></tr>
+	<tr><td>1</td><td>33.9</td><td>11</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># apply functions to multiple variables</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span>
+    <span class="nf">group_by</span><span class="p">(</span><span class="n">vs</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">summarise_at</span><span class="p">(</span>
+        <span class="nf">vars</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span> <span class="n">hp</span><span class="p">),</span>
+        <span class="nf">funs</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="n">min</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;`funs()` is deprecated as of dplyr 0.8.0.
+Please use a list of either functions or lambdas: 
+
+  # Simple named list: 
+  list(mean = mean, median = median)
+
+  # Auto named with `tibble::lst()`: 
+  tibble::lst(mean, median)
+
+  # Using lambdas
+  list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_warnings()` to see where this warning was generated.&quot;
+</pre></div>
+</div>
+<div class="output text_html"><table>
+<caption>A tibble: 2 × 7</caption>
+<thead>
+	<tr><th scope=col>vs</th><th scope=col>mpg_mean</th><th scope=col>hp_mean</th><th scope=col>mpg_max</th><th scope=col>hp_max</th><th scope=col>mpg_min</th><th scope=col>hp_min</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>0</td><td>16.61667</td><td>189.72222</td><td>26.0</td><td>335</td><td>10.4</td><td>91</td></tr>
+	<tr><td>1</td><td>24.55714</td><td> 91.35714</td><td>33.9</td><td>123</td><td>17.8</td><td>52</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># apply fucntions to variables that meets a given condition</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span>
+    <span class="nf">select</span><span class="p">(</span><span class="n">vs</span><span class="p">,</span> <span class="n">mpg</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">cyl</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">mutate</span><span class="p">(</span><span class="n">cyl</span> <span class="o">=</span> <span class="nf">as.factor</span><span class="p">(</span><span class="n">cyl</span><span class="p">))</span> <span class="o">%&gt;%</span> 
+    <span class="nf">group_by</span><span class="p">(</span><span class="n">vs</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">summarise_if</span><span class="p">(</span>
+        <span class="n">is.numeric</span><span class="p">,</span>
+        <span class="nf">funs</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">median</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A tibble: 2 × 5</caption>
+<thead>
+	<tr><th scope=col>vs</th><th scope=col>mpg_mean</th><th scope=col>hp_mean</th><th scope=col>mpg_median</th><th scope=col>hp_median</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>0</td><td>16.61667</td><td>189.72222</td><td>15.65</td><td>180</td></tr>
+	<tr><td>1</td><td>24.55714</td><td> 91.35714</td><td>22.80</td><td> 96</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="unpivoting">
+<h3>2.2. Unpivoting<a class="headerlink" href="#unpivoting" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wide</span> <span class="o">=</span> <span class="nf">data.frame</span><span class="p">(</span>
+    <span class="n">Color</span><span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;Red&#39;</span><span class="p">,</span> <span class="s">&#39;Green&#39;</span><span class="p">,</span> <span class="s">&#39;Blue&#39;</span><span class="p">),</span>
+    <span class="s">&#39;Q1.2020&#39;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="m">1500</span><span class="p">,</span> <span class="m">2000</span><span class="p">),</span>
+    <span class="s">&#39;Q2.2020&#39;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1200</span><span class="p">,</span> <span class="m">1500</span><span class="p">,</span> <span class="m">2200</span><span class="p">),</span>
+    <span class="s">&#39;Q3.2020&#39;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1500</span><span class="p">,</span> <span class="m">1575</span><span class="p">,</span> <span class="m">2000</span><span class="p">),</span>
+    <span class="s">&#39;Q4.2020&#39;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1700</span><span class="p">,</span> <span class="m">1800</span><span class="p">,</span> <span class="m">2800</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">wide</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 3 × 5</caption>
+<thead>
+	<tr><th scope=col>Color</th><th scope=col>Q1.2020</th><th scope=col>Q2.2020</th><th scope=col>Q3.2020</th><th scope=col>Q4.2020</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Red  </td><td>1000</td><td>1200</td><td>1500</td><td>1700</td></tr>
+	<tr><td>Green</td><td>1500</td><td>1500</td><td>1575</td><td>1800</td></tr>
+	<tr><td>Blue </td><td>2000</td><td>2200</td><td>2000</td><td>2800</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wide</span> <span class="o">%&gt;%</span> <span class="nf">pivot_longer</span><span class="p">(</span>
+    <span class="n">cols</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">Q1.2020</span><span class="p">,</span> <span class="n">Q2.2020</span><span class="p">,</span> <span class="n">Q3.2020</span><span class="p">,</span> <span class="n">Q4.2020</span><span class="p">),</span>
+    <span class="n">names_to</span><span class="o">=</span><span class="s">&#39;Quarter&#39;</span><span class="p">,</span>
+    <span class="n">values_to</span><span class="o">=</span><span class="s">&#39;Sales&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A tibble: 12 × 3</caption>
+<thead>
+	<tr><th scope=col>Color</th><th scope=col>Quarter</th><th scope=col>Sales</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Red  </td><td>Q1.2020</td><td>1000</td></tr>
+	<tr><td>Red  </td><td>Q2.2020</td><td>1200</td></tr>
+	<tr><td>Red  </td><td>Q3.2020</td><td>1500</td></tr>
+	<tr><td>Red  </td><td>Q4.2020</td><td>1700</td></tr>
+	<tr><td>Green</td><td>Q1.2020</td><td>1500</td></tr>
+	<tr><td>Green</td><td>Q2.2020</td><td>1500</td></tr>
+	<tr><td>Green</td><td>Q3.2020</td><td>1575</td></tr>
+	<tr><td>Green</td><td>Q4.2020</td><td>1800</td></tr>
+	<tr><td>Blue </td><td>Q1.2020</td><td>2000</td></tr>
+	<tr><td>Blue </td><td>Q2.2020</td><td>2200</td></tr>
+	<tr><td>Blue </td><td>Q3.2020</td><td>2000</td></tr>
+	<tr><td>Blue </td><td>Q4.2020</td><td>2800</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="pivot-table">
+<h3>2.3. Pivot table<a class="headerlink" href="#pivot-table" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">long</span> <span class="o">=</span> <span class="nf">data.frame</span><span class="p">(</span>
+    <span class="n">Market</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Asian&#39;</span><span class="p">,</span> <span class="s">&#39;Asian&#39;</span><span class="p">,</span> <span class="s">&#39;Asian&#39;</span><span class="p">,</span> <span class="s">&#39;Asian&#39;</span><span class="p">,</span> <span class="s">&#39;Europe&#39;</span><span class="p">,</span> <span class="s">&#39;Europe&#39;</span><span class="p">,</span> <span class="s">&#39;Europe&#39;</span><span class="p">,</span> <span class="s">&#39;Europe&#39;</span><span class="p">),</span>
+    <span class="n">Color</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Red&#39;</span><span class="p">,</span> <span class="s">&#39;Red&#39;</span><span class="p">,</span> <span class="s">&#39;Blue&#39;</span><span class="p">,</span> <span class="s">&#39;Blue&#39;</span><span class="p">,</span> <span class="s">&#39;Red&#39;</span><span class="p">,</span> <span class="s">&#39;Red&#39;</span><span class="p">,</span> <span class="s">&#39;Blue&#39;</span><span class="p">,</span> <span class="s">&#39;Blue&#39;</span><span class="p">),</span>
+    <span class="n">Size</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Large&#39;</span><span class="p">,</span> <span class="s">&#39;Small&#39;</span><span class="p">,</span> <span class="s">&#39;Large&#39;</span><span class="p">,</span> <span class="s">&#39;Small&#39;</span><span class="p">,</span><span class="s">&#39;Large&#39;</span><span class="p">,</span> <span class="s">&#39;Small&#39;</span><span class="p">,</span> <span class="s">&#39;Large&#39;</span><span class="p">,</span> <span class="s">&#39;Small&#39;</span><span class="p">),</span>
+    <span class="n">Price</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">17</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">19</span><span class="p">,</span> <span class="m">13</span><span class="p">,</span> <span class="m">18</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">14</span><span class="p">),</span>
+    <span class="n">Sales</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">68000</span><span class="p">,</span> <span class="m">44000</span><span class="p">,</span> <span class="m">57000</span><span class="p">,</span> <span class="m">52000</span><span class="p">,</span> <span class="m">81000</span><span class="p">,</span> <span class="m">72000</span><span class="p">,</span> <span class="m">90000</span><span class="p">,</span> <span class="m">77000</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">long</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 8 × 5</caption>
+<thead>
+	<tr><th scope=col>Market</th><th scope=col>Color</th><th scope=col>Size</th><th scope=col>Price</th><th scope=col>Sales</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Asian </td><td>Red </td><td>Large</td><td>17</td><td>68000</td></tr>
+	<tr><td>Asian </td><td>Red </td><td>Small</td><td>11</td><td>44000</td></tr>
+	<tr><td>Asian </td><td>Blue</td><td>Large</td><td>19</td><td>57000</td></tr>
+	<tr><td>Asian </td><td>Blue</td><td>Small</td><td>13</td><td>52000</td></tr>
+	<tr><td>Europe</td><td>Red </td><td>Large</td><td>18</td><td>81000</td></tr>
+	<tr><td>Europe</td><td>Red </td><td>Small</td><td>12</td><td>72000</td></tr>
+	<tr><td>Europe</td><td>Blue</td><td>Large</td><td>20</td><td>90000</td></tr>
+	<tr><td>Europe</td><td>Blue</td><td>Small</td><td>14</td><td>77000</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">long</span> <span class="o">%&gt;%</span> <span class="nf">pivot_wider</span><span class="p">(</span>
+    <span class="n">id_cols</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Market&#39;</span><span class="p">,</span> <span class="s">&#39;Color&#39;</span><span class="p">),</span>
+    <span class="n">names_from</span><span class="o">=</span><span class="s">&#39;Size&#39;</span><span class="p">,</span>
+    <span class="n">values_from</span><span class="o">=</span><span class="s">&#39;Sales&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A tibble: 4 × 4</caption>
+<thead>
+	<tr><th scope=col>Market</th><th scope=col>Color</th><th scope=col>Large</th><th scope=col>Small</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Asian </td><td>Red </td><td>68000</td><td>44000</td></tr>
+	<tr><td>Asian </td><td>Blue</td><td>57000</td><td>52000</td></tr>
+	<tr><td>Europe</td><td>Red </td><td>81000</td><td>72000</td></tr>
+	<tr><td>Europe</td><td>Blue</td><td>90000</td><td>77000</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">long</span> <span class="o">%&gt;%</span> <span class="nf">pivot_wider</span><span class="p">(</span>
+    <span class="n">id_cols</span><span class="o">=</span><span class="s">&#39;Market&#39;</span><span class="p">,</span>
+    <span class="n">names_from</span><span class="o">=</span><span class="s">&#39;Size&#39;</span><span class="p">,</span>
+    <span class="n">values_from</span><span class="o">=</span><span class="s">&#39;Price&#39;</span><span class="p">,</span>
+    <span class="n">values_fn</span><span class="o">=</span><span class="n">mean</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A tibble: 2 × 3</caption>
+<thead>
+	<tr><th scope=col>Market</th><th scope=col>Large</th><th scope=col>Small</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Asian </td><td>18</td><td>12</td></tr>
+	<tr><td>Europe</td><td>19</td><td>13</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">long</span> <span class="o">%&gt;%</span> <span class="nf">pivot_wider</span><span class="p">(</span>
+    <span class="n">id_cols</span><span class="o">=</span><span class="s">&#39;Market&#39;</span><span class="p">,</span>
+    <span class="n">names_from</span><span class="o">=</span><span class="s">&#39;Size&#39;</span><span class="p">,</span>
+    <span class="n">values_from</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Sales&#39;</span><span class="p">,</span> <span class="s">&#39;Price&#39;</span><span class="p">),</span>
+    <span class="n">values_fn</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="s">&#39;Sales&#39;</span><span class="o">=</span><span class="n">sum</span><span class="p">,</span> <span class="s">&#39;Price&#39;</span><span class="o">=</span><span class="n">mean</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A tibble: 2 × 5</caption>
+<thead>
+	<tr><th scope=col>Market</th><th scope=col>Sales_Large</th><th scope=col>Sales_Small</th><th scope=col>Price_Large</th><th scope=col>Price_Small</th></tr>
+	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Asian </td><td>125000</td><td> 96000</td><td>18</td><td>12</td></tr>
+	<tr><td>Europe</td><td>171000</td><td>149000</td><td>19</td><td>13</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="appending-data">
+<h3>2.4. Appending data<a class="headerlink" href="#appending-data" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;package &#39;readxl&#39; was built under R version 3.6.3&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove all warnings</span>
+<span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">-1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s">&#39;../data/world_population.xlsx&#39;</span>
+<span class="n">sheets</span> <span class="o">=</span> <span class="nf">excel_sheets</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">sheets</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'1960s'</li><li>'1970s'</li><li>'1980s'</li><li>'1990s'</li><li>'2000s'</li><li>'2010s'</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">world1</span> <span class="o">=</span> <span class="nf">read_excel</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="n">sheets</span><span class="p">[</span><span class="m">1</span><span class="p">])</span>
+<span class="n">world2</span> <span class="o">=</span> <span class="nf">read_excel</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="n">sheets</span><span class="p">[</span><span class="m">2</span><span class="p">])</span>
+<span class="n">world3</span> <span class="o">=</span> <span class="nf">read_excel</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="n">sheets</span><span class="p">[</span><span class="m">3</span><span class="p">])</span>
+<span class="n">world4</span> <span class="o">=</span> <span class="nf">read_excel</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="n">sheets</span><span class="p">[</span><span class="m">4</span><span class="p">])</span>
+<span class="n">world5</span> <span class="o">=</span> <span class="nf">read_excel</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="n">sheets</span><span class="p">[</span><span class="m">5</span><span class="p">])</span>
+<span class="n">world6</span> <span class="o">=</span> <span class="nf">read_excel</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="n">sheets</span><span class="p">[</span><span class="m">6</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">world</span> <span class="o">&lt;-</span> <span class="nf">bind_rows</span><span class="p">(</span><span class="n">world1</span><span class="p">,</span> <span class="n">world2</span><span class="p">,</span> <span class="n">world3</span><span class="p">,</span> <span class="n">world4</span><span class="p">,</span> <span class="n">world5</span><span class="p">,</span> <span class="n">world6</span><span class="p">)</span>
+<span class="n">world</span> <span class="o">%&gt;%</span> <span class="n">dim</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>12263</li><li>3</li></ol>
+</div></div>
+</div>
+</section>
+<section id="joining-dataframes">
+<h3>2.5. Joining dataframes<a class="headerlink" href="#joining-dataframes" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">math</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span>
+    <span class="n">student_id</span><span class="o">=</span><span class="nf">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">),</span>
+    <span class="n">maths</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">8.5</span><span class="p">,</span> <span class="m">9</span><span class="p">))</span>
+
+<span class="n">physics</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span>
+    <span class="n">student_id</span><span class="o">=</span><span class="nf">seq</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span>
+    <span class="n">physics</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">9.5</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">student_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">math</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 5 × 2</caption>
+<thead>
+	<tr><th scope=col>student_id</th><th scope=col>maths</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>10.0</td></tr>
+	<tr><td>2</td><td> 8.0</td></tr>
+	<tr><td>3</td><td> 7.0</td></tr>
+	<tr><td>4</td><td> 8.5</td></tr>
+	<tr><td>5</td><td> 9.0</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">physics</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 5 × 3</caption>
+<thead>
+	<tr><th scope=col>student_id</th><th scope=col>physics</th><th scope=col>id</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td> 2</td><td>7.0</td><td> 2</td></tr>
+	<tr><td> 4</td><td>3.0</td><td> 4</td></tr>
+	<tr><td> 6</td><td>6.0</td><td> 6</td></tr>
+	<tr><td> 8</td><td>8.0</td><td> 8</td></tr>
+	<tr><td>10</td><td>9.5</td><td>10</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">math</span> <span class="o">%&gt;%</span> <span class="nf">left_join</span><span class="p">(</span><span class="n">physics</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s">&#39;student_id&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 5 × 4</caption>
+<thead>
+	<tr><th scope=col>student_id</th><th scope=col>maths</th><th scope=col>physics</th><th scope=col>id</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>10.0</td><td>NA</td><td>NA</td></tr>
+	<tr><td>2</td><td> 8.0</td><td> 7</td><td> 2</td></tr>
+	<tr><td>3</td><td> 7.0</td><td>NA</td><td>NA</td></tr>
+	<tr><td>4</td><td> 8.5</td><td> 3</td><td> 4</td></tr>
+	<tr><td>5</td><td> 9.0</td><td>NA</td><td>NA</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">math</span> <span class="o">%&gt;%</span> <span class="nf">inner_join</span><span class="p">(</span><span class="n">physics</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s">&#39;student_id&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 2 × 4</caption>
+<thead>
+	<tr><th scope=col>student_id</th><th scope=col>maths</th><th scope=col>physics</th><th scope=col>id</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>2</td><td>8.0</td><td>7</td><td>2</td></tr>
+	<tr><td>4</td><td>8.5</td><td>3</td><td>4</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">math</span> <span class="o">%&gt;%</span> <span class="nf">left_join</span><span class="p">(</span><span class="n">physics</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;student_id&#39;</span><span class="o">=</span><span class="s">&#39;id&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<caption>A data.frame: 5 × 4</caption>
+<thead>
+	<tr><th scope=col>student_id</th><th scope=col>maths</th><th scope=col>student_id.y</th><th scope=col>physics</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>10.0</td><td>NA</td><td>NA</td></tr>
+	<tr><td>2</td><td> 8.0</td><td> 2</td><td> 7</td></tr>
+	<tr><td>3</td><td> 7.0</td><td>NA</td><td>NA</td></tr>
+	<tr><td>4</td><td> 8.5</td><td> 4</td><td> 3</td></tr>
+	<tr><td>5</td><td> 9.0</td><td>NA</td><td>NA</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><em><a class="reference external" href="http://r4ds.had.co.nz">r4ds.had.co.nz</a> - <a class="reference external" href="https://r4ds.had.co.nz/">R for Data Science</a></em></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            kernelName: "ir",
+            path: "./11-r-programing"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="r-data-structures.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">R: Data Structures</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="dplyr-data-cleaning.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Dplyr: Data Cleaning</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

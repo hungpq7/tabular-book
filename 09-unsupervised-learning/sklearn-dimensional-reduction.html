@@ -1,0 +1,2921 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Sklearn: Dimensional Reduction</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PyOD: Anomaly Detection" href="pyod-anomaly-detection.html" />
+    <link rel="prev" title="Sklearn: Clustering" href="sklearn-clustering.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../01-python-programing/_intro.html">
+   <b>
+    1. Python Programing
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-algorithms.html">
+     (w) Python: Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02-mathematics/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-linear-algebra.html">
+     NumPy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/sympy-calculus.html">
+     SymPy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-probability.html">
+     NumPy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-statistics.html">
+     NumPy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/scipy-hypothesis-testing.html">
+     SciPy: Hypothesis Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-applied-mathematics.html">
+     (w) NumPy: Applied Mathematics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/networkx-network-analysis.html">
+     (w) NetworkX: Network Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03-data-manipulation/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/numpy-arrays.html">
+     NumPy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04-big-data/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../05-data-visualization/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../06-machine-learning/_intro.html">
+   <b>
+    6. Machine Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-machine-learning.html">
+     Sklearn: Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-classification.html">
+     Sklearn: Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-regression.html">
+     Sklearn: Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
+     Sklearn: Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/lenskit-recommendation.html">
+     Lenskit: Recommendation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/pyspark-machine-learning.html">
+     PySpark: Machine Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../07-tabular-learning/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/ray-hyperparameter-optimization.html">
+     Ray: Hyperparam Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/shap-model-interpretation.html">
+     Shap: Model Interpretation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/imblearn-targeted-modeling.html">
+     (w) Imblearn: Targeted Modeling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../08-time-series/_intro.html">
+   <b>
+    8. Time Series
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/statsmodels-temporal-analysis.html">
+     Statsmodels: Temporal Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/prophet-forecasting-algorithms.html">
+     Prophet: Forecasting Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/sktime-forecasting-pipeline.html">
+     Sktime: Forecasting Pipeline
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
+     (w) Darts: Deep Forecasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    9. Unsupervised Learning
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="mlxtend-association-rules.html">
+     (w) Mlxtend: Association Rules
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="sklearn-clustering.html">
+     Sklearn: Clustering
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Sklearn: Dimensional Reduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pyod-anomaly-detection.html">
+     PyOD: Anomaly Detection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../10-deep-learning/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/gensim-text-mining.html">
+     Gensim: Text Mining
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/opencv-image-processing.html">
+     (w) OpenCV: Image Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/keras-multilayer-perceptron.html">
+     Keras: Multilayer Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/keras-recurrent-networks.html">
+     Keras: Recurrent Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/keras-convolutional-networks.html">
+     (w) Keras: Convolutional Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/pytorch-deep-learning.html">
+     PyTorch: Deep Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../11-r-programing/_intro.html">
+   <b>
+    11. R Programing
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-basic-concepts.html">
+     R: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-data-structures.html">
+     R: Data Structures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/tidyverse-data-wrangling.html">
+     Tidyverse: Data Wrangling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/dplyr-data-cleaning.html">
+     Dplyr: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/ggplot-data-visualization.html">
+     Ggplot: Data Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-statistics.html">
+     R: Statistics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/09-unsupervised-learning/sklearn-dimensional-reduction.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/09-unsupervised-learning/sklearn-dimensional-reduction.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/09-unsupervised-learning/sklearn-dimensional-reduction.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#feature-selection">
+   1. Feature selection
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#filter-methods">
+     1.1. Filter methods
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#low-variance-filtering">
+       Low variance filtering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#collinearity-filtering">
+       Collinearity filtering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#target-based-selection">
+       Target-based selection
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gradient-selection">
+       Gradient selection
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model-based-methods">
+     1.2. Model-based methods
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#greedy-elimination">
+       Greedy elimination
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#importance-analysis">
+       Importance analysis
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ranked-elimination">
+       Ranked elimination
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stochastic-prediction">
+       Stochastic prediction
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pca">
+   2. PCA
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm">
+     2.1  Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     2.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lda">
+   3. LDA
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     3.1. Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     3.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#t-sne">
+   4. t-SNE
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     4.1. Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     4.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#umap">
+   5. UMAP
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     5.1. Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     5.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Sklearn: Dimensional Reduction</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#feature-selection">
+   1. Feature selection
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#filter-methods">
+     1.1. Filter methods
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#low-variance-filtering">
+       Low variance filtering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#collinearity-filtering">
+       Collinearity filtering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#target-based-selection">
+       Target-based selection
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gradient-selection">
+       Gradient selection
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model-based-methods">
+     1.2. Model-based methods
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#greedy-elimination">
+       Greedy elimination
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#importance-analysis">
+       Importance analysis
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ranked-elimination">
+       Ranked elimination
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stochastic-prediction">
+       Stochastic prediction
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pca">
+   2. PCA
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm">
+     2.1  Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     2.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lda">
+   3. LDA
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     3.1. Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     3.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#t-sne">
+   4. t-SNE
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     4.1. Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     4.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#umap">
+   5. UMAP
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     5.1. Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     5.2. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   Install
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="sklearn-dimensional-reduction">
+<h1>Sklearn: Dimensional Reduction<a class="headerlink" href="#sklearn-dimensional-reduction" title="Permalink to this headline">#</a></h1>
+<p>Generalization refers to the property of a good dataset that has several observations for each combination of feature values. <a class="reference external" href="https://en.wikipedia.org/wiki/Curse_of_dimensionality">Curse of dimensionality</a> is a phenomenom arises in a high dimensional dataset, where the number of possible values is very huge so that the dataset fails to <em>generalize</em>.</p>
+<p>Imagine there are 10 <em>binary</em> features, then we need thousands of observations to generalize about 1000 combinations (<span class="math notranslate nohighlight">\(2^{10}=1024\)</span>). It’s not hard to see that: to construct a good dataset, we are going to need millions of observations for 20 features and billions of observations for 30 features. Of course, a lot of combinations in real world data never exist, making the actual number of combinations is much smaller. However, the data size required still grows exponentially, thus this example still provides a good explanation of how dimensionality curses us.</p>
+<p>The most challenging part in Machine Learning is to select the right set of features before traning any model. Irrelevant features may hurt the performance of our predictive model while they spend computing resources. Noises these features add to the dataset lead to overfitting and increase both training and predicting time. Thus, dimensionality reduction is an important task of Data Scientists.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SelectByShuffling</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">DropCorrelatedFeatures</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SmartCorrelatedSelection</span>
+<span class="kn">from</span> <span class="nn">nni.algorithms.feature_engineering.gradient_selector</span> <span class="kn">import</span> <span class="n">FeatureGradientSelector</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <span class="n">LDA</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">VarianceThreshold</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">RFE</span><span class="p">,</span> <span class="n">RFECV</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectFromModel</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SequentialFeatureSelector</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">GenericUnivariateSelect</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">f_classif</span><span class="p">,</span> <span class="n">mutual_info_classif</span><span class="p">,</span> <span class="n">r_regression</span>
+<span class="kn">from</span> <span class="nn">umap</span> <span class="kn">import</span> <span class="n">UMAP</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="feature-selection">
+<h2>1. Feature selection<a class="headerlink" href="#feature-selection" title="Permalink to this headline">#</a></h2>
+<p>Feature selection refers to the tasks that remove low quality data, hence keep informative features. It helps reduce noises and computational cost. Here are some feature selection techniques, they can be implemented very easily.</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfMobile</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/train_mobile_price.csv&#39;</span><span class="p">)</span>
+<span class="n">dfMobile</span> <span class="o">=</span> <span class="n">dfMobile</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;priceRange&#39;</span><span class="p">:</span><span class="s1">&#39;target&#39;</span><span class="p">})</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfMobile</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfMobile</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="n">dfMobile</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>batteryPower</th>
+      <th>bluetooth</th>
+      <th>clockSpeed</th>
+      <th>dualSim</th>
+      <th>frontCam</th>
+      <th>4g</th>
+      <th>intMem</th>
+      <th>mDepth</th>
+      <th>mWeight</th>
+      <th>nCores</th>
+      <th>...</th>
+      <th>pxHeight</th>
+      <th>pxWidth</th>
+      <th>ram</th>
+      <th>scrHeight</th>
+      <th>scrWidth</th>
+      <th>talkTime</th>
+      <th>3g</th>
+      <th>touchScreen</th>
+      <th>wifi</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>842</td>
+      <td>0</td>
+      <td>2.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7</td>
+      <td>0.6</td>
+      <td>188</td>
+      <td>2</td>
+      <td>...</td>
+      <td>20</td>
+      <td>756</td>
+      <td>2549</td>
+      <td>9</td>
+      <td>7</td>
+      <td>19</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1021</td>
+      <td>1</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>53</td>
+      <td>0.7</td>
+      <td>136</td>
+      <td>3</td>
+      <td>...</td>
+      <td>905</td>
+      <td>1988</td>
+      <td>2631</td>
+      <td>17</td>
+      <td>3</td>
+      <td>7</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>563</td>
+      <td>1</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>41</td>
+      <td>0.9</td>
+      <td>145</td>
+      <td>5</td>
+      <td>...</td>
+      <td>1263</td>
+      <td>1716</td>
+      <td>2603</td>
+      <td>11</td>
+      <td>2</td>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>615</td>
+      <td>1</td>
+      <td>2.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>0.8</td>
+      <td>131</td>
+      <td>6</td>
+      <td>...</td>
+      <td>1216</td>
+      <td>1786</td>
+      <td>2769</td>
+      <td>16</td>
+      <td>8</td>
+      <td>11</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1821</td>
+      <td>1</td>
+      <td>1.2</td>
+      <td>0</td>
+      <td>13</td>
+      <td>1</td>
+      <td>44</td>
+      <td>0.6</td>
+      <td>141</td>
+      <td>2</td>
+      <td>...</td>
+      <td>1208</td>
+      <td>1212</td>
+      <td>1411</td>
+      <td>8</td>
+      <td>2</td>
+      <td>15</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div></div></div>
+</div>
+<section id="filter-methods">
+<h3>1.1. Filter methods<a class="headerlink" href="#filter-methods" title="Permalink to this headline">#</a></h3>
+<p>Filter methods rely on descriptive statistics of features to decide which one to be filtered out. They are done independently to Machine Learning algorithms, and are classified into three approaches:</p>
+<ul class="simple">
+<li><p><em>Univariate statistics</em>. Methods of this type usually assess quality of features such as ratio of missing data or variance.</p></li>
+<li><p><em>Feature interaction</em>. This approach analyzes feature pairs to examine if they bring the same information.</p></li>
+<li><p><em>Target interaction</em>. The idea of this technique is scoring how strong the relationship between each feature and the target is.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">VarianceThreshold</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SelectByShuffling</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">DropCorrelatedFeatures</span>
+<span class="kn">from</span> <span class="nn">feature_engine.selection</span> <span class="kn">import</span> <span class="n">SmartCorrelatedSelection</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">GenericUnivariateSelect</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">f_classif</span><span class="p">,</span> <span class="n">mutual_info_classif</span><span class="p">,</span> <span class="n">r_regression</span>
+<span class="kn">from</span> <span class="nn">nni.algorithms.feature_engineering.gradient_selector</span> <span class="kn">import</span> <span class="n">FeatureGradientSelector</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="low-variance-filtering">
+<h4>Low variance filtering<a class="headerlink" href="#low-variance-filtering" title="Permalink to this headline">#</a></h4>
+<p>Think about a constant feature, whose all observations have the same value, it has no predictive power and cannot explain the target variable. Therefore, features with very low variance can be safely removed. Implemented via Scikit-learn’s
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html"><code class="docutils literal notranslate"><span class="pre">VarianceThreshold</span></code></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">VarianceThreshold</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 842. ,    2.2,    1. , ...,    9. ,    7. ,   19. ],
+       [1021. ,    0.5,    0. , ...,   17. ,    3. ,    7. ],
+       [ 563. ,    0.5,    2. , ...,   11. ,    2. ,    9. ],
+       ...,
+       [1911. ,    0.9,    1. , ...,    9. ,    1. ,    5. ],
+       [1512. ,    0.9,    4. , ...,   18. ,   10. ,   19. ],
+       [ 510. ,    2. ,    5. , ...,   19. ,    4. ,    2. ]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;batteryPower&#39;, &#39;clockSpeed&#39;, &#39;frontCam&#39;, &#39;intMem&#39;, &#39;mWeight&#39;,
+       &#39;nCores&#39;, &#39;primeCam&#39;, &#39;pxHeight&#39;, &#39;pxWidth&#39;, &#39;ram&#39;, &#39;scrHeight&#39;,
+       &#39;scrWidth&#39;, &#39;talkTime&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="collinearity-filtering">
+<h4>Collinearity filtering<a class="headerlink" href="#collinearity-filtering" title="Permalink to this headline">#</a></h4>
+<p>A pair of features having a high Pearson’s correlation coefficient means they are very similar to each other, and they will bring the same information to the predictive model. Such a situation is called <a class="reference external" href="https://en.wikipedia.org/wiki/Multicollinearity">collinearity</a>, and it can mislead some Machine Learning algorithms. Therefore, only one variable in the highly correlated group should be used. This method is implemented in Feature-engine via the class
+<a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/selection/DropCorrelatedFeatures.html"><code class="docutils literal notranslate"><span class="pre">DropCorrelatedFeatures</span></code></a>
+, which only keeps the first high correlated feature.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotCollinear</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">):</span>
+    <span class="n">matCorr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+    <span class="n">maskCollinear</span> <span class="o">=</span> <span class="n">matCorr</span><span class="p">[</span><span class="n">matCorr</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">thresh</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">matCorr</span> <span class="o">=</span> <span class="n">matCorr</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">maskCollinear</span><span class="p">,</span> <span class="n">maskCollinear</span><span class="p">]</span>
+    
+    <span class="n">figsize</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">matCorr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.7</span>
+    <span class="n">palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">matCorr</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">matCorr</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotCollinear</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;kendall&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_12_0.png"><img alt="../_images/sklearn-dimensional-reduction_12_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_12_0.png" style="width: 380.5px; height: 348.5px;" /></a>
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">DropCorrelatedFeatures</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>batteryPower</th>
+      <th>bluetooth</th>
+      <th>clockSpeed</th>
+      <th>dualSim</th>
+      <th>frontCam</th>
+      <th>4g</th>
+      <th>intMem</th>
+      <th>mDepth</th>
+      <th>mWeight</th>
+      <th>nCores</th>
+      <th>pxHeight</th>
+      <th>ram</th>
+      <th>scrHeight</th>
+      <th>talkTime</th>
+      <th>touchScreen</th>
+      <th>wifi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>842</td>
+      <td>0</td>
+      <td>2.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7</td>
+      <td>0.6</td>
+      <td>188</td>
+      <td>2</td>
+      <td>20</td>
+      <td>2549</td>
+      <td>9</td>
+      <td>19</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1021</td>
+      <td>1</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>53</td>
+      <td>0.7</td>
+      <td>136</td>
+      <td>3</td>
+      <td>905</td>
+      <td>2631</td>
+      <td>17</td>
+      <td>7</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>563</td>
+      <td>1</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>41</td>
+      <td>0.9</td>
+      <td>145</td>
+      <td>5</td>
+      <td>1263</td>
+      <td>2603</td>
+      <td>11</td>
+      <td>9</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span><span class="o">.</span><span class="n">correlated_feature_sets_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;frontCam&#39;, &#39;primeCam&#39;},
+ {&#39;3g&#39;, &#39;4g&#39;},
+ {&#39;pxHeight&#39;, &#39;pxWidth&#39;},
+ {&#39;scrHeight&#39;, &#39;scrWidth&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Feature-engine also provides a synthetic class
+<a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/selection/SmartCorrelatedSelection.html"><code class="docutils literal notranslate"><span class="pre">SmartCorrelatedSelection</span></code></a>
+that integrates multiple selection techniques at once: missing data, variance, collinearity and model-based.</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">SmartCorrelatedSelection</span><span class="p">(</span><span class="n">selection_method</span><span class="o">=</span><span class="s1">&#39;missing_values&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>batteryPower</th>
+      <th>bluetooth</th>
+      <th>clockSpeed</th>
+      <th>dualSim</th>
+      <th>frontCam</th>
+      <th>4g</th>
+      <th>intMem</th>
+      <th>mDepth</th>
+      <th>mWeight</th>
+      <th>nCores</th>
+      <th>pxHeight</th>
+      <th>pxWidth</th>
+      <th>ram</th>
+      <th>scrHeight</th>
+      <th>scrWidth</th>
+      <th>talkTime</th>
+      <th>3g</th>
+      <th>touchScreen</th>
+      <th>wifi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>842</td>
+      <td>0</td>
+      <td>2.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7</td>
+      <td>0.6</td>
+      <td>188</td>
+      <td>2</td>
+      <td>20</td>
+      <td>756</td>
+      <td>2549</td>
+      <td>9</td>
+      <td>7</td>
+      <td>19</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1021</td>
+      <td>1</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>53</td>
+      <td>0.7</td>
+      <td>136</td>
+      <td>3</td>
+      <td>905</td>
+      <td>1988</td>
+      <td>2631</td>
+      <td>17</td>
+      <td>3</td>
+      <td>7</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>563</td>
+      <td>1</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>41</td>
+      <td>0.9</td>
+      <td>145</td>
+      <td>5</td>
+      <td>1263</td>
+      <td>1716</td>
+      <td>2603</td>
+      <td>11</td>
+      <td>2</td>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="target-based-selection">
+<h4>Target-based selection<a class="headerlink" href="#target-based-selection" title="Permalink to this headline">#</a></h4>
+<p>Another strategy is <a class="reference external" href="https://scikit-learn.org/stable/modules/feature_selection.html#univariate-feature-selection">univariate feature selection</a>, it measures the relationship between each feature and the target, then select best scored features. It is implemented in Scikit-learn’s via the class
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.GenericUnivariateSelect.html"><code class="docutils literal notranslate"><span class="pre">GenericUnivariateSelect</span></code></a>.
+The scoring function can be choosen among:</p>
+<ul class="simple">
+<li><p>Pearson’s correlation coefficient</p></li>
+<li><p>ANOVA F-value</p></li>
+<li><p>Chi-squared test statistic</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Mutual_information">Mutual information</a>, a metric can show non-linear relationship</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">GenericUnivariateSelect</span><span class="p">(</span><span class="n">score_func</span><span class="o">=</span><span class="n">f_classif</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;percentile&#39;</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">selector</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;batteryPower&#39;, &#39;pxHeight&#39;, &#39;pxWidth&#39;, &#39;ram&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nTop</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">selector</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">selector</span><span class="o">.</span><span class="n">scores_</span><span class="p">})</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;score &gt; 0&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">nTop</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;teal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_19_0.png"><img alt="../_images/sklearn-dimensional-reduction_19_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_19_0.png" style="width: 373.0px; height: 207.5px;" /></a>
+</div>
+</div>
+</section>
+<section id="gradient-selection">
+<h4>Gradient selection<a class="headerlink" href="#gradient-selection" title="Permalink to this headline">#</a></h4>
+<p>NNI’s <a class="reference external" href="https://nni.readthedocs.io/en/stable/feature_engineering/gradient_feature_selector.html"><code class="docutils literal notranslate"><span class="pre">GradientFeatureSelector</span></code></a>
+is a cool algorithm with low computational complexity, high statistical efficiency that can detect higher-order feature interations for large datasets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">FeatureGradientSelector</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>batteryPower</th>
+      <th>4g</th>
+      <th>intMem</th>
+      <th>nCores</th>
+      <th>pxWidth</th>
+      <th>ram</th>
+      <th>scrHeight</th>
+      <th>talkTime</th>
+      <th>3g</th>
+      <th>wifi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>842</td>
+      <td>0</td>
+      <td>7</td>
+      <td>2</td>
+      <td>756</td>
+      <td>2549</td>
+      <td>9</td>
+      <td>19</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1021</td>
+      <td>1</td>
+      <td>53</td>
+      <td>3</td>
+      <td>1988</td>
+      <td>2631</td>
+      <td>17</td>
+      <td>7</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>563</td>
+      <td>1</td>
+      <td>41</td>
+      <td>5</td>
+      <td>1716</td>
+      <td>2603</td>
+      <td>11</td>
+      <td>9</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>615</td>
+      <td>0</td>
+      <td>10</td>
+      <td>6</td>
+      <td>1786</td>
+      <td>2769</td>
+      <td>16</td>
+      <td>11</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1821</td>
+      <td>1</td>
+      <td>44</td>
+      <td>2</td>
+      <td>1212</td>
+      <td>1411</td>
+      <td>8</td>
+      <td>15</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="model-based-methods">
+<h3>1.2. Model-based methods<a class="headerlink" href="#model-based-methods" title="Permalink to this headline">#</a></h3>
+<p>Also known as wrapper methods, they run Machine Learning algorithms on the dataset to detect unimporatant features. This strategy is considered more accurate but more expensive that filter methods. It also depends on the quality of the model used in the process.</p>
+<section id="greedy-elimination">
+<h4>Greedy elimination<a class="headerlink" href="#greedy-elimination" title="Permalink to this headline">#</a></h4>
+<p>This method can be used in two directions: bottom-up (foward addition) or top-down (backward elimination). While considering a subset of features, it tries to add the best feature or to remove the worst feature based on cross-validated score. The process is repeated util the desired number of feature is reached. This technique is implemented via Scikit-learn’s
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html"><code class="docutils literal notranslate"><span class="pre">SequentialFeatureSelector</span></code></a>,
+but should never be used in practice due to the huge number of models need to be trained.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">selector</span> <span class="o">=</span> <span class="n">SequentialFeatureSelector</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="p">,</span> 
+    <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">,</span> 
+    <span class="n">n_features_to_select</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span>
+<span class="p">)</span>
+
+<span class="n">selector</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">selector</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;batteryPower&#39;, &#39;bluetooth&#39;, &#39;clockSpeed&#39;, &#39;pxHeight&#39;, &#39;ram&#39;],
+      dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="importance-analysis">
+<h4>Importance analysis<a class="headerlink" href="#importance-analysis" title="Permalink to this headline">#</a></h4>
+<p>Some Machine Learning algorithms have the ability to return feature importances. For example, Linear Regression uses variable weights and Decision Tree uses information gains. Feature importances express how much information features contribute on predicting the target variable. We can take advantage of it to remove low important features. This selector can be found in Scikit-learn’s class
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectFromModel.html"><code class="docutils literal notranslate"><span class="pre">SelectFromModel</span></code></a></p>
+<p>Importance analysis only requires a single model to be trained, thus it is not very expensive. But you should consider feature importances with a grain of salt, as it does not always resemble the true contribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">selector</span> <span class="o">=</span> <span class="n">SelectFromModel</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 842., 2549.],
+       [1021., 2631.],
+       [ 563., 2603.],
+       ...,
+       [1911., 3057.],
+       [1512.,  869.],
+       [ 510., 3919.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;batteryPower&#39;, &#39;ram&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ranked-elimination">
+<h4>Ranked elimination<a class="headerlink" href="#ranked-elimination" title="Permalink to this headline">#</a></h4>
+<p>This selector is Scikit-learn’s combines greedy elimination with importance analysis and takes the best of both worlds. It firstly trains a model using all features, prunes worst scoring ones based on feature importances, then trains a new model using current subset, measures the importances again,… The process is repeated until the desired number of features is reached. The implementations of this method is found in Sckit-learn via the classes
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html"><code class="docutils literal notranslate"><span class="pre">RFE</span></code></a> and
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFECV.html"><code class="docutils literal notranslate"><span class="pre">RFECV</span></code></a>.</p>
+<p>There are some differences compared to the greedy method above. First, as we need to update feature importances at each iteration, bottom-up approach will not be used. Second, ranked elimination can discard more than one feature at a time, which significantly reduce the number of iterations required.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">seletor</span> <span class="o">=</span> <span class="n">RFE</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">n_features_to_select</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">seletor</span> <span class="o">=</span> <span class="n">seletor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">seletor</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;batteryPower&#39;, &#39;mDepth&#39;, &#39;pxHeight&#39;, &#39;pxWidth&#39;, &#39;ram&#39;,
+       &#39;scrHeight&#39;, &#39;scrWidth&#39;, &#39;talkTime&#39;, &#39;3g&#39;, &#39;touchScreen&#39;],
+      dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="stochastic-prediction">
+<h4>Stochastic prediction<a class="headerlink" href="#stochastic-prediction" title="Permalink to this headline">#</a></h4>
+<p>Ranked elimiation is much faster than greedy elimiation, but it is still not enough to be popular in practical tasks. When talking about a Machine Learning model, notice that the predicting time is much less than the training time. A smart approach has been proposed to take advantage of this, it is implemented via Feature-engine’s
+<a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/selection/SelectByShuffling.html"><code class="docutils literal notranslate"><span class="pre">SelectByShuffling</span></code></a>.</p>
+<p>This technique first trains a model on the entire feature set, then measures performance drop when predicting when each feature is random shuffled. If a feature is importance, the model will witness a significant performance drop when that feature is shuffled. Stochastic prediction trains only once, and thus is much faster than elimination methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">SelectByShuffling</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc_ovr&#39;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="mf">0.01</span>
+<span class="p">)</span>
+<span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>batteryPower</th>
+      <th>pxHeight</th>
+      <th>ram</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>842</td>
+      <td>20</td>
+      <td>2549</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1021</td>
+      <td>905</td>
+      <td>2631</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>563</td>
+      <td>1263</td>
+      <td>2603</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>615</td>
+      <td>1216</td>
+      <td>2769</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1821</td>
+      <td>1208</td>
+      <td>1411</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="pca">
+<h2>2. PCA<a class="headerlink" href="#pca" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Principal_component_analysis">PCA</a> (Principle Component Analysis) is a very popular dimensionality reduction aiming to construct a new dataset having less dimensions but retains most important characteristics of the original dataset. The term <em>characteristic</em> is defined by PCA using <em>variance</em>, which means we project data so that the variance of the image is maximized. To achieve this, PCA constructs a new coordinate system, in which each axis is found so that it (1) is orthorgonal to all previous axes and (2) maximizes the variance of its image.</p>
+<section id="algorithm">
+<h3>2.1  Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">#</a></h3>
+<p><em>Input</em>: A dataset having <span class="math notranslate nohighlight">\(D\)</span> variables <span class="math notranslate nohighlight">\(\mathbf{X}=(\mathbf{x}_1,\mathbf{x}_2,\dots,\mathbf{x}_D)\in\mathbb{R}^{N\times D}\)</span> and the number of components you expect to keep, <span class="math notranslate nohighlight">\(K\)</span>.</p>
+<p><em>Step 1</em>. Standardize all variables so that they are on the same scale. Then compute the covariance matrix <span class="math notranslate nohighlight">\(\mathbf{Q}\in\mathbb{R}^{D\times D}\)</span> of the scaled variables, notice that this is a symmetric square matrix.</p>
+<p><em>Step 2</em>. Solve for the eigenvalues <span class="math notranslate nohighlight">\((\lambda_1,\lambda_2,\dots,\lambda_D)\)</span> and eigenvectors <span class="math notranslate nohighlight">\((\mathbf{u}_1,\mathbf{u}_2,\dots,\mathbf{u}_D)\)</span> of <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>. As the covariance matrix is symmetric, all their eigenvectors are orthogonal.</p>
+<p><em>Step 3</em>. Choose <span class="math notranslate nohighlight">\(K\)</span> eigenvectors with largest eigenvalues and construct a matrix <span class="math notranslate nohighlight">\(\mathbf{W}=(\mathbf{u}_1,\mathbf{u}_2,\dots,\mathbf{u}_K)\)</span>. Notice <span class="math notranslate nohighlight">\(\mathbf{u}_k\in\mathbb{R}^{D}\)</span>, then <span class="math notranslate nohighlight">\(\mathbf{W}\in\mathbb{R}^{D\times K}\)</span>. The orthogonality of eigenvectors makes <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> a set of axes and form a new coordinate system.</p>
+<p><em>Step 4</em>. Project original data to the new coordinate system by computing <span class="math notranslate nohighlight">\(\mathbf{X}'=\mathbf{X}\mathbf{W}\)</span>. It turns out, the variations each new axis accounts for is quantified by the corresponding eigenvalue. Thus, <span class="math notranslate nohighlight">\(K\)</span> eigenvectors selected in step 3 are the most important components. An effective PCA model should have most variations explained in a few first components.</p>
+</section>
+<section id="implementation">
+<h3>2.2. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h3>
+<p>PCA is implemented in Scikit-learn via the classes <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html"><code class="docutils literal notranslate"><span class="pre">PCA</span></code></a> (original version), <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.KernelPCA.html"><code class="docutils literal notranslate"><span class="pre">KernelPCA</span></code></a> (non-linear reduction) and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html"><code class="docutils literal notranslate"><span class="pre">IncrementalPCA</span></code></a> (mini-batch processing). They all have a main hyperparameter:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: the number of principal components to keep, defaults to <em>None</em> (keep all components). It can accept (1) an integer for the number of components, (2) a float in the range <span class="math notranslate nohighlight">\((0,1)\)</span> for a minimum threshold that total percentage of explained variances must be greater that, or (3) <em>mle</em> for letting PCA guess the dimension. The number of components in PCA can be determined using a scree plot.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
+<span class="n">dfIris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">species</span>
+
+<span class="n">reducer</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">reducer</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">variances</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">explained_variance_ratio_</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">variances</span><span class="p">,</span> <span class="s1">&#39;-ok&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Scree Plot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_39_0.png"><img alt="../_images/sklearn-dimensional-reduction_39_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_39_0.png" style="width: 314.0px; height: 208.5px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># eigenvectors</span>
+<span class="n">reducer</span><span class="o">.</span><span class="n">components_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.36138659, -0.08452251,  0.85667061,  0.3582892 ],
+       [ 0.65658877,  0.73016143, -0.17337266, -0.07548102],
+       [-0.58202985,  0.59791083,  0.07623608,  0.54583143],
+       [-0.31548719,  0.3197231 ,  0.47983899, -0.75365743]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looking at the scree plot, the explained variances drops significantly right after the first component (PC1). This means, we only need to keep PC1, as it’s very good at retaining the most characteristics of the Iris dataset. PC1 is constructed by:</p>
+<div class="math notranslate nohighlight">
+\[\text{PC1}=0.36\cdot\text{sepalLength}-0.08\cdot\text{sepalWidth}+0.85\cdot\text{petalLength}+0.35\cdot\text{petalWidth}\]</div>
+<p>To further verify the performance of PC1, we color each flower by its species (this field was not used in training PCA).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xTransformed</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">pcNames</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;PC</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xTransformed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<span class="n">xTransformed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">xTransformed</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">pcNames</span><span class="p">)</span>
+<span class="n">xTransformed</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PC1</th>
+      <th>PC2</th>
+      <th>PC3</th>
+      <th>PC4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-2.684126</td>
+      <td>0.319397</td>
+      <td>-0.027915</td>
+      <td>-0.002262</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-2.714142</td>
+      <td>-0.177001</td>
+      <td>-0.210464</td>
+      <td>-0.099027</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-2.888991</td>
+      <td>-0.144949</td>
+      <td>0.017900</td>
+      <td>-0.019968</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-2.745343</td>
+      <td>-0.318299</td>
+      <td>0.031559</td>
+      <td>0.075576</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-2.728717</td>
+      <td>0.326755</td>
+      <td>0.090079</td>
+      <td>0.061259</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTransformed</span> <span class="o">=</span> <span class="n">xTransformed</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dfTransformed</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;PC1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;PC2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">marginal_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span><span class="p">:</span><span class="s1">&#39;w&#39;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_43_0.png"><img alt="../_images/sklearn-dimensional-reduction_43_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_43_0.png" style="width: 430.5px; height: 425.0px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="lda">
+<h2>3. LDA<a class="headerlink" href="#lda" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Linear_discriminant_analysis">LDA</a> (Linear Discriminant Analysis) is a supervised dimensionality reduction algorithm. Its ultimate goal is to map data to a new space so that classes are most <em>discriminant</em>, which can be achieved via (1) maximizing between-class variances and (2) minimizing within-class variances.</p>
+<section id="id1">
+<h3>3.1. Algorithm<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>LDA can be performed in various ways, where a simple method is applying eigendecomposition.</p>
+<p><em>Input</em>:</p>
+<ul class="simple">
+<li><p>A dataset of size <span class="math notranslate nohighlight">\(N\times D\)</span>, divided into <span class="math notranslate nohighlight">\(M\)</span> classes: <span class="math notranslate nohighlight">\(\mathcal{C}_1,\mathcal{C}_2,\dots,\mathcal{C}_M\)</span></p></li>
+<li><p>The number of components you expect to keep, <span class="math notranslate nohighlight">\(K\)</span></p></li>
+<li><p>Notation:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{s}_i\)</span> is the index of an observation belongs to a class</p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{\mathbf{s}}_m\)</span> is the mean vector of class <span class="math notranslate nohighlight">\(\mathcal{C}_m\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{\mathbf{s}}\)</span> is the overall mean vector</p></li>
+</ul>
+</li>
+</ul>
+<p><em>Step 1</em>: Compute the within-class scatter matrix, <span class="math notranslate nohighlight">\(\mathbf{S}_\text{W}\in\mathbb{R}^{D\times D}\)</span>, by taking the sum of scatter matrices of all classes.</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{S}_\text{W}=\sum_{m=1}^{M}\sum_{\mathbf{s}_i\in\mathcal{C}_m}^{}{(\mathbf{s}_i-\bar{\mathbf{s}}_m)(\mathbf{s}_i-\bar{\mathbf{s}}_m)^\text{T}}\]</div>
+<p><em>Step 2</em>: Compute the between-class scatter matrix, <span class="math notranslate nohighlight">\(\mathbf{S}_\text{B}\in\mathbb{R}^{D\times D}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\mathbf{S}_\text{B}=\sum_{m=1}^{M}{N_m}(\bar{\mathbf{s}}_m-\bar{\mathbf{s}})(\bar{\mathbf{s}}_m-\bar{\mathbf{s}})^\text{T}\]</div>
+<p><em>Step 3</em>: Solve the generalized eigenvalue problem for <span class="math notranslate nohighlight">\(\mathbf{S}_\text{W}^{-1}\mathbf{S}_\text{B}\)</span> to obtain its eigenvalues <span class="math notranslate nohighlight">\((\lambda_1,\lambda_2,\dots,\lambda_D)\)</span> and eigenvectors <span class="math notranslate nohighlight">\((\mathbf{u}_1,\mathbf{u}_2,\dots,\mathbf{u}_D)\)</span>.</p>
+<p><em>Step 4</em>. Choose <span class="math notranslate nohighlight">\(K\)</span> eigenvectors with largest eigenvalues and construct a transformation matrix <span class="math notranslate nohighlight">\(\mathbf{W}=(\mathbf{u}_1,\mathbf{u}_2,\dots,\mathbf{u}_K)\)</span> of new axes. Then project original data to the new coordinate system by computing <span class="math notranslate nohighlight">\(\mathbf{X}'=\mathbf{X}\mathbf{W}\)</span>. Recall steps 3 and 4 of PCA.</p>
+</section>
+<section id="id2">
+<h3>3.2. Implementation<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<p>Scikit-learn implements LDA and QDA via the classes <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html"><code class="docutils literal notranslate"><span class="pre">LinearDiscriminantAnalysis</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis.html"><code class="docutils literal notranslate"><span class="pre">QuadraticDiscriminantAnalysis</span></code></a>. They have only one hyperparameter like PCA:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: the number of principal components to keep, defaults to <em>None</em> (keep all components).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">species</span>
+<span class="n">dfIris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reducer</span> <span class="o">=</span> <span class="n">LDA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">reducer</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reducer</span><span class="o">.</span><span class="n">explained_variance_ratio_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.9912126, 0.0087874])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xTransformed</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ldNames</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;LD</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xTransformed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<span class="n">xTransformed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">xTransformed</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">ldNames</span><span class="p">)</span>
+<span class="n">xTransformed</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LD1</th>
+      <th>LD2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8.061800</td>
+      <td>0.300421</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.128688</td>
+      <td>-0.786660</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.489828</td>
+      <td>-0.265384</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6.813201</td>
+      <td>-0.670631</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>8.132309</td>
+      <td>0.514463</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTransformed</span> <span class="o">=</span> <span class="n">xTransformed</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dfTransformed</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;LD1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;LD2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">marginal_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span><span class="p">:</span><span class="s1">&#39;w&#39;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_52_0.png"><img alt="../_images/sklearn-dimensional-reduction_52_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_52_0.png" style="width: 422.0px; height: 425.0px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="t-sne">
+<h2>4. t-SNE<a class="headerlink" href="#t-sne" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">t-SNE</a> (t-distributed Stochastic Neighbor Embedding) is an algorithm of manifold learning, a family of methods trying to represent <em>non-linear</em> structure in data. Introduced in 2008 by van der Maaten, t-SNE quickly becomes popular in discovering characteristics of data, as the algorithm has the ability to embed any high-dimensional dataset into 2 or 3 embedded vectors, which is friendly to human.</p>
+<p>Despite its popularity, t-SNE has some drawbacks:</p>
+<ul class="simple">
+<li><p>It is computationally expensive and does not scale very well.</p></li>
+<li><p>It does not preserve global data structure, specifically, between-cluster variances are not meaningful.</p></li>
+<li><p>The result is not deterministic (due to stochastic intialization); different runs may give different results.</p></li>
+<li><p>It’s hard to select an optimal value of perplexity.</p></li>
+</ul>
+<section id="id3">
+<h3>4.1. Algorithm<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<p><em>Input:</em> A dataset having <span class="math notranslate nohighlight">\(N\)</span> observations <span class="math notranslate nohighlight">\(\mathbf{X}=\mathbf{s}_1,\mathbf{s}_2,\dots,\mathbf{s}_N\)</span> and the perplexity <span class="math notranslate nohighlight">\(K\)</span>, the number of effective neighbors around a point.</p>
+<p><em>Step 1.</em> Compute high-dimensional affinities using different normal distributions. These distributions locate at data points (which gives us <span class="math notranslate nohighlight">\(\mu\)</span>) and are more center-concentrated in denser regions (which gives us <span class="math notranslate nohighlight">\(\sigma\)</span>).</p>
+<ul class="simple">
+<li><p>For each data point <span class="math notranslate nohighlight">\(\mathbf{s}_n\)</span>, perform a binary search for <span class="math notranslate nohighlight">\(\sigma_n\)</span> such that the <a class="reference external" href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">entropy</a> of the distribution <span class="math notranslate nohighlight">\(\text{N}(\mathbf{s}_n,\sigma_n)\)</span> over neighbors equals to <span class="math notranslate nohighlight">\(\log_2K\)</span></p></li>
+<li><p>Calculate the <em>asymmetric</em> similarity between <span class="math notranslate nohighlight">\(\mathbf{s}_n\)</span> and each of its neighbor <span class="math notranslate nohighlight">\(\mathbf{s}_m\)</span> equals to the probability density at <span class="math notranslate nohighlight">\(\mathbf{s}_m\)</span> (note that <span class="math notranslate nohighlight">\(\phi_{m|n}\neq \phi_{n|m}\)</span>). As the similarity will be normalized later, the coeficient will be canceled out and is not include in the formula. We also set <span class="math notranslate nohighlight">\(\phi_{n|n}=0\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\phi_{m|n}=\exp{\left(\frac{\|\mathbf{s}_n-\mathbf{s}_m\|_2^2}{\sigma_n}\right)}\]</div>
+<ul class="simple">
+<li><p>Normalize <span class="math notranslate nohighlight">\(\phi_{m|n}\)</span> to get the affinity <span class="math notranslate nohighlight">\(p_{m|n}\)</span>. It represents the probability that a point <span class="math notranslate nohighlight">\(\mathbf{s}_m\)</span> becomes an effective neighbor of <span class="math notranslate nohighlight">\(\mathbf{s}_n\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[p_{m|n}=\phi_{m|n}\div\sum_{m=1}^{N}{\phi_{m|n}}\]</div>
+<p><em>Step 2.</em> Symmetrize high-demensional affinities. This makes the computation needed for step 4 much more simpler. The formula ensure every point has a significant contribution to the cost function:</p>
+<div class="math notranslate nohighlight">
+\[p_{mn}=\frac{p_{m|n}+p_{n|m}}{2N}\]</div>
+<p><em>Step 3.</em> Construct formulation for low-dimensional affinities. We first denote <span class="math notranslate nohighlight">\(\mathbf{s}'_1,\mathbf{s}'_2,\dots,\mathbf{s}'_N\)</span> the images in low dimension, which are unknown. This step uses a t-distribution with 1 degree of freedom (<span class="math notranslate nohighlight">\(\nu=1\)</span>), which has a heavier tail than a normal distribution. This has proved in practice its efficiency.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\phi'_{mn} &amp;= \left(1+\|\mathbf{s}'_n-\mathbf{s}'_m\|_2^2\right)^{-1} \\
+p'_{mn} &amp;= \phi'_{mn}\div\sum_{n=1}^{N}\sum_{m=1}^{N}\phi'_{mn}
+\end{aligned}\end{split}\]</div>
+<p><em>Step 4.</em> Find optimal value for <span class="math notranslate nohighlight">\(\mathbf{X}'\)</span> using <em>Gradient Descent (with momentum)</em> that minimizes Kullback-Leibler divergences:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\mathbf{X}')=\sum_{n=1}^{N}\sum_{m=1}^{N}{p_{mn}\log{\frac{p_{mn}}{p'_{mn}}}}\]</div>
+</section>
+<section id="id4">
+<h3>4.2. Implementation<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<p>Scikit-learn implements t-SNE via the classes
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html"><code class="docutils literal notranslate"><span class="pre">TSNE</span></code></a>.
+It has the following hyperparameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: the dimension of the space to embed into, defaults to <em>2</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">perplexity</span></code>: the number of effective neighbors, defaults to <em>30</em>. Should be greater on large datasets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">early_exaggeration</span></code>: a parmater controls the space between natural cluster in the embedding space, defaults to <em>12</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_iter</span></code>: the number of iteration in Gradient Descent, defaults to <em>1000</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>: the learning rate in Gradient Descent, defaults to <em>200</em>. Can be set to other floats or <em>auto</em>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">species</span>
+<span class="n">dfIris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reducer</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">xTransformed</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ldNames</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;EV</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xTransformed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<span class="n">xTransformed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">xTransformed</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">ldNames</span><span class="p">)</span>
+<span class="n">xTransformed</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EV1</th>
+      <th>EV2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-18.720890</td>
+      <td>-35.738895</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-25.321299</td>
+      <td>-27.586557</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-25.457335</td>
+      <td>-24.214565</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-23.622675</td>
+      <td>-24.388340</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-20.159002</td>
+      <td>-37.195858</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTransformed</span> <span class="o">=</span> <span class="n">xTransformed</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dfTransformed</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;EV1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;EV2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">marginal_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span><span class="p">:</span><span class="s1">&#39;w&#39;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_59_0.png"><img alt="../_images/sklearn-dimensional-reduction_59_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_59_0.png" style="width: 427.5px; height: 425.0px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="umap">
+<h2>5. UMAP<a class="headerlink" href="#umap" title="Permalink to this headline">#</a></h2>
+<p>UMAP (Uniform Manifold Approximation and Projection) is another algorithm of the neighbor embedding family, coming with a lot of improvements to solve the problems that t-SNE (as well as other implementations of it) suffers from.</p>
+<ul class="simple">
+<li><p>UMAP is capable of capturing global structure of the dataset</p></li>
+<li><p>UMAP can practically embed data to more than 3 dimensions</p></li>
+<li><p>UMAP improves dramatically in time consuming when compared to t-SNE</p></li>
+</ul>
+<section id="id5">
+<h3>5.1. Algorithm<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<p>In this section, we are only going to review the differences between UMAP and t-SNE and analyze how these changes affect their outputs.</p>
+<ul class="simple">
+<li><p>In step 1 of t-SNE, UMAP uses a different equation to calculate <span class="math notranslate nohighlight">\(\phi_{m|n}\)</span>, in which <span class="math notranslate nohighlight">\(d(\mathbf{s}_m,\mathbf{s}_n)\)</span> is any distance metric (not limited to Euclidean) and <span class="math notranslate nohighlight">\(\rho_n\)</span> is the distance between <span class="math notranslate nohighlight">\(\mathbf{s}_n\)</span> and its nearest neighbor. The occurance of <span class="math notranslate nohighlight">\(\rho_n\)</span> gives an adaptive kernel for each data point.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\phi_{m|n}=\exp{\left(-\frac{d(\mathbf{s}_m,\mathbf{s}_n)^2-\rho_n}{\sigma_n}\right)}\]</div>
+<ul class="simple">
+<li><p>Also in step 1, UMAP does not normalize <span class="math notranslate nohighlight">\(\phi_{m|n}\)</span>. Thus, <span class="math notranslate nohighlight">\(p_{m|n}=\phi_{m|n}\)</span>. The absence of normalization in both computing <span class="math notranslate nohighlight">\(p_{m|n}\)</span> and <span class="math notranslate nohighlight">\(p'_{m|n}\)</span> significantly reduces the computation time of UMAP, especially for large datasets.</p></li>
+<li><p>In step 2, UMAP designs a slightly different equation for symmetrization of high-dimensional affinities:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[p_{mn}=p_{m|n}+p_{n|m}-p_{m|n}p_{n|m}\]</div>
+<ul class="simple">
+<li><p>In step 3, UMAP use a more generalized equation for computing low-dimensional affinities, which is a family of curves parameterized by <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. These parameters are estimated by UMAP, and adapts from point to point in low-dimensional space.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\phi'_{mn}=p'_{mn}=\left(1+a\cdot d(\mathbf{s}_m,\mathbf{s}_n)^{2b}\right)^{-1}\]</div>
+<ul class="simple">
+<li><p>In step 4, UMAP uses a Cross Entropy as the loss function instead of Kullback-Leibler divergences. This choice of loss function makes UMAP capable of preserving global data structure.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\mathbf{X}')=
+\sum_{n=1}^{N}\sum_{m=1}^{N} \left[
+    p_{mn}\log{\frac{p_{mn}}{p'_{mn}}}+
+    (1-p_{mn})\log{\frac{1-p_{mn}}{1-p'_{mn}}}
+\right]
+\]</div>
+<ul class="simple">
+<li><p>Also in step 4, UMAP initializes low-dimensional coordinates using Graph Lapacian instead of randomizing. This strategy makes UMAP results not change much after each run.</p></li>
+<li><p>Finally, still in step 4, UMAP implements Stochastic Gradient Descent. The benefits of SGD over normal GD have been proven by its success in Deep Learning.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>5.2. Implementation<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
+<p>UMAP is implemented in its own <a class="reference external" href="https://umap-learn.readthedocs.io/en/latest/index.html">library</a> via the class
+<a class="reference external" href="https://umap-learn.readthedocs.io/en/latest/api.html"><code class="docutils literal notranslate"><span class="pre">UMAP</span></code></a>. It has the following hyperparameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: the dimension of the space to embed into, defaults to <em>2</em>. Can increase up to 100.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>: the number of effective neighbors of each sample, defaults to <em>15</em>. Larger values result in more global views of the manifold, while smaller values result in more local data being preserved.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: the distance metric used in high-dimensional data, defaults to <em>euclidean</em>. Can be other metric names in string or a custom function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_metric</span></code>: the distance metric used in low-dimensional data, defaults to <em>euclidean</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_dist</span></code>: the effective minimum distance between embedded points, defaults to <em>0.1</em>. Smaller values result in nearby points in the original dataset are embedded closer toghether.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spread</span></code>: the effective scale of embedded points, defaults to <em>1</em>. In combination with <em>min_dist</em> this determines how clustered/clumped the embedded points are.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_epochs</span></code>: the number of epochs in SGD, defaults to <em>None</em> (UMAP’s rule: 500 for small datasets and 200 for large datasets).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>: the learning rate in SGD, defaults to <em>1</em>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfIris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dfIris</span><span class="o">.</span><span class="n">species</span>
+<span class="n">dfIris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reducer</span> <span class="o">=</span> <span class="n">UMAP</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">xTransformed</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ldNames</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;EV</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xTransformed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<span class="n">xTransformed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">xTransformed</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">ldNames</span><span class="p">)</span>
+<span class="n">xTransformed</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EV1</th>
+      <th>EV2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>19.186245</td>
+      <td>13.658341</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>18.839174</td>
+      <td>11.648748</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>18.308769</td>
+      <td>12.255518</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>18.401110</td>
+      <td>11.946709</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>19.238541</td>
+      <td>13.426895</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTransformed</span> <span class="o">=</span> <span class="n">xTransformed</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dfTransformed</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;EV1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;EV2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">marginal_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span><span class="p">:</span><span class="s1">&#39;w&#39;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sklearn-dimensional-reduction_66_0.png"><img alt="../_images/sklearn-dimensional-reduction_66_0.png" class="align-center" src="../_images/sklearn-dimensional-reduction_66_0.png" style="width: 430.5px; height: 425.0px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><em><a class="reference external" href="http://cs.toronto.edu">cs.toronto.edu</a> - <a class="reference external" href="https://www.cs.toronto.edu/~hinton/absps/sne.pdf">Stochastic Neighbor Embedding</a></em></p></li>
+<li><p><em><a class="reference external" href="http://jmlr.org">jmlr.org</a> - <a class="reference external" href="https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf">Visualizing data using t-SNE</a></em></p></li>
+<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1802.03426.pdf">UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction</a></em></p></li>
+<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/how-exactly-umap-works-13e3040e1668">How exactly UMAP works?</a></em></p></li>
+<li><p><em>distill.pub - <a class="reference external" href="https://distill.pub/2016/misread-tsne/">How to Use t-SNE Effectively</a></em></p></li>
+<li><p><em><a class="reference external" href="http://pair-code.github.io">pair-code.github.io</a> - <a class="reference external" href="https://pair-code.github.io/understanding-umap/">Understanding UMAP</a></em></p></li>
+<li><p><em>feature-engine - <a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/quickstart/index.html">feature-engine</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://medium.com/&#64;hertan06/which-features-to-use-in-your-model-350630a1e31c">Which features to use in your model?</a></em></p></li>
+</ul>
+</section>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">nni</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">torch</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">feature_engi</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./09-unsupervised-learning"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="sklearn-clustering.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Sklearn: Clustering</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="pyod-anomaly-detection.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PyOD: Anomaly Detection</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

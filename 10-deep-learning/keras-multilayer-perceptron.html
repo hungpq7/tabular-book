@@ -1,0 +1,2092 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Keras: Multilayer Perceptron</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Keras: Recurrent Networks" href="keras-recurrent-networks.html" />
+    <link rel="prev" title="Python: Gradient Descent" href="numpy-gradient-descent.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../01-python-programing/_intro.html">
+   <b>
+    1. Python Programing
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-algorithms.html">
+     (w) Python: Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02-mathematics/_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-linear-algebra.html">
+     NumPy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/sympy-calculus.html">
+     SymPy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-probability.html">
+     NumPy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-statistics.html">
+     NumPy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/scipy-hypothesis-testing.html">
+     SciPy: Hypothesis Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/numpy-applied-mathematics.html">
+     (w) NumPy: Applied Mathematics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02-mathematics/networkx-network-analysis.html">
+     (w) NetworkX: Network Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03-data-manipulation/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/numpy-arrays.html">
+     NumPy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04-big-data/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../05-data-visualization/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../06-machine-learning/_intro.html">
+   <b>
+    6. Machine Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-machine-learning.html">
+     Sklearn: Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-classification.html">
+     Sklearn: Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-regression.html">
+     Sklearn: Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
+     Sklearn: Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/lenskit-recommendation.html">
+     Lenskit: Recommendation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/pyspark-machine-learning.html">
+     PySpark: Machine Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../07-tabular-learning/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/ray-hyperparameter-optimization.html">
+     Ray: Hyperparam Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/shap-model-interpretation.html">
+     Shap: Model Interpretation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/imblearn-targeted-modeling.html">
+     (w) Imblearn: Targeted Modeling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../08-time-series/_intro.html">
+   <b>
+    8. Time Series
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/statsmodels-temporal-analysis.html">
+     Statsmodels: Temporal Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/prophet-forecasting-algorithms.html">
+     Prophet: Forecasting Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/sktime-forecasting-pipeline.html">
+     Sktime: Forecasting Pipeline
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
+     (w) Darts: Deep Forecasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../09-unsupervised-learning/_intro.html">
+   <b>
+    9. Unsupervised Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/mlxtend-association-rules.html">
+     (w) Mlxtend: Association Rules
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/sklearn-clustering.html">
+     Sklearn: Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/sklearn-dimensional-reduction.html">
+     Sklearn: Dimensional Reduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/pyod-anomaly-detection.html">
+     PyOD: Anomaly Detection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="gensim-text-mining.html">
+     Gensim: Text Mining
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="opencv-image-processing.html">
+     (w) OpenCV: Image Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Keras: Multilayer Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="keras-recurrent-networks.html">
+     Keras: Recurrent Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="keras-convolutional-networks.html">
+     (w) Keras: Convolutional Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pytorch-deep-learning.html">
+     PyTorch: Deep Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../11-r-programing/_intro.html">
+   <b>
+    11. R Programing
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-basic-concepts.html">
+     R: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-data-structures.html">
+     R: Data Structures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/tidyverse-data-wrangling.html">
+     Tidyverse: Data Wrangling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/dplyr-data-cleaning.html">
+     Dplyr: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/ggplot-data-visualization.html">
+     Ggplot: Data Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-statistics.html">
+     R: Statistics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/10-deep-learning/keras-multilayer-perceptron.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/10-deep-learning/keras-multilayer-perceptron.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/10-deep-learning/keras-multilayer-perceptron.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   1. Overview
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basic-concepts">
+     1.1. Basic concepts
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#nodes-and-edges">
+       Nodes and edges
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#layers">
+       Layers
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#representation-learning">
+       Representation learning
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#notation">
+       Notation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inspiration">
+       Inspiration
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sizing">
+       Sizing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loss-function">
+     1.2. Loss function
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#cross-entropy">
+       Cross Entropy
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#kl-divergence">
+       KL Divergence
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tensorflow-and-keras">
+     1.3. TensorFlow and Keras
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#interfaces">
+       Interfaces
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#implementation">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#activation-functions">
+   2. Activation functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#s-curves">
+     2.1. S-curves
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sigmoid">
+       Sigmoid
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hard-sigmoid">
+       Hard Sigmoid
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#softmax">
+       Softmax
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tanh">
+       Tanh
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#softsign">
+       Softsign
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rectifiers">
+     2.2. Rectifiers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#relu">
+       ReLU
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#leakyrelu">
+       LeakyReLU
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#elu">
+       ELU
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#swish">
+       Swish
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gelu">
+       GELU
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#softplus">
+       Softplus
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#prelu">
+       PReLU
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#backpropagation">
+   3. Backpropagation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#chain-rule">
+     3.1. Chain rule
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#univariable">
+       Univariable
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#multivariable">
+       Multivariable
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#automatic-differentiation">
+     3.2. Automatic differentiation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#computational-graph">
+       Computational graph
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#numerical-derivatives">
+       Numerical derivatives
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#computing-modes">
+       Computing modes
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regularization">
+   4. Regularization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#l1-and-l2">
+     4.1. L1 and L2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dropout">
+     4.2. Dropout
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#batch-normalization">
+     4.3. Batch normalization
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#formulation">
+       Formulation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#internal-covariate-shift">
+       Internal covariate shift
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#other-benefits">
+       Other benefits
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#early-stopping">
+     4.4. Early stopping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Keras: Multilayer Perceptron</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   1. Overview
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basic-concepts">
+     1.1. Basic concepts
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#nodes-and-edges">
+       Nodes and edges
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#layers">
+       Layers
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#representation-learning">
+       Representation learning
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#notation">
+       Notation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inspiration">
+       Inspiration
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sizing">
+       Sizing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loss-function">
+     1.2. Loss function
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#cross-entropy">
+       Cross Entropy
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#kl-divergence">
+       KL Divergence
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tensorflow-and-keras">
+     1.3. TensorFlow and Keras
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#interfaces">
+       Interfaces
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#implementation">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#activation-functions">
+   2. Activation functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#s-curves">
+     2.1. S-curves
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sigmoid">
+       Sigmoid
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hard-sigmoid">
+       Hard Sigmoid
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#softmax">
+       Softmax
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tanh">
+       Tanh
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#softsign">
+       Softsign
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rectifiers">
+     2.2. Rectifiers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#relu">
+       ReLU
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#leakyrelu">
+       LeakyReLU
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#elu">
+       ELU
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#swish">
+       Swish
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gelu">
+       GELU
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#softplus">
+       Softplus
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#prelu">
+       PReLU
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#backpropagation">
+   3. Backpropagation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#chain-rule">
+     3.1. Chain rule
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#univariable">
+       Univariable
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#multivariable">
+       Multivariable
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#automatic-differentiation">
+     3.2. Automatic differentiation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#computational-graph">
+       Computational graph
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#numerical-derivatives">
+       Numerical derivatives
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#computing-modes">
+       Computing modes
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regularization">
+   4. Regularization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#l1-and-l2">
+     4.1. L1 and L2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dropout">
+     4.2. Dropout
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#batch-normalization">
+     4.3. Batch normalization
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#formulation">
+       Formulation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#internal-covariate-shift">
+       Internal covariate shift
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#other-benefits">
+       Other benefits
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#early-stopping">
+     4.4. Early stopping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="keras-multilayer-perceptron">
+<h1>Keras: Multilayer Perceptron<a class="headerlink" href="#keras-multilayer-perceptron" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="overview">
+<h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<section id="basic-concepts">
+<h3>1.1. Basic concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline">#</a></h3>
+<section id="nodes-and-edges">
+<h4>Nodes and edges<a class="headerlink" href="#nodes-and-edges" title="Permalink to this headline">#</a></h4>
+<p>Going back to familiar binary Logistic Regression, we visualize, let’s say, a model trained on the dataset having 3 features and a single label. On the graph, each feature/label (<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> or <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>) is represented by a <em>node</em> and each model weight (<span class="math notranslate nohighlight">\(w_1,w_2,w_3\)</span>) is represented by a <em>colored edge</em>. The bias <span class="math notranslate nohighlight">\(w_0\)</span> (or sometimes denoted <span class="math notranslate nohighlight">\(b\)</span>) is not showing on the graph, but keep in mind it is attached to the output node. This is the most basic architecture of a Neural Network with 4 parameters (3 weights + 1 bias).</p>
+<a class="reference internal image-reference" href="../_images/mlp_linear_simple.png"><img alt="../_images/mlp_linear_simple.png" class="align-center" src="../_images/mlp_linear_simple.png" style="height: 180px;" /></a>
+</section>
+<section id="layers">
+<h4>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">#</a></h4>
+<p>Now, we extend the problem to a Stacking model, where 5 base models and the meta model are all Logistic Regression. Beside an input layer and an output layer, there is a new layer between them, called the <em>hidden layer</em>. We can add more and more hidden layers for multilevel stacking design. By doing this, our Neural Network becomes <em>deeper</em> and can capture more complicated relationship in our data. This opens up a new branch of Machine Learning algorithms: Deep Learning.</p>
+<a class="reference internal image-reference" href="../_images/mlp_linear_stacking.png"><img alt="../_images/mlp_linear_stacking.png" class="align-center" src="../_images/mlp_linear_stacking.png" style="height: 300px;" /></a>
+</section>
+<section id="representation-learning">
+<h4>Representation learning<a class="headerlink" href="#representation-learning" title="Permalink to this headline">#</a></h4>
+<p>In the two examples above, the Neural Network is designed for a binary classification problem, where the target is a vector storing the probabilities of being classified to the positive class. For a multi-class classification problem, we need to contruct a vector of probabilities for each class. Below is an example Neural Network architecture with 2 hidden layers for the Iris data which has 4 features and 3 classes.</p>
+<a class="reference internal image-reference" href="../_images/mlp_iris.png"><img alt="../_images/mlp_iris.png" class="align-center" src="../_images/mlp_iris.png" style="height: 300px;" /></a>
+<p>This type of architecture is generally called Deep Neural Network of Multilayer Perceptron. Notice that each node represents a vector, we can think of nodes in the hidden layers as <em>latent features</em>, as they are automatically discovered by Deep Neural Networks. Such an approach is called <a class="reference external" href="https://en.wikipedia.org/wiki/Feature_learning">representation learning</a>, one of the benefits that Multilayer Perceptron offers.</p>
+</section>
+<section id="notation">
+<h4>Notation<a class="headerlink" href="#notation" title="Permalink to this headline">#</a></h4>
+<p>In the Iris example above, the network can be formally written in matrix notation as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbf{H}^{(1)} &amp;= \phi^{(1)}\left(\mathbf{X}\mathbf{W}^{(1)}+\mathbf{b}^{(1)}\right) \\
+\mathbf{H}^{(2)} &amp;= \phi^{(2)}\left(\mathbf{H}^{(1)}\mathbf{W}^{(2)}+\mathbf{b}^{(2)}\right) \\
+\hat{\mathbf{Y}}=\mathbf{H}^{(3)} &amp;= \phi^{(3)}\left(\mathbf{H}^{(2)}\mathbf{W}^{(3)}+\mathbf{b}^{(3)}\right) \\
+\end{aligned}\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{X}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{Y}\)</span> are the matrices in the input and output layers.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{H}^{(l)}\)</span> (<span class="math notranslate nohighlight">\(l=1,2,\dots,L\)</span>) is the matrix in the layer number <span class="math notranslate nohighlight">\(l\)</span>. In this case, <span class="math notranslate nohighlight">\(L=3\)</span> indicates there are 3 feedforward layers.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{W}^{(l)}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}^{(l)}\)</span> are the matrix of weights and the vector of biases that fire information from the layer <span class="math notranslate nohighlight">\(l-1\)</span> to the layer <span class="math notranslate nohighlight">\(l\)</span>.</p></li>
+</ul>
+<p>To make things easier to catch up, let’s take a look at the size of some matrices (we denote <span class="math notranslate nohighlight">\(N\)</span> the sample size):
+<span class="math notranslate nohighlight">\(\mathbf{X}\in\mathbb{R}^{N\times4},\)</span>
+<span class="math notranslate nohighlight">\(\mathbf{W}^{(1)}\in\mathbb{R}^{4\times6},\)</span>
+<span class="math notranslate nohighlight">\(\mathbf{b}^{(1)}\mathbf{1}^\text{T}\in\mathbb{R}^{N\times6},\)</span>
+<span class="math notranslate nohighlight">\(\mathbf{H}^{(1)}\in\mathbb{R}^{N\times6}\)</span>.</p>
+</section>
+<section id="inspiration">
+<h4>Inspiration<a class="headerlink" href="#inspiration" title="Permalink to this headline">#</a></h4>
+<p>Now we have known what a Deep Neural Network is, but what does the term <em>neural</em> implies here? This is because Neural Nets are inspired by biological neural network that constitute human brains. Artificial Neural Networks are constructed by nodes and edges, which resemble <em>neurons</em> and <em>synapses</em> in biological brains. An artificial neuron recieves signals, processes them and transmits it to other neurons. The strength of a signal between neurons is modeled by the weight of an edge. Biological nervous system in fact is much more complicated, and Artificial Neural Network is just a simple counterpart.</p>
+</section>
+<section id="sizing">
+<h4>Sizing<a class="headerlink" href="#sizing" title="Permalink to this headline">#</a></h4>
+<p>The first thing to notice when constructing a Neural Network is the shape of each layer. Let’s take a look at the first hidden layer: it has the shape of (None, 6). This means, this layer is a matrix with 6 columns and an unspecified number of rows. In other words, the architecture of the Neural Network is fixed, but it can adapts to any data size.</p>
+<p>Another important thing is the number of parameters (weights and biases). A large number of parameters leads to high training time and overfitting. Here are the numbers of parameters for each layer:</p>
+<ul class="simple">
+<li><p>Layer 1: <span class="math notranslate nohighlight">\(4\times6=24\)</span> weights and <span class="math notranslate nohighlight">\(6\)</span> biases for a total of <span class="math notranslate nohighlight">\(30\)</span> parameters</p></li>
+<li><p>Layer 2: <span class="math notranslate nohighlight">\(6\times6=36\)</span> weights and <span class="math notranslate nohighlight">\(6\)</span> biases for a total of <span class="math notranslate nohighlight">\(42\)</span> parameters</p></li>
+<li><p>Layer 3: <span class="math notranslate nohighlight">\(6\times3=18\)</span> weights and <span class="math notranslate nohighlight">\(3\)</span> biases for a total of <span class="math notranslate nohighlight">\(21\)</span> parameters</p></li>
+</ul>
+</section>
+</section>
+<section id="loss-function">
+<h3>1.2. Loss function<a class="headerlink" href="#loss-function" title="Permalink to this headline">#</a></h3>
+<p>Loss function is a compulsory component in some Machine Learning models, it tells the model how far it is from the predicted values to the ground truth and guides the optimization to go to the appropriate direction. However, traditional Machine Learning (implemented in frameworks such as Scikit-learn) seems don’t pay too much attention on loss function: algorithms always go for squared errors in regression and negative log likelihood in classification, as well as don’t have an option to customize it.</p>
+<p>Modern Machine Learning (Deep Learning and Tree Boosting) frameworks allow us to select from a wide range of loss functions. In this section, we are going through the most popular choices. They are generally denoted <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>. Loss functions are found in <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses">TensorFlow</a> or <a class="reference external" href="https://www.tensorflow.org/addons/api_docs/python/tfa/losses">TensorFlow Addons</a>.</p>
+<section id="cross-entropy">
+<h4>Cross Entropy<a class="headerlink" href="#cross-entropy" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cross_entropy">Cross Entropy</a> is the most popular loss function used in classifcation problems. It is a concept originally defined in information theory to compute how close two distributions of a random variables are. When applied in classification, two distributions refer to the true label <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> and the predicted label <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\)</span>, given by the formula:</p>
+<div class="math notranslate nohighlight">
+\[\text{CrossEntropy}(\hat{\mathbf{y}},\mathbf{y})
+=-\sum_{n=1}^{N}{y_n\log\hat{y}_n}\]</div>
+<p>In practice, trying to reach two boundaries <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> as close as possible for every observation seems impossible. A regularization technique called <em>label smoothing</em> has been proposed to prevent overconfidence by pulling two boundaries closer. With a pre-defined weight factor <span class="math notranslate nohighlight">\(\epsilon\)</span> and the number of classes <span class="math notranslate nohighlight">\(K\)</span>, it replaces the true label <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> with:</p>
+<div class="math notranslate nohighlight">
+\[y_n\leftarrow(1-\epsilon)y_n+\frac{\epsilon}{K}\]</div>
+<p>When implementing in TensorFlow, we may use several variants for different scenarios:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy"><code class="docutils literal notranslate"><span class="pre">BinaryCrossentropy</span></code></a> is for binary classification, when the label is the probability of the positive class. It is recommended to use it either with Sigmoid activation function in the output layer, or with the <em>from_logit</em> parameter set to <em>True</em>.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryFocalCrossentropy"><code class="docutils literal notranslate"><span class="pre">BinaryFocalCrossentropy</span></code></a> has the same usecase as binary cross entropy, but is useful when the label is significantly imbalanced.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/CategoricalCrossentropy"><code class="docutils literal notranslate"><span class="pre">CategoricalCrossentropy</span></code></a> is for multi-class classification, when the label is one-hot encoded. It is recommended to use it either with Softmax activation function in the output layer or with the <em>from_logit</em> parameter set to <em>True</em>.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/SparseCategoricalCrossentropy"><code class="docutils literal notranslate"><span class="pre">SparseCategoricalCrossentropy</span></code></a> is also for multi-class classfication, but the label is integer encoded.</p></li>
+</ul>
+</section>
+<section id="kl-divergence">
+<h4>KL Divergence<a class="headerlink" href="#kl-divergence" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler Divergence</a> is an alternative to Cross Entropy, it simply minus the <a class="reference external" href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">Entropy</a> of the target from the Cross Entropy. In practice, minimizing KL Divergence, Cross Entropy and Negative Log Likelihood (Log Loss) are all the same. Here is the formula of KL Divergence:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\text{KLDivergence}(\hat{\mathbf{y}},\mathbf{y})
+&amp;= -\sum_{n=1}^{N}{y_n\log\frac{\hat{y}_n}{y_n}} \\
+&amp;= -\sum_{n=1}^{N}{y_n\log\hat{y}_n} + \sum_{n=1}^{N}{y_n\log\hat{y}} \\
+&amp; = \text{CrossEntropy}(\hat{\mathbf{y}},\mathbf{y}) - \text{Entropy}(\mathbf{y}) \\
+\end{aligned}\end{split}\]</div>
+</section>
+</section>
+<section id="tensorflow-and-keras">
+<h3>1.3. TensorFlow and Keras<a class="headerlink" href="#tensorflow-and-keras" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://www.tensorflow.org/api_docs">TensorFlow</a> is one of the most popular Deep Learning framework released in 2015, but it focuses on computation and thus have a low-level API. <a class="reference external" href="https://keras.io/about/">Keras</a>, in the other hand, is a high-level, easy-to-use framework with multiple backends (TensorFlow, Theano and CNTK). In the late 2019 to 2020, <a class="reference external" href="https://github.com/keras-team/keras/releases/tag/2.4.0">Keras 2.4</a> was released as a part of <a class="reference external" href="https://blog.tensorflow.org/2019/09/tensorflow-20-is-now-available.html">TensorFlow 2.0</a> and stopped supporting other backends. In this topic, we are going to use <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras"><code class="docutils literal notranslate"><span class="pre">tf.keras</span></code></a> to construct a Neural Network for the Iris example above.</p>
+<section id="interfaces">
+<h4>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">#</a></h4>
+<p>There are two APIs that Keras supports: sequential and functional. In sequential interface, each layer has exactly one input tensor and one output tensor. We use a <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Sequential"><code class="docutils literal notranslate"><span class="pre">Sequential</span></code></a> to add <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers">layers</a> successively to the network. There are so many types of layer, but we will start with the most basic one, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense"><code class="docutils literal notranslate"><span class="pre">Dense</span></code></a> (also known as Fully Connected), indicating all nodes from the previous layers connect to the next layer. In the example below, we initialize the network with the first two layers, then add the rest.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_4&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_12 (Dense)            (None, 6)                 30        
+                                                                 
+ dense_13 (Dense)            (None, 6)                 42        
+                                                                 
+ dense_14 (Dense)            (None, 3)                 21        
+                                                                 
+=================================================================
+Total params: 93
+Trainable params: 93
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<p>Functional interface builds a <em>graph of layers</em>, allow us to manipulate layers that are not connect sequentially.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layerInput</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">layerHidden</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">6</span><span class="p">)(</span><span class="n">layerInput</span><span class="p">)</span>
+<span class="n">layerHidden</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">6</span><span class="p">)(</span><span class="n">layerHidden</span><span class="p">)</span>
+<span class="n">layerOutput</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)(</span><span class="n">layerHidden</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">layerInput</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">layerOutput</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;model_1&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_8 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense_19 (Dense)            (None, 6)                 30        
+                                                                 
+ dense_20 (Dense)            (None, 6)                 42        
+                                                                 
+ dense_21 (Dense)            (None, 3)                 21        
+                                                                 
+=================================================================
+Total params: 93
+Trainable params: 93
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="implementation">
+<h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
+<p>Once the model architecture is built, we use the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a> method to specify the loss function, the optimization algorithm and evaluation metrics for our network. At this step, the model is ready to use by calling the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit"><code class="docutils literal notranslate"><span class="pre">fit()</span></code></a> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">((</span><span class="mi">1</span><span class="p">)),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mae&#39;</span><span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x20e9b009e20&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_25&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_49 (Dense)            (None, 4)                 8         
+                                                                 
+ dense_50 (Dense)            (None, 1)                 5         
+                                                                 
+=================================================================
+Total params: 13
+Trainable params: 13
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 44ms/step
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[2.       ],
+       [3.9999998],
+       [6.       ],
+       [8.       ],
+       [9.999999 ]], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="activation-functions">
+<h2>2. Activation functions<a class="headerlink" href="#activation-functions" title="Permalink to this headline">#</a></h2>
+<p>So far, we have already known a Deep Neural Network is simply the combination of many Logistic Regression models. But if we keep stacking up linear functions, the result is still a linear function. To go beyonds linearity, an <a class="reference external" href="https://en.wikipedia.org/wiki/Activation_function">activation function</a> is added to each layer. These special functions <em>activate</em> non-linearity for layers, so that our Neural Network can model complicated relationship in the data. Activation functions are generally denoted <span class="math notranslate nohighlight">\(\phi(x)\)</span>.</p>
+<p>There are several aspects should be considered when choosing the appropriate activation function:</p>
+<ul class="simple">
+<li><p>no gradient vanishing</p></li>
+<li><p>zero-centered</p></li>
+<li><p>computational cost</p></li>
+<li><p>differentiable</p></li>
+</ul>
+<p>In Keras, popular activation functions can either be used through an <a class="reference external" href="https://keras.io/api/layers/activation_layers/">activation layer</a>, or through the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/activations">activation parameter</a> supported by all forward layers. Each function of the second type has a string identifier. More advanced activation functions can be found in the add-on module of TensorFlow via <a class="reference external" href="https://www.tensorflow.org/addons/api_docs/python/tfa/activations"><code class="docutils literal notranslate"><span class="pre">tfa.activations</span></code></a>.</p>
+<section id="s-curves">
+<h3>2.1. S-curves<a class="headerlink" href="#s-curves" title="Permalink to this headline">#</a></h3>
+<section id="sigmoid">
+<h4>Sigmoid<a class="headerlink" href="#sigmoid" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\text{Sigmoid}(x)=\frac{1}{1+e^{-x}}\]</div>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Sigmoid_function">sigmoid function</a> returns a value in the interval <span class="math notranslate nohighlight">\((0,1)\)</span>, thus it can be used in the output layer of binary classification problems to convert logits into probabilties. The Sigmoid function uses to be popular in the past due to its nice representation. However, it is rarely used nowadays due to these drawbacks:</p>
+<ul class="simple">
+<li><p><em>It kills gradients</em>. An undesired property of Sigmoid is that it <em>saturates</em> at two tails (it approaches <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>). If a node falls into these regions, its gradient is almost <span class="math notranslate nohighlight">\(0\)</span> and it fires almost no signal to the next node. This problem is also known as <em>gradient vanishing</em>.</p></li>
+<li><p><em>It is not zero-centered</em>. The output value of Sigmoid function is always positive, making the training process unstable and take more steps than needed to converges.</p></li>
+<li><p><em>It is expensive</em>. This is because the computation of exponents is costly.</p></li>
+</ul>
+</section>
+<section id="hard-sigmoid">
+<h4>Hard Sigmoid<a class="headerlink" href="#hard-sigmoid" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{HardSigmoid}(x)=
+\begin{cases}
+    0 &amp;\; \text{if }x&lt;-a \\
+    x/2a+0.5 &amp;\; \text{if }-a\leq x&lt;a \\
+    1 &amp;\; \text{if }x\geq a
+\end{cases}
+\end{split}\]</div>
+<p>Hard Sigmoid is a piecewise function with a parameter <span class="math notranslate nohighlight">\(a\)</span>. The original paper uses <span class="math notranslate nohighlight">\(a=1\)</span>, Keras uses <span class="math notranslate nohighlight">\(a=2.5\)</span> while Torch uses <span class="math notranslate nohighlight">\(a=3\)</span>. This function is very close to Sigmoid, but is significantly faster. Use this function carefully as it may cause large errors in regression problems.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">hard_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="s1">&#39;indianred&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sigmoid&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s1">&#39;royalblue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;HardSigmoid&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/keras-multilayer-perceptron_31_0.png"><img alt="../_images/keras-multilayer-perceptron_31_0.png" class="align-center" src="../_images/keras-multilayer-perceptron_31_0.png" style="width: 370.0px; height: 248.0px;" /></a>
+</div>
+</div>
+</section>
+<section id="softmax">
+<h4>Softmax<a class="headerlink" href="#softmax" title="Permalink to this headline">#</a></h4>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Softmax_function">softmax function</a> is a more generalized form of the sigmoid, it converts data in a row into probabilities (be positive and sum up to <span class="math notranslate nohighlight">\(1\)</span>), using the formula:</p>
+<div class="math notranslate nohighlight">
+\[\text{Softmax}(x_d)=\frac{\exp{(x_d)}}{\sum_{d=1}^{D}{\exp{(x_d)}}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(D\)</span> is the number of nodes in a layer. Softmax treats input values as log-odds, and can be used in the last layer of multiclass classification problems.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softmax</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.6604, 0.1115, 0.2281],
+       [0.0924, 0.4246, 0.483 ],
+       [0.1463, 0.3795, 0.4742],
+       [0.4801, 0.357 , 0.1629],
+       [0.4771, 0.3065, 0.2164],
+       [0.3281, 0.3926, 0.2793],
+       [0.1052, 0.2064, 0.6884],
+       [0.3203, 0.5797, 0.1   ],
+       [0.2061, 0.2349, 0.5591],
+       [0.1831, 0.2805, 0.5364]], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tanh">
+<h4>Tanh<a class="headerlink" href="#tanh" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\text{Tanh}(x)=\frac{{{e^x} - {e^{-x}}}}{{{e^x} + {e^{-x}}}}\]</div>
+<p>Hyperbolic tangent (tanh) is another S-shaped function. It outputs values in the interval <span class="math notranslate nohighlight">\((-1,1)\)</span> rather than <span class="math notranslate nohighlight">\((0,1)\)</span> and is zero-centered. Tanh is also rarely used because the domain <span class="math notranslate nohighlight">\((-3,3)\)</span> before the function approaches <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span> is quite small.</p>
+</section>
+<section id="softsign">
+<h4>Softsign<a class="headerlink" href="#softsign" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\text{Softsign}(x)=\frac{x}{|x|+1}\]</div>
+<p>Softsign is very much like Tanh, but it <em>saturates</em> much slowlier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softsign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="s1">&#39;indianred&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Tanh&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s1">&#39;royalblue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Softsign&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/keras-multilayer-perceptron_36_0.png"><img alt="../_images/keras-multilayer-perceptron_36_0.png" class="align-center" src="../_images/keras-multilayer-perceptron_36_0.png" style="width: 381.5px; height: 248.0px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="rectifiers">
+<h3>2.2. Rectifiers<a class="headerlink" href="#rectifiers" title="Permalink to this headline">#</a></h3>
+<p>The term <em>rectifier</em> is taken from electrical engineering.</p>
+<section id="relu">
+<h4>ReLU<a class="headerlink" href="#relu" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\text{ReLU}(x)=\max{(0,x)}=
+\begin{cases}
+    0 &amp;\;\text{if }x&lt;0 \\
+    x &amp;\;\text{if }x\geq0 \\
+\end{cases}
+\end{split}\]</div>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)">Rectified Linear Unit</a> (ReLU) was first used as an activation function in 2010. It comes to solve the problem that all S-shaped functions suffer from: gradient vanishing. ReLU is also very simple in computing, making it a very popular choice in the world of Deep Learning. It is recommended for Data Scientists to start with ReLU in their Neural Networks.</p>
+<p>But ReLU is not perfect, as it’s has a significant problem: <em>dead neurons</em>, or <em>dying ReLU</em>. This problem occurs when a neuron takes nagative input and returns <span class="math notranslate nohighlight">\(0\)</span>, making it inactive and the weights attached to it will never be updated. This issue is likely to be caused by large negative biases and high learning rate.  To effectively tackle this problem, many improved version of ReLU has be proposed. Below is a quick recap of ReLU and its modified versions, they are going to be discussed later.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">yRelu</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">yLeakyRelu</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">yElu</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">ELU</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">yGelu</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ySoftplus</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softplus</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ySwish</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">swish</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">yRelu6</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu6</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">yRelu</span><span class="p">,</span> <span class="s1">&#39;teal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;ReLU&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">yLeakyRelu</span><span class="p">,</span> <span class="s1">&#39;teal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;LeakyReLU&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">yElu</span><span class="p">,</span> <span class="s1">&#39;indianred&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;ELU&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ySwish</span><span class="p">,</span> <span class="s1">&#39;indianred&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Swish&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">yGelu</span><span class="p">,</span> <span class="s1">&#39;indianred&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;GELU&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ySoftplus</span><span class="p">,</span> <span class="s1">&#39;indianred&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Softplus&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">axi</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">flatten</span><span class="p">():</span>
+    <span class="n">axi</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">axi</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">axi</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/keras-multilayer-perceptron_39_0.png"><img alt="../_images/keras-multilayer-perceptron_39_0.png" class="align-center" src="../_images/keras-multilayer-perceptron_39_0.png" style="width: 712.5px; height: 352.5px;" /></a>
+</div>
+</div>
+</section>
+<section id="leakyrelu">
+<h4>LeakyReLU<a class="headerlink" href="#leakyrelu" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\text{LeakyReLU}(x)=
+\begin{cases}
+    \alpha x &amp;\;\text{if }x&lt;0 \\
+    x &amp;\;\text{if }x\geq0 \\
+\end{cases}
+\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\alpha\)</span> is a tunable hyperparameter, usually <span class="math notranslate nohighlight">\(\alpha\leq0.3\)</span>. Proposed in 2012, this leaky version of ReLU allows a small fraction of <span class="math notranslate nohighlight">\(x\)</span> to be kept in the negative zone, preventing <em>dying ReLU</em>. This is because LeakyReLU gives dead neurons a chance to recover. This function inherits fast computation from ReLU, can be considered an alternative choice who has shown improved performance in various tasks.</p>
+</section>
+<section id="elu">
+<h4>ELU<a class="headerlink" href="#elu" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\text{ELU}(x)=
+\begin{cases}
+    \alpha(e^x-1) &amp;\; \text{if }x&lt;0 \\
+    x             &amp;\; \text{if }x\geq0 \\
+\end{cases}
+\end{split}\]</div>
+<p>ELU (Exponential Linear Unit) is another modified version of ReLU proposed in 2015, it uses an exponential function in the negative region. This function saturates for very large negative values (it approaches <span class="math notranslate nohighlight">\(\alpha\)</span>), allowing them to be essentially inactive. Thus, <span class="math notranslate nohighlight">\(\alpha\)</span> controls the degree of saturation: higher values mean more room before convergence. Both Keras and Torch implement ELU with <span class="math notranslate nohighlight">\(\alpha=1\)</span>. A disadvantage of ELU is that it is slow due to the computation of exponents.</p>
+</section>
+<section id="swish">
+<h4>Swish<a class="headerlink" href="#swish" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\text{Swish}(x)=x\sigma(x)=\frac{x}{1+e^{-x}}\]</div>
+<div class="math notranslate nohighlight">
+\[\text{SiLU}(x)=x\sigma(\beta x)=\frac{x}{1+e^{-\beta x}}\]</div>
+<p>Swish, also known as a special case SiLU (Sigmoid Linear Unit) with <span class="math notranslate nohighlight">\(\beta=1\)</span>, proposed in 2017 by Google Brain. It is <a class="reference external" href="https://en.wikipedia.org/wiki/Bounded_function">bounded</a> below (enables sparsity), unbounded above (avoids gradient vanishing) and <a class="reference external" href="https://en.wikipedia.org/wiki/Monotonic_function">non-monotonic</a> (increases expressivity). This self-gating activation function has shown impressive performance accross a wide range of tasks.</p>
+<p>However, like other <em>smooth</em> curves, Swish is slower compared to other simple variants such as LeakyReLU because of the involving of the Sigmoid function in its computation. HardSwish, a variant of Swish has been proposed to add <em>hardness</em> and thus reduce computational cost.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\text{HardSwish}(x)= x\frac{\text{ReLU6}(x+3)}{6} =
+\begin{cases}
+    0        &amp;\; \text{for }x&lt;-3 \\
+    x(x-3)/6 &amp;\; \text{for }-3\leq x&lt;3 \\
+    1        &amp;\; \text{for }x\geq3 \\
+\end{cases}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\text{ReLU6}(x)\)</span> is another activation function, it clips <span class="math notranslate nohighlight">\(x\)</span> at two boundaries <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(6\)</span>.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.nn</span> <span class="kn">import</span> <span class="n">relu6</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.activations</span> <span class="kn">import</span> <span class="n">swish</span>
+<span class="n">hswish</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">relu6</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">6</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">swish</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;indianred&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Swish&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hswish</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;royalblue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;HardSwish&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/keras-multilayer-perceptron_43_0.png"><img alt="../_images/keras-multilayer-perceptron_43_0.png" class="align-center" src="../_images/keras-multilayer-perceptron_43_0.png" style="width: 361.5px; height: 248.0px;" /></a>
+</div>
+</div>
+</section>
+<section id="gelu">
+<h4>GELU<a class="headerlink" href="#gelu" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\text{GELU}(x)
+&amp;= x\,\text{Pr}(x&gt;z)\quad\text{for }z\sim\mathcal{N}(0,1) \\
+&amp;\approx x\sigma(1.702x)
+\end{aligned}\end{split}\]</div>
+<p>Gaussian Error Linear Unit (GELU), introduced in 2016, seems to be state-of-the-art in NLP, specially in Transformer models. It uses the survival function of standard normal distribution (the first equation), which is computationally expensive. Thus, an approximation is proposed (second equation), which is a SiLU function with <span class="math notranslate nohighlight">\(\beta=1.702\)</span>.</p>
+</section>
+<section id="softplus">
+<h4>Softplus<a class="headerlink" href="#softplus" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\text{Softplus}(x)=\log(1+e^x)\]</div>
+<p>This function is the anti-derivative of the Sigmoid function, thus it has a very smooth gradient, which is one of its biggest advantages. Unlike other Linear Unit functions, Softplus doesn’t go through the origin.</p>
+</section>
+<section id="prelu">
+<h4>PReLU<a class="headerlink" href="#prelu" title="Permalink to this headline">#</a></h4>
+<p>PReLU (Parametric ReLU) has exactly the same function form as LeakyReLU, but it considers <span class="math notranslate nohighlight">\(\alpha\)</span> a <em>learnable</em> parameter instead of a <em>tunable</em> hyperparameter. In other words, <span class="math notranslate nohighlight">\(\alpha\)</span> is neuron-level adaptive, giving a very high flexibility to our Neural Network. This method is vital to the success of Deep Learning.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">PReLU</span><span class="p">(),</span>
+<span class="p">])</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_5&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_22 (Dense)            (None, 6)                 30        
+                                                                 
+ leaky_re_lu_12 (LeakyReLU)  (None, 6)                 0         
+                                                                 
+ dense_23 (Dense)            (None, 6)                 42        
+                                                                 
+ p_re_lu (PReLU)             (None, 6)                 6         
+                                                                 
+=================================================================
+Total params: 78
+Trainable params: 78
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="backpropagation">
+<h2>3. Backpropagation<a class="headerlink" href="#backpropagation" title="Permalink to this headline">#</a></h2>
+<p>Like Linear/Logistic Regression, Multilayer Perceptron also uses Gradient Descent to optimize its parameters, which requires partial derivative of the loss function with respect to each parameter. However, the number of weights and biases in a Neural Network is huge and they are organized in a hierachical architecture, making calculating their derivatives very expensive.</p>
+<p>This is where <a class="reference external" href="https://en.wikipedia.org/wiki/Backpropagation">backpropagation</a> comes to the rescue, an algorithm dedicated to make the computation of partial derivatives in Neural Network feasible and tractable. This algorithm is key to the success of modern Deep Learning.</p>
+<section id="chain-rule">
+<h3>3.1. Chain rule<a class="headerlink" href="#chain-rule" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Chain_rule">Chain rule</a> is a technique to calculate the derivatives of a <a class="reference external" href="https://en.wikipedia.org/wiki/Function_composition">composition</a> of function. It is especially useful when we stack multiple functions to a variable (do you see the relationship with Neural Networks here?), as it allows us to compute each derivative separately and then combine them later. We can think of it as <a class="reference external" href="https://en.wikipedia.org/wiki/Divide_and_rule">divide and conquer</a> strategy. Let’s dive into examples.</p>
+<section id="univariable">
+<h4>Univariable<a class="headerlink" href="#univariable" title="Permalink to this headline">#</a></h4>
+<p>In the simple form of chain rule, the function looks like this: <span class="math notranslate nohighlight">\(y=f(g(h(x)))\)</span>. It may look nasty, but luckily, it is much easier when we look at an example, <span class="math notranslate nohighlight">\(y=\sin^2(5x)\)</span>. We can decompose it into a sequence of functions, visuaized as a graph like this:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+y &amp;= f(u)=u^2 \\
+u &amp;= g(v)=\sin(v) \\
+v &amp;= h(x)=5x \\
+\end{aligned}\end{split}\]</div>
+<a class="reference internal image-reference" href="../_images/function_composition_univariable.png"><img alt="../_images/function_composition_univariable.png" class="align-center" src="../_images/function_composition_univariable.png" style="width: 360px;" /></a>
+<br>
+<p>By computing <span class="math notranslate nohighlight">\(f'(u)\)</span>, <span class="math notranslate nohighlight">\(g'(v)\)</span> and <span class="math notranslate nohighlight">\(h'(x)\)</span> (which is very simple and is not what we are going to do here), the derivative of <span class="math notranslate nohighlight">\(y\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span> is calculated using the chain rule as follows:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial y}{\partial x}
+= \frac{\partial y}{\partial u}\frac{\partial u}{\partial v}\frac{\partial v}{\partial x}\]</div>
+</section>
+<section id="multivariable">
+<h4>Multivariable<a class="headerlink" href="#multivariable" title="Permalink to this headline">#</a></h4>
+<p>This case, the structure of function is more complicated <span class="math notranslate nohighlight">\(y=f(g(x),h(x))\)</span>. The function <span class="math notranslate nohighlight">\(f\)</span> here takes multiple intermediate inputs, each is related to <span class="math notranslate nohighlight">\(x\)</span>. Same as the previous case, we decompose the function to make it easier to understand. For example, <span class="math notranslate nohighlight">\(y=x^2\log(x)\)</span> can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+y &amp;= f(u,v)=uv \\
+u &amp;= g(x)=x^2 \\
+v &amp;= h(x)=\log(x) \\
+\end{aligned}\end{split}\]</div>
+<a class="reference internal image-reference" href="../_images/function_composition_multivariable.png"><img alt="../_images/function_composition_multivariable.png" class="align-center" src="../_images/function_composition_multivariable.png" style="width: 320px;" /></a>
+<br>
+<p>In this more general case, the chain rule is given by:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial y}{\partial x}
+=\frac{\partial y}{\partial u}\frac{\partial u}{\partial x}
++\frac{\partial y}{\partial v}\frac{\partial v}{\partial x}\]</div>
+<p>The chain rule serves an important rule in Deep Neural Networks, however we cannot implement it in such a naive way in practice. This leads us to the next part, automatic differentiation, about how computers can compute derivative themselves.</p>
+</section>
+</section>
+<section id="automatic-differentiation">
+<h3>3.2. Automatic differentiation<a class="headerlink" href="#automatic-differentiation" title="Permalink to this headline">#</a></h3>
+<section id="computational-graph">
+<h4>Computational graph<a class="headerlink" href="#computational-graph" title="Permalink to this headline">#</a></h4>
+<p>The graphs in those examples are generally called <em>computational graph</em>, the descriptive language of mathematical expressions. This is a popular concept in Computer Science, and is the foundation of <a class="reference external" href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation</a>. In this section, we take the example from Christopher Olah <span class="math notranslate nohighlight">\(e=(a+b)\cdot(b+1)\)</span> to compute derivatives. Each node represents a variable, and each edge represents either a function or the derivative of that function, depends on computation purposes.</p>
+<a class="reference internal image-reference" href="../_images/computational_graph.png"><img alt="../_images/computational_graph.png" class="align-center" src="../_images/computational_graph.png" style="height: 200px;" /></a>
+<br>
+<p>The graph has a tree structure. The input variables are placed at leaf nodes, the output variable is placed at root node and intermediate variables are presented by terminal nodes. Using the chain rule, we can easily compute the partial derivatives: <span class="math notranslate nohighlight">\(\partial{e}/\partial{a}=b+1\)</span> and <span class="math notranslate nohighlight">\(\partial{e}/\partial{b}=2b+a+1\)</span>.</p>
+</section>
+<section id="numerical-derivatives">
+<h4>Numerical derivatives<a class="headerlink" href="#numerical-derivatives" title="Permalink to this headline">#</a></h4>
+<p>Now go back to the Neural Network, is it neccessary to compute the complete gradient function form, and then plug in numbers? So far, we have already known Neural Networks update their weights <em>step by step</em> using Gradient Descent. In other words, we only need to known the <em>slope</em> at the <em>current position</em>, so no need to compute the derivative function. The process of computing instantaneous velocity is refered to as <a class="reference external" href="https://en.wikipedia.org/wiki/Numerical_differentiation">numerical differentiation</a>.</p>
+<p>Let’s say in the above example, our Gradient Descent process is currently at <span class="math notranslate nohighlight">\((a,b)=(2,1)\)</span>. As we only care about how <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> affect <span class="math notranslate nohighlight">\(e\)</span> at this point, we only need to plug in numbers and apply the chain rule.</p>
+<a class="reference internal image-reference" href="../_images/numerical_differentiation.png"><img alt="../_images/numerical_differentiation.png" class="align-center" src="../_images/numerical_differentiation.png" style="height: 220px;" /></a>
+<br>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{\partial e}{\partial a} &amp;= 1\times2=2 \\
+\frac{\partial e}{\partial b} &amp;= 1\times2+1\times3=5 \\
+\end{aligned}\end{split}\]</div>
+<p>Note that the derivatives on edges change as <span class="math notranslate nohighlight">\((a,b)\)</span> changes. This technique allows computers to compute numerical derivatives without human efforts, but it still requires derivatives of intermediate functions. This explaines why loss functions and activation functions in the Neural Network must be differentiable.</p>
+</section>
+<section id="computing-modes">
+<h4>Computing modes<a class="headerlink" href="#computing-modes" title="Permalink to this headline">#</a></h4>
+<p>Same as other tree-structured diagrams, we can approach computational graph in two ways: foward (bottom-up) and backward (top-down). In foward mode, we start from each input variable <span class="math notranslate nohighlight">\(x\)</span> and apply <span class="math notranslate nohighlight">\(\partial/\partial x\)</span> to every node that it transfer information to, and repeat for all inputs. It’s not hard to see, intermediate nodes will be passed through multiple times as many input nodes connect to it, thus increases the computational time a lot.</p>
+<p>In reverse mode, we begin at the output <span class="math notranslate nohighlight">\(y\)</span> and apply <span class="math notranslate nohighlight">\(\partial{y}/\partial\)</span> to every node. The important part is that derivative with respect to an intermediate variable is recycled to compute derivatives of all variables below it. Thus, it is much more efficient than foward mode, and is exactly what backpropagation does.</p>
+</section>
+</section>
+</section>
+<section id="regularization">
+<h2>4. Regularization<a class="headerlink" href="#regularization" title="Permalink to this headline">#</a></h2>
+<p>Overfitting is one of the most common problem that Data Scientists must solve in attemp to apply Machine Learning. This is even a bigger problem in Deep Neural Networks, where we can basically increase model complexity (via number of nodes and number of layers) without any limit. That’s why regularization is a very important topic in Deep Learning.</p>
+<p>In this section, we are going to discuss some great regulariztion techniques. But keep in mind that regularizations are already in every part of a Neural Network, from stochastic behaviour in the optimization algorithm to label smoothing in the loss function.</p>
+<section id="l1-and-l2">
+<h3>4.1. L1 and L2<a class="headerlink" href="#l1-and-l2" title="Permalink to this headline">#</a></h3>
+<p>These two famous techniques have been introduced as variants of Linear Regression (Ridge, Lasso and Elastic Net) as well as in Tree Boosting algorithms (XGBoost, LightGBM and CatBoost). In TensorFlow, it is implemented via the class <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/regularizers/L1L2"><code class="docutils literal notranslate"><span class="pre">L1L2</span></code></a>.</p>
+</section>
+<section id="dropout">
+<h3>4.2. Dropout<a class="headerlink" href="#dropout" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Dilution_(neural_networks)">Dropout</a> (2014) is a simple but efficient, one of the most popular regularization techniques especially in feed-foward networks. With a pre-defined drop rate <span class="math notranslate nohighlight">\(p\)</span>, it random sets input values to <span class="math notranslate nohighlight">\(0\)</span> with a probability of <span class="math notranslate nohighlight">\(p\)</span> during training phase to add noises to the model. Then, during the inference phase, it scales down input values by multiplying them with <span class="math notranslate nohighlight">\(1-p\)</span> but does not drop any node, to make sure input distribution remains unchanged.</p>
+<p>In the implementation of TensorFlow, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dropout"><code class="docutils literal notranslate"><span class="pre">Dropout</span></code></a> leaves the inference phase untouched, but scales up the remaining inputs after dropped in the training phase by multiplying with <span class="math notranslate nohighlight">\(1/(1-p)\)</span>. This small change optimizes inference time. There are also other variants of Dropout, namely: <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/GaussianDropout"><code class="docutils literal notranslate"><span class="pre">GaussianDropout</span></code></a>, <a class="reference external" href="https://tensorlayer.readthedocs.io/en/latest/modules/layers.html#tensorlayer.layers.DropconnectDense"><code class="docutils literal notranslate"><span class="pre">DropconnectDense</span></code></a> and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/SpatialDropout2D"><code class="docutils literal notranslate"><span class="pre">SpatialDropout2D</span></code></a>.</p>
+<p>For example, with the same input values <span class="math notranslate nohighlight">\(\{10,20,30,40,50\}\)</span></p>
+<ul class="simple">
+<li><p>Original implementation takes <span class="math notranslate nohighlight">\(\{10,20,30,0,50\}\)</span> as input during training and <span class="math notranslate nohighlight">\(\{8,16,24,32,40\}\)</span> as input during inference</p></li>
+<li><p>TensorFlow implementation takes <span class="math notranslate nohighlight">\(\{12.5,25,37.5,0,62.5\}\)</span> as input during training and <span class="math notranslate nohighlight">\(\{10,20,30,40,50\}\)</span> as input during inference</p></li>
+</ul>
+</section>
+<section id="batch-normalization">
+<h3>4.3. Batch normalization<a class="headerlink" href="#batch-normalization" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Batch_normalization">Batch Normalization</a> (2015) is another powerful technique bases on a very simple concept: normalization, it appears in many state-of-the-art Neural Network architectures, especially in Computer Vision applications. Batch Normalization offers three main benefits: (1) faster convergence, (2) numerical stability and (3) regularization. To fully understand this technique, you should be familiar with batch and epoch, two concepts in SGD. Like Dropout, Batch Normalization behaves differently during training and inference phases.</p>
+<section id="formulation">
+<h4>Formulation<a class="headerlink" href="#formulation" title="Permalink to this headline">#</a></h4>
+<p>In training, let’s say the SGD optimizer currently considers batch <span class="math notranslate nohighlight">\(\mathcal{B}_t\in\mathbb{R}^{M\times D}\)</span> (<span class="math notranslate nohighlight">\(M\)</span> is the mini-batch size, <span class="math notranslate nohighlight">\(D\)</span> is the number of nodes and <span class="math notranslate nohighlight">\(t\)</span> is the iteration). Each sample <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in <span class="math notranslate nohighlight">\(\mathcal{B}_t\)</span> is transformed using the formula:</p>
+<div class="math notranslate nohighlight">
+\[\text{BN}(\mathbf{x}) = \boldsymbol\gamma\odot\frac{\mathbf{x}-\hat{\boldsymbol\mu}_t}{\hat{\boldsymbol\sigma}_t} + \boldsymbol{\beta}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\hat{\boldsymbol\mu}_t\)</span> and <span class="math notranslate nohighlight">\(\hat{\boldsymbol\sigma}_t\)</span> are the sample mean and standard deviation of the current batch, repectively. After being normalized, data is scaled by <span class="math notranslate nohighlight">\(\boldsymbol\gamma\)</span> and shifted by <span class="math notranslate nohighlight">\(\boldsymbol\beta\)</span>, two vectors of <em>learnable</em> parameters. All vectors have the size of <span class="math notranslate nohighlight">\(1\times D\)</span>.</p>
+<p>Now, recall how is normalization applied in traditional Machine Learning: we <em>fit</em> the normalizer to the training data, which is simply storing the training statistics (mean and variance) and use these statistics to transform any new data, even a single sample. However, in Batch Normalization, batch statistics are noisy as they are calculated on samples. So, to get representative statistics for inference phase, we take the moving average over SGD iterations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\boldsymbol\mu' &amp;= \alpha\boldsymbol\mu' + (1-\alpha)\hat{\boldsymbol\mu}_t \\
+\boldsymbol\sigma' &amp;= \alpha\boldsymbol\sigma' + (1-\alpha)\hat{\boldsymbol\sigma}_t \\
+\end{aligned}\end{split}\]</div>
+<p>Moving average, or exponential smoothing is very powerful technique has been used in ETS (time series) and Adam (optimization). It has a weight decay <span class="math notranslate nohighlight">\(\alpha\)</span> (is usually set to <span class="math notranslate nohighlight">\(0.9\)</span> or <span class="math notranslate nohighlight">\(0.99\)</span>), which is implemented in <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/BatchNormalization"><code class="docutils literal notranslate"><span class="pre">BatchNormalization</span></code></a> under the name <em>momentum</em>. Using moving average makes Batch Normalization only needs to save the most recent value of <span class="math notranslate nohighlight">\(\boldsymbol\mu'\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol\sigma'\)</span> instead of all batches statistics.</p>
+<p>We can also find a lot of Batch Normalization variants such as <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/GroupNormalization"><code class="docutils literal notranslate"><span class="pre">GroupNormalization</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/LayerNormalization"><code class="docutils literal notranslate"><span class="pre">LayerNormalization</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/UnitNormalization"><code class="docutils literal notranslate"><span class="pre">UnitNormalization</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/probability/api_docs/python/tfp/layers/weight_norm/WeightNorm"><code class="docutils literal notranslate"><span class="pre">WeightNorm</span></code></a> and <a class="reference external" href="https://www.tensorflow.org/addons/api_docs/python/tfa/layers/SpectralNormalization"><code class="docutils literal notranslate"><span class="pre">SpectralNormalization</span></code></a>.</p>
+</section>
+<section id="internal-covariate-shift">
+<h4>Internal covariate shift<a class="headerlink" href="#internal-covariate-shift" title="Permalink to this headline">#</a></h4>
+<p>So far, we have known mathematical formulation of Batch Normalization, but why it works so well and quickly becomes a standard feature in many Deep Learning architectures? The most essential reason is, according to the original paper, it reduces <em>internal covariate shift</em> and thus makes Neural Networks converge faster.</p>
+<p>To understand <em>internal covariate shift</em>, let’s review the learning curve of SGD. Due to the <em>stochastic</em> behaviour, the ball controled by SGD ocsillates around a path, as each step is computed on a different batch, and batches can distribute far differently. By applying normalization, we bring data in batches to the same scale, which makes gradient steps smoother.</p>
+<a class="reference internal image-reference" href="../_images/internal_covariate_shift.png"><img alt="../_images/internal_covariate_shift.png" class="align-center" src="../_images/internal_covariate_shift.png" style="height: 300px;" /></a>
+<br>
+<p>Comparing SGD in two cases, with and without normalization, it’s obvious that normalization will make convergence faster and higher learning rate can be used without compromising accuracy. Batch Normalization even goes a step further in smoothening gradients with the introduction of scale and shift parameters. They are <em>trainable</em>, giving Batch Normalization the ability to find optimal values itself.</p>
+</section>
+<section id="other-benefits">
+<h4>Other benefits<a class="headerlink" href="#other-benefits" title="Permalink to this headline">#</a></h4>
+<p>Reducing internal covariate shift is not the only advantage that Batch Normalization has. Normalized input encourages output of the next layer to avoid saturation regions of the activation function, thus prevent gradient vanishing especially when Sigmoid is used. Many Batch Normalization layers overall will numerically stablize our Neural Network.</p>
+<p>Batch Normalization also has regularization effect, as each batch is scaled differently. Especially after normalization, each batch is scaled and shifted using different values of <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>. However, this is considered a side effect, and you should not rely on Batch Normalization to avoid overfitting.</p>
+</section>
+</section>
+<section id="early-stopping">
+<h3>4.4. Early stopping<a class="headerlink" href="#early-stopping" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Early_stopping">Early stopping</a> (implemented in TensorFlow via the callback <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/EarlyStopping"><code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a>) is a regularization technique dedicated to iterative learning algorithms such as Gradient Descent and Gradient Boosting. The working principle is very straight forward: it will break the training loop when model performance does not improve. This technique offers two benefits:</p>
+<ul class="simple">
+<li><p>Saving time, as the algorithm would not necessarily go through all expensive iterations</p></li>
+<li><p>Generalization, as at some points, keep training more iterations only improves validation score a little, then it is much likely that our model is learning noises</p></li>
+</ul>
+</section>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/ftp/arxiv/papers/2010/2010.09458.pdf">Review and comparison of commonly used activation functions for Deep Neural Networks</a></em></p></li>
+<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1502.03167v3.pdf">Batch Normalization: Accelerating Deep Network training by reducing internal covariate shift</a></em></p></li>
+<li><p><em><a class="reference external" href="http://jmlr.org">jmlr.org</a> - <a class="reference external" href="https://jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf">Dropout: A simple way to prevent Neural Networks from overfitting</a></em></p></li>
+<li><p><em><a class="reference external" href="http://cs231n.github.io">cs231n.github.io</a> - <a class="reference external" href="https://cs231n.github.io/neural-networks-1/">Convolutional Neural Networks for Visual Recognition</a></em></p></li>
+<li><p><em><a class="reference external" href="http://theaidream.com">theaidream.com</a> - <a class="reference external" href="https://www.theaidream.com/post/an-overview-of-activation-functions-in-deep-learning">An overview of activation functions in Deep Learning</a></em></p></li>
+<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/activation-functions-neural-networks-1cbd9f8d91d6">Activation Functions in Neural Networks</a></em></p></li>
+<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/the-dying-relu-problem-clearly-explained-42d0c54e0d24">The dying ReLU problem, clearly explained</a></em></p></li>
+<li><p><em><a class="reference external" href="http://medium.com">medium.com</a> - <a class="reference external" href="https://medium.com/&#64;danqing/a-practical-guide-to-relu-b83ca804f1f7">A practical guide to ReLU</a></em></p></li>
+<li><p><em><a class="reference external" href="http://colah.github.io">colah.github.io</a> - <a class="reference external" href="https://colah.github.io/posts/2015-08-Backprop/">Calculus on computational graphs: backpropagation</a></em></p></li>
+<li><p><em><a class="reference external" href="http://leimao.github.io">leimao.github.io</a> - <a class="reference external" href="https://leimao.github.io/blog/Cross-Entropy-KL-Divergence-MLE/">Cross Entropy, KL Divergence and Maximum Likelihood Estimation</a></em></p></li>
+<li><p><em><a class="reference external" href="http://leimao.github.io">leimao.github.io</a> - <a class="reference external" href="https://leimao.github.io/blog/Dropout-Explained/">Dropout explained</a></em></p></li>
+<li><p><em><a class="reference external" href="http://leimao.github.io">leimao.github.io</a> - <a class="reference external" href="https://leimao.github.io/blog/Batch-Normalization/">Batch normalization explained</a></em></p></li>
+<li><p><em><a class="reference external" href="http://staff.fnwi.uva.nl">staff.fnwi.uva.nl</a> - <a class="reference external" href="https://staff.fnwi.uva.nl/r.vandenboomgaard/MachineLearning/LectureNotes/Math/automatic_differentiation.html">Computational Graphs and the Chain Rule of Differentiation</a></em></p></li>
+<li><p><em><a class="reference external" href="http://math.libretexts.org">math.libretexts.org</a> - <a class="reference external" href="https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus_(OpenStax)/14%3A_Differentiation_of_Functions_of_Several_Variables/14.05%3A_The_Chain_Rule_for_Multivariable_Functions">The chain rule for multivariable functions</a></em></p></li>
+<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="https://d2l.ai/chapter_convolutional-modern/batch-norm.html">Batch normalization</a></em></p></li>
+<li><p><em><a class="reference external" href="http://ketanhdoshi.github.io">ketanhdoshi.github.io</a> - <a class="reference external" href="https://ketanhdoshi.github.io/Batch-Norm-Why/">Batch Normalization explained visually: Why does it work?</a></em></p></li>
+<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/batch-normalization-in-3-levels-of-understanding-14c2da90a338#3164">Batch normalization in 3 levels of understanding</a></em></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./10-deep-learning"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="numpy-gradient-descent.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Python: Gradient Descent</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="keras-recurrent-networks.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Keras: Recurrent Networks</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

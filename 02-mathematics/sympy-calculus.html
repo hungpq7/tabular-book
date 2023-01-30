@@ -1,0 +1,2506 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>SymPy: Calculus</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NumPy: Probability" href="numpy-probability.html" />
+    <link rel="prev" title="NumPy: Linear Algebra" href="numpy-linear-algebra.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../01-python-programing/_intro.html">
+   <b>
+    1. Python Programing
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-basic-concepts.html">
+     Python: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-types.html">
+     Python: Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-data-containers.html">
+     Python: Data Containers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-functions-objects.html">
+     Python: Functions and Objects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-algorithms.html">
+     (w) Python: Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/python-external-sources.html">
+     Python: External Sources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01-python-programing/selenium-web-scraping.html">
+     Selenium: Web Scraping
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="_intro.html">
+   <b>
+    2. Mathematics
+   </b>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-linear-algebra.html">
+     NumPy: Linear Algebra
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     SymPy: Calculus
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-probability.html">
+     NumPy: Probability
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-statistics.html">
+     NumPy: Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="scipy-hypothesis-testing.html">
+     SciPy: Hypothesis Testing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy-applied-mathematics.html">
+     (w) NumPy: Applied Mathematics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="networkx-network-analysis.html">
+     (w) NetworkX: Network Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03-data-manipulation/_intro.html">
+   <b>
+    3. Data Manipulation
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/numpy-arrays.html">
+     NumPy: Arrays
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-exploratory.html">
+     Pandas: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-cleaning.html">
+     Pandas: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/pandas-data-transformation.html">
+     Pandas: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03-data-manipulation/janitor-pandas-extensions.html">
+     Janitor: Pandas Extensions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04-big-data/_intro.html">
+   <b>
+    4. Big Data
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/hiveql-data-manipulation.html">
+     HiveQL: Data Manipulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-exploratory.html">
+     PySpark: Data Exploratory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-cleaning.html">
+     PySpark: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/pyspark-data-transformation.html">
+     PySpark: Data Transformation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04-big-data/dask-parallelized-pandas.html">
+     Dask: Parallelized Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../05-data-visualization/_intro.html">
+   <b>
+    5. Data Visualization
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/matplotlib-graph-construction.html">
+     Matplotlib: Graph Construction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/seaborn-statistical-visualization.html">
+     Seaborn: Statistical Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05-data-visualization/plotly-interactive-visualization.html">
+     Plotly: Interactive Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../06-machine-learning/_intro.html">
+   <b>
+    6. Machine Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-machine-learning.html">
+     Sklearn: Machine Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-classification.html">
+     Sklearn: Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-regression.html">
+     Sklearn: Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
+     Sklearn: Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/lenskit-recommendation.html">
+     Lenskit: Recommendation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06-machine-learning/pyspark-machine-learning.html">
+     PySpark: Machine Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../07-tabular-learning/_intro.html">
+   <b>
+    7. Tabular Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/sklearn-ensemble-learning.html">
+     Sklearn: Ensemble Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/xgboost-tree-boosting.html">
+     XGBoost: Tree Boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/ray-hyperparameter-optimization.html">
+     Ray: Hyperparam Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/shap-model-interpretation.html">
+     Shap: Model Interpretation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07-tabular-learning/imblearn-targeted-modeling.html">
+     (w) Imblearn: Targeted Modeling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../08-time-series/_intro.html">
+   <b>
+    8. Time Series
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/statsmodels-temporal-analysis.html">
+     Statsmodels: Temporal Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/prophet-forecasting-algorithms.html">
+     Prophet: Forecasting Algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/sktime-forecasting-pipeline.html">
+     Sktime: Forecasting Pipeline
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
+     (w) Darts: Deep Forecasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../09-unsupervised-learning/_intro.html">
+   <b>
+    9. Unsupervised Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/mlxtend-association-rules.html">
+     (w) Mlxtend: Association Rules
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/sklearn-clustering.html">
+     Sklearn: Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/sklearn-dimensional-reduction.html">
+     Sklearn: Dimensional Reduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09-unsupervised-learning/pyod-anomaly-detection.html">
+     PyOD: Anomaly Detection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../10-deep-learning/_intro.html">
+   <b>
+    10. Deep Learning
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/gensim-text-mining.html">
+     Gensim: Text Mining
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/opencv-image-processing.html">
+     (w) OpenCV: Image Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/numpy-gradient-descent.html">
+     Python: Gradient Descent
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/keras-multilayer-perceptron.html">
+     Keras: Multilayer Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/keras-recurrent-networks.html">
+     Keras: Recurrent Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/keras-convolutional-networks.html">
+     (w) Keras: Convolutional Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/pytorch-deep-learning.html">
+     PyTorch: Deep Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../11-r-programing/_intro.html">
+   <b>
+    11. R Programing
+   </b>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-basic-concepts.html">
+     R: Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-data-structures.html">
+     R: Data Structures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/tidyverse-data-wrangling.html">
+     Tidyverse: Data Wrangling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/dplyr-data-cleaning.html">
+     Dplyr: Data Cleaning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/ggplot-data-visualization.html">
+     Ggplot: Data Visualization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11-r-programing/r-statistics.html">
+     R: Statistics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/02-mathematics/sympy-calculus.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hungpq7/tabular-book/blob/master/02-mathematics/sympy-calculus.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/hungpq7/tabular-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/02-mathematics/sympy-calculus.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sympy">
+   1. SymPy
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#expression">
+     1.1. Expression
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simplification">
+     1.2. Simplification
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#polynomials">
+       Polynomials
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#trigonimetric-functions">
+       Trigonimetric functions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rewrite">
+       Rewrite
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#solvers">
+     1.3. Solvers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#equation-solver">
+       Equation solver
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#linear-system-solver">
+       Linear system solver
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inequality-solver">
+       Inequality solver
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#limits">
+   2. Limits
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#preview">
+     2.1. Preview
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-velocity-problem">
+       The velocity problem
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-area-problem">
+       The area problem
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     2.2. Limits
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#cases-of-limit">
+       Cases of limit
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#limits-evaluation">
+       Limits evaluation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#eulers-number">
+       Euler’s number
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#derivatives">
+   3. Derivatives
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition">
+     3.1. Definition
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#leibnizs-notation">
+       Leibniz’s notation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#differentiability">
+     3.2. Differentiability
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivatives-evaluation">
+     3.3. Derivatives evaluation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#basic-derivatives">
+       Basic derivatives
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#derivative-rules">
+       Derivative rules
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#taylor-series">
+       Taylor series
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#implementation">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multivariate-derivatives">
+     3.4. Multivariate derivatives
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#partial-derivative">
+       Partial derivative
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gradient">
+       Gradient
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hessian">
+       Hessian
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#integrals">
+   4. Integrals
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     4.1. Definition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#integration-rules">
+     4.2. Integration rules
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     4.3. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization">
+   5. Optimization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivative-test">
+     5.1. Derivative test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#first-derivative-test">
+       First-derivative test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#second-derivative-test">
+       Second-derivative test
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#constrained-optimization">
+     5.2. Constrained optimization
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#lagrange-multiplier">
+       Lagrange multiplier
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#multiple-constraints">
+       Multiple constraints
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#kkt-conditions">
+       KKT conditions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#interpretation">
+       Interpretation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#duality">
+     5.3. Duality
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#linear-optimization">
+       Linear optimization
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#lagrangean-duality">
+       Lagrangean duality
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>SymPy: Calculus</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sympy">
+   1. SymPy
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#expression">
+     1.1. Expression
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simplification">
+     1.2. Simplification
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#polynomials">
+       Polynomials
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#trigonimetric-functions">
+       Trigonimetric functions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rewrite">
+       Rewrite
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#solvers">
+     1.3. Solvers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#equation-solver">
+       Equation solver
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#linear-system-solver">
+       Linear system solver
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inequality-solver">
+       Inequality solver
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#limits">
+   2. Limits
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#preview">
+     2.1. Preview
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-velocity-problem">
+       The velocity problem
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-area-problem">
+       The area problem
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     2.2. Limits
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#cases-of-limit">
+       Cases of limit
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#limits-evaluation">
+       Limits evaluation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#eulers-number">
+       Euler’s number
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#derivatives">
+   3. Derivatives
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition">
+     3.1. Definition
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#leibnizs-notation">
+       Leibniz’s notation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#differentiability">
+     3.2. Differentiability
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivatives-evaluation">
+     3.3. Derivatives evaluation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#basic-derivatives">
+       Basic derivatives
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#derivative-rules">
+       Derivative rules
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#taylor-series">
+       Taylor series
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#implementation">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multivariate-derivatives">
+     3.4. Multivariate derivatives
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#partial-derivative">
+       Partial derivative
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gradient">
+       Gradient
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hessian">
+       Hessian
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#integrals">
+   4. Integrals
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     4.1. Definition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#integration-rules">
+     4.2. Integration rules
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     4.3. Implementation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization">
+   5. Optimization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivative-test">
+     5.1. Derivative test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#first-derivative-test">
+       First-derivative test
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#second-derivative-test">
+       Second-derivative test
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#constrained-optimization">
+     5.2. Constrained optimization
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#lagrange-multiplier">
+       Lagrange multiplier
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#multiple-constraints">
+       Multiple constraints
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#kkt-conditions">
+       KKT conditions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#interpretation">
+       Interpretation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#duality">
+     5.3. Duality
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#linear-optimization">
+       Linear optimization
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#lagrangean-duality">
+       Lagrangean duality
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="sympy-calculus">
+<h1>SymPy: Calculus<a class="headerlink" href="#sympy-calculus" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sspipe</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">px</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="sympy">
+<h2>1. SymPy<a class="headerlink" href="#sympy" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://github.com/sympy/sympy">SymPy</a> is a exclusive and native library to Python, designed for <a class="reference external" href="https://docs.sympy.org/latest/tutorials/intro-tutorial/intro.html#what-is-symbolic-computation">symbolic computation</a>. This mean mathematical expressions will be left in their symbolic forms and represented exactly, not approximately. SymPy can do this for all kinds of computations such as simplication, limits, derivatives and solving equations.</p>
+<section id="expression">
+<h3>1.1. Expression<a class="headerlink" href="#expression" title="Permalink to this headline">#</a></h3>
+<p>Expression is the most basic concept in Mathematics. We are going to use SymPy to create symbolic variables (distiguish them with Python variables), write expressions and substitute numbers to make ealuation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create some variables</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x,y,z&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># write an expression</span>
+<span class="n">expr</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="n">sym</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="n">expr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle x^{2} + \cos{\left(z \right)} + \frac{3 \left(x^{2} - 4\right)}{x - 2}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># substitute numbers, partially or fully</span>
+<span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \cos{\left(z \right)} + 7\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># by default, sympy will only evaluate non-decimal numbers once calling evalf()</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">pi</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle 3.14159265358979\]</div>
+</div>
+</div>
+</section>
+<section id="simplification">
+<h3>1.2. Simplification<a class="headerlink" href="#simplification" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html">Simplification</a> is one of the most interesting parts in Mathematics. SymPy provides
+<code class="docutils literal notranslate"><span class="pre">simplify()</span></code>, a general but slow simplifier and a number of faster simplifiers dedicated to specific cases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lhs</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">sym</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">lhs</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{\Gamma\left(x\right)}{\Gamma\left(x - 2\right)} = \left(x - 2\right) \left(x - 1\right)\]</div>
+</div>
+</div>
+<section id="polynomials">
+<h4>Polynomials<a class="headerlink" href="#polynomials" title="Permalink to this headline">#</a></h4>
+<p>In polynomials, expansion and factorization are two opposite tasks, one prefers sum form of monomials and the other prefer product form of irreducible factors. Sometimes, we also want to collect monomials with the same degree.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lhs</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">lhs</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \left(x + 1\right) \left(x + 2\right) \left(x + 3\right) = x^{3} + 6 x^{2} + 11 x + 6\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lhs</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">10</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">lhs</span><span class="o">.</span><span class="n">factor</span><span class="p">()</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle x^{10} + x^{2} + 1 = \left(x^{2} - x + 1\right) \left(x^{2} + x + 1\right) \left(x^{6} - x^{4} + 1\right)\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lhs</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">z</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">lhs</span><span class="o">.</span><span class="n">factor</span><span class="p">()</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle x^{2} z + 4 x y z + 4 y^{2} z = z \left(x + 2 y\right)^{2}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lhs</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">lhs</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle x^{2} z + 2 x^{2} + x y + x + 3 = x^{2} \left(z + 2\right) + x \left(y + 1\right) + 3\]</div>
+</div>
+</div>
+</section>
+<section id="trigonimetric-functions">
+<h4>Trigonimetric functions<a class="headerlink" href="#trigonimetric-functions" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sym</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">trigsimp</span><span class="p">()</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \sin^{2}{\left(x \right)} + \cos^{2}{\left(x \right)} = 1\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">expand_trig</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \sin{\left(2 x \right)} = 2 \sin{\left(x \right)} \cos{\left(x \right)}\]</div>
+</div>
+</div>
+</section>
+<section id="rewrite">
+<h4>Rewrite<a class="headerlink" href="#rewrite" title="Permalink to this headline">#</a></h4>
+<p>A common way to deal with special functions is to <em>rewrite</em> them in terms of one another.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">rewrite</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">cos</span><span class="p">)</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \tan{\left(x \right)} = \frac{\cos{\left(x - \frac{\pi}{2} \right)}}{\cos{\left(x \right)}}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lhs</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">lhs</span><span class="o">.</span><span class="n">rewrite</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">factorial</span><span class="p">)</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \Gamma\left(x\right) = \left(x - 1\right)!\]</div>
+</div>
+</div>
+</section>
+</section>
+<section id="solvers">
+<h3>1.3. Solvers<a class="headerlink" href="#solvers" title="Permalink to this headline">#</a></h3>
+<p>A quick review of number sets in Mathematics: <span class="math notranslate nohighlight">\(\mathbb{N}\)</span> (naturals), <span class="math notranslate nohighlight">\(\mathbb{Z}\)</span> (integers), <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span> (rationals), <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> (reals) and <span class="math notranslate nohighlight">\(\mathbb{C}\)</span> (complexes). They serve an important role of defining scope of the input.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="equation-solver">
+<h4>Equation solver<a class="headerlink" href="#equation-solver" title="Permalink to this headline">#</a></h4>
+<p>The function <a class="reference external" href="https://docs.sympy.org/latest/modules/solvers/solveset.html"><code class="docutils literal notranslate"><span class="pre">solveset()</span></code></a> solves an equation for one variable and returns a set of solutions. When an expression is passed in, it is automatically assumed to equal <span class="math notranslate nohighlight">\(0\)</span>. We can also change the equation domain to get appropriate solutions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">solveset</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \left\{-1, 1\right\}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;x^2 + 2*x + 5&#39;</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">solveset</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \left\{-1 - 2 i, -1 + 2 i\right\}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;x^2 + 2*x + 5&#39;</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">solveset</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">sym</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">Reals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \emptyset\]</div>
+</div>
+</div>
+</section>
+<section id="linear-system-solver">
+<h4>Linear system solver<a class="headerlink" href="#linear-system-solver" title="Permalink to this headline">#</a></h4>
+<p>We can solve systems of equations by specifying each equation explicitly or using agumented matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eqSys</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+    <span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">z</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">sym</span><span class="o">.</span><span class="n">linsolve</span><span class="p">(</span><span class="n">eqSys</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \left\{\left( 1, \  2, \  3\right)\right\}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matAgumented</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">sym</span><span class="o">.</span><span class="n">linsolve</span><span class="p">(</span><span class="n">matAgumented</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="inequality-solver">
+<h4>Inequality solver<a class="headerlink" href="#inequality-solver" title="Permalink to this headline">#</a></h4>
+<p>SymPy <a class="reference external" href="https://docs.sympy.org/latest/modules/solvers/inequalities.html">solves inequalities</a> via a number of functions adapt to various cases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ineq</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">4</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">solve_univariate_inequality</span><span class="p">(</span><span class="n">ineq</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \left(2 \leq x \wedge x &lt; \infty\right) \vee \left(x \leq -2 \wedge -\infty &lt; x\right)\]</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="limits">
+<h2>2. Limits<a class="headerlink" href="#limits" title="Permalink to this headline">#</a></h2>
+<section id="preview">
+<h3>2.1. Preview<a class="headerlink" href="#preview" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="the-velocity-problem">
+<h4>The velocity problem<a class="headerlink" href="#the-velocity-problem" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Time_derivative">Rate of change</a> or instantaneous <a class="reference external" href="https://en.wikipedia.org/wiki/Velocity">velocity</a> is an important concept in Data Science and Machine Learning. It is expressed as the <a class="reference external" href="https://en.wikipedia.org/wiki/Slope">slope</a> <span class="math notranslate nohighlight">\(m\)</span> of a line <span class="math notranslate nohighlight">\(y=mx+c\)</span>. However, in a non-linear function (which is very popular), the velocity changes as <span class="math notranslate nohighlight">\(x\)</span> changes. To measure the instantaneous velocity at any given point, an visual approach is trying to draw a <a class="reference external" href="https://en.wikipedia.org/wiki/Tangent">tangent</a> then find its slope by computing <span class="math notranslate nohighlight">\(\Delta{y}/\Delta{x}\)</span>.</p>
+<a class="reference internal image-reference" href="../_images/velocity_problem.png"><img alt="../_images/velocity_problem.png" class="align-center" src="../_images/velocity_problem.png" style="height: 180px;" /></a>
+<br>
+<p>Let’s an this example, we want to draw the tangent of the parabola at the blue point, <span class="math notranslate nohighlight">\(a\)</span>. It is the blue line, but we will have a hard time finding it. It would be more reasonable for us to approximate the tangent by drawing a <a class="reference external" href="https://en.wikipedia.org/wiki/Secant_line">secant</a>, like the red one.</p>
+<div class="math notranslate nohighlight">
+\[m_a\approx\frac{f(x)-f(a)}{x-a}\]</div>
+<p>We also observe that the orange secant is less accurate, as the orange <span class="math notranslate nohighlight">\(x\)</span> is further from the <span class="math notranslate nohighlight">\(a\)</span>, compared to red <span class="math notranslate nohighlight">\(x\)</span>. In other words, we would want to move <span class="math notranslate nohighlight">\(x\)</span> as close to <span class="math notranslate nohighlight">\(a\)</span> as possible, but never let them overlap to make sure the secant can always be drawn. We say that <span class="math notranslate nohighlight">\(x\)</span> approaches <span class="math notranslate nohighlight">\(a\)</span>, denoted <span class="math notranslate nohighlight">\(x\rightarrow a\)</span>. Such a process is mathematically written as:</p>
+<div class="math notranslate nohighlight">
+\[m_a=\lim_{x\rightarrow a}\frac{f(x)-f(a)}{x-a}\]</div>
+</section>
+<section id="the-area-problem">
+<h4>The area problem<a class="headerlink" href="#the-area-problem" title="Permalink to this headline">#</a></h4>
+<p>Another popular problem in Calculus is evaluating the area under a curve over an interval. Same as the velocity problem, we cannot compute it exactly, but can try to approximate it.</p>
+<a class="reference internal image-reference" href="../_images/area_problem.png"><img alt="../_images/area_problem.png" class="align-center" src="../_images/area_problem.png" style="height: 300px;" /></a>
+<br>
+<p>One way to do this is dividing up the interval <span class="math notranslate nohighlight">\([a,b]\)</span> into <span class="math notranslate nohighlight">\(N\)</span> small bins, each has a width of <span class="math notranslate nohighlight">\(h\)</span> and is represented by a point <span class="math notranslate nohighlight">\(x_n\)</span>. This point is usually placed at the center or at one of the two boundaries of a bin. For each bin <span class="math notranslate nohighlight">\(n\)</span>, draw a rectangular having width of <span class="math notranslate nohighlight">\(h\)</span> and height of <span class="math notranslate nohighlight">\(f(x_n)\)</span>. The area can be approximated by summing up the areas of all rectangulars:</p>
+<div class="math notranslate nohighlight">
+\[S\approx\sum_{n=1}^{N}{hf(x_n)}\]</div>
+<p>It’s obvious that, the smaller <span class="math notranslate nohighlight">\(h\)</span> is, the more accurate of our approximation. So we would want to reduce <span class="math notranslate nohighlight">\(h\)</span> to be as close to <span class="math notranslate nohighlight">\(0\)</span> as possible, but never equal to <span class="math notranslate nohighlight">\(0\)</span> because at this point we cannot <em>draw</em> rectangulars. This is formally written as:</p>
+<div class="math notranslate nohighlight">
+\[S=\lim_{h\rightarrow0}\sum_{n=1}^{N}{hf(x_n)}\]</div>
+</section>
+</section>
+<section id="id1">
+<h3>2.2. Limits<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Limit_of_a_function">Limit</a> (of a function) is an essential building block in Calculus. This section will takes a deeper look at function limits to explain what limits are, but avoid the Mathematical definition. We also discuss of how to estimate them using SymPy instead of Mathematical approaches.</p>
+<section id="cases-of-limit">
+<h4>Cases of limit<a class="headerlink" href="#cases-of-limit" title="Permalink to this headline">#</a></h4>
+<a class="reference internal image-reference" href="../_images/limit_types.png"><img alt="../_images/limit_types.png" class="align-center" src="../_images/limit_types.png" style="height: 250px;" /></a>
+<br>
+<p>The images above show the behaviours of different functions around <span class="math notranslate nohighlight">\(x=2\)</span>. It summrizes most popular cases you may face when finding a limit:</p>
+<ul class="simple">
+<li><p><em>Constant limits</em>. This is the easiest one to understand, shown in the first image. Even the function is not defined at <span class="math notranslate nohighlight">\(x=2\)</span>, it still has a limit:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\lim_{x\rightarrow2}\frac{x^2-4}{x-2}=4\]</div>
+<ul class="simple">
+<li><p><em>One-sided limits</em>. In the second image, <span class="math notranslate nohighlight">\(y\)</span> approaches different values when <span class="math notranslate nohighlight">\(x\)</span> comes in different directions. The previous function in fact is a special case of one-sided limits, where limits of a function from both sides are equal. In this case:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\lim_{x\rightarrow2^-}\frac{|x-2|}{x-2}=-1;\qquad\lim_{x\rightarrow2^+}\frac{|x-2|}{x-2}=1\]</div>
+<ul class="simple">
+<li><p><em>Infinite limits</em>. Limits are not constrained to be a number. If <span class="math notranslate nohighlight">\(f(x)\)</span> increases or decrease without bound as <span class="math notranslate nohighlight">\(x\rightarrow a\)</span>, then the limit is said to be positive/negative infinite.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\lim_{x\rightarrow2}\frac{1}{(x-2)^2}=+\infty\]</div>
+<ul class="simple">
+<li><p><em>Non-existant limits</em>. Sometimes, limits don’t exist. For example, consider the function <span class="math notranslate nohighlight">\(y=\sin(x)\)</span>. When <span class="math notranslate nohighlight">\(x\rightarrow+\infty\)</span>, <span class="math notranslate nohighlight">\(y\)</span> oscillates between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span> and never converges. Limit in this case does not exist.</p></li>
+</ul>
+</section>
+<section id="limits-evaluation">
+<h4>Limits evaluation<a class="headerlink" href="#limits-evaluation" title="Permalink to this headline">#</a></h4>
+<p>Limits can be evaluated by looking at graphs or by constructing tables of function values. For more complex function, we cannot rely on these methods. Using a number of basic laws, here are some techniques we can use to evaluate limits: direct substitution, factorization, rationalization, conjugate multiplication, <a class="reference external" href="https://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule">L’Hospital’s rule</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Squeeze_theorem">squeeze theorem</a>.</p>
+<p>However, this topic is not a Calculus textbook, so instead of diving into these techniques, we are going to use SymPy. It provides us the function <code class="docutils literal notranslate"><span class="pre">limit()</span></code> evaluates the limit and the <code class="docutils literal notranslate"><span class="pre">Limit</span></code> class to store the unevaluated expression. Both take following arguments, in that order:</p>
+<ul class="simple">
+<li><p>The function you want to evaluate limit</p></li>
+<li><p>The variable in the limit</p></li>
+<li><p>The value which the variable tends towards</p></li>
+<li><p>The direction of the limit</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">lim</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Limit</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="s1">&#39;+-&#39;</span><span class="p">)</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">lim</span><span class="p">,</span> <span class="n">lim</span><span class="o">.</span><span class="n">doit</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \lim_{x \to 2}\left(\frac{x^{2} - 4}{x - 2}\right) = 4\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">lim</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Limit</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="s1">&#39;+-&#39;</span><span class="p">)</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">lim</span><span class="p">,</span> <span class="n">lim</span><span class="o">.</span><span class="n">doit</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \lim_{x \to 2} \frac{1}{\left(x - 2\right)^{2}} = \infty\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">y</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \left\langle -1, 1\right\rangle\]</div>
+</div>
+</div>
+</section>
+<section id="eulers-number">
+<h4>Euler’s number<a class="headerlink" href="#eulers-number" title="Permalink to this headline">#</a></h4>
+<p>Imagine you are lending <span class="math notranslate nohighlight">\(1\)</span> dollar at the <a class="reference external" href="https://en.wikipedia.org/wiki/Compound_interest">compound interest</a> rate of <span class="math notranslate nohighlight">\(100\%\)</span> a year. How much money will you have after a year, if the compounding frequency <span class="math notranslate nohighlight">\(n\)</span> keeps increasing? This problem leads directly to the definition of the <a class="reference external" href="https://en.wikipedia.org/wiki/E_(mathematical_constant)">Euler’s number</a>, <span class="math notranslate nohighlight">\(e\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[e=\lim_{n\rightarrow\infty}\left(1+\frac{1}{n}\right)^n\]</div>
+<p>Euler’s number is one of the most important concepts in Mathematics and Calculus.</p>
+</section>
+</section>
+</section>
+<section id="derivatives">
+<h2>3. Derivatives<a class="headerlink" href="#derivatives" title="Permalink to this headline">#</a></h2>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Derivative">derivative</a> of a function <span class="math notranslate nohighlight">\(f\)</span> is a function <span class="math notranslate nohighlight">\(f'\)</span> describes velocities at different points. The process of finding a derivative is called <a class="reference external" href="https://en.wikipedia.org/wiki/Differential_calculus">differentiation</a>. In Data Science, the most recognizable application of Differential Calculus is solving optimization problems.</p>
+<section id="definition">
+<h3>3.1. Definition<a class="headerlink" href="#definition" title="Permalink to this headline">#</a></h3>
+<p>Let’s <span class="math notranslate nohighlight">\(y=f(x)\)</span> be a function. The <em>derivative function</em>, denoted <span class="math notranslate nohighlight">\(f'(x)\)</span>, is a set of points that the following limit exists:</p>
+<div class="math notranslate nohighlight">
+\[f'(x)=\frac{dy}{dx}=\lim_{\Delta{x}\rightarrow0}\frac{f(x+\Delta{x})-f(x)}{\Delta{x}} \]</div>
+<p>Using this definition, we can find the derivatives of basic functions, for example:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{d}{dx}x^2
+&amp;= \lim_{h\rightarrow0}\frac{(x+h)^2-x^2}{h} \\
+&amp;= \lim_{h\rightarrow0}\frac{2hx+h^2}{h} \\
+&amp;= \lim_{h\rightarrow0}(2x+h) \\
+&amp;= 2x \\
+\end{aligned}\end{split}\]</div>
+<section id="leibnizs-notation">
+<h4>Leibniz’s notation<a class="headerlink" href="#leibnizs-notation" title="Permalink to this headline">#</a></h4>
+<p>The expression <span class="math notranslate nohighlight">\(dy/dx\)</span>, <a class="reference external" href="https://en.wikipedia.org/wiki/Leibniz%27s_notation">Leibniz’s notation</a>, is a more versatile way to write derivatives and is highly recommended. Here is how we write higher order derivatives:</p>
+<div class="math notranslate nohighlight">
+\[
+f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
+\]</div>
+</section>
+</section>
+<section id="differentiability">
+<h3>3.2. Differentiability<a class="headerlink" href="#differentiability" title="Permalink to this headline">#</a></h3>
+<p>Sometimes, derivatives at some points of a function <span class="math notranslate nohighlight">\(f\)</span> cannot be evaluated, such a function is said to be non-<a class="reference external" href="https://en.wikipedia.org/wiki/Differentiable_function">differentiable</a>. This happens when there is at least one point <span class="math notranslate nohighlight">\(x=a\)</span> the derivative does not exist. Here are some common cases:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f\)</span> is not <a class="reference external" href="https://en.wikipedia.org/wiki/Continuous_function">continuous</a> at <span class="math notranslate nohighlight">\(a\)</span> over its <a class="reference external" href="https://en.wikipedia.org/wiki/Domain_of_a_function">domain</a>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f\)</span> is continuous but is not <a class="reference external" href="https://en.wikipedia.org/wiki/Smoothness">smooth</a> at <span class="math notranslate nohighlight">\(a\)</span>. Formally, the limits differ when <span class="math notranslate nohighlight">\(x\)</span> aproaches <span class="math notranslate nohighlight">\(a\)</span> from two sides. Example: <span class="math notranslate nohighlight">\(f(x)=|x|\)</span> at <span class="math notranslate nohighlight">\(x=0\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f\)</span> has an infinite limit at <span class="math notranslate nohighlight">\(a\)</span>. In other words, the tangent at <span class="math notranslate nohighlight">\(a\)</span> is a vertical line. Example: <span class="math notranslate nohighlight">\(f(x)=\sqrt[3]{x}\)</span> at <span class="math notranslate nohighlight">\(x=0\)</span>.</p></li>
+<li><p>The limit at <span class="math notranslate nohighlight">\(a\)</span> of <span class="math notranslate nohighlight">\(f\)</span> does not exist. For example: <span class="math notranslate nohighlight">\(f(x)=\sin(1/x)\)</span> at <span class="math notranslate nohighlight">\(x=0\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x,y,z&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+    <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">aspect_ratio</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sympy-calculus_55_0.png"><img alt="../_images/sympy-calculus_55_0.png" class="align-center" src="../_images/sympy-calculus_55_0.png" style="width: 356.0px; height: 215.5px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">cbrt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+    <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">aspect_ratio</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sympy-calculus_56_0.png"><img alt="../_images/sympy-calculus_56_0.png" class="align-center" src="../_images/sympy-calculus_56_0.png" style="width: 353.0px; height: 242.0px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+    <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">aspect_ratio</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/sympy-calculus_57_0.png"><img alt="../_images/sympy-calculus_57_0.png" class="align-center" src="../_images/sympy-calculus_57_0.png" style="width: 356.0px; height: 192.5px;" /></a>
+</div>
+</div>
+</section>
+<section id="derivatives-evaluation">
+<h3>3.3. Derivatives evaluation<a class="headerlink" href="#derivatives-evaluation" title="Permalink to this headline">#</a></h3>
+<section id="basic-derivatives">
+<h4>Basic derivatives<a class="headerlink" href="#basic-derivatives" title="Permalink to this headline">#</a></h4>
+<p>These basic derivatives are found easily using the definition.</p>
+<ul class="simple">
+<li><p>Constants: <span class="math notranslate nohighlight">\(\dfrac{d}{dx}c=0 \)</span></p></li>
+<li><p>Power functions: <span class="math notranslate nohighlight">\(\dfrac{d}{dx}x^n=nx^{n-1}\)</span></p></li>
+<li><p>Exponential functions: <span class="math notranslate nohighlight">\(\dfrac{d}{dx}a^x=a^x\log{a}\)</span></p></li>
+<li><p>Logarithm functions: <span class="math notranslate nohighlight">\(\dfrac{d}{dx}\log_ax=\dfrac{1}{x\log{a}}\)</span></p></li>
+<li><p>Trigonometric functions: <span class="math notranslate nohighlight">\(\dfrac{d}{dx}\sin{x}=\cos{x},\;\dfrac{d}{dx}\cos{x}=\sin{x},\;\dfrac{d}{dx}\tan{x}=1+\tan^2x\)</span></p></li>
+</ul>
+</section>
+<section id="derivative-rules">
+<h4>Derivative rules<a class="headerlink" href="#derivative-rules" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p>Sum rule: <span class="math notranslate nohighlight">\(\dfrac{d}{dx}(f(x)+g(x))=\dfrac{d}{dx}f(x)+\dfrac{d}{dx}g(x)\)</span></p></li>
+<li><p>Product rule: <span class="math notranslate nohighlight">\(\dfrac{d}{dx}(f(x)\cdot g(x))=\dfrac{df(x)}{dx}g(x)+\dfrac{dg(x)}{dx}f(x)\)</span></p></li>
+<li><p>Chain rule: <span class="math notranslate nohighlight">\(\dfrac{d}{dx}f(g(x))=\dfrac{df(g(x))}{dg(x)}\dfrac{dg(x)}{dx}\)</span></p></li>
+</ul>
+</section>
+<section id="taylor-series">
+<h4>Taylor series<a class="headerlink" href="#taylor-series" title="Permalink to this headline">#</a></h4>
+<p>Sometimes, we need to solve a <a class="reference external" href="https://en.wikipedia.org/wiki/Differential_equation">differential equation</a>, in which both a function and its derivatives exist. One way to solve this kind of function is using <a class="reference external" href="https://en.wikipedia.org/wiki/Taylor_series">Taylor series</a>, an approximation of the function <span class="math notranslate nohighlight">\(f(x)\)</span> using derivatives at a specific point <span class="math notranslate nohighlight">\(a\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[f(x)
+\approx \lim_{N\rightarrow\infty}\sum_{n=1}^{N}\frac{f^{(n)}(a)}{n!}(x-a)^n
+= f(a)+f'(a)(x-a)+\frac{f''(a)}{2!}(x-a)^2+\dots
+\]</div>
+<p><span class="math notranslate nohighlight">\(N\)</span> is called the order of the Taylor series. The higher <span class="math notranslate nohighlight">\(N\)</span> is, the more accurate the approximation is.</p>
+</section>
+<section id="implementation">
+<h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
+<div class="seealso admonition">
+<p class="admonition-title">Case study</p>
+<p>Given the function <span class="math notranslate nohighlight">\(y=\log(x^2)\)</span> . Find the derivative of <span class="math notranslate nohighlight">\(y\)</span> at <span class="math notranslate nohighlight">\(x=1\)</span> using derivative rules and check it again with SymPy.</p>
+<p>Let <span class="math notranslate nohighlight">\(y=f(u)=\log(u)\)</span> and <span class="math notranslate nohighlight">\(u=g(x)=x^2\)</span>. Using the chain rule:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dy}{dx} = \frac{dy}{du}\cdot\frac{du}{dx} = \frac{1}{u}\cdot2x = \frac{2x}{x^2} = \frac{2}{x}\]</div>
+<p>So, at <span class="math notranslate nohighlight">\(x=1\)</span>, the rate of change of <span class="math notranslate nohighlight">\(y\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(2\)</span>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">lhs</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Derivative</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{d}{d x} \log{\left(x^{2} \right)} = \frac{2}{x}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rhs</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle 2\]</div>
+</div>
+</div>
+</section>
+</section>
+<section id="multivariate-derivatives">
+<h3>3.4. Multivariate derivatives<a class="headerlink" href="#multivariate-derivatives" title="Permalink to this headline">#</a></h3>
+<section id="partial-derivative">
+<h4>Partial derivative<a class="headerlink" href="#partial-derivative" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Partial_derivative">Partial derivative</a> is a concept defined for <a class="reference external" href="https://en.wikipedia.org/wiki/Function_of_several_real_variables">multivariate functions</a>, it is the derivative of the function with respect to each variable with the others held constant. For instance, the partial derivatives of <span class="math notranslate nohighlight">\(y=f(x_1,x_2)=x_1^2+\log{x_2}+x_1x_2\)</span> are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{\partial{y}}{\partial{x_1}} &amp;= 2x_1+x_2 \\
+\frac{\partial{y}}{\partial{x_2}} &amp;= \frac{1}{x_2}+x_1
+\end{aligned}\end{split}\]</div>
+</section>
+<section id="gradient">
+<h4>Gradient<a class="headerlink" href="#gradient" title="Permalink to this headline">#</a></h4>
+<p>The partial derivative reppresents the rate of change in a specific direction. If we use a column vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to denote the input, then the set of all partial derivatives of <span class="math notranslate nohighlight">\(y=f(\mathbf{x})\)</span> is called the <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient">gradient</a>, denoted <span class="math notranslate nohighlight">\(\nabla{y}\)</span>. The gradient is also written as a column vector, thus it has the same size with the input vector.</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{g}_f=\nabla{y}=\begin{bmatrix}
+    \dfrac{\partial{y}}{\partial{x_1}} &amp;
+    \dfrac{\partial{y}}{\partial{x_2}}
+\end{bmatrix}^\text{T} \]</div>
+</section>
+<section id="hessian">
+<h4>Hessian<a class="headerlink" href="#hessian" title="Permalink to this headline">#</a></h4>
+<p>Becasue this is the most popular case in <a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_calculus">matrix calculus</a> (scalar-by-vector derivatives), we are moving to a more complicated concept: second-order derivatives. It is written as a matrix, called the <a class="reference external" href="https://en.wikipedia.org/wiki/Hessian_matrix">Hessian matrix</a> as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{H}_f=\begin{bmatrix}
+    \dfrac{\partial^2{f}}{\partial{x_1}^2} &amp; \dfrac{\partial^2{f}}{\partial{x_1x_2}} \\
+    \dfrac{\partial^2{f}}{\partial{x_2x_1}} &amp; \dfrac{\partial^2{f}}{\partial{x_2}^2} \\
+\end{bmatrix} \end{split}\]</div>
+</section>
+</section>
+</section>
+<section id="integrals">
+<h2>4. Integrals<a class="headerlink" href="#integrals" title="Permalink to this headline">#</a></h2>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Antiderivative">integral</a> of a function <span class="math notranslate nohighlight">\(f\)</span> is a function <span class="math notranslate nohighlight">\(F\)</span> describes areas under the curve up to different points. The process of finding an integral is call <a class="reference external" href="https://en.wikipedia.org/wiki/Integral">integration</a>. In Data Science, the most recognizable application of Integral Calculus is defining probabilities.</p>
+<section id="id2">
+<h3>4.1. Definition<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<p>The problem of area under the curve exmained when we start learning about limits gives us the definition of <em>definite integral</em>. The term <em>area</em> here is loosely understood, as it can be negative when the curve is under the <span class="math notranslate nohighlight">\(x\)</span>-axis. It is defined within an interval <span class="math notranslate nohighlight">\([a,b]\)</span> given by:</p>
+<div class="math notranslate nohighlight">
+\[\int_a^bf(x)dx=\lim_{\Delta{x}\rightarrow0}\sum_{n=1}^{N}{f(x_n)\Delta{x}}\]</div>
+<p>The term <span class="math notranslate nohighlight">\(dx\)</span> refers to a very small <span class="math notranslate nohighlight">\(\Delta{x}\)</span> is called an <a class="reference external" href="https://en.wikipedia.org/wiki/Infinitesimal">infinitesimal</a>. When using integral as a function, we use the concept <em>finite integral</em> or <a class="reference external" href="https://en.wikipedia.org/wiki/Antiderivative">anti-derivative</a> written as a function <span class="math notranslate nohighlight">\(F\)</span> where <span class="math notranslate nohighlight">\(F'(x)=f(x)\)</span>. This is a more general concept as we can use it to compute definite integral:</p>
+<div class="math notranslate nohighlight">
+\[\int_a^bf(x)dx=F(b)-F(a)=\int f(b)dx-\int f(a)dx\]</div>
+<p>Notice that if <span class="math notranslate nohighlight">\(F'(x)=f(x)\)</span> then <span class="math notranslate nohighlight">\((F(x)+c)'=f(x)\)</span> for any constant <span class="math notranslate nohighlight">\(c\)</span>. So basically there are a countless number of anti-derivatives, but they are all related. For simplification purpose, we only write <span class="math notranslate nohighlight">\(F(x)\)</span>.</p>
+</section>
+<section id="integration-rules">
+<h3>4.2. Integration rules<a class="headerlink" href="#integration-rules" title="Permalink to this headline">#</a></h3>
+<p>This section summaries most popular anti-derivatives.</p>
+<ul class="simple">
+<li><p>Constant: <span class="math notranslate nohighlight">\(\displaystyle{\int cdx=cx}\)</span></p></li>
+<li><p>Power functions: <span class="math notranslate nohighlight">\(\displaystyle{\int x^ndx=\dfrac{x^{n+1}}{n+1}}\)</span></p></li>
+<li><p>Exponential functions: <span class="math notranslate nohighlight">\(\displaystyle{\int a^xdx=\frac{a^x}{\log a}}\)</span></p></li>
+<li><p>Trigonometric functions:
+<span class="math notranslate nohighlight">\(\displaystyle{
+  \int\sin(x)dx=-\cos{x},\;
+  \int\cos(x)dx=\sin{x},\;
+  \int\tan(x)dx=-\log|\cos(x)|
+}\)</span></p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>4.3. Implementation<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle x \log{\left(x \right)} - x\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x:z&#39;</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="mi">3</span><span class="o">**</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">z</span><span class="o">.</span><span class="n">integrate</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle 25.7947686930944\]</div>
+</div>
+</div>
+</section>
+</section>
+<section id="optimization">
+<h2>5. Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_optimization">Optimization</a> is the problem of finding <em>global</em> <a class="reference external" href="https://en.wikipedia.org/wiki/Maxima_and_minima">extrema</a> of a function. It is solved using <a class="reference external" href="https://en.wikipedia.org/wiki/Fermat%27s_theorem_(stationary_points)">Fermat’s theorem</a>, saying that the derivative of a function at a local maximum or local minimum must be zero.</p>
+<section id="derivative-test">
+<h3>5.1. Derivative test<a class="headerlink" href="#derivative-test" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Derivative_test">Derivative test</a> is an application of derivative for examining important properties of a function. Two commonly used derivatives are:</p>
+<ul class="simple">
+<li><p>first-order derivative, to describe the <a class="reference external" href="https://en.wikipedia.org/wiki/Monotonic_function">monotonicity</a> and to locate <a class="reference external" href="https://en.wikipedia.org/wiki/Stationary_point">stationary points</a></p></li>
+<li><p>second-order derivative, to describe the <a class="reference external" href="https://en.wikipedia.org/wiki/Concave_function">concavity</a> and to locate <a class="reference external" href="https://en.wikipedia.org/wiki/Inflection_point">inflection points</a></p></li>
+</ul>
+<p>Combined together, the two tests enable the capacity of finding <em>local minima</em> and <em>local maxima</em>. In this section, we are going to analyze the results of derivative tests of the function:</p>
+<div class="math notranslate nohighlight">
+\[y=(2x^5-x^4-10x^3)/16\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.125</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span> <span class="o">-</span> <span class="mf">0.0625</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mf">0.625</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.625</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mf">1.875</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">boundLeft</span><span class="p">,</span> <span class="n">boundRight</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">2.6</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">mapSignToColor</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;negative&#39;</span><span class="p">:</span> <span class="s1">&#39;indianred&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;positive&#39;</span><span class="p">:</span> <span class="s1">&#39;royalblue&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-&#39;</span><span class="p">:</span> <span class="s1">&#39;indianred&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;+&#39;</span><span class="p">:</span> <span class="s1">&#39;royalblue&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="first-derivative-test">
+<h4>First-derivative test<a class="headerlink" href="#first-derivative-test" title="Permalink to this headline">#</a></h4>
+<p>So far, we have known the derivative at a point implies the <em>instantaneous velocity</em> of the function. So, if we could solve for the sign of the derivative in all possible intervals, we also know when the function is <em>increasing</em> or <em>decreasing</em>. Below are the table of sign for <span class="math notranslate nohighlight">\(f'(x)\)</span> and its relationship with the graph of <span class="math notranslate nohighlight">\(f(x)\)</span>. The graph is partially colored so that the red intervals indicate <span class="math notranslate nohighlight">\(f'(x)&lt;0\)</span> and blue intervals indicate <span class="math notranslate nohighlight">\(f'(x)&gt;0\)</span>.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p><span class="math notranslate nohighlight">\(x\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(-\infty\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(-1.544\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(0\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(1.944\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(\infty\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><span class="math notranslate nohighlight">\(f'(x)\)</span></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(+\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(+\)</span></p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="../_images/function_monotonicity.png"><img alt="../_images/function_monotonicity.png" class="align-center" src="../_images/function_monotonicity.png" style="height: 300px;" /></a>
+<br>
+<p>The black points are where the derivative is zero, we generally call them <em>stationary points</em>. However, the behaviours of the function around them are quite different. The first stationary point, <span class="math notranslate nohighlight">\(x\approx-1.544\)</span>, we witness that <span class="math notranslate nohighlight">\(y\)</span> is switching from increasing to decreasing when going through it. This indicates <span class="math notranslate nohighlight">\(x\approx-1.544\)</span> is a <em>relative</em>, or <em>local</em> maximum. Likewise, <span class="math notranslate nohighlight">\(x\approx-1.944\)</span> is a local minimum. But <span class="math notranslate nohighlight">\(x=0\)</span> is different, the function does not change its monotonicity after going through this point, so it is not a maximum neither a minimum. Points like this are called <em>saddle points</em>.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">listStationary</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">solveset</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="nb">sorted</span><span class="p">)]</span>
+<span class="n">listInterval</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">boundLeft</span><span class="p">,</span> <span class="n">listStationary</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">listStationary</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">listStationary</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">listStationary</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">listStationary</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">listStationary</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">boundRight</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">mapSignToColor</span><span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Increasing (velocity &gt; 0)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">mapSignToColor</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Decreasing (velocity &lt; 0)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">mapSignToColor</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">mapSignToColor</span><span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">stationary</span> <span class="ow">in</span> <span class="n">listStationary</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">stationary</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">stationary</span><span class="p">),</span> <span class="s1">&#39;ok&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">stationary</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">listStationary</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;../output/function_monotonicity.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="second-derivative-test">
+<h4>Second-derivative test<a class="headerlink" href="#second-derivative-test" title="Permalink to this headline">#</a></h4>
+<p>We first talk about the meaning of <a class="reference external" href="https://en.wikipedia.org/wiki/Second_derivative">second derivative</a>. Because it is computed by taking the rate of change of velocity, it describes how the velocity is changing itself. In other words, second derivative is the representation of <em>instantaneous acceleration</em>. Below is the table of sign for <span class="math notranslate nohighlight">\(f''(x)\)</span> and how it affects <span class="math notranslate nohighlight">\(f(x)\)</span> and <span class="math notranslate nohighlight">\(f'(x)\)</span>:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p><span class="math notranslate nohighlight">\(x\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(-\infty\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(-1.084\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(0\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(1.384\)</span></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p><span class="math notranslate nohighlight">\(\infty\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><span class="math notranslate nohighlight">\(f''(x)\)</span></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(+\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(+\)</span></p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="../_images/function_concavity.png"><img alt="../_images/function_concavity.png" class="align-center" src="../_images/function_concavity.png" style="height: 300px;" /></a>
+<br>
+<p>When the second derivative is negative (red sections), which means the velocity is decreasing, we witness that the function is <em>concave</em>. In contrast, the function is <em>convex</em> in blue sections. This is the main result of the second derivative test, it pairs with first-derivative test to conclude if a stationary point is whether a local minimum, a local maxium or a saddle point:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(f'(a)=0\)</span> and <span class="math notranslate nohighlight">\(f''(a)&gt;0\)</span> then <span class="math notranslate nohighlight">\(x=a\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f(x)\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(f'(a)=0\)</span> and <span class="math notranslate nohighlight">\(f''(a)&lt;0\)</span> then <span class="math notranslate nohighlight">\(x=a\)</span> is a local maximum of <span class="math notranslate nohighlight">\(f(x)\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(f'(a)=f''(a)=0\)</span> then <span class="math notranslate nohighlight">\(x=a\)</span> is a saddle point</p></li>
+</ul>
+<p>We also observe that at black points, the function <em>switches</em> between concave and convex. Such a point is called an <em>inflection point</em>. This is another benefit of second-derivative test. Also note that some resources refer to concave/convex as concave down/up.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">listInflection</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">solveset</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">|</span> <span class="n">p</span><span class="p">(</span><span class="nb">sorted</span><span class="p">)]</span>
+<span class="n">listInterval</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">boundLeft</span><span class="p">,</span> <span class="n">listInflection</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">listInflection</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">listInflection</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">listInflection</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">listInflection</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">listInflection</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">boundRight</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xPlot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">boundLeft</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">boundRight</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xPlot</span><span class="p">,</span> <span class="n">f1</span><span class="p">(</span><span class="n">xPlot</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Velocity&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">mapSignToColor</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Concave (acceleration &lt; 0)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">mapSignToColor</span><span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Convex (acceleration &gt; 0)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">mapSignToColor</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">listInterval</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">mapSignToColor</span><span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">inflection</span> <span class="ow">in</span> <span class="n">listInflection</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">inflection</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">inflection</span><span class="p">),</span> <span class="s1">&#39;ok&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">inflection</span><span class="p">,</span> <span class="n">f1</span><span class="p">(</span><span class="n">inflection</span><span class="p">),</span> <span class="s1">&#39;ok&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">inflection</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">listInflection</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;../output/function_concavity.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="constrained-optimization">
+<h3>5.2. Constrained optimization<a class="headerlink" href="#constrained-optimization" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Constrained_optimization">Constrained optimization</a> is the extension of the normal optimization problem, in which the solution must satisfy specific contraints. This type of otimization is very popular in real world problems.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rll}
+\min              &amp; f(\mathbf{x}) \\
+\text{subject to} &amp; g_i(\mathbf{x})=0    &amp; \text{for }i=1,2,\dots \\
+                  &amp; h_j(\mathbf{x})\geq0 &amp; \text{for }j=1,2,\dots
+\end{array}\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(g=0\)</span> refers to equality constraints and <span class="math notranslate nohighlight">\(h=0\)</span> refers to non-equality constraints. The indices <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> are added to imply that there can be an unlimited number of constraints. Also note that this is the most general form of an optimization problem, as other scenarios such as maximizing, non-zero right hand side and “less than” constraints can be easily converted to this form.</p>
+<section id="lagrange-multiplier">
+<h4>Lagrange multiplier<a class="headerlink" href="#lagrange-multiplier" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Lagrange_multiplier">Lagrange multiplier</a> is a theorem for optimizing a function with equality constraints only. Intuitively, it says that at an optimal point <span class="math notranslate nohighlight">\(\mathbf{x}^*=(x_1^*,x_2^*,\dots)\)</span>, the gradient of <span class="math notranslate nohighlight">\(f\)</span> has the same direction with the gradient of <span class="math notranslate nohighlight">\(g\)</span>. Mathematically, the theorem states that there always exists a real number <span class="math notranslate nohighlight">\(\lambda\)</span>, called the Lagrange multiplier, such that:</p>
+<div class="math notranslate nohighlight">
+\[\nabla f(\mathbf{x}^*)=-\lambda\nabla g(\mathbf{x}^*)\]</div>
+<p>The solution <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> and <span class="math notranslate nohighlight">\(\lambda\)</span> that satisfies the above equation, interestingly, is the saddle point of
+<span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{x},\lambda)=f(\mathbf{x})+\lambda g(\mathbf{x})\)</span>, also known as the <em>Lagrange function</em>. Solving for <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> and <span class="math notranslate nohighlight">\(\lambda\)</span> yields the system of equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{ll}
+\text{Stationarity:} &amp; \nabla\mathcal{L}(\mathbf{x},\lambda)=\mathbf{0} \\
+\text{Feasibility:}  &amp; g(\mathbf{x})=0
+\end{array}\end{split}\]</div>
+<p>One thing to notice, is that solving this yields only a <a class="reference external" href="https://en.wikipedia.org/wiki/Necessity_and_sufficiency">necessary condition</a> and still requires some sufficient conditions to confirm if a solution is an extremum. And even that, the extrema we have found so far are local ones, we still need to compare them to get the global optima.</p>
+<div class="seealso admonition">
+<p class="admonition-title">Case study</p>
+<p>Find the minimum value of <span class="math notranslate nohighlight">\(f(x_1,x_2)=x_1^2+2x_2^2\)</span> subject to the constraint <span class="math notranslate nohighlight">\(g(x_1,x_2)=2x_1+x_2-9=0\)</span>, using Lagrange multiplier.</p>
+<p>First, calculate the gradients of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span>. Here, <span class="math notranslate nohighlight">\(\mathbf{i}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{i}_2\)</span> are the unit vectors of the respective input dimensions.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\nabla f &amp;= 2x_1\mathbf{i}_1+4x_2\mathbf{i}_2 \\
+\nabla g &amp;= \mathbf{i}_1+2\mathbf{i}_2 \\
+\end{aligned}\end{split}\]</div>
+<p>According to the method of Lagrange multiplier, <span class="math notranslate nohighlight">\(\nabla f=\lambda\nabla g\)</span>, along with the constraint give us the system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+2x_1 &amp;= 2\lambda \\
+4x_2 &amp;= \lambda \\
+2x_1+x_2 &amp;= 9 \\
+\end{aligned}\end{split}\]</div>
+<p>Solving it gives us <span class="math notranslate nohighlight">\((x_1^*,x_2^*)=(4,1)\)</span> and <span class="math notranslate nohighlight">\(\lambda=4\)</span>.</p>
+</div>
+</section>
+<section id="multiple-constraints">
+<h4>Multiple constraints<a class="headerlink" href="#multiple-constraints" title="Permalink to this headline">#</a></h4>
+<p>Starting simple let us understand Lagrange multiplier in an intuitive way. Now, it’s time to extend the method a little, by considering more than one equality constraints: <span class="math notranslate nohighlight">\(g_1(\mathbf{x})=g_2(\mathbf{x})=\ldots=0\)</span>, or shortly: <span class="math notranslate nohighlight">\(\mathbf{g}(\mathbf{x})=\mathbf{0}\)</span>. In this case, our Lagrange function will be:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\mathbf{x},\boldsymbol{\lambda})
+= f(\mathbf{x})+\boldsymbol{\lambda}^\text{T}\mathbf{g}(\mathbf{x})
+= f(\mathbf{x})+\sum{\lambda_ig_i(\mathbf{x})}
+\]</div>
+<p>Solving this more general problem is the same as in the case of a single constraint. Notice the system of equations will be equal to the total number of elements in <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\lambda}\)</span>.</p>
+</section>
+<section id="kkt-conditions">
+<h4>KKT conditions<a class="headerlink" href="#kkt-conditions" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions">Karush-Kuhn-Tucker conditions</a> (KKT conditions) is a technique extending Lagrange multiplier to adapt non-equality constraints. Let’s say, we are optimizing a simple problem with one equality and one non-equality constraints:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rll}
+\min              &amp; f(\mathbf{x}) \\
+\text{subject to} &amp; \mathbf{g}(\mathbf{x})=\mathbf{0}\text{ and }\mathbf{h}(\mathbf{x})\leq\mathbf{0} \\
+\end{array}\end{split}\]</div>
+<p>With the introduction of KTT multipliers, <span class="math notranslate nohighlight">\(\boldsymbol{\lambda}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>, we construct the KKT function which is very close to the Lagrange function:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\mathbf{x},\boldsymbol{\lambda},\boldsymbol\mu)
+=f(\mathbf{x})+\boldsymbol\lambda^\text{T}\mathbf{g}(\mathbf{x})+\boldsymbol{\mu}^\text{T}\mathbf{h}(\mathbf{x})
+\]</div>
+<p>KKT theorem states that the optimal solution of this problem must satisfies all these 4 conditions:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{ll}
+\text{Stationarity:}             &amp; \nabla\mathcal{L}(\mathbf{x},\boldsymbol{\lambda},\boldsymbol{\mu})=\mathbf{0} \\
+\text{Primal feasibility:}       &amp; \mathbf{g}(\mathbf{x})=\mathbf{0}\text{ and }\mathbf{h}(\mathbf{x})\leq\mathbf{0} \\
+\text{Dual feasibility:}         &amp; \boldsymbol\mu\geq\mathbf{0} \\
+\text{Complementary slackness:}  &amp; \boldsymbol\mu^\text{T}\mathbf{h}(\mathbf{x})=\mathbf{0} \\
+\end{array}\end{split}\]</div>
+<p>As being a generalization of Lagrange multiplier, KKT conditions are also necessary conditions. The method is applied popularly in economics, especially in <a class="reference external" href="https://en.wikipedia.org/wiki/Profit_maximization">profit maximization</a>.</p>
+</section>
+<section id="interpretation">
+<h4>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this headline">#</a></h4>
+<a class="reference internal image-reference" href="../_images/lagrange_multiplier.png"><img alt="../_images/lagrange_multiplier.png" class="align-center" src="../_images/lagrange_multiplier.png" style="height: 300px;" /></a>
+<br>
+<p>The image above shows the geometric meaning of Lagrange multiplier: at the optimal point, <span class="math notranslate nohighlight">\(\nabla f\)</span> and <span class="math notranslate nohighlight">\(\nabla g\)</span> are two parallel vectors. Imagine we know the function <span class="math notranslate nohighlight">\(f\)</span> measuring the <em>distance</em> (<span class="math notranslate nohighlight">\(y\)</span>) to the <em>treasure</em> (<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>) with respect to the <em>location</em> (<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>). We also have a <em>compass</em> always points to the treasure, shown in black arrows, which is a casual way to talk about the gradient. The treasure is in the forest, so we must follow a <em>trail</em> (red line, representing the constraint <span class="math notranslate nohighlight">\(g=0\)</span>). The red arrows represent the gradient of <span class="math notranslate nohighlight">\(g\)</span>.</p>
+<p>The optimization problem in this example is: which point on the trail is closest to the treasure? Lagrange multiplier gives us the solution for this problem: it is the point at which the black arrow is parallel to the red arrow, or in other words, the compass points perpendicularly to the trail. The ratio between two arrows, <span class="math notranslate nohighlight">\(\lambda\)</span> can be interpreted as the <em>rate of change</em> of the objective function with respect to the constraint at the optimal solution:</p>
+<div class="math notranslate nohighlight">
+\[\lambda=\frac{df}{dx}\div\frac{dg}{dx}=\frac{df}{dg}\]</div>
+<p>In economics, the Lagrange multiplier (in the case of non-equality contraints) represents the <a class="reference external" href="https://en.wikipedia.org/wiki/Shadow_price">shadow price</a>. For example, a working day is limited to be 8 hours, and the manager of a company wants to hire an employee for an additional hour. Then, the Lagrange multiplier is marginal cost, showing the maximum price the manager would be willing to pay, based on the benefits he would get from this change.</p>
+<p>The increase of time for a working day from 8 to 9 hours is known as the concept of <em>constraint relaxtion</em>. In economics, constraint relaxation can occur in a lot of situations, such as bribery and overtime hiring. Thus, Lagrange multiplier can help improve decision making by analyzing the marginal utility of breaking the rule.</p>
+</section>
+</section>
+<section id="duality">
+<h3>5.3. Duality<a class="headerlink" href="#duality" title="Permalink to this headline">#</a></h3>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Duality_(optimization)">duality principle</a> states that any optimization problem can be viewed in either of two perspective, the <em>primal problem</em> and the <em>dual problem</em>. The set of solutions of the two problems are not always the same (we refer to it as <a class="reference external" href="https://en.wikipedia.org/wiki/Duality_gap">duality gap</a>), but the dual problem is sometimes easier to solve and can express interesting properties of the optimization problem. In this section, we are going to learn about two common special forms with most applications of duality, <em>dual linear optimization</em> and <em>Lagrangean duality</em>.</p>
+<section id="linear-optimization">
+<h4>Linear optimization<a class="headerlink" href="#linear-optimization" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Linear_programming">Linear optimization</a> is a special case of optimization problems, in which the function to optimize and the constraints are all linear functions. The canonical form of a linear program is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rl}
+\max              &amp; y=\mathbf{c}^\text{T}\mathbf{x} \\
+\text{subject to} &amp; \mathbf{A}\mathbf{x}\leq\mathbf{b}\text{ and }\mathbf{x}\geq\mathbf{0} \\
+\end{array}\end{split}\]</div>
+<p>In the first constraint, the term <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x}\)</span> represents multipler linear constraints. The second constraint can always be transformed to, simply by changing the sign of the coefficients. The above problem is known as the <em>primal</em> form of the optimization problem, which has a <em>dual</em> problem given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rl}
+\min              &amp; z=\mathbf{b}^\text{T}\mathbf{t} \\
+\text{subject to} &amp; \mathbf{A}^\text{T}\mathbf{t}\geq\mathbf{c}\text{ and }\mathbf{t}\geq\mathbf{0} \\
+\end{array}\end{split}\]</div>
+<p>There are two important theorems about <a class="reference external" href="https://en.wikipedia.org/wiki/Dual_linear_program">linear duality</a> we need to take a look at:</p>
+<ul class="simple">
+<li><p>Weak duality theorem, states that the property <span class="math notranslate nohighlight">\(y\leq z\)</span> is always true at any <em>feasible solution</em> to the the two problems</p></li>
+<li><p>Strong duality theorem, states that the optimal values of the two problems are the same, written formally as <span class="math notranslate nohighlight">\(\max{y}=\min{z}\)</span></p></li>
+</ul>
+<div class="seealso admonition">
+<p class="admonition-title">Case study</p>
+<p>A rancher is preparing for a flea market sale in which he intends to sell three types of clothing that are all comprised of wool from his sheep: peacoats, hats, and scarves. As the market is in high demand, the rancher is likely to sell out all of his products. With the limited materials and time, the rancher needs to determine how he should use his resources to maximize the profit. The following table show the rancher’s total resources and how much resources each product requires.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>Material</p></th>
+<th class="text-align:center head"><p>Peacoat</p></th>
+<th class="text-align:center head"><p>Hat</p></th>
+<th class="text-align:center head"><p>Scarve</p></th>
+<th class="text-align:center head"><p>Resource</p></th>
+<th class="text-align:center head"><p>Unit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>Wool</p></td>
+<td class="text-align:center"><p>9</p></td>
+<td class="text-align:center"><p>2</p></td>
+<td class="text-align:center"><p>4</p></td>
+<td class="text-align:center"><p>50</p></td>
+<td class="text-align:center"><p>foot</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>Fabric</p></td>
+<td class="text-align:center"><p>80</p></td>
+<td class="text-align:center"><p>40</p></td>
+<td class="text-align:center"><p>20</p></td>
+<td class="text-align:center"><p>460</p></td>
+<td class="text-align:center"><p>inch</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p><strong>Profit</strong></p></td>
+<td class="text-align:center"><p><strong>175</strong></p></td>
+<td class="text-align:center"><p><strong>25</strong></p></td>
+<td class="text-align:center"><p><strong>21</strong></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p>dollar</p></td>
+</tr>
+</tbody>
+</table>
+<p>Denote <span class="math notranslate nohighlight">\(x_1,x_2,x_3\)</span> the <em>quantity</em> of each product to produce, we write the <em>profit</em> formula (<span class="math notranslate nohighlight">\(y\)</span>) as the objective function and write each <em>resource limitation</em> as a constraint (<span class="math notranslate nohighlight">\(\mathbf{b}\)</span>). This maximization problem gives us the primal form.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rll}
+\max   &amp; y=175x_1+25x_2+21x_3 \\
+\text{subject to} &amp; 9x_1+2x_2+4x_3\leq50\,(\text{ft}^2) \\
+                  &amp; 80x_1+40x_2+20x_3\leq460\,(\text{in}) \\
+                  &amp; x_1,x_2,x_3\geq0 \\
+\end{array}\end{split}\]</div>
+<p>Now, imagine we are a clothing store who want to buy wool and fabric of the rancher at the <em>unit price</em> <span class="math notranslate nohighlight">\(t_1,t_2\)</span>, respectively. To persuade the rancher, the total <em>material price</em> we offer for each product must be at least equal to its <em>selling price</em> (<span class="math notranslate nohighlight">\(\mathbf{c}\)</span>). Being a purchasing department, we would want to minimize the total <em>expenditure</em> (<span class="math notranslate nohighlight">\(z\)</span>). This problem yields the dual form.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rll}
+\min              &amp; z=50t_1+460t_2 \\
+\text{subject to} &amp; 9t_1+80t_2\geq175\,(\$) \\
+                  &amp; 2t_1+40t_2\geq25\,(\$) \\
+                  &amp; 4t_1+20t_2\geq21\,(\$) \\
+                  &amp; t_1,t_2\geq0 \\
+\end{array}\end{split}\]</div>
+<p>Here is a summarization of economical interpretation of duality. In the primal problem, we are a manufacturing company dealing with quantities to maximize revenue, constrained by limited resources. In the dual problem, we are a retail company dealing with prices to minimize costs, constrained by price floors.</p>
+</div>
+</section>
+<section id="lagrangean-duality">
+<h4>Lagrangean duality<a class="headerlink" href="#lagrangean-duality" title="Permalink to this headline">#</a></h4>
+<p>Lagrangean duality is a more general form of linear duality, being capable of solving non-linear optimization problems. When talking about duality, it usually refers to Lagrangean duality. It is strongly related to Lagrange multiplier and KKT conditions, the extension of Lagrange multiplier. Consider the general form of an unconstrained optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rll}
+\min              &amp; f(\mathbf{x}) \\
+\text{subject to} &amp; \mathbf{g}(\mathbf{x})=\mathbf{0}\text{ and }\mathbf{h}(\mathbf{x})\leq\mathbf{0} \\
+\end{array}\end{split}\]</div>
+<p>The dual problem is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rll}
+\max_{\lambda,\mu}\;\min_x &amp; \mathcal{L}(\mathbf{x},\boldsymbol{\lambda},\boldsymbol\mu) \\
+\text{subject to}          &amp; \boldsymbol\mu\geq\mathbf{0} \\
+\end{array}\end{split}\]</div>
+<p>In this problem, weak duality always holds. If <a class="reference external" href="https://en.wikipedia.org/wiki/Slater%27s_condition">Slater’s condition</a> is satisfied, then strong duality holds. Also when strong duality holds, we have the optimal solution satisfies complementary slackness: <span class="math notranslate nohighlight">\(\mu_h=0\)</span> for every non-equality constrain. This leads to two cases, <span class="math notranslate nohighlight">\(\mu=0\)</span> or <span class="math notranslate nohighlight">\(h=0\)</span>. To interpret this economically, think about the constraint <span class="math notranslate nohighlight">\(h\leq0\)</span> as the limitation of a resource.</p>
+<ul class="simple">
+<li><p>If the Lagrange multiplier is zero (<span class="math notranslate nohighlight">\(\mu=0\)</span>), then we get an optimal objective even when this resource did not reach its limit (<span class="math notranslate nohighlight">\(h&lt;0\)</span>). The resource in this case is redundant and does not help improving our objective.</p></li>
+<li><p>If the constraint is <a class="reference external" href="https://en.wikipedia.org/wiki/Constraint_(mathematics)#Terminology">binding</a> (<span class="math notranslate nohighlight">\(h=0\)</span>), it means we are running out of this resource. Its shadow price (Lagrange multiplier) is positive (<span class="math notranslate nohighlight">\(\mu&gt;0\)</span>) indicating this is a valuable resource. Hence, if we can find a way to relax the limitation of this resource (<span class="math notranslate nohighlight">\(h\leq\epsilon&gt;0\)</span>) at a reasonable cost (less than shadow price), do it.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><em><a class="reference external" href="http://openstax.org">openstax.org</a> - <a class="reference external" href="https://openstax.org/books/calculus-volume-1/pages/1-introduction">Calculus Volume 1</a></em></p></li>
+<li><p><em><a class="reference external" href="http://openstax.org">openstax.org</a> - <a class="reference external" href="https://openstax.org/books/calculus-volume-2/pages/1-introduction">Calculus Volume 2</a></em></p></li>
+<li><p><em><a class="reference external" href="http://openstax.org">openstax.org</a> - <a class="reference external" href="https://openstax.org/books/calculus-volume-3/pages/1-introduction">Calculus Volume 3</a></em></p></li>
+<li><p><em><a class="reference external" href="http://rodrigopacios.github.io">rodrigopacios.github.io</a> - <a class="reference external" href="https://rodrigopacios.github.io/mrpacios/download/Thomas_Calculus.pdf">Thomas’ Calculus</a></em></p></li>
+<li><p><em><a class="reference external" href="http://quora.com">quora.com</a> - <a class="reference external" href="https://qr.ae/pvxTdc">Can you explain Lagrange Multipliers without using any mathematical notation?</a></em></p></li>
+<li><p><em><a class="reference external" href="http://optimization.cbe.cornell.edu">optimization.cbe.cornell.edu</a> - <a class="reference external" href="https://optimization.cbe.cornell.edu/index.php?title=Duality">Duality</a></em></p></li>
+<li><p><em><a class="reference external" href="http://optimization.cbe.cornell.edu">optimization.cbe.cornell.edu</a> - <a class="reference external" href="https://optimization.cbe.cornell.edu/index.php?title=Lagrangean_duality">Lagrangean duality</a></em></p></li>
+<li><p><em><a class="reference external" href="http://math.ucdenver.edu">math.ucdenver.edu</a> - <a class="reference external" href="http://math.ucdenver.edu/~sborgwardt/wiki/index.php/Lagrangian_Duality">Lagranrian duality</a></em></p></li>
+<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/optimization-stories-kkt-conditions-f86aea4fb6c2">Optimization stories: KKT conditions</a></em></p></li>
+<li><p><em><a class="reference external" href="http://mjo.osborne.economics.utoronto.ca">mjo.osborne.economics.utoronto.ca</a> - <a class="reference external" href="https://mjo.osborne.economics.utoronto.ca/index.php/tutorial/index/1/ilm/t">Interpretation of Lagrange multipliers</a></em></p></li>
+<li><p><em><a class="reference external" href="http://optimization.mccormick.northwestern.edu">optimization.mccormick.northwestern.edu</a> - <a class="reference external" href="https://optimization.mccormick.northwestern.edu/index.php/Lagrangean_duality">Lagrangean duality</a></em></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "hungpq7/tabular-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./02-mathematics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="numpy-linear-algebra.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">NumPy: Linear Algebra</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="numpy-probability.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">NumPy: Probability</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Quang Hung &#9829; Thuy Linh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
