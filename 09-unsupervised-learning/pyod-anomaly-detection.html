@@ -1115,7 +1115,7 @@ title="Print to PDF"
 <li><p><em>Dependency anomalies</em>: refer to the data points that do not follow the dependency structure which normal data follow. Example salary covariates with education but anomalies do not.</p></li>
 <li><p><em>Clustered anomalies</em>: is group of abnomalies, the data points are not scattered in space but appear in a group that are different from normal data</p></li>
 </ul>
-<a class="reference internal image-reference" href="../_images/types_of_anomaly.png"><img alt="../_images/types_of_anomaly.png" class="align-center" src="../_images/types_of_anomaly.png" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../_images/types_of_anomaly.png"><img alt="../_images/types_of_anomaly.png" class="align-center" src="../_images/types_of_anomaly.png" style="height: 220px;" /></a>
 </section>
 <section id="approaches">
 <h3>1.2. Approaches<a class="headerlink" href="#approaches" title="Permalink to this headline">#</a></h3>
@@ -1141,10 +1141,9 @@ title="Print to PDF"
 <h3>2.1. Stategies<a class="headerlink" href="#stategies" title="Permalink to this headline">#</a></h3>
 <section id="z-score">
 <h4>Z-score<a class="headerlink" href="#z-score" title="Permalink to this headline">#</a></h4>
-<p>Given a vector, <span class="math notranslate nohighlight">\(x\)</span>, we calculate z-score (denoted <span class="math notranslate nohighlight">\(z\)</span>) with the following formula:</p>
+<p>Given a vector, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, we calculate z-score (denoted <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>) with the following formula:</p>
 <div class="math notranslate nohighlight">
 \[z = \frac{x-\mu}{\sigma}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation.</p>
 <p>The approach of this method is to eliminate values of <span class="math notranslate nohighlight">\(z&lt;-3\)</span> and <span class="math notranslate nohighlight">\(z&gt;3\)</span>. You can also remove <span class="math notranslate nohighlight">\(x&lt;\mu-3\sigma\)</span> and <span class="math notranslate nohighlight">\(x&gt;\mu+3\sigma\)</span> which gives the same result. Notice that the coefficient can be changed to 2.5 or 3.5 depends on the problem.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
