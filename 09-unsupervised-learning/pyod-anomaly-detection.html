@@ -1189,7 +1189,7 @@ title="Print to PDF"
 <p>The class <a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/outliers/Winsorizer.html"><code class="docutils literal notranslate"><span class="pre">Winsorizer</span></code></a> detects outliers based on z-score, IQR and percentiles rule and replace these outliers by the maximum/minimum values at automatically determined values</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -1235,7 +1235,7 @@ title="Print to PDF"
 <p><a class="reference external" href="https://feature-engine.readthedocs.io/en/latest/api_doc/outliers/OutlierTrimmer.html"><code class="docutils literal notranslate"><span class="pre">OutlierTrimmer</span></code></a> detects outliers based on z-score, IQR and percentiles rule and removes observations with outliers from the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -1299,7 +1299,7 @@ title="Print to PDF"
 model in Pyod can calculate the outlier scores and predict which observation is outlier</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1584,7 +1584,7 @@ model in Pyod can calculate the outlier scores and predict which observation is 
 <p>In clustering topic, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html">DBSCAN</a> can be used to detect outliers based on concept core points - edge points. If a point is neither a core point nor edge point, it will be considered as an outlier.</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1861,7 +1861,7 @@ Assume the clustering algorithm split dataset into <span class="math notranslate
 <p>The formula simplify states that score is equal to the distance to the nearest large cluster multiplie by the size of the cluster the object belong to</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2026,7 +2026,7 @@ Assume the clustering algorithm split dataset into <span class="math notranslate
 <p>This algorithm is consider as <a class="reference external" href="https://scikit-learn.org/stable/modules/outlier_detection.html#novelty-and-outlier-detection">novelty detection</a> (a kind of semi-supervised) which the training data do not contain outliers, the algorithm only detects the new observation is an outlier or not. Thus, it not suitable if there are outliers in the training set</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2182,7 +2182,7 @@ Assume the clustering algorithm split dataset into <span class="math notranslate
 </ul>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2342,6 +2342,7 @@ Assume the clustering algorithm split dataset into <span class="math notranslate
 <div class="math notranslate nohighlight">
 \[\text{RD}(p_i,p_j) = \max(\text{K_distance}_{p_i}, d(p_i,p_j))\]</div>
 <a class="reference internal image-reference" href="../_images/local_outlier_factor.png"><img alt="../_images/local_outlier_factor.png" class="align-center" src="../_images/local_outlier_factor.png" style="height: 250px;" /></a>
+<br>
 <ul class="simple">
 <li><p>Computes the <em>local reachability density (LRD)</em>. LRD is inverse of the average RD of <span class="math notranslate nohighlight">\(p_i\)</span> from its neighbors. The larger average RD leads to the smaller LRD - it means the density of <span class="math notranslate nohighlight">\(p_i\)</span> is quite low:</p></li>
 </ul>
@@ -2378,6 +2379,7 @@ c(n) &amp;= 2 \cdot (\log(n-1)+0.577) - \frac{2(n-1)}{n} \\
 <div class="math notranslate nohighlight">
 \[\text{ACD}_p = \sum_{i=1}^k \frac{2(k+1-i)}{k(k+1)} e_i\]</div>
 <a class="reference internal image-reference" href="../_images/connectivity_based_outlier_factor.png"><img alt="../_images/connectivity_based_outlier_factor.png" class="align-center" src="../_images/connectivity_based_outlier_factor.png" style="height: 180px;" /></a>
+<br>
 <p>At last, anomaly score is generated by ratio of average chaining distance of instance and the average of average chaining distance of <span class="math notranslate nohighlight">\(k\)</span> nearest neighbor of this point. The higher the score, the easier it is to be an outlier.</p>
 <div class="math notranslate nohighlight">
 \[\text{COF}_p = \frac{\text{ACD}_p}{\frac{\sum ACD_k}{k}}\]</div>
@@ -2440,7 +2442,7 @@ c(n) &amp;= 2 \cdot (\log(n-1)+0.577) - \frac{2(n-1)}{n} \\
 </table>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfWine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data/wine_quality.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfWine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../data/wine_quality.csv&#39;</span><span class="p">)</span>
 <span class="n">dfWine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
