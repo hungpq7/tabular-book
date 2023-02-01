@@ -87,7 +87,7 @@ chapters:
 - file: 09-unsupervised-learning/_intro
   sections:
   - file: 09-unsupervised-learning/mlxtend-association-rules
-    title: "(w) Mlxtend: Association Rules"
+    title: "(w) MLxtend: Association Rules"
   - file: 09-unsupervised-learning/sklearn-clustering
   - file: 09-unsupervised-learning/sklearn-dimensional-reduction
   - file: 09-unsupervised-learning/pyod-anomaly-detection
