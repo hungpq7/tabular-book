@@ -947,8 +947,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#probability-prediction">
-       Probability prediction
+      <a class="reference internal nav-link" href="#probabilistic-prediction">
+       Probabilistic prediction
       </a>
      </li>
     </ul>
@@ -1145,8 +1145,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#probability-prediction">
-       Probability prediction
+      <a class="reference internal nav-link" href="#probabilistic-prediction">
+       Probabilistic prediction
       </a>
      </li>
     </ul>
@@ -1981,7 +1981,7 @@ NODE=0 (internal): mean_radius=106.05, node1, node12
 <section id="id8">
 <h4>Hyperparameters<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code>: the signicicance of the penalty, defaults to <em>1</em>. Common values are <span class="math notranslate nohighlight">\(10^k\)</span> for <span class="math notranslate nohighlight">\(k\in\{-2,-1,0,1,2\}\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code>: the significance of the penalty, defaults to <em>1</em>. Common values are <span class="math notranslate nohighlight">\(10^k\)</span> for <span class="math notranslate nohighlight">\(k\in\{-2,-1,0,1,2\}\)</span>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel</span></code>: the kernel function to be used, defaults to <em>rbf</em>. Other options are <em>poly</em> and <em>sigmoid</em>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gamma</span></code>: the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> in some kernel functions, defaults to <em>scale</em>. Common values are <span class="math notranslate nohighlight">\(10^k\)</span> for <span class="math notranslate nohighlight">\(k\in\{-2,-1,0,1,2\}\)</span>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">coef0</span></code>: the paremeter <span class="math notranslate nohighlight">\(r\)</span> in some kernel functions, defautls to <em>0</em>.</p></li>
@@ -2050,8 +2050,8 @@ NODE=0 (internal): mean_radius=106.05, node1, node12
 </div>
 </div>
 </section>
-<section id="probability-prediction">
-<h4>Probability prediction<a class="headerlink" href="#probability-prediction" title="Permalink to this headline">#</a></h4>
+<section id="probabilistic-prediction">
+<h4>Probabilistic prediction<a class="headerlink" href="#probabilistic-prediction" title="Permalink to this headline">#</a></h4>
 <p>SVM does not easily calculate probabilities like K-NN or Decision Tree, it instead implements cross validated logistic regression on the scores. Thus, it is computationally expensive and need to be enabled. Otherwise, decision function of SVM can be used instead.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
