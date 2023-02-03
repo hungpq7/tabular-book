@@ -104,6 +104,8 @@ chapters:
   - file: 10-deep-learning/keras-convolutional-networks
     title: "(w) Keras: Convolutional Networks"
   - file: 10-deep-learning/pytorch-deep-learning
+  - file: 10-deep-learning/transformers-transfer-learning
+    title: "(w) Transformers: Transfer Learning"
 
 # R Programming
 - file: 11-r-programing/_intro
