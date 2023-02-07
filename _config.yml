@@ -1,42 +1,47 @@
-# Book settings
-# Learn more at https://jupyterbook.org/customize/config.html
-
 title: ''
-author: "Quang Hung &#9829; Thuy Linh"
+author: Quang Hung &#9829; Thuy Linh
 logo: image/book/logo.svg
-exclude_patterns: [README.md, _build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", 'util/refactor.ipynb']
 only_build_toc_files: true
+exclude_patterns: [
+  '_build',
+  '.DS_Store',
+  '**.ipynb_checkpoints',
+  'README.md',
+  'Thumbs.db',
+  'util/refactor.ipynb'
+]
 
-launch_buttons:
-  notebook_interface: "classic" # The interface interactive links will activate ["classic", "jupyterlab"]
-  binderhub_url: "https://mybinder.org"
-  colab_url: "https://colab.research.google.com"
-  thebe: true
-
-# Force re-execution of notebooks on each build.
-# See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: 'off'
+  execute_notebooks: off # (auto, force, cache, off)
 
-# Information about where the book exists on the web
 repository:
-  url: https://github.com/hungpq7/tabular-book  # Online location of your book
-  # path_to_book: docs  # Optional path to your book, relative to the repository root
-  # branch: master  # Which branch of the repository should be used when creating links (optional)
+  url: https://github.com/hungpq7/tabular-book
 
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
   favicon: image/book/favicon.ico
   use_issues_button: false
   use_repository_button: true
   use_download_button: false
 
-# Load Plotly plots
 sphinx:
   config:
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
     html_js_files: https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
+    html_theme_options:
+      repository_url: https://github.com/hungpq7/tabular-book
+      use_repository_button: true
+      use_download_button: false
+      launch_buttons:
+        notebook_interface: jupyterlab # (classic, jupyterlab)
+        binderhub_url: https://mybinder.org
+        colab_url: https://colab.research.google.com
+        thebe: true
+
+launch_buttons:
+  notebook_interface: jupyterlab # (classic, jupyterlab)
+  binderhub_url: https://mybinder.org
+  colab_url: https://colab.research.google.com
+  thebe: true
 
 parse:
   myst_substitutions:
