@@ -69,7 +69,6 @@ chapters:
   - file: 07-tabular-learning/ray-hyperparameter-optimization
   - file: 07-tabular-learning/shap-model-interpretation
   - file: 07-tabular-learning/imblearn-targeted-modeling
-    title: "(w) Imblearn: Targeted Modeling"
 
 # Time Series
 - file: 08-time-series/_intro
