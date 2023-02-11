@@ -105,17 +105,9 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="../util/intro.html">
-                    Data Science
-                </a>
-            </li>
-        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -351,7 +343,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
-     Sklearn: Feature Engineering
+     Featuretools: Feature Engineering
     </a>
    </li>
    <li class="toctree-l2">
@@ -400,7 +392,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     (w) Imblearn: Targeted Modeling
+     Imblearn: Targeted Modeling
     </a>
    </li>
   </ul>
@@ -453,7 +445,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../09-unsupervised-learning/mlxtend-association-rules.html">
-     (w) Mlxtend: Association Rules
+     (w) MLxtend: Association Rules
     </a>
    </li>
    <li class="toctree-l2">
@@ -520,6 +512,11 @@ const thebe_selector_output = ".output, .cell_output"
      PyTorch: Deep Learning
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/transformers-transfer-learning.html">
+     (w) Transformers: Transfer Learning
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
@@ -574,7 +571,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
             </div>
             
         </div>
@@ -625,7 +622,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/07-tabular-learning/imblearn-targeted-modeling.ipynb"
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=lab/tree/07-tabular-learning/imblearn-targeted-modeling.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -708,52 +705,6 @@ title="Source repository"
   </span>
 
 </a>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/07-tabular-learning/imblearn-targeted-modeling.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -782,18 +733,18 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#over-sampling">
-     1.1. Over-sampling
+    <a class="reference internal nav-link" href="#class-weighting">
+     1.1. Class weighting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#focal-loss">
+     1.2. Focal loss
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#synthetic-minority">
-       Synthetic Minority
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#adaptive-synthetic">
-       Adaptive Synthetic
+      <a class="reference internal nav-link" href="#hyperparameters">
+       Hyperparameters
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -805,31 +756,48 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#under-sampling">
-     1.2. Under-sampling
+     1.3. Under-sampling
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#near-miss">
-       Near miss
+      <a class="reference internal nav-link" href="#controlled-techniques">
+       Controlled techniques
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#tomek-links">
-       Tomek links
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#condensed-nearest-neighbors">
-       Condensed Nearest Neighbors
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#edited-nearest-neighbors">
-       Edited Nearest Neighbors
+      <a class="reference internal nav-link" href="#cleaning-methods">
+       Cleaning methods
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id1">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#over-sampling">
+     1.3. Over-sampling
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#synthetic-minority">
+       Synthetic Minority
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#smote-variants">
+       SMOTE variants
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#smote-combinations">
+       SMOTE combinations
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
        Implementation
       </a>
      </li>
@@ -889,18 +857,18 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#over-sampling">
-     1.1. Over-sampling
+    <a class="reference internal nav-link" href="#class-weighting">
+     1.1. Class weighting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#focal-loss">
+     1.2. Focal loss
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#synthetic-minority">
-       Synthetic Minority
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#adaptive-synthetic">
-       Adaptive Synthetic
+      <a class="reference internal nav-link" href="#hyperparameters">
+       Hyperparameters
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -912,31 +880,48 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#under-sampling">
-     1.2. Under-sampling
+     1.3. Under-sampling
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#near-miss">
-       Near miss
+      <a class="reference internal nav-link" href="#controlled-techniques">
+       Controlled techniques
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#tomek-links">
-       Tomek links
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#condensed-nearest-neighbors">
-       Condensed Nearest Neighbors
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#edited-nearest-neighbors">
-       Edited Nearest Neighbors
+      <a class="reference internal nav-link" href="#cleaning-methods">
+       Cleaning methods
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id1">
+       Implementation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#over-sampling">
+     1.3. Over-sampling
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#synthetic-minority">
+       Synthetic Minority
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#smote-variants">
+       SMOTE variants
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#smote-combinations">
+       SMOTE combinations
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
        Implementation
       </a>
      </li>
@@ -985,39 +970,311 @@ title="Print to PDF"
 <h1>Imblearn: Targeted Modeling<a class="headerlink" href="#imblearn-targeted-modeling" title="Permalink to this headline">#</a></h1>
 <section id="imbalanced-learning">
 <h2>1. Imbalanced learning<a class="headerlink" href="#imbalanced-learning" title="Permalink to this headline">#</a></h2>
-<p>Working with imbalanced data is normal in real world. Some cases of that can be solved by choosing the right metric or make sure the distribution between training and testing set are the same. Otherwise, there are 2 methods can be used to reduce imbalanced in machine learning are: upsampling (over-sampling) or downsampling (under-sampling)</p>
-<p>Both methods have random sampler which random duplicates/drops the samples in minority/majority class.</p>
-<section id="over-sampling">
-<h3>1.1. Over-sampling<a class="headerlink" href="#over-sampling" title="Permalink to this headline">#</a></h3>
-<p>Over-sampling is generating the new observations in minoriry class. This method should be used only when the data size is small, because of data leakage and model performance problem. The same data point can be shown up in both training and testing set, so always do it after splitting the data into training and validation folds. Over sampling can hurt model performance by training the operation points - it’s a bit different from real world data.</p>
-<section id="synthetic-minority">
-<h4>Synthetic Minority<a class="headerlink" href="#synthetic-minority" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html">SMOTE</a> (Synthetic Minority Oversampling Techique) uses the algorithm to generate new data points. It works by selecting points that are close in the feature space, drawing a line between the points and drawing a new sample as a point along that line. Called <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(x_j\)</span> are the points in minor class, <span class="math notranslate nohighlight">\(x_j\)</span> is one of <span class="math notranslate nohighlight">\(k\)</span> nearest neighbors of <span class="math notranslate nohighlight">\(x_i\)</span>. The new sample <span class="math notranslate nohighlight">\(x_n\)</span> will be computed by:</p>
-<div class="math notranslate nohighlight">
-\[x_n = x_i + \lambda (x_j-x_i)\]</div>
-<p>With <span class="math notranslate nohighlight">\(\lambda\)</span> is a random number in range <span class="math notranslate nohighlight">\([0,1]\)</span>. There are some variants of SMOTE:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.BorderlineSMOTE.html#imblearn.over_sampling.BorderlineSMOTE">Borderline SMOTE</a>: In some cases, the instance of minority is so close to the majority which can lead to misclassified. These instances are called borderline points that a point has more than a half of its neighbors in majority class. To improve the prediction, we need to fullfill the <em>border</em> so the algorithm synthesize the border line points instead of others</p></li>
-<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SVMSMOTE.html#imblearn.over_sampling.SVMSMOTE">SVM SMOTE</a>: Similar to borderline, svm create new points based on support vectors, but the new point can lie both outside and inside the distance between support vector to its neighbors. If fewer than a half of <span class="math notranslate nohighlight">\(k\)</span> nearest neighbors of a point are majority class, the new points will be created outside to expand the minority class area.</p></li>
-<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.KMeansSMOTE.html#imblearn.over_sampling.KMeansSMOTE">Kmeans SMOTE</a>: Using kmean to cluster data set before oversampling, any cluster with at least 50% of minority instance will be choosen for generating new samples.</p></li>
-</ul>
+<p>A common phenomenom in classification is imbalance data, it refers to the situation that a class has too few data and our Machine Learning model cannot put focus to learn it. This phenomenom exists in all types of classification problems, but we will focus only on solving it in <em>binary classification</em>. In real-world problems, often times there will be a class being more important than the other but contains only a small fraction of data. For convention, we will denote this class <span class="math notranslate nohighlight">\(1\)</span> and the other <span class="math notranslate nohighlight">\(0\)</span>.</p>
+<p>In this section, we will introduce three approaches to fight this challenge: class weighting, using focal loss and resampling, but will focus on the last method using <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn">Imbalanced-learn</a>. Resampling is divided into over/up-sampling and under/down-sampling as described in the following image.</p>
+<a class="reference internal image-reference" href="../_images/resampling.png"><img alt="../_images/resampling.png" class="align-center" src="../_images/resampling.png" style="height: 160px;" /></a>
+<br>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Any method solving imbalanced data causes data leakage.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">imblearn</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">imblearn.datasets</span> <span class="kn">import</span> <span class="n">make_imbalance</span>
+<span class="kn">import</span> <span class="nn">imblearn.over_sampling</span> <span class="k">as</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">imblearn.under_sampling</span> <span class="k">as</span> <span class="nn">iu</span>
+
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMClassifier</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/credit_scoring.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;bad_customer&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;bad_customer&#39;</span><span class="p">]</span>
+<span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    139974
+1     10026
+Name: bad_customer, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">NearMiss</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xSampled</span><span class="p">,</span> <span class="n">ySampled</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">ySampled</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    10026
+1    10026
+Name: bad_customer, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">TomekLinks</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xSampled</span><span class="p">,</span> <span class="n">ySampled</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">ySampled</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_3336</span><span class="o">/</span><span class="mf">677645355.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">TomekLinks</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">xSampled</span><span class="p">,</span> <span class="n">ySampled</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">ySampled</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="nn">~\AppData\Roaming\Python\Python39\site-packages\imblearn\base.py</span> in <span class="ni">fit_resample</span><span class="nt">(self, X, y)</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span>         <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">binarize_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">78</span> 
+<span class="ne">---&gt; </span><span class="mi">79</span>         <span class="bp">self</span><span class="o">.</span><span class="n">sampling_strategy_</span> <span class="o">=</span> <span class="n">check_sampling_strategy</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span>             <span class="bp">self</span><span class="o">.</span><span class="n">sampling_strategy</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sampling_type</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span>         <span class="p">)</span>
+
+<span class="nn">~\AppData\Roaming\Python\Python39\site-packages\imblearn\utils\_validation.py</span> in <span class="ni">check_sampling_strategy</span><span class="nt">(sampling_strategy, y, sampling_type, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">532</span>         <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">533</span>             <span class="nb">sorted</span><span class="p">(</span>
+<span class="ne">--&gt; </span><span class="mi">534</span>                 <span class="n">_sampling_strategy_float</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">535</span>             <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">536</span>         <span class="p">)</span>
+
+<span class="nn">~\AppData\Roaming\Python\Python39\site-packages\imblearn\utils\_validation.py</span> in <span class="ni">_sampling_strategy_float</span><span class="nt">(sampling_strategy, y, sampling_type)</span>
+<span class="g g-Whitespace">    </span><span class="mi">397</span>             <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">398</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">399</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">400</span>             <span class="s2">&quot;&#39;clean-sampling&#39; methods do let the user specify the sampling ratio.&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">401</span>         <span class="p">)</span>
+
+<span class="ne">ValueError</span>: &#39;clean-sampling&#39; methods do let the user specify the sampling ratio.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="class-weighting">
+<h3>1.1. Class weighting<a class="headerlink" href="#class-weighting" title="Permalink to this headline">#</a></h3>
+<p>The simplest strategy dealing with imbalance classes is to assign a higher weight to the minority class. Most Scikit-learn’s classifiers support this method via the parameter <code class="docutils literal notranslate"><span class="pre">class_weight</span></code>.</p>
 </section>
-<section id="adaptive-synthetic">
-<h4>Adaptive Synthetic<a class="headerlink" href="#adaptive-synthetic" title="Permalink to this headline">#</a></h4>
-<p>Adaptive Synthetic Sampling Approach (ADASYN) works similarity to the regular SMOTE. However, the number of samples generated for each <span class="math notranslate nohighlight">\(x_i\)</span> is proportional to the number of samples which are not from the same class with <span class="math notranslate nohighlight">\(x_i\)</span> in a given neighborhood. The algorithms generated more new samples where the density of minority is low and fewer or none where the density is high. This will improve the learning process for minority class</p>
-<p>Called <span class="math notranslate nohighlight">\(n_s\)</span> is number of samples in minority class and <span class="math notranslate nohighlight">\(n_l\)</span> is number of samples in majority class.</p>
+<section id="focal-loss">
+<h3>1.2. Focal loss<a class="headerlink" href="#focal-loss" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://arxiv.org/pdf/1708.02002.pdf">Focal Loss</a> is a variant of Cross Entropy (CE) that prevents the majority class from overwhelmeing the loss function. It has two hyperparameters: <span class="math notranslate nohighlight">\(\alpha\in[0,1]\)</span>, the <em>balance</em> parameter and <span class="math notranslate nohighlight">\(\gamma\in[0,\infty]\)</span>, the <em>focusing</em> parameter. Before going to the Focal Loss formula, we first introduce two artificial variables <span class="math notranslate nohighlight">\(p_n\)</span> and <span class="math notranslate nohighlight">\(\alpha_n\)</span> defined same way:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p_n=
+\begin{cases}
+\hat{y}_n   &amp; \text{if }y_n=1 \\
+1-\hat{y}_n &amp; \text{if }y_n=0
+\end{cases}
+\quad\text{and}\quad
+\alpha_n=
+\begin{cases}
+\alpha   &amp; \text{if }y_n=1 \\
+1-\alpha &amp; \text{if }y_n=0
+\end{cases}
+\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(p_n\)</span> represents prediction goodness (higher-is-better) and <span class="math notranslate nohighlight">\(\alpha_n\)</span> is simple class weight. The formula of Focal Loss (FL) is then given by:</p>
+<div class="math notranslate nohighlight">
+\[\text{FL}(\hat{\mathbf{y}})=-\sum_{n=1}^N \alpha_n(1-p_n)^\gamma\log{p_n}\]</div>
+<p>In an imbalanced classification problem, the majority class dominates the loss function. This makes the the majority class easier to learn, thus <span class="math notranslate nohighlight">\(p_n\)</span> in this class tends to be higher than in the minority class. We can see the impact of the term <span class="math notranslate nohighlight">\((1-p_n)^\gamma\)</span> here, it gives smaller weights to those <em>easy</em> predictions which are mostly in the negative class. This design, in my opinion, is very smart as it only <em>discards</em> the unimportant part but leaves the important part of the negative class to train the next iteration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9410666666666667
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">yPred</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">p0</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">yPred</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkred&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;probability&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Negative/Majority class ($y_n=0$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Bin density&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$p_n$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Positive/Minority class ($y_n=1$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$p_n$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_11_0.png"><img alt="../_images/imblearn-targeted-modeling_11_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_11_0.png" style="width: 685.2px; height: 282.0px;" /></a>
+</div>
+</div>
+<section id="hyperparameters">
+<h4>Hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
-<li><p>Compute the total numbers of samples will be generated <span class="math notranslate nohighlight">\(G = (n_l - n_s) * \beta\)</span> with <span class="math notranslate nohighlight">\(\beta\)</span> in range <span class="math notranslate nohighlight">\((0,1]\)</span>, if <span class="math notranslate nohighlight">\(\beta=1\)</span>, the ratio <span class="math notranslate nohighlight">\(\frac{n_l}{n_s}=1\)</span></p></li>
-<li><p>Find <span class="math notranslate nohighlight">\(k\)</span> nearest neighbors of <span class="math notranslate nohighlight">\(x_i\)</span> - put into set <span class="math notranslate nohighlight">\(S_i\)</span></p></li>
-<li><p>Find <span class="math notranslate nohighlight">\(\delta_i\)</span> as the number of samples in k-nearest neighbors which belong to the majority class. Calculate ratio <span class="math notranslate nohighlight">\(r_i = \frac{\delta_i}{k}\)</span></p></li>
-<li><p>Normalize <span class="math notranslate nohighlight">\(r_i\)</span> according to $<span class="math notranslate nohighlight">\(r_i = \frac{r_i}{\sum_{i=1}^{n_s} r_i}\)</span>$</p></li>
-<li><p>Calculate the number of samples need to generated for each <span class="math notranslate nohighlight">\(x_i\)</span>: <span class="math notranslate nohighlight">\(g_i = r_i\times G\)</span></p></li>
-<li><p>From <span class="math notranslate nohighlight">\(S_i\)</span>, randomly pick <span class="math notranslate nohighlight">\(g_i\)</span> samples and generate new samples following the formula:
-$<span class="math notranslate nohighlight">\(x_n = x_i + \lambda\times (x_i - x_j)\)</span>$</p></li>
+<li><p>The <em>focusing</em> parameter, <span class="math notranslate nohighlight">\(\gamma\)</span> shows how strong we punish easy predictions. It is recommended by the author to be <span class="math notranslate nohighlight">\(2\)</span>, otherwise it should be tuned within the range <span class="math notranslate nohighlight">\([0.5,5]\)</span>.</p></li>
+<li><p>The <em>balance</em> parameter, <span class="math notranslate nohighlight">\(\alpha\)</span> simply indicates the weight of the positive class. Although <span class="math notranslate nohighlight">\(\alpha&lt;0.5\)</span> favors the negative class, the recommended value for it is <span class="math notranslate nohighlight">\(0.25\)</span>. This can be explained that most of the focusing effect of this function comes from <span class="math notranslate nohighlight">\(\gamma\)</span>, and since it already favors class <span class="math notranslate nohighlight">\(1\)</span>, a low <span class="math notranslate nohighlight">\(\alpha\)</span> will compensate that a bit. In the case you want to tune this parameter, it should be set within the range <span class="math notranslate nohighlight">\([0.25,0.75]\)</span>.</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <span class="math notranslate nohighlight">\(\alpha\)</span> is used standalone (known as the Balanced Cross Entropy), then it should be <span class="math notranslate nohighlight">\(&gt;0.5\)</span>.</p>
+</div>
 </section>
 <section id="implementation">
 <h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
+<p>We are going to use Focal Loss as a custom loss function in tree boosting algorithms. Keep in mind two important properties of these algorithms: (1) they require us to provide both gradient and hessian of the loss function with respect to the predicted value and (2) they predict <a class="reference external" href="https://en.wikipedia.org/wiki/Logit">logits</a> then turn into probability using <a class="reference external" href="https://en.wikipedia.org/wiki/Logistic_function">logistic function</a>. With these information, we need to calculate the first and second order derivatives of Focal Loss with respect to the logit (let’s denote it <span class="math notranslate nohighlight">\(z_n\)</span>). Note that Focal Loss as well as Cross Entropy is usually formulated using <span class="math notranslate nohighlight">\(\hat{y}_n\)</span> or <span class="math notranslate nohighlight">\(p_n\)</span>, so the first derivative will be obtained using the chain rule:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{\partial\mathcal{L}}{\partial z_n}
+&amp;= \frac{\partial\mathcal{L}}{\partial p_n}\times\frac{\partial p_n}{\partial\hat{y}_n}\times\frac{\partial\hat{y}_n}{\partial z_n} \\
+&amp;= \alpha_n y_n(1-p_n)^\gamma(\gamma p_n\log{p_n}+p_n-1)
+\end{aligned}\end{split}\]</div>
+<p>We skip the derivation because it is quite complicated. Similary, we compute the hessian as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{\partial^2\mathcal{L}}{\partial z_n^2}
+&amp;= \frac{\partial}{\partial z_n}\left( \frac{\partial\mathcal{L}}{\partial z_n} \right) \\
+&amp;= \frac{\partial}{\partial p_n}\left( \frac{\partial\mathcal{L}}{\partial z_n} \right)
+   \times\frac{\partial p_n}{\partial\hat{y}_n}
+   \times\frac{\partial\hat{y}_n}{\partial z_n} \\
+&amp;= \left( \frac{\partial{u}}{\partial{p_n}}\times{v}+\frac{\partial{v}}{\partial{p_n}}\times{u} \right)y_np_n(1-p_n)
+\end{aligned}\end{split}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+u=\alpha_ny_n(1-p_n)^\gamma \quad&amp;;\quad
+v=\gamma p_n\log{p_n}+p_n-1 \\
+\frac{\partial{u}}{\partial{p_n}}=-\gamma\alpha_n y_n(1-p_n)^{\gamma-1} \quad&amp;;\quad
+\frac{\partial{v}}{\partial{p_n}}=\gamma\log{p_n}+\gamma+1
+\end{aligned}\end{split}\]</div>
+</section>
+</section>
+<section id="under-sampling">
+<h3>1.3. Under-sampling<a class="headerlink" href="#under-sampling" title="Permalink to this headline">#</a></h3>
+<p>Let’s say a binary labeled dataset has <span class="math notranslate nohighlight">\(N_0\)</span> negative samples and <span class="math notranslate nohighlight">\(N_1\)</span> positive samples (with <span class="math notranslate nohighlight">\(N_0\gg N_1\)</span>). <a class="reference external" href="https://imbalanced-learn.org/stable/under_sampling.html#prototype-selection">Under-sampling</a> is the process of reducing the majority class until there are <span class="math notranslate nohighlight">\(N_0^*\)</span> negative samples left. This method is helpful for large datasets, but can accidentally drop informative data.</p>
+<p>The rest of this section presents several down-sampling algorithm provided by Imbalanced-learn, which mainly differ in how they determine points to remove. They are divided into two groups: <em>controlled</em> techniques allowing us to specify how much data to remove, and <em>cleaning</em> techniques being <a class="reference external" href="https://en.wikipedia.org/wiki/Heuristic">heuristics</a> for data cleaning.</p>
+<section id="controlled-techniques">
+<h4>Controlled techniques<a class="headerlink" href="#controlled-techniques" title="Permalink to this headline">#</a></h4>
+<p>All techniques in this group require us to provide <code class="docutils literal notranslate"><span class="pre">sampling_strategy</span></code>, which is usually set to a number indicating the desired class ratio, <span class="math notranslate nohighlight">\(N_1/N_0^*\)</span>. We can use either the basic <a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.RandomUnderSampler.html"><code class="docutils literal notranslate"><span class="pre">RandomUnderSampler</span></code></a>, or the more advanced <a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.NearMiss.html"><code class="docutils literal notranslate"><span class="pre">NearMiss</span></code></a> which removes furthest negative samples from the positive class. With a pre-selected value of <span class="math notranslate nohighlight">\(K\)</span>, NearMiss has three variants presented as follows:</p>
+<ul class="simple">
+<li><p>NearMiss-1 keeps negative samples with the smallest average distance to <span class="math notranslate nohighlight">\(K\)</span> nearest positive samples.</p></li>
+<li><p>NearMiss-2 keeps negative samples with the smallest average distance to <span class="math notranslate nohighlight">\(K\)</span> furthest positive samples.</p></li>
+<li><p>NearMiss-3 first keeps several nearest negative samples to each positive sample and then keeps negative samples with the largest average distance to <span class="math notranslate nohighlight">\(K\)</span> nearest positive samples. This version is considered less affected by outlier and is thus the most efficient, according to the authors.</p></li>
+</ul>
+</section>
+<section id="cleaning-methods">
+<h4>Cleaning methods<a class="headerlink" href="#cleaning-methods" title="Permalink to this headline">#</a></h4>
+<p>As introduced earlier, cleaning methods don’t use the desired class ratio, thus the parameter <code class="docutils literal notranslate"><span class="pre">sampling_strategy</span></code> should be left alone. There are mainly three algorithms in this group:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.TomekLinks.html"><code class="docutils literal notranslate"><span class="pre">TomekLinks</span></code></a> detects and removes any negative sample having the nearest neighbor falling into the minority class. Such a connection is called a Tomek link.</p></li>
+<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.CondensedNearestNeighbour.html"><code class="docutils literal notranslate"><span class="pre">CondensedNearestNeighbour</span></code></a> uses 1-NN rule to decide if a sample should be remove or not. Firstly, get all minority sample in a set C and others in set S. Then we go through set S, sample by sample, and classify each sample using 1-NN rule. If the sample is misclassified, add it to C otherwise do nothing. Repeat all step until there is no sample to be added Set C will be used in classify instead of all dataset. This method has lower execution time and reduce space complexity but it sensitive to noise</p></li>
+<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.EditedNearestNeighbours.html"><code class="docutils literal notranslate"><span class="pre">EditedNearestNeighbours</span></code></a> trains a K-NN classifier and removes any sample which doesn’t <em>agree enough</em> with its neighbors. There are two dropping strategies available (set via the <code class="docutils literal notranslate"><span class="pre">kind_sel</span></code> parameter): <code class="docutils literal notranslate"><span class="pre">mode</span></code> keeps an inspected point if at least <span class="math notranslate nohighlight">\(50\%\)</span> neighbors are in the same class with it, and <code class="docutils literal notranslate"><span class="pre">all</span></code> keeps an inspected point if only all <span class="math notranslate nohighlight">\(100\%\)</span> neighbors agree with it. The later is more aggressive and is the default.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h4>Implementation<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random_under</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">RandomUnderSampler</span><span class="p">()</span>
+<span class="n">cnn</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">CondensedNearestNeighbour</span><span class="p">()</span>
+<span class="n">enn</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">EditedNearestNeighbours</span><span class="p">()</span>
+<span class="n">nearmiss</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">NearMiss</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">tomek</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">TomekLinks</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samplers</span> <span class="o">=</span> <span class="p">[</span><span class="n">random_under</span><span class="p">,</span> <span class="n">cnn</span><span class="p">,</span> <span class="n">enn</span><span class="p">,</span> <span class="n">nearmiss</span><span class="p">,</span><span class="n">tomek</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">sampler</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">samplers</span><span class="p">):</span>
+    <span class="n">plot_resampling</span><span class="p">(</span><span class="n">X_imb</span><span class="p">,</span><span class="n">y_imb</span><span class="p">,</span><span class="n">sampler</span><span class="p">,</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_imb</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X_imb</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">y_imb</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Spectral&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ADMIN\anaconda3\lib\site-packages\imblearn\under_sampling\_prototype_selection\_nearmiss.py:188: UserWarning: The number of the samples to be selected is larger than the number of samples available. The balancing ratio cannot be ensure and all samples will be returned.
+  warnings.warn(
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_20_1.png"><img alt="../_images/imblearn-targeted-modeling_20_1.png" class="align-center" src="../_images/imblearn-targeted-modeling_20_1.png" style="width: 856.5px; height: 426.0px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="over-sampling">
+<h3>1.3. Over-sampling<a class="headerlink" href="#over-sampling" title="Permalink to this headline">#</a></h3>
+<p>Over-sampling is the process of generating new observations for the minority class. You can try a <a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.RandomOverSampler.html"><code class="docutils literal notranslate"><span class="pre">RandomOverSampler</span></code></a> or another advanced method that intentionally creates <em>synthetic data</em>, which will be introduced in this section. The disadvantages of this method you should be aware of:</p>
+<ul class="simple">
+<li><p>causing data leakage</p></li>
+<li><p>slowing down training</p></li>
+<li><p>adding incorrect information that hurts model performance</p></li>
+</ul>
+<p>Here are some notations used for all over-samplers:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N_0\)</span> and <span class="math notranslate nohighlight">\(N_1\)</span> are the numbers of samples in the negative and positive class, respectively.</p></li>
+<li><p><span class="math notranslate nohighlight">\(N_1^*\)</span> is the expected size of the positive class, so there will be <span class="math notranslate nohighlight">\(N_1^*-N_1\)</span> points generated.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha=N_1/N_0\)</span> is the original class ratio and <span class="math notranslate nohighlight">\(\alpha^*=N_1^*/N_0\)</span> is the expected class ratio.</p></li>
+</ul>
+<section id="synthetic-minority">
+<h4>Synthetic Minority<a class="headerlink" href="#synthetic-minority" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://arxiv.org/pdf/1106.1813.pdf">Synthetic Minority Oversampling Techique</a> (SMOTE) create new data using a very simple mechanism: the clone of a data point moves towards a neighbor that belongs to the same class. You can also think of this process as drawing a line between a point and one of its neighbor, then pick a new point somewhere on that line.</p>
+<a class="reference internal image-reference" href="../_images/smote.png"><img alt="../_images/smote.png" class="align-center" src="../_images/smote.png" style="height: 300px;" /></a>
+<p>Formally, denote <span class="math notranslate nohighlight">\(\mathbf{s}_n\)</span> a data point of the minority class. Among its <span class="math notranslate nohighlight">\(K\)</span> <em>same-class</em> nearest neighbors, randomly select a point <span class="math notranslate nohighlight">\(\mathbf{s}_k\)</span> and a number <span class="math notranslate nohighlight">\(\lambda\in(0,1)\)</span>. A clone of <span class="math notranslate nohighlight">\(\mathbf{s}_n\)</span> will be created using the formula:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{s}_n+\lambda(\mathbf{s}_k-\mathbf{s}_n)\]</div>
+<p>In SMOTE, the number of points to be synthesized are uniformally allocated to each sample in the minority class. In other words, each member of class <span class="math notranslate nohighlight">\(1\)</span> will be cloned <span class="math notranslate nohighlight">\(N_1^*/N_1-1\)</span> times. Also note that each clone is created with another value of <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+</section>
+<section id="smote-variants">
+<h4>SMOTE variants<a class="headerlink" href="#smote-variants" title="Permalink to this headline">#</a></h4>
+<p>Imbalanced-learn provides several SMOTE variants as well:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.BorderlineSMOTE.html"><code class="docutils literal notranslate"><span class="pre">BorderlineSMOTE</span></code></a>, which creates clones only from <em>borderline points</em> instead of from all positive samples. A borderline point is defined as a positive sample having more than a half of its neighbors belong to the negative class. This improvement bases on the design of many Machine Learning algorithms that attemp to learn the borderlines between classes, making borderline points easily misclassified. The impact of this algorithm can be thought as highlighting grey zones, so that prediction accuracy can be boosted a bit.</p></li>
+<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SVMSMOTE.html"><code class="docutils literal notranslate"><span class="pre">SVMSMOTE</span></code></a> is proposed based on the same idea as Borderline SMOTE, where support vectors of the positive class serve the same role as borderline points. If less than a half of <span class="math notranslate nohighlight">\(K\)</span> neighbors of a point are of the majority class, then synthetic point will be created outside of the segment connnecting two points by setting <span class="math notranslate nohighlight">\(\lambda&gt;1\)</span>.</p></li>
+<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.KMeansSMOTE.html"><code class="docutils literal notranslate"><span class="pre">KMeansSMOTE</span></code></a> firstly uses K-Means to divide the dataset into clusters, then use any cluster with at least <span class="math notranslate nohighlight">\(50\%\)</span> positive samples will be used for cloning.</p></li>
+<li><p><a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html"><code class="docutils literal notranslate"><span class="pre">ADASYN</span></code></a> (Adaptive Synthetic) works similarly to regular SMOTE, but the clones of each positive sample will be proportional to the number of negative points in its <span class="math notranslate nohighlight">\(K\)</span> nearest neighbors. The purpose of this is to generate more data in those regions with low density of the minority class.</p></li>
+</ul>
+</section>
+<section id="smote-combinations">
+<h4>SMOTE combinations<a class="headerlink" href="#smote-combinations" title="Permalink to this headline">#</a></h4>
+</section>
+<section id="id2">
+<h4>Implementation<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
+<p>All over-samplers share a general hyperparameter, <code class="docutils literal notranslate"><span class="pre">sampling_strategy</span></code>, which supports a number of strategies. However, as we are focusing on binary classification, a float should be passed in, indicating the desired ratio between size of positive class and size of negative class:</p>
 <p>In Imbalance-learn package, all algorithms have a parameter called <code class="docutils literal notranslate"><span class="pre">sampling_strategy</span></code> which defines sampling information. There are 5 ways to use a sampling strategy for different family of samplers:</p>
 <ol class="simple">
 <li><p>Sampling strategy as float</p>
@@ -1062,9 +1319,47 @@ $<span class="math notranslate nohighlight">\(x_n = x_i + \lambda\times (x_i - x
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/breast_cancer.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMClassifier</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/breast_cancer.csv&#39;</span><span class="p">)</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/credit_scoring.csv&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;bad_customer&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;bad_customer&#39;</span><span class="p">]</span>
+<span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    139974
+1     10026
+Name: bad_customer, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">bad_customer</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    139974
+1     10026
+Name: bad_customer, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -1129,70 +1424,7 @@ Counter({1: 357, 0: 50})
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_13_0.png"><img alt="../_images/imblearn-targeted-modeling_13_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_13_0.png" style="width: 856.5px; height: 426.0px;" /></a>
-</div>
-</div>
-</section>
-</section>
-<section id="under-sampling">
-<h3>1.2. Under-sampling<a class="headerlink" href="#under-sampling" title="Permalink to this headline">#</a></h3>
-<p>Opposite to over-sampling, under-sampling is the process of reducing samples in majority class. It’s simple and suitable for large dataset, but the risk is the most informative samples may be dropped and lead to bad model prediction.</p>
-<section id="near-miss">
-<h4>Near miss<a class="headerlink" href="#near-miss" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://imbalanced-learn.org/stable/under_sampling.html#mathematical-formulation">Near Miss</a> choses the samples to keep using the minimum average distance to <span class="math notranslate nohighlight">\(N\)</span> minority samples:</p>
-<ul class="simple">
-<li><p>NearMiss-1: keeping the samples which have minimum distance to <span class="math notranslate nohighlight">\(N\)</span> closest samples</p></li>
-<li><p>NearMiss-2: keeping the samples which have minimum distance to <span class="math notranslate nohighlight">\(N\)</span> farthest samples</p></li>
-<li><p>NearMiss-3: keeping the samples for each closest record in the minority class.</p></li>
-</ul>
-<p>The NearMiss-3 seems the most accurate version, because it will only keep those majority class points that are on the decision boundary.</p>
-</section>
-<section id="tomek-links">
-<h4>Tomek links<a class="headerlink" href="#tomek-links" title="Permalink to this headline">#</a></h4>
-<p>A <a class="reference external" href="https://imbalanced-learn.org/stable/under_sampling.html#tomek-s-links">tomek link</a> exist if two samples in different class are the nearest neighbor of each other then the algorithm will remove the point in majority class or both of them. This method will remove the points in majority class which easy to misclassified.</p>
-</section>
-<section id="condensed-nearest-neighbors">
-<h4>Condensed Nearest Neighbors<a class="headerlink" href="#condensed-nearest-neighbors" title="Permalink to this headline">#</a></h4>
-<p>CNN uses 1-NN rule to decide if a sample should be remove or not. Firstly, get all minority sample in a set C and others in set S. Then we go through set S, sample by sample, and classify each sample using 1-NN rule. If the sample is misclassified, add it to C otherwise do nothing. Repeat all step until there is no sample to be added Set C will be used in classify instead of all dataset. This method has lower execution time and reduce space complexity but it sensitive to noise</p>
-</section>
-<section id="edited-nearest-neighbors">
-<h4>Edited Nearest Neighbors<a class="headerlink" href="#edited-nearest-neighbors" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://imbalanced-learn.org/stable/under_sampling.html#edited-data-set-using-nearest-neighbours">Edited Nearest Neighbors (ENN)</a> uses a nearest neighbor algorithm to classify and edit the dataset by removing samples which do not the same with their neighbors. Assume the instance <span class="math notranslate nohighlight">\(p\)</span> has 3 nearest neighbor, if <span class="math notranslate nohighlight">\(p\)</span> in majority class but misclassified by these 3 neighbors then <span class="math notranslate nohighlight">\(p\)</span> will be dropped. If <span class="math notranslate nohighlight">\(p\)</span> in minority class and 3 neighbors in majority class, then these neighbors of <span class="math notranslate nohighlight">\(p\)</span> will be removed.</p>
-<p>In <a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.EditedNearestNeighbours.html#imblearn.under_sampling.EditedNearestNeighbours">ENN</a> function, we can set <code class="docutils literal notranslate"><span class="pre">kind=mode</span></code> for dropping just in case <span class="math notranslate nohighlight">\(p\)</span> in majority and <code class="docutils literal notranslate"><span class="pre">kind=all</span></code> for both cases, notice that <code class="docutils literal notranslate"><span class="pre">kind=all</span></code> will remove more samples from the dataset.</p>
-</section>
-<section id="id1">
-<h4>Implementation<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random_under</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">RandomUnderSampler</span><span class="p">()</span>
-<span class="n">cnn</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">CondensedNearestNeighbour</span><span class="p">()</span>
-<span class="n">enn</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">EditedNearestNeighbours</span><span class="p">()</span>
-<span class="n">nearmiss</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">NearMiss</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">tomek</span> <span class="o">=</span> <span class="n">iu</span><span class="o">.</span><span class="n">TomekLinks</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samplers</span> <span class="o">=</span> <span class="p">[</span><span class="n">random_under</span><span class="p">,</span> <span class="n">cnn</span><span class="p">,</span> <span class="n">enn</span><span class="p">,</span> <span class="n">nearmiss</span><span class="p">,</span><span class="n">tomek</span><span class="p">]</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-
-<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">sampler</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">samplers</span><span class="p">):</span>
-    <span class="n">plot_resampling</span><span class="p">(</span><span class="n">X_imb</span><span class="p">,</span><span class="n">y_imb</span><span class="p">,</span><span class="n">sampler</span><span class="p">,</span><span class="n">ax</span><span class="p">)</span>
-
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_imb</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X_imb</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">y_imb</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Spectral&#39;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ADMIN\anaconda3\lib\site-packages\imblearn\under_sampling\_prototype_selection\_nearmiss.py:188: UserWarning: The number of the samples to be selected is larger than the number of samples available. The balancing ratio cannot be ensure and all samples will be returned.
-  warnings.warn(
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_21_1.png"><img alt="../_images/imblearn-targeted-modeling_21_1.png" class="align-center" src="../_images/imblearn-targeted-modeling_21_1.png" style="width: 856.5px; height: 426.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_37_0.png"><img alt="../_images/imblearn-targeted-modeling_37_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_37_0.png" style="width: 856.5px; height: 426.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1276,7 +1508,7 @@ Counter({1: 357, 0: 50})
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_29_0.png"><img alt="../_images/imblearn-targeted-modeling_29_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_29_0.png" style="width: 640.5px; height: 210.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_46_0.png"><img alt="../_images/imblearn-targeted-modeling_46_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_46_0.png" style="width: 640.5px; height: 210.0px;" /></a>
 </div>
 </div>
 <section id="ensemble-method">
@@ -1299,11 +1531,38 @@ Counter({1: 357, 0: 50})
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em>Imbalance learn - <a class="reference external" href="https://imbalanced-learn.org/stable/user_guide.html">User guide</a></em></p></li>
-<li><p><em>Medium - <a class="reference external" href="https://medium.com/quantyca/oversampling-and-undersampling-adasyn-vs-enn-60828a58db39">Oversampling and undersampling: adasyn vs enn</a></em></p></li>
-<li><p><em>paper - <a class="reference external" href="https://sci2s.ugr.es/keel/keel-dataset/pdfs/2005-Han-LNCS.pdf">Borderline SMOTE</a></em></p></li>
-<li><p><em>paper - <a class="reference external" href="https://www.diva-portal.org/smash/get/diva2:1519153/FULLTEXT01.pdf">ADASYN</a></em></p></li>
+<li><p><em><a class="reference external" href="http://medium.com">medium.com</a> - <a class="reference external" href="https://medium.com/quantyca/oversampling-and-undersampling-adasyn-vs-enn-60828a58db39">Oversampling and undersampling: ADASYN vs ENN</a></em></p></li>
+<li><p><em><a class="reference external" href="http://sci2s.ugr.es">sci2s.ugr.es</a> - <a class="reference external" href="https://sci2s.ugr.es/keel/keel-dataset/pdfs/2005-Han-LNCS.pdf">Borderline SMOTE</a></em></p></li>
+<li><p><em><a class="reference external" href="http://diva-portal.org">diva-portal.org</a> - <a class="reference external" href="https://www.diva-portal.org/smash/get/diva2:1519153/FULLTEXT01.pdf">ADASYN</a></em></p></li>
+<li><p><em><a class="reference external" href="http://maxhalford.github.io">maxhalford.github.io</a> - <a class="reference external" href="https://maxhalford.github.io/blog/lightgbm-focal-loss/">Focal loss implementation for LightGBM</a></em></p></li>
+<li><p><em><a class="reference external" href="http://leimao.github.io">leimao.github.io</a> - <a class="reference external" href="https://leimao.github.io/blog/Focal-Loss-Explained/">Focal Loss explained</a></em></p></li>
+<li><p><em><a class="reference external" href="http://neptune.ai">neptune.ai</a> - <a class="reference external" href="https://neptune.ai/blog/binary-classification-tips-and-tricks-from-kaggle">Binary classification tips and tricks from Kaggle</a></em></p></li>
 </ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">imbalanced</span><span class="o">-</span><span class="n">learn</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting imbalanced-learn
+  Downloading imbalanced_learn-0.10.1-py3-none-any.whl (226 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">226.0/226.0 kB</span> <span class=" -Color -Color-Red">871.1 kB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>00:0100:01
+?25hRequirement already satisfied: threadpoolctl&gt;=2.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from imbalanced-learn) (3.0.0)
+Requirement already satisfied: joblib&gt;=1.1.1 in /opt/anaconda3/lib/python3.8/site-packages (from imbalanced-learn) (1.2.0)
+Requirement already satisfied: scipy&gt;=1.3.2 in /opt/anaconda3/lib/python3.8/site-packages (from imbalanced-learn) (1.7.3)
+Requirement already satisfied: numpy&gt;=1.17.3 in /opt/anaconda3/lib/python3.8/site-packages (from imbalanced-learn) (1.21.6)
+Requirement already satisfied: scikit-learn&gt;=1.0.2 in /opt/anaconda3/lib/python3.8/site-packages (from imbalanced-learn) (1.1.0)
+Installing collected packages: imbalanced-learn
+Successfully installed imbalanced-learn-0.10.1
+
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip available: <span class=" -Color -Color-Red">22.3.1</span> -&gt; <span class=" -Color -Color-Green">23.0</span>
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">pip install --upgrade pip</span>
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 

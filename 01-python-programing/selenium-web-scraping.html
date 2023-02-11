@@ -103,17 +103,9 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="../util/intro.html">
-                    Data Science
-                </a>
-            </li>
-        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="_intro.html">
@@ -349,7 +341,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
-     Sklearn: Feature Engineering
+     Featuretools: Feature Engineering
     </a>
    </li>
    <li class="toctree-l2">
@@ -398,7 +390,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../07-tabular-learning/imblearn-targeted-modeling.html">
-     (w) Imblearn: Targeted Modeling
+     Imblearn: Targeted Modeling
     </a>
    </li>
   </ul>
@@ -451,7 +443,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../09-unsupervised-learning/mlxtend-association-rules.html">
-     (w) Mlxtend: Association Rules
+     (w) MLxtend: Association Rules
     </a>
    </li>
    <li class="toctree-l2">
@@ -518,6 +510,11 @@ const thebe_selector_output = ".output, .cell_output"
      PyTorch: Deep Learning
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/transformers-transfer-learning.html">
+     (w) Transformers: Transfer Learning
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
@@ -572,7 +569,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
             </div>
             
         </div>
@@ -623,7 +620,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/01-python-programing/selenium-web-scraping.ipynb"
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=lab/tree/01-python-programing/selenium-web-scraping.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -706,52 +703,6 @@ title="Source repository"
   </span>
 
 </a>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/01-python-programing/selenium-web-scraping.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -1067,13 +1018,13 @@ title="Print to PDF"
 <h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <p>There are basically two ways to scrape data from websites, one is via HTML responses (server-side) and the other is via JSON responses (client-side).</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="929d23cc-eb36-4130-93d3-b1509f136496" name="13973073-a192-4709-952d-60db06d3dbd4" type="radio">
-</input><label class="sd-tab-label" for="929d23cc-eb36-4130-93d3-b1509f136496">
+<input checked="checked" id="9fbc4624-3692-4bc0-b6c5-10809965f583" name="8cbc749b-bd9d-4479-8698-f6dd2b4097c2" type="radio">
+</input><label class="sd-tab-label" for="9fbc4624-3692-4bc0-b6c5-10809965f583">
 Server-side</label><div class="sd-tab-content docutils">
 <p>We extract <em>unstructured</em> data from user interface, which is friendly for human eyes but not for computers. Data is availale most of the time except for cases when website owners protect their data intentionally. This crawling approach requires some basic knowledge of HTML.</p>
 </div>
-<input id="7d6996a3-df67-48ac-9713-6f39b4de2b05" name="13973073-a192-4709-952d-60db06d3dbd4" type="radio">
-</input><label class="sd-tab-label" for="7d6996a3-df67-48ac-9713-6f39b4de2b05">
+<input id="fae6a8d6-9269-4766-8780-8ffa87826b19" name="8cbc749b-bd9d-4479-8698-f6dd2b4097c2" type="radio">
+</input><label class="sd-tab-label" for="fae6a8d6-9269-4766-8780-8ffa87826b19">
 Client-side</label><div class="sd-tab-content docutils">
 <p>We try to crawl <em>structured</em> REST API responses, which is only available in specific website that use this protocol. The advantage is that the returned data is in JSON format, so they can be easily extracted and processed. Crawling data this way is much easier, so we are going to start with it.</p>
 </div>

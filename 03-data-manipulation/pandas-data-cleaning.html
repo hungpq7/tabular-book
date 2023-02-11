@@ -105,17 +105,9 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="../util/intro.html">
-                    Data Science
-                </a>
-            </li>
-        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -351,7 +343,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
-     Sklearn: Feature Engineering
+     Featuretools: Feature Engineering
     </a>
    </li>
    <li class="toctree-l2">
@@ -400,7 +392,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../07-tabular-learning/imblearn-targeted-modeling.html">
-     (w) Imblearn: Targeted Modeling
+     Imblearn: Targeted Modeling
     </a>
    </li>
   </ul>
@@ -453,7 +445,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../09-unsupervised-learning/mlxtend-association-rules.html">
-     (w) Mlxtend: Association Rules
+     (w) MLxtend: Association Rules
     </a>
    </li>
    <li class="toctree-l2">
@@ -520,6 +512,11 @@ const thebe_selector_output = ".output, .cell_output"
      PyTorch: Deep Learning
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/transformers-transfer-learning.html">
+     (w) Transformers: Transfer Learning
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
@@ -574,7 +571,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
             </div>
             
         </div>
@@ -625,7 +622,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/03-data-manipulation/pandas-data-cleaning.ipynb"
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=lab/tree/03-data-manipulation/pandas-data-cleaning.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -708,52 +705,6 @@ title="Source repository"
   </span>
 
 </a>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/03-data-manipulation/pandas-data-cleaning.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -3225,18 +3176,18 @@ Name: information, dtype: object
 </tbody>
 </table>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="85134509-9ac4-4513-b835-4b6078e1abac" name="7ebe35d5-1ae5-4d97-a8e4-1aaf0b112ff0" type="radio">
-</input><label class="sd-tab-label" for="85134509-9ac4-4513-b835-4b6078e1abac">
+<input checked="checked" id="64905868-3da6-4d81-ab6d-3dbe3f2a4070" name="eb3a56ad-7b55-4b09-976b-55e5eee3efd4" type="radio">
+</input><label class="sd-tab-label" for="64905868-3da6-4d81-ab6d-3dbe3f2a4070">
 MCAR</label><div class="sd-tab-content docutils">
 <p>MCAR (Missing Completely At Random): The name says it all, there’s no actual reason behind the missing values. This type of missing does not lead to bias, therefore <em>deletion</em> and <em>imputation</em> are both suitable solutions.</p>
 </div>
-<input id="a667f87a-4b86-41e9-90bc-cc0072ed4ba1" name="7ebe35d5-1ae5-4d97-a8e4-1aaf0b112ff0" type="radio">
-</input><label class="sd-tab-label" for="a667f87a-4b86-41e9-90bc-cc0072ed4ba1">
+<input id="20d79b56-a5c9-4622-bf8d-a08032c977d4" name="eb3a56ad-7b55-4b09-976b-55e5eee3efd4" type="radio">
+</input><label class="sd-tab-label" for="20d79b56-a5c9-4622-bf8d-a08032c977d4">
 MAR</label><div class="sd-tab-content docutils">
 <p>MAR (Missing At Random): The missing values in a feature relate to another feature. In the example above, people under 25 years old miss their IQ score. Deleting these records causes bias, making <em>imputation</em> the best choice.</p>
 </div>
-<input id="1b54f942-f140-4d24-afc5-92e0869181f6" name="7ebe35d5-1ae5-4d97-a8e4-1aaf0b112ff0" type="radio">
-</input><label class="sd-tab-label" for="1b54f942-f140-4d24-afc5-92e0869181f6">
+<input id="453c8ba8-4de1-4507-a6df-d10d02ee9316" name="eb3a56ad-7b55-4b09-976b-55e5eee3efd4" type="radio">
+</input><label class="sd-tab-label" for="453c8ba8-4de1-4507-a6df-d10d02ee9316">
 MAR</label><div class="sd-tab-content docutils">
 <p>MNAR (Missing Not At Random): Assume people with IQ score of 100 or less tend to refuse to answer the survey. There is no way missing data can be inferred only by looking at collected data. Either <em>deletion</em> or <em>imputation</em> makes data biased, and Data Scientists may not even realize if they are facing a MNAR case.</p>
 </div>

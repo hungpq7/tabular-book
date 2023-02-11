@@ -105,17 +105,9 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="../util/intro.html">
-                    Data Science
-                </a>
-            </li>
-        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -351,7 +343,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
-     Sklearn: Feature Engineering
+     Featuretools: Feature Engineering
     </a>
    </li>
    <li class="toctree-l2">
@@ -400,7 +392,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="imblearn-targeted-modeling.html">
-     (w) Imblearn: Targeted Modeling
+     Imblearn: Targeted Modeling
     </a>
    </li>
   </ul>
@@ -453,7 +445,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../09-unsupervised-learning/mlxtend-association-rules.html">
-     (w) Mlxtend: Association Rules
+     (w) MLxtend: Association Rules
     </a>
    </li>
    <li class="toctree-l2">
@@ -520,6 +512,11 @@ const thebe_selector_output = ".output, .cell_output"
      PyTorch: Deep Learning
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10-deep-learning/transformers-transfer-learning.html">
+     (w) Transformers: Transfer Learning
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
@@ -574,7 +571,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
             </div>
             
         </div>
@@ -625,7 +622,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/07-tabular-learning/ray-hyperparameter-optimization.ipynb"
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=lab/tree/07-tabular-learning/ray-hyperparameter-optimization.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -708,52 +705,6 @@ title="Source repository"
   </span>
 
 </a>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/07-tabular-learning/ray-hyperparameter-optimization.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -2176,7 +2127,8 @@ Despite that, the algorithm has some disadvantages:</p>
 <section id="n-versus-b-n-problem">
 <h4>N versus B/N problem<a class="headerlink" href="#n-versus-b-n-problem" title="Permalink to this headline">#</a></h4>
 <p>This problem is all about <em>biases</em>, especially in early rounds: a good candidate can poorly perform if not being given enough resources. You can look at the learning curve of Gradient Boosting or Gradient Descent examples in practice to see a particular situation: the curve first fluctuates very much, but when the number of epochs/trees increases, it converges to a stable state.</p>
-<a class="reference internal image-reference" href="../_images/learning_curve_fluctuations.png"><img alt="../_images/learning_curve_fluctuations.png" class="align-center" src="../_images/learning_curve_fluctuations.png" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../_images/learning_curve_fluctuations.png"><img alt="../_images/learning_curve_fluctuations.png" class="align-center" src="../_images/learning_curve_fluctuations.png" style="height: 300px;" /></a>
+<br>
 <p>In the <span class="math notranslate nohighlight">\(N\)</span> versus <span class="math notranslate nohighlight">\(B/N\)</span> problem, <span class="math notranslate nohighlight">\(N\)</span> refers to the number of configurations and <span class="math notranslate nohighlight">\(B/N\)</span> refers to the average budget for each configuration. When the learning curves in the first rounds fluctuate and overlap, then the configurations are hard to distinguished. If we judge them using these biased scores, there is a high change that we are going to discard good candidates. So, it is reasonable to use fewer configurations and train them for longer.</p>
 <p>In contrast, when the configurations can significantly differentiate themselves after a small number of resources, we known that biases do not affect very much. We would want <span class="math notranslate nohighlight">\(N\)</span> to be as large as possible to cover a wider range of candidates (more exploration), as the budget is fixed.</p>
 </section>

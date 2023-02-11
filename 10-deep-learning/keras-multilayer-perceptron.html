@@ -105,17 +105,9 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="../util/intro.html">
-                    Data Science
-                </a>
-            </li>
-        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -351,7 +343,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
-     Sklearn: Feature Engineering
+     Featuretools: Feature Engineering
     </a>
    </li>
    <li class="toctree-l2">
@@ -400,7 +392,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../07-tabular-learning/imblearn-targeted-modeling.html">
-     (w) Imblearn: Targeted Modeling
+     Imblearn: Targeted Modeling
     </a>
    </li>
   </ul>
@@ -453,7 +445,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../09-unsupervised-learning/mlxtend-association-rules.html">
-     (w) Mlxtend: Association Rules
+     (w) MLxtend: Association Rules
     </a>
    </li>
    <li class="toctree-l2">
@@ -520,6 +512,11 @@ const thebe_selector_output = ".output, .cell_output"
      PyTorch: Deep Learning
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="transformers-transfer-learning.html">
+     (w) Transformers: Transfer Learning
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
@@ -574,7 +571,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
             </div>
             
         </div>
@@ -625,7 +622,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=tree/10-deep-learning/keras-multilayer-perceptron.ipynb"
+        <a href="https://mybinder.org/v2/gh/hungpq7/tabular-book/master?urlpath=lab/tree/10-deep-learning/keras-multilayer-perceptron.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -708,52 +705,6 @@ title="Source repository"
   </span>
 
 </a>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/10-deep-learning/keras-multilayer-perceptron.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -819,8 +770,8 @@ title="Print to PDF"
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#loss-function">
-     1.2. Loss function
+    <a class="reference internal nav-link" href="#loss-functions">
+     1.2. Loss functions
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -1092,8 +1043,8 @@ title="Print to PDF"
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#loss-function">
-     1.2. Loss function
+    <a class="reference internal nav-link" href="#loss-functions">
+     1.2. Loss functions
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -1387,16 +1338,24 @@ title="Print to PDF"
 </ul>
 </section>
 </section>
-<section id="loss-function">
-<h3>1.2. Loss function<a class="headerlink" href="#loss-function" title="Permalink to this headline">#</a></h3>
+<section id="loss-functions">
+<h3>1.2. Loss functions<a class="headerlink" href="#loss-functions" title="Permalink to this headline">#</a></h3>
 <p>Loss function is a compulsory component in some Machine Learning models, it tells the model how far it is from the predicted values to the ground truth and guides the optimization to go to the appropriate direction. However, traditional Machine Learning (implemented in frameworks such as Scikit-learn) seems don’t pay too much attention on loss function: algorithms always go for squared errors in regression and negative log likelihood in classification, as well as don’t have an option to customize it.</p>
 <p>Modern Machine Learning (Deep Learning and Tree Boosting) frameworks allow us to select from a wide range of loss functions. In this section, we are going through the most popular choices. They are generally denoted <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>. Loss functions are found in <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses">TensorFlow</a> or <a class="reference external" href="https://www.tensorflow.org/addons/api_docs/python/tfa/losses">TensorFlow Addons</a>.</p>
 <section id="cross-entropy">
 <h4>Cross Entropy<a class="headerlink" href="#cross-entropy" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cross_entropy">Cross Entropy</a> is the most popular loss function used in classifcation problems. It is a concept originally defined in information theory to compute how close two distributions of a random variables are. When applied in classification, two distributions refer to the true label <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> and the predicted label <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\)</span>, given by the formula:</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cross_entropy">Cross Entropy</a> is the most popular loss function used in classifcation problems. It is a concept originally defined in information theory to compute how close two distributions of a random variables are. When applied in classification, it is formulated in two cases:</p>
+<ul class="simple">
+<li><p>For binary classification, the label <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is 0-1 encoded and the predicted value <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\)</span> is a vector of probabilities. The <em>binary cross entropy</em> is given by:</p></li>
+</ul>
 <div class="math notranslate nohighlight">
-\[\text{CrossEntropy}(\hat{\mathbf{y}},\mathbf{y})
-=-\sum_{n=1}^{N}{y_n\log\hat{y}_n}\]</div>
+\[\text{CrossEntropy}(\hat{\mathbf{y}})=-\sum_{n=1}^N \left(y_n\log\hat{y}_n+(1-y_n)\log(1-\hat{y}_n)\right)
+\]</div>
+<ul class="simple">
+<li><p>For multiclass classification, the label <span class="math notranslate nohighlight">\(\mathbf{Y}\in\mathbb{R}^{N\times C}\)</span> is a one-hot encoded matrix, containing <span class="math notranslate nohighlight">\(C\)</span> label vectors <span class="math notranslate nohighlight">\(\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_C\)</span> (adding a hat gives us the corresponding prediction). The <em>categorical cross entropy</em> is given by:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\hat{\mathbf{y}})=-\sum_{c=1}^{C}{\mathbf{y}_c\log\hat{\mathbf{y}}_c^\text{T}}\]</div>
 <p>In practice, trying to reach two boundaries <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> as close as possible for every observation seems impossible. A regularization technique called <em>label smoothing</em> has been proposed to prevent overconfidence by pulling two boundaries closer. With a pre-defined weight factor <span class="math notranslate nohighlight">\(\epsilon\)</span> and the number of classes <span class="math notranslate nohighlight">\(K\)</span>, it replaces the true label <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> with:</p>
 <div class="math notranslate nohighlight">
 \[y_n\leftarrow(1-\epsilon)y_n+\frac{\epsilon}{K}\]</div>
@@ -1413,10 +1372,10 @@ title="Print to PDF"
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler Divergence</a> is an alternative to Cross Entropy, it simply minus the <a class="reference external" href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">Entropy</a> of the target from the Cross Entropy. In practice, minimizing KL Divergence, Cross Entropy and Negative Log Likelihood (Log Loss) are all the same. Here is the formula of KL Divergence:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\text{KLDivergence}(\hat{\mathbf{y}},\mathbf{y})
+\text{KLDivergence}(\hat{\mathbf{y}})
 &amp;= -\sum_{n=1}^{N}{y_n\log\frac{\hat{y}_n}{y_n}} \\
 &amp;= -\sum_{n=1}^{N}{y_n\log\hat{y}_n} + \sum_{n=1}^{N}{y_n\log\hat{y}} \\
-&amp; = \text{CrossEntropy}(\hat{\mathbf{y}},\mathbf{y}) - \text{Entropy}(\mathbf{y}) \\
+&amp; = \text{CrossEntropy}(\hat{\mathbf{y}}) - \text{Entropy}(\mathbf{y}) \\
 \end{aligned}\end{split}\]</div>
 </section>
 </section>
