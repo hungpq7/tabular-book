@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/10-deep-learning/pytorch-deep-learning.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -1374,14 +1428,14 @@ grad1=3.0 grad2=4.0
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://pytorch.org">pytorch.org</a> - <a class="reference external" href="https://pytorch.org/docs/stable/notes/autograd.html">Autograd mechanics</a></em></p></li>
-<li><p><em><a class="reference external" href="http://pytorch.org">pytorch.org</a> - <a class="reference external" href="https://pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html">Automatic differentiation with Torch’s Autograd</a></em></p></li>
-<li><p><em><a class="reference external" href="http://pytorch.org">pytorch.org</a> - <a class="reference external" href="https://pytorch.org/tutorials/beginner/nn_tutorial.html">What is Torch’s NN really?</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/understanding-pytorch-with-an-example-a-step-by-step-tutorial-81fc5f8c4e8e">Understanding PyTorch with an example: a step-by-step tutorial</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c75777377b">PyTorch vs TensorFlow - spotting the difference</a></em></p></li>
-<li><p><em><a class="reference external" href="http://blog.paperspace.com">blog.paperspace.com</a> - <a class="reference external" href="https://blog.paperspace.com/pytorch-101-advanced/">PyTorch 101 advanced</a></em></p></li>
-<li><p><em><a class="reference external" href="http://poloclub.github.io">poloclub.github.io</a> - <a class="reference external" href="https://poloclub.github.io/cnn-explainer/">CNN explainer</a></em></p></li>
-<li><p><em><a class="reference external" href="http://cs230.stanford.edu">cs230.stanford.edu</a> - <a class="reference external" href="https://cs230.stanford.edu/blog/pytorch/">Introduction to Pytorch Code Examples</a></em></p></li>
+<li><p><em>pytorch - <a class="reference external" href="https://pytorch.org/docs/stable/notes/autograd.html">Autograd mechanics</a></em></p></li>
+<li><p><em>pytorch - <a class="reference external" href="https://pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html">Automatic differentiation with Torch’s Autograd</a></em></p></li>
+<li><p><em>pytorch - <a class="reference external" href="https://pytorch.org/tutorials/beginner/nn_tutorial.html">What is Torch’s NN really?</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/understanding-pytorch-with-an-example-a-step-by-step-tutorial-81fc5f8c4e8e">Understanding PyTorch with an example: a step-by-step tutorial</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c75777377b">PyTorch vs TensorFlow - spotting the difference</a></em></p></li>
+<li><p><em>blog.paperspace - <a class="reference external" href="https://blog.paperspace.com/pytorch-101-advanced/">PyTorch 101 advanced</a></em></p></li>
+<li><p><em>poloclub.github - <a class="reference external" href="https://poloclub.github.io/cnn-explainer/">CNN explainer</a></em></p></li>
+<li><p><em>cs230.stanford - <a class="reference external" href="https://cs230.stanford.edu/blog/pytorch/">Introduction to Pytorch Code Examples</a></em></p></li>
 </ul>
 </section>
 <section id="install">

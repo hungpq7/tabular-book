@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/10-deep-learning/numpy-gradient-descent.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -1546,7 +1600,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </section>
 <section id="adadelta">
 <h4>AdaDelta<a class="headerlink" href="#adadelta" title="Permalink to this headline">#</a></h4>
-<p>AdaDelta (Adaptive Delta <span class="math notranslate nohighlight">\(\Delta x\)</span>) has both been developed in around the same time, but independently with RMSprop. Its main idea is very much like RMSprop, with an additional variable <span class="math notranslate nohighlight">\(u_t\)</span>, the exponential smoothing of <span class="math notranslate nohighlight">\(\Delta^2 x_t\)</span>. Both <span class="math notranslate nohighlight">\(u_t\)</span> and <span class="math notranslate nohighlight">\(v_t\)</span> share the same smoothing parameter, <span class="math notranslate nohighlight">\(\rho\)</span>. The update rules of AdaDelta is given below:</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1212.5701">AdaDelta</a> (Adaptive <span class="math notranslate nohighlight">\(\Delta x\)</span>) has both been developed in around the same time, but independently with RMSprop. Its main idea is very much like RMSprop, with an additional variable <span class="math notranslate nohighlight">\(u_t\)</span>, the exponential smoothing of <span class="math notranslate nohighlight">\(\Delta^2 x_t\)</span>. Both <span class="math notranslate nohighlight">\(u_t\)</span> and <span class="math notranslate nohighlight">\(v_t\)</span> share the same smoothing parameter, <span class="math notranslate nohighlight">\(\rho\)</span>. The update rules of AdaDelta is given below:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 v_t &amp;= \rho v_{t-1}+(1-\rho)g_t^2 \\
@@ -1624,7 +1678,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <h3>2.3. Addams family<a class="headerlink" href="#addams-family" title="Permalink to this headline">#</a></h3>
 <section id="adam">
 <h4>Adam<a class="headerlink" href="#adam" title="Permalink to this headline">#</a></h4>
-<p>Adam (Adaptive Momentum) is the combination of Momentum and RMSprop. It inherits <span class="math notranslate nohighlight">\(m_t\)</span>, the exponential smoothing of <em>gradient</em> from Momentum and <span class="math notranslate nohighlight">\(v_t\)</span>, the exponential smoothing of <em>squared gradient</em> from RMSprop. According to the author of Adam, the inititialize value of <span class="math notranslate nohighlight">\(m_t\)</span> and <span class="math notranslate nohighlight">\(v_t\)</span> are 0 so they are biased towards 0, especially with a large smoothing factor. Adam fixes these biases by computing the corrected version of exponential smoothing, <span class="math notranslate nohighlight">\(\hat{m}_t\)</span> and <span class="math notranslate nohighlight">\(\hat{v}_t\)</span>.</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1412.6980">Adam</a> (Adaptive Momentum) is the combination of Momentum and RMSprop. It inherits <span class="math notranslate nohighlight">\(m_t\)</span>, the exponential smoothing of <em>gradient</em> from Momentum and <span class="math notranslate nohighlight">\(v_t\)</span>, the exponential smoothing of <em>squared gradient</em> from RMSprop. According to the author of Adam, the inititialize value of <span class="math notranslate nohighlight">\(m_t\)</span> and <span class="math notranslate nohighlight">\(v_t\)</span> are 0 so they are biased towards 0, especially with a large smoothing factor. Adam fixes these biases by computing the corrected version of exponential smoothing, <span class="math notranslate nohighlight">\(\hat{m}_t\)</span> and <span class="math notranslate nohighlight">\(\hat{v}_t\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 m_t &amp;= \gamma m_{t-1} + (1-\gamma)g_t \\
@@ -1668,12 +1722,12 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <span class="n">nIter</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">xInit</span> <span class="o">=</span> <span class="mi">5</span>
 
-<span class="n">eta1</span> <span class="o">=</span> <span class="mf">.1</span>
-<span class="n">eta2</span> <span class="o">=</span> <span class="mf">.3</span>
-<span class="n">eta3</span> <span class="o">=</span> <span class="mf">.5</span>
+<span class="n">eta1</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span>
+<span class="n">eta2</span> <span class="o">=</span> <span class="o">.</span><span class="mi">3</span>
+<span class="n">eta3</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>
 <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-8</span>
-<span class="n">beta1</span> <span class="o">=</span> <span class="mf">.9</span>
-<span class="n">beta2</span> <span class="o">=</span> <span class="mf">.999</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="o">.</span><span class="mi">9</span>
+<span class="n">beta2</span> <span class="o">=</span> <span class="o">.</span><span class="mi">999</span>
 </pre></div>
 </div>
 </div>
@@ -1770,18 +1824,16 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://ruder.io">ruder.io</a> - <a class="reference external" href="https://ruder.io/optimizing-gradient-descent/index.html">An overview of gradient descent optimization algorithms</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1212.0901v2.pdf">Advances in optimizing Recurrent Networks</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1212.5701.pdf">AdaDelta: An Adaptive Learning Rate Method</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1412.6980.pdf">Adam: A method for Stochastic Optimization</a></em></p></li>
-<li><p><em><a class="reference external" href="http://web.stanford.edu">web.stanford.edu</a> - <a class="reference external" href="https://web.stanford.edu/~jduchi/projects/DuchiHaSi10_colt.pdf">Adaptive Subgradient Methods for Online Learning and Stochastic Optimization</a></em></p></li>
-<li><p><em><a class="reference external" href="http://cs229.stanford.edu">cs229.stanford.edu</a> - <a class="reference external" href="https://cs229.stanford.edu/proj2015/054_report.pdf">Incoporating Nesterov Momentum into Adam</a></em></p></li>
-<li><p><em><a class="reference external" href="http://openreview.net">openreview.net</a> - <a class="reference external" href="https://openreview.net/pdf?id=ryQu7f-RZ">On the Convergence of Adam and Beyond</a></em></p></li>
-<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="http://d2l.ai/chapter_optimization/index.html">Optimization algorithms</a></em></p></li>
-<li><p><em>distill.pub - <a class="reference external" href="https://distill.pub/2017/momentum/">Why Momentum really works</a></em></p></li>
-<li><p><em><a class="reference external" href="http://compphysics.github.io">compphysics.github.io</a> - <a class="reference external" href="https://compphysics.github.io/MachineLearningMSU/doc/pub/GradientOptim/html/._GradientOptim-bs000.html">Optimization and Gradient Methods</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/stochastic-gradient-descent-with-momentum-a84097641a5d">Stochastic Gradient Descent with momentum</a></em></p></li>
-<li><p><em><a class="reference external" href="http://blog.paperspace.com">blog.paperspace.com</a> - <a class="reference external" href="https://blog.paperspace.com/intro-to-optimization-momentum-rmsprop-adam/">Intro to optimization in deep learning: Momentum, RMSProp and Adam</a></em></p></li>
+<li><p><em>ruder - <a class="reference external" href="https://www.ruder.io/optimizing-gradient-descent/">An overview of gradient descent optimization algorithms</a></em></p></li>
+<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1212.0901v2.pdf">Advances in optimizing Recurrent Networks</a></em></p></li>
+<li><p><em>web.stanford - <a class="reference external" href="https://web.stanford.edu/~jduchi/projects/DuchiHaSi10_colt.pdf">Adaptive Subgradient Methods for Online Learning and Stochastic Optimization</a></em></p></li>
+<li><p><em>cs229.stanford - <a class="reference external" href="https://cs229.stanford.edu/proj2015/054_report.pdf">Incoporating Nesterov Momentum into Adam</a></em></p></li>
+<li><p><em>openreview - <a class="reference external" href="https://openreview.net/pdf?id=ryQu7f-RZ">On the Convergence of Adam and Beyond</a></em></p></li>
+<li><p><em>d2l - <a class="reference external" href="http://d2l.ai/chapter_optimization/index.html">Optimization algorithms</a></em></p></li>
+<li><p><em>distill - <a class="reference external" href="https://distill.pub/2017/momentum/">Why Momentum really works</a></em></p></li>
+<li><p><em>compphysics.github - <a class="reference external" href="https://compphysics.github.io/MachineLearningMSU/doc/pub/GradientOptim/html/._GradientOptim-bs000.html">Optimization and Gradient Methods</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/stochastic-gradient-descent-with-momentum-a84097641a5d">Stochastic Gradient Descent with momentum</a></em></p></li>
+<li><p><em>blog.paperspace - <a class="reference external" href="https://blog.paperspace.com/intro-to-optimization-momentum-rmsprop-adam/">Intro to optimization in deep learning: Momentum, RMSProp and Adam</a></em></p></li>
 </ul>
 </section>
 </section>

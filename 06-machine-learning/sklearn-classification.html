@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/06-machine-learning/sklearn-classification.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -1935,7 +1989,7 @@ NODE=0 (internal): mean_radius=106.05, node1, node12
 <li><p><code class="docutils literal notranslate"><span class="pre">C</span></code>: the significance of the penalty, defaults to <em>1</em>. Common values are <span class="math notranslate nohighlight">\(10^k\)</span> for <span class="math notranslate nohighlight">\(k\in\{-2,-1,0,1,2\}\)</span>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel</span></code>: the kernel function to be used, defaults to <em>rbf</em>. Other options are <em>poly</em> and <em>sigmoid</em>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gamma</span></code>: the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> in some kernel functions, defaults to <em>scale</em>. Common values are <span class="math notranslate nohighlight">\(10^k\)</span> for <span class="math notranslate nohighlight">\(k\in\{-2,-1,0,1,2\}\)</span>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">coef0</span></code>: the paremeter <span class="math notranslate nohighlight">\(r\)</span> in some kernel functions, defautls to <em>0</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coef0</span></code>: the paremeter <span class="math notranslate nohighlight">\(r\)</span> in some kernel functions, defaults to <em>0</em>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">degree</span></code>: the parameter <span class="math notranslate nohighlight">\(d\)</span> in polynomial kernel, defaults to <em>3</em>.</p></li>
 </ul>
 <div class="cell docutils container">

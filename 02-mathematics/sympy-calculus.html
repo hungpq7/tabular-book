@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/02-mathematics/sympy-calculus.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -2373,17 +2427,17 @@ f''(x)=\frac{d^2}{dx^2}f(x);\qquad f'''(x)=f^{(3)}=\frac{d^3}{dx^3}f(x)
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://openstax.org">openstax.org</a> - <a class="reference external" href="https://openstax.org/books/calculus-volume-1/pages/1-introduction">Calculus Volume 1</a></em></p></li>
-<li><p><em><a class="reference external" href="http://openstax.org">openstax.org</a> - <a class="reference external" href="https://openstax.org/books/calculus-volume-2/pages/1-introduction">Calculus Volume 2</a></em></p></li>
-<li><p><em><a class="reference external" href="http://openstax.org">openstax.org</a> - <a class="reference external" href="https://openstax.org/books/calculus-volume-3/pages/1-introduction">Calculus Volume 3</a></em></p></li>
-<li><p><em><a class="reference external" href="http://rodrigopacios.github.io">rodrigopacios.github.io</a> - <a class="reference external" href="https://rodrigopacios.github.io/mrpacios/download/Thomas_Calculus.pdf">Thomas’ Calculus</a></em></p></li>
-<li><p><em><a class="reference external" href="http://quora.com">quora.com</a> - <a class="reference external" href="https://qr.ae/pvxTdc">Can you explain Lagrange Multipliers without using any mathematical notation?</a></em></p></li>
-<li><p><em><a class="reference external" href="http://optimization.cbe.cornell.edu">optimization.cbe.cornell.edu</a> - <a class="reference external" href="https://optimization.cbe.cornell.edu/index.php?title=Duality">Duality</a></em></p></li>
-<li><p><em><a class="reference external" href="http://optimization.cbe.cornell.edu">optimization.cbe.cornell.edu</a> - <a class="reference external" href="https://optimization.cbe.cornell.edu/index.php?title=Lagrangean_duality">Lagrangean duality</a></em></p></li>
-<li><p><em><a class="reference external" href="http://math.ucdenver.edu">math.ucdenver.edu</a> - <a class="reference external" href="http://math.ucdenver.edu/~sborgwardt/wiki/index.php/Lagrangian_Duality">Lagranrian duality</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/optimization-stories-kkt-conditions-f86aea4fb6c2">Optimization stories: KKT conditions</a></em></p></li>
-<li><p><em><a class="reference external" href="http://mjo.osborne.economics.utoronto.ca">mjo.osborne.economics.utoronto.ca</a> - <a class="reference external" href="https://mjo.osborne.economics.utoronto.ca/index.php/tutorial/index/1/ilm/t">Interpretation of Lagrange multipliers</a></em></p></li>
-<li><p><em><a class="reference external" href="http://optimization.mccormick.northwestern.edu">optimization.mccormick.northwestern.edu</a> - <a class="reference external" href="https://optimization.mccormick.northwestern.edu/index.php/Lagrangean_duality">Lagrangean duality</a></em></p></li>
+<li><p><em>openstax - <a class="reference external" href="https://openstax.org/books/calculus-volume-1/pages/1-introduction">Calculus Volume 1</a></em></p></li>
+<li><p><em>openstax - <a class="reference external" href="https://openstax.org/books/calculus-volume-2/pages/1-introduction">Calculus Volume 2</a></em></p></li>
+<li><p><em>openstax - <a class="reference external" href="https://openstax.org/books/calculus-volume-3/pages/1-introduction">Calculus Volume 3</a></em></p></li>
+<li><p><em>rodrigopacios.github - <a class="reference external" href="https://rodrigopacios.github.io/mrpacios/download/Thomas_Calculus.pdf">Thomas’ Calculus</a></em></p></li>
+<li><p><em>quora - <a class="reference external" href="https://qr.ae/pvxTdc">Can you explain Lagrange Multipliers without using any mathematical notation?</a></em></p></li>
+<li><p><em>optimization.cbe.cornell - <a class="reference external" href="https://optimization.cbe.cornell.edu/index.php?title=Duality">Duality</a></em></p></li>
+<li><p><em>optimization.cbe.cornell - <a class="reference external" href="https://optimization.cbe.cornell.edu/index.php?title=Lagrangean_duality">Lagrangean duality</a></em></p></li>
+<li><p><em>math.ucdenver - <a class="reference external" href="http://math.ucdenver.edu/~sborgwardt/wiki/index.php/Lagrangian_Duality">Lagranrian duality</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/optimization-stories-kkt-conditions-f86aea4fb6c2">Optimization stories: KKT conditions</a></em></p></li>
+<li><p><em>osborne.economics.utoronto - <a class="reference external" href="https://mjo.osborne.economics.utoronto.ca/index.php/tutorial/index/1/ilm/t">Interpretation of Lagrange multipliers</a></em></p></li>
+<li><p><em>optimization.mccormick.northwestern - <a class="reference external" href="https://optimization.mccormick.northwestern.edu/index.php/Lagrangean_duality">Lagrangean duality</a></em></p></li>
 </ul>
 </section>
 </section>

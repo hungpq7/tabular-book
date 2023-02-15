@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/08-time-series/statsmodels-temporal-analysis.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -3162,10 +3216,10 @@ Name: seasonal, dtype: float64
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://otexts.com">otexts.com</a> - <a class="reference external" href="https://otexts.com/fpp3/">Forecasting: Principles and Practice</a></em></p></li>
-<li><p><em><a class="reference external" href="http://laurentoudre.fr">laurentoudre.fr</a> - <a class="reference external" href="http://www.laurentoudre.fr/publis/TOG-SP-19.pdf">Selective review of offline change point detection methods</a></em></p></li>
-<li><p><em><a class="reference external" href="http://github.com">github.com</a> - <a class="reference external" href="https://github.com/rob-med/awesome-TS-anomaly-detection">Awesome TS anomaly detection</a></em></p></li>
-<li><p><em><a class="reference external" href="http://github.com">github.com</a> - <a class="reference external" href="https://github.com/yzhao062/anomaly-detection-resources#34-time-series-outlier-detection">Anomaly detection resources</a></em></p></li>
+<li><p><em>otexts - <a class="reference external" href="https://otexts.com/fpp3/">Forecasting: Principles and Practice</a></em></p></li>
+<li><p><em>laurentoudre - <a class="reference external" href="http://www.laurentoudre.fr/publis/TOG-SP-19.pdf">Selective review of offline change point detection methods</a></em></p></li>
+<li><p><em>github - <a class="reference external" href="https://github.com/rob-med/awesome-TS-anomaly-detection">Awesome TS anomaly detection</a></em></p></li>
+<li><p><em>github - <a class="reference external" href="https://github.com/yzhao062/anomaly-detection-resources#34-time-series-outlier-detection">Anomaly detection resources</a></em></p></li>
 <li><p><a class="reference external" href="https://datascience.stackexchange.com/questions/32126/looking-for-a-good-package-for-anomaly-detection-in-time-series">https://datascience.stackexchange.com/questions/32126/looking-for-a-good-package-for-anomaly-detection-in-time-series</a></p></li>
 <li><p><a class="reference external" href="https://pro.arcgis.com/en/pro-app/2.9/tool-reference/space-time-pattern-mining/how-change-point-detection-works.htm">https://pro.arcgis.com/en/pro-app/2.9/tool-reference/space-time-pattern-mining/how-change-point-detection-works.htm</a></p></li>
 </ul>

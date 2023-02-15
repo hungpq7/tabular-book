@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/10-deep-learning/keras-multilayer-perceptron.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -1355,7 +1409,7 @@ title="Source repository"
 <li><p>For multiclass classification, the label <span class="math notranslate nohighlight">\(\mathbf{Y}\in\mathbb{R}^{N\times C}\)</span> is a one-hot encoded matrix, containing <span class="math notranslate nohighlight">\(C\)</span> label vectors <span class="math notranslate nohighlight">\(\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_C\)</span> (adding a hat gives us the corresponding prediction). The <em>categorical cross entropy</em> is given by:</p></li>
 </ul>
 <div class="math notranslate nohighlight">
-\[\mathcal{L}(\hat{\mathbf{y}})=-\sum_{c=1}^{C}{\mathbf{y}_c\log\hat{\mathbf{y}}_c^\text{T}}\]</div>
+\[\text{CrossEntropy}(\hat{\mathbf{y}})=-\sum_{c=1}^{C}{\mathbf{y}_c\log\hat{\mathbf{y}}_c^\text{T}}\]</div>
 <p>In practice, trying to reach two boundaries <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> as close as possible for every observation seems impossible. A regularization technique called <em>label smoothing</em> has been proposed to prevent overconfidence by pulling two boundaries closer. With a pre-defined weight factor <span class="math notranslate nohighlight">\(\epsilon\)</span> and the number of classes <span class="math notranslate nohighlight">\(K\)</span>, it replaces the true label <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> with:</p>
 <div class="math notranslate nohighlight">
 \[y_n\leftarrow(1-\epsilon)y_n+\frac{\epsilon}{K}\]</div>
@@ -1961,23 +2015,23 @@ v &amp;= h(x)=\log(x) \\
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/ftp/arxiv/papers/2010/2010.09458.pdf">Review and comparison of commonly used activation functions for Deep Neural Networks</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1502.03167v3.pdf">Batch Normalization: Accelerating Deep Network training by reducing internal covariate shift</a></em></p></li>
-<li><p><em><a class="reference external" href="http://jmlr.org">jmlr.org</a> - <a class="reference external" href="https://jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf">Dropout: A simple way to prevent Neural Networks from overfitting</a></em></p></li>
-<li><p><em><a class="reference external" href="http://cs231n.github.io">cs231n.github.io</a> - <a class="reference external" href="https://cs231n.github.io/neural-networks-1/">Convolutional Neural Networks for Visual Recognition</a></em></p></li>
-<li><p><em><a class="reference external" href="http://theaidream.com">theaidream.com</a> - <a class="reference external" href="https://www.theaidream.com/post/an-overview-of-activation-functions-in-deep-learning">An overview of activation functions in Deep Learning</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/activation-functions-neural-networks-1cbd9f8d91d6">Activation Functions in Neural Networks</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/the-dying-relu-problem-clearly-explained-42d0c54e0d24">The dying ReLU problem, clearly explained</a></em></p></li>
-<li><p><em><a class="reference external" href="http://medium.com">medium.com</a> - <a class="reference external" href="https://medium.com/&#64;danqing/a-practical-guide-to-relu-b83ca804f1f7">A practical guide to ReLU</a></em></p></li>
-<li><p><em><a class="reference external" href="http://colah.github.io">colah.github.io</a> - <a class="reference external" href="https://colah.github.io/posts/2015-08-Backprop/">Calculus on computational graphs: backpropagation</a></em></p></li>
-<li><p><em><a class="reference external" href="http://leimao.github.io">leimao.github.io</a> - <a class="reference external" href="https://leimao.github.io/blog/Cross-Entropy-KL-Divergence-MLE/">Cross Entropy, KL Divergence and Maximum Likelihood Estimation</a></em></p></li>
-<li><p><em><a class="reference external" href="http://leimao.github.io">leimao.github.io</a> - <a class="reference external" href="https://leimao.github.io/blog/Dropout-Explained/">Dropout explained</a></em></p></li>
-<li><p><em><a class="reference external" href="http://leimao.github.io">leimao.github.io</a> - <a class="reference external" href="https://leimao.github.io/blog/Batch-Normalization/">Batch normalization explained</a></em></p></li>
-<li><p><em><a class="reference external" href="http://staff.fnwi.uva.nl">staff.fnwi.uva.nl</a> - <a class="reference external" href="https://staff.fnwi.uva.nl/r.vandenboomgaard/MachineLearning/LectureNotes/Math/automatic_differentiation.html">Computational Graphs and the Chain Rule of Differentiation</a></em></p></li>
-<li><p><em><a class="reference external" href="http://math.libretexts.org">math.libretexts.org</a> - <a class="reference external" href="https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus_(OpenStax)/14%3A_Differentiation_of_Functions_of_Several_Variables/14.05%3A_The_Chain_Rule_for_Multivariable_Functions">The chain rule for multivariable functions</a></em></p></li>
-<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="https://d2l.ai/chapter_convolutional-modern/batch-norm.html">Batch normalization</a></em></p></li>
-<li><p><em><a class="reference external" href="http://ketanhdoshi.github.io">ketanhdoshi.github.io</a> - <a class="reference external" href="https://ketanhdoshi.github.io/Batch-Norm-Why/">Batch Normalization explained visually: Why does it work?</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/batch-normalization-in-3-levels-of-understanding-14c2da90a338#3164">Batch normalization in 3 levels of understanding</a></em></p></li>
+<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/ftp/arxiv/papers/2010/2010.09458.pdf">Review and comparison of commonly used activation functions for Deep Neural Networks</a></em></p></li>
+<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1502.03167v3.pdf">Batch Normalization: Accelerating Deep Network training by reducing internal covariate shift</a></em></p></li>
+<li><p><em>jmlr - <a class="reference external" href="https://jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf">Dropout: A simple way to prevent Neural Networks from overfitting</a></em></p></li>
+<li><p><em>cs231n.github - <a class="reference external" href="https://cs231n.github.io/neural-networks-1/">Convolutional Neural Networks for Visual Recognition</a></em></p></li>
+<li><p><em>theaidream - <a class="reference external" href="https://www.theaidream.com/post/an-overview-of-activation-functions-in-deep-learning">An overview of activation functions in Deep Learning</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/activation-functions-neural-networks-1cbd9f8d91d6">Activation Functions in Neural Networks</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/the-dying-relu-problem-clearly-explained-42d0c54e0d24">The dying ReLU problem, clearly explained</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://medium.com/&#64;danqing/a-practical-guide-to-relu-b83ca804f1f7">A practical guide to ReLU</a></em></p></li>
+<li><p><em>colah.github - <a class="reference external" href="https://colah.github.io/posts/2015-08-Backprop/">Calculus on computational graphs: backpropagation</a></em></p></li>
+<li><p><em>leimao.github - <a class="reference external" href="https://leimao.github.io/blog/Cross-Entropy-KL-Divergence-MLE/">Cross Entropy, KL Divergence and Maximum Likelihood Estimation</a></em></p></li>
+<li><p><em>leimao.github - <a class="reference external" href="https://leimao.github.io/blog/Dropout-Explained/">Dropout explained</a></em></p></li>
+<li><p><em>leimao.github - <a class="reference external" href="https://leimao.github.io/blog/Batch-Normalization/">Batch normalization explained</a></em></p></li>
+<li><p><em>staff.fnwi.uva - <a class="reference external" href="https://staff.fnwi.uva.nl/r.vandenboomgaard/MachineLearning/LectureNotes/Math/automatic_differentiation.html">Computational Graphs and the Chain Rule of Differentiation</a></em></p></li>
+<li><p><em>math.libretexts - <a class="reference external" href="https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus_(OpenStax)/14%3A_Differentiation_of_Functions_of_Several_Variables/14.05%3A_The_Chain_Rule_for_Multivariable_Functions">The chain rule for multivariable functions</a></em></p></li>
+<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_convolutional-modern/batch-norm.html">Batch normalization</a></em></p></li>
+<li><p><em>ketanhdoshi.github - <a class="reference external" href="https://ketanhdoshi.github.io/Batch-Norm-Why/">Batch Normalization explained visually: Why does it work?</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/batch-normalization-in-3-levels-of-understanding-14c2da90a338#3164">Batch normalization in 3 levels of understanding</a></em></p></li>
 </ul>
 </section>
 </section>

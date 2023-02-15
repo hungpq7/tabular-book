@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/06-machine-learning/sklearn-feature-engineering.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -2010,7 +2064,7 @@ is more of a preprocessing technique than an encoder, as it does not returns a n
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">&#39;osPhone&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
         <span class="p">[</span><span class="s1">&#39;Android&#39;</span><span class="p">,</span> <span class="s1">&#39;iOS&#39;</span><span class="p">,</span> <span class="s1">&#39;Windows&#39;</span><span class="p">,</span> <span class="s1">&#39;Blackberry&#39;</span><span class="p">,</span> <span class="s1">&#39;Bada&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbian&#39;</span><span class="p">,</span> <span class="s1">&#39;Meego&#39;</span><span class="p">],</span>
-        <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">.4</span><span class="p">,</span> <span class="mf">.32</span><span class="p">,</span> <span class="mf">.12</span><span class="p">,</span> <span class="mf">.10</span><span class="p">,</span> <span class="mf">.03</span><span class="p">,</span> <span class="mf">.02</span><span class="p">,</span> <span class="mf">.01</span><span class="p">]</span>
+        <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="o">.</span><span class="mi">4</span><span class="p">,</span> <span class="o">.</span><span class="mi">32</span><span class="p">,</span> <span class="o">.</span><span class="mi">12</span><span class="p">,</span> <span class="o">.</span><span class="mi">10</span><span class="p">,</span> <span class="o">.</span><span class="mi">03</span><span class="p">,</span> <span class="o">.</span><span class="mi">02</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">]</span>
     <span class="p">)</span>
 <span class="p">})</span>
 <span class="n">df</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -2307,17 +2361,14 @@ uses the occuring order of categories in a feature to performce encoding. It ign
 </section>
 <section id="target-encoding">
 <h4>Target encoding<a class="headerlink" href="#target-encoding" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/targetencoder.html"><code class="docutils literal notranslate"><span class="pre">TargetEncoder</span></code></a>
-is the most popular encoder used in Kaggle competitions. The main idea is to replace each category <span class="math notranslate nohighlight">\(c\)</span> of a categorial feature <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> with the mean of target associated with that category, <span class="math notranslate nohighlight">\(y_c\)</span>. However, this encoding strategy suffers from <em>data leakage</em>, as we are kind of <em>leaking the answer before teaching our machinary student</em>. This is a significant disadvantage which leads to overfitting. To solve this, we smooth the encoded values by pushing it towards the population mean <span class="math notranslate nohighlight">\(\bar{y}\)</span>:</p>
+<p><a class="reference external" href="https://dl.acm.org/doi/10.1145/507533.507538">Target encoding</a> is the one most popular encoders used in Kaggle competitions. The main idea is to replace each category <span class="math notranslate nohighlight">\(c\)</span> of a categorial feature <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> with the mean of target associated with that category, <span class="math notranslate nohighlight">\(y_c\)</span>. However, this encoding strategy suffers from <em>data leakage</em>, as we are kind of <em>leaking the answer before teaching our machinary student</em>. This is a significant disadvantage which leads to overfitting. To solve this, we smooth the encoded values by pushing it towards the population mean <span class="math notranslate nohighlight">\(\bar{y}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[x_c=wy_c+(1-w)\bar{y}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(w\)</span> follows a logistic distribution parameterized by the category size <span class="math notranslate nohighlight">\(n_c\)</span>, so that our encoder assigns more credit to <span class="math notranslate nohighlight">\(y_c\)</span> when <span class="math notranslate nohighlight">\(n_c\)</span> is large and prefer population mean <span class="math notranslate nohighlight">\(\bar{y}\)</span> for small categories. The smoothing effect is controled via two hyperparameters, min samples leaf <span class="math notranslate nohighlight">\(k\)</span> and smoothing coefficient <span class="math notranslate nohighlight">\(f\)</span>, given as:</p>
 <div class="math notranslate nohighlight">
 \[w=\frac{1}{1+\exp\left(-\dfrac{n_c-k}{f}\right)}\]</div>
 <p>We can see that, the weight of a very small category (when <span class="math notranslate nohighlight">\(n_c\ll k\)</span>) is approximately <span class="math notranslate nohighlight">\(0\)</span>. In the simple example below, our categories have only 2 or 3 observations; so if we set <span class="math notranslate nohighlight">\(k=10\)</span>, they will uniformally replaced with <span class="math notranslate nohighlight">\(\bar{y}=0.6\)</span>. And a higher value of <span class="math notranslate nohighlight">\(f\)</span> indicates a flatter logistic curve as well as stronger regularization effect.</p>
-<p>Another strategy to tackle <em>data leakage</em> is excluding the current row from the calculation of mean target, implemented via
-<a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/leaveoneout.html"><code class="docutils literal notranslate"><span class="pre">LeaveOneOutEncoder</span></code></a>
-. Notice this will return different encoding values within a category.</p>
+<p>You can implement <a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/targetencoder.html"><code class="docutils literal notranslate"><span class="pre">TargetEncoder</span></code></a> for the original version or <a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/leaveoneout.html"><code class="docutils literal notranslate"><span class="pre">LeaveOneOutEncoder</span></code></a>, a variant to tackle <em>data leakage</em> by excluding the current row from the calculation of mean target. Notice this will return different encoding values within a category.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -3948,15 +3999,14 @@ The square root of the &quot;views&quot;.
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://featuretools.alteryx.com">featuretools.alteryx.com</a> - <a class="reference external" href="https://featuretools.alteryx.com/en/stable/">Documentation</a></em></p></li>
-<li><p><em><a class="reference external" href="http://contrib.scikit-learn.org">contrib.scikit-learn.org</a> - <a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/">Category encoders</a></em></p></li>
-<li><p><em><a class="reference external" href="http://helios.mm.di.uoa.gr">helios.mm.di.uoa.gr</a> - <a class="reference external" href="http://helios.mm.di.uoa.gr/~rouvas/ssi/sigkdd/sigkdd.vol3.1/barreca.pdf">A processing scheme for high-cardinality categorical attributes in classification and prediction problems</a></em></p></li>
-<li><p><em><a class="reference external" href="http://kaggle.com">kaggle.com</a> - <a class="reference external" href="https://www.kaggle.com/code/subinium/11-categorical-encoders-and-benchmark">11 categorical encoders and benchmarks</a></em></p></li>
-<li><p><em><a class="reference external" href="http://kaggle.com">kaggle.com</a> - <a class="reference external" href="https://www.kaggle.com/code/willkoehrsen/automated-feature-engineering-basics/notebook#Deep-Feature-Synthesis">Automated feature engineering basics</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/benchmarking-categorical-encoders-9c322bd77ee8">Benchmarking categorical encoders</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/automated-feature-engineering-in-python-99baf11cc219">Automated feature engineering in Python</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/all-about-categorical-variable-encoding-305f3361fd02">All about categorical variable encoding</a></em></p></li>
-<li><p><em><a class="reference external" href="http://listendata.com">listendata.com</a> - <a class="reference external" href="https://www.listendata.com/2015/03/weight-of-evidence-woe-and-information.html">Weight of Evidence and Information value explained</a></em></p></li>
+<li><p><em>featuretools.alteryx - <a class="reference external" href="https://featuretools.alteryx.com/en/stable/">Documentation</a></em></p></li>
+<li><p><em>contrib.scikit-learn - <a class="reference external" href="https://contrib.scikit-learn.org/category_encoders/">Category encoders</a></em></p></li>
+<li><p><em>kaggle - <a class="reference external" href="https://www.kaggle.com/code/subinium/11-categorical-encoders-and-benchmark">11 categorical encoders and benchmarks</a></em></p></li>
+<li><p><em>kaggle - <a class="reference external" href="https://www.kaggle.com/code/willkoehrsen/automated-feature-engineering-basics/notebook#Deep-Feature-Synthesis">Automated feature engineering basics</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/benchmarking-categorical-encoders-9c322bd77ee8">Benchmarking categorical encoders</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/automated-feature-engineering-in-python-99baf11cc219">Automated feature engineering in Python</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/all-about-categorical-variable-encoding-305f3361fd02">All about categorical variable encoding</a></em></p></li>
+<li><p><em>listendata - <a class="reference external" href="https://www.listendata.com/2015/03/weight-of-evidence-woe-and-information.html">Weight of Evidence and Information value explained</a></em></p></li>
 </ul>
 </section>
 </section>

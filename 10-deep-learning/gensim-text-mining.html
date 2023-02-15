@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/10-deep-learning/gensim-text-mining.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -2660,22 +2714,22 @@ b&#39;Ti\\u1ebfng Vi\\u1ec7t&#39;
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://tartarus.org">tartarus.org</a> - <a class="reference external" href="https://tartarus.org/martin/PorterStemmer/def.txt">An algorithm for suffix stripping</a></em></p></li>
-<li><p><em><a class="reference external" href="http://dl.acm.org">dl.acm.org</a> - <a class="reference external" href="https://dl.acm.org/doi/pdf/10.1145/101306.101310">Another stemmer</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1607.04606.pdf">Enriching word vectors with subword information</a></em></p></li>
-<li><p><em><a class="reference external" href="http://nlp.stanford.edu">nlp.stanford.edu</a> - <a class="reference external" href="https://nlp.stanford.edu/pubs/glove.pdf">GloVe: Global Vectors for word representation</a></em></p></li>
-<li><p><em><a class="reference external" href="http://lilianweng.github.io">lilianweng.github.io</a> - <a class="reference external" href="https://lilianweng.github.io/posts/2017-10-15-word-embedding/">Learning word embedding</a></em></p></li>
-<li><p><em><a class="reference external" href="http://mccormickml.com">mccormickml.com</a> - <a class="reference external" href="https://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/">Word2Vec tutorial - The Skip-Gram model</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1810.04805.pdf">BERT: Pre-training of Deep Bidirectional Transformers for language understanding</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1801.06146.pdf">Universal Language Model Fine-tuning for text classification</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1802.05365.pdf">Deep contextualized word representations</a></em></p></li>
-<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="https://d2l.ai/chapter_natural-language-processing-pretraining/word2vec.html">The Skip-Gram model</a></em></p></li>
-<li><p><em><a class="reference external" href="http://aegis4048.github.io">aegis4048.github.io</a> - <a class="reference external" href="https://aegis4048.github.io/demystifying_neural_network_in_skip_gram_language_modeling">Demystifying Neural Network in Skip-Gram language modeling</a></em></p></li>
-<li><p><em><a class="reference external" href="http://jonathan-hui.medium.com">jonathan-hui.medium.com</a> - <a class="reference external" href="https://jonathan-hui.medium.com/nlp-word-embedding-glove-5e7f523999f6">NLP - Word embedding &amp; GloVe</a></em></p></li>
-<li><p><em><a class="reference external" href="http://maelfabien.github.io">maelfabien.github.io</a> - <a class="reference external" href="https://maelfabien.github.io/machinelearning/NLP_3/">Word embedding with Skip-Gram Word2Vec</a></em></p></li>
-<li><p><em><a class="reference external" href="http://amitness.com">amitness.com</a> - <a class="reference external" href="https://amitness.com/2020/06/fasttext-embeddings/">FastText embeddings</a></em></p></li>
-<li><p><em><a class="reference external" href="http://medium.datadriveninvestor.com">medium.datadriveninvestor.com</a> - <a class="reference external" href="https://medium.datadriveninvestor.com/word2vec-skip-gram-model-explained-383fa6ddc4ae">Word2Vec (Skip-Gram model) explained</a></em></p></li>
-<li><p><em><a class="reference external" href="http://towardsdatascience.com">towardsdatascience.com</a> - <a class="reference external" href="https://towardsdatascience.com/light-on-math-ml-intuitive-guide-to-understanding-glove-embeddings-b13b4f19c010">Intuitive guide to understanding GloVe embedding</a></em></p></li>
+<li><p><em>tartarus - <a class="reference external" href="https://tartarus.org/martin/PorterStemmer/def.txt">An algorithm for suffix stripping</a></em></p></li>
+<li><p><em>dl.acm - <a class="reference external" href="https://dl.acm.org/doi/pdf/10.1145/101306.101310">Another stemmer</a></em></p></li>
+<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1607.04606.pdf">Enriching word vectors with subword information</a></em></p></li>
+<li><p><em>nlp.stanford - <a class="reference external" href="https://nlp.stanford.edu/pubs/glove.pdf">GloVe: Global Vectors for word representation</a></em></p></li>
+<li><p><em>lilianweng.github - <a class="reference external" href="https://lilianweng.github.io/posts/2017-10-15-word-embedding/">Learning word embedding</a></em></p></li>
+<li><p><em>mccormickml - <a class="reference external" href="https://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/">Word2Vec tutorial - The Skip-Gram model</a></em></p></li>
+<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1810.04805.pdf">BERT: Pre-training of Deep Bidirectional Transformers for language understanding</a></em></p></li>
+<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1801.06146.pdf">Universal Language Model Fine-tuning for text classification</a></em></p></li>
+<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1802.05365.pdf">Deep contextualized word representations</a></em></p></li>
+<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_natural-language-processing-pretraining/word2vec.html">The Skip-Gram model</a></em></p></li>
+<li><p><em>aegis4048.github - <a class="reference external" href="https://aegis4048.github.io/demystifying_neural_network_in_skip_gram_language_modeling">Demystifying Neural Network in Skip-Gram language modeling</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://jonathan-hui.medium.com/nlp-word-embedding-glove-5e7f523999f6">NLP - Word embedding &amp; GloVe</a></em></p></li>
+<li><p><em>maelfabien.github - <a class="reference external" href="https://maelfabien.github.io/machinelearning/NLP_3/">Word embedding with Skip-Gram Word2Vec</a></em></p></li>
+<li><p><em>amitness - <a class="reference external" href="https://amitness.com/2020/06/fasttext-embeddings/">FastText embeddings</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://medium.datadriveninvestor.com/word2vec-skip-gram-model-explained-383fa6ddc4ae">Word2Vec (Skip-Gram model) explained</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/light-on-math-ml-intuitive-guide-to-understanding-glove-embeddings-b13b4f19c010">Intuitive guide to understanding GloVe embedding</a></em></p></li>
 </ul>
 <hr class="docutils" />
 <ul class="simple">

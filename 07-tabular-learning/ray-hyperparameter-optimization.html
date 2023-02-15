@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/07-tabular-learning/ray-hyperparameter-optimization.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -1296,7 +1350,7 @@ f &amp;:\text{hyperparameter}\rightarrow\text{score}
 </section>
 <section id="sequential-search">
 <h3>1.2. Sequential search<a class="headerlink" href="#sequential-search" title="Permalink to this headline">#</a></h3>
-<p>It’s not difficult to see that searching methods perform expensive trials independently, thus they are actually wasting a lot of useful information from previous trials. In order to take advantages of historical information, SMBO (Sequential Model-Based Optimization) comes to the rescue. This is a class contains algorithms that <em>smartly</em> predict the most promising configuration <em>sequentially</em>, thus reduce the number of training rounds needed significantly.</p>
+<p>It’s not difficult to see that searching methods perform expensive trials independently, thus they are actually wasting a lot of useful information from previous trials. In order to take advantages of historical information, <a class="reference external" href="https://dl.acm.org/doi/10.5555/2986459.2986743">Sequential Model-Based Optimization</a> (SMBO) comes to the rescue. This is a class contains algorithms that <em>smartly</em> predict the most promising configuration <em>sequentially</em>, thus reduce the number of training rounds needed significantly.</p>
 <p>The basic idea of SMBO is to build a <em>probabilistic surrogate model</em> of the black-box function <span class="math notranslate nohighlight">\(f:\text{hyperparameter}\rightarrow\text{score}\)</span> using results from observed trials. You can think of it as Machine Learning of Machine Learning; this concept can be a bit complicated but is exactly how it works. There are many algorithms using this sequential search strategy, but in this topic, we are discussing Bayesian Optimization and Tree-structured Parzen Estimators.</p>
 </section>
 <section id="bandit-based">
@@ -2078,7 +2132,7 @@ Despite that, the algorithm has some disadvantages:</p>
 </section>
 <section id="id2">
 <h4>Algorithm<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
-<p>Successive Halving uniformally allocates the budget to <span class="math notranslate nohighlight">\(N\)</span> configurations randomly choosed from the hyperparameter space, which means each configuration is trained using <span class="math notranslate nohighlight">\(\lfloor B/N\rfloor\)</span> whatever the resource is. The bottom half in terms of validation score is discarded (early stopping), while the top half is promoted to the next bracket and then trained with doubled resources. This process is repeated until one configuration survives.</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1502.07943">Successive Halving</a> uniformally allocates the budget to <span class="math notranslate nohighlight">\(N\)</span> configurations randomly choosed from the hyperparameter space, which means each configuration is trained using <span class="math notranslate nohighlight">\(\lfloor B/N\rfloor\)</span> whatever the resource is. The bottom half in terms of validation score is discarded (early stopping), while the top half is promoted to the next bracket and then trained with doubled resources. This process is repeated until one configuration survives.</p>
 <p>The algorithm can be generalized to:</p>
 <ul class="simple">
 <li><p>Instead of strictly <em>halving</em>, we perform <em>eliminating</em> with an <em>elimination rate</em>, <span class="math notranslate nohighlight">\(\eta\geq2\)</span>, so that in each bracket we promote only <span class="math notranslate nohighlight">\(1/\eta\)</span> best scoring candidates and give them resources <span class="math notranslate nohighlight">\(\eta\)</span> times higher than the last round.</p></li>
@@ -2123,7 +2177,7 @@ Despite that, the algorithm has some disadvantages:</p>
 </section>
 <section id="id3">
 <h3>4.2. Hyperband<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
-<p>Hyperband is an improved version solving the problem <em><span class="math notranslate nohighlight">\(N\)</span> versus <span class="math notranslate nohighlight">\(B/N\)</span></em> that Successive Halving suffers from.</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1603.06560">Hyperband</a> is an improved version solving the problem <em><span class="math notranslate nohighlight">\(N\)</span> versus <span class="math notranslate nohighlight">\(B/N\)</span></em> that Successive Halving suffers from.</p>
 <section id="n-versus-b-n-problem">
 <h4>N versus B/N problem<a class="headerlink" href="#n-versus-b-n-problem" title="Permalink to this headline">#</a></h4>
 <p>This problem is all about <em>biases</em>, especially in early rounds: a good candidate can poorly perform if not being given enough resources. You can look at the learning curve of Gradient Boosting or Gradient Descent examples in practice to see a particular situation: the curve first fluctuates very much, but when the number of epochs/trees increases, it converges to a stable state.</p>
@@ -2145,7 +2199,7 @@ B_s=B\eta^{-s}
 </section>
 <section id="bohb">
 <h3>4.3. BOHB<a class="headerlink" href="#bohb" title="Permalink to this headline">#</a></h3>
-<p>Hyperband shows good performance across many problems, but it does random sampling each time run Successive Halving, so is not the most effective. BOHB is proposed as an extended version of Hyperband (HB), which combines it with Bayesian Optimization (BO) to determine <span class="math notranslate nohighlight">\(N_s\)</span> configurations prior to each Successive Halving run more effectively.</p>
+<p>Hyperband shows good performance across many problems, but it does random sampling each time run Successive Halving, so is not the most effective. <a class="reference external" href="https://arxiv.org/abs/1807.01774">BOHB</a> is proposed as an extended version of Hyperband (HB), which combines it with Bayesian Optimization (BO) to determine <span class="math notranslate nohighlight">\(N_s\)</span> configurations prior to each Successive Halving run more effectively.</p>
 </section>
 </section>
 <section id="implementation">
@@ -2988,21 +3042,16 @@ AUC = 0.9911 [H2OClassifier]
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://papers.nips.cc">papers.nips.cc</a> - <a class="reference external" href="https://papers.nips.cc/paper/2011/file/86e8f7ab32cfd12577bc2619bc635690-Paper.pdf">Algorithms for hyperparameters optimization</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1502.07943.pdf">Non-stochastic best arm identification and hyperparameter optimization</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1603.06560.pdf">Hyperband: Bandit-based configuration evaluation for hyperparameter optimization</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1807.01774.pdf">BOHB: Robust and efficient hyperparameter optimization at scale</a></em></p></li>
-<li><p><em><a class="reference external" href="http://deepmind.com">deepmind.com</a> - <a class="reference external" href="https://www.deepmind.com/blog/population-based-training-of-neural-networks">Population based training of Neural Networks</a></em></p></li>
-<li><p><em><a class="reference external" href="http://automl.org">automl.org</a> - <a class="reference external" href="https://www.automl.org/automl/hpo-packages/">Overview of HPO packages</a></em></p></li>
-<li><p><em><a class="reference external" href="http://medium.com">medium.com</a> - <a class="reference external" href="https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f">A conceptual explanation of Bayesian hyperparameter optimization for Machine Learning</a></em></p></li>
-<li><p><em><a class="reference external" href="http://medium.com">medium.com</a> - <a class="reference external" href="https://medium.com/criteo-engineering/hyper-parameter-optimization-algorithms-2fe447525903">Hyperparameter optimization algorithms: a short review</a></em></p></li>
-<li><p><em><a class="reference external" href="http://krasserm.github.io">krasserm.github.io</a> - <a class="reference external" href="https://krasserm.github.io/2018/03/21/bayesian-optimization/">Bayesian Optimization</a></em></p></li>
-<li><p><em>distill.pub - <a class="reference external" href="https://distill.pub/2020/bayesian-optimization/">Exploring Bayesian Optimization</a></em></p></li>
-<li><p><em><a class="reference external" href="http://borealisai.com">borealisai.com</a> - <a class="reference external" href="https://www.borealisai.com/research-blogs/tutorial-8-bayesian-optimization/">Tutorial #8: Bayesian optimization</a></em></p></li>
-<li><p><em><a class="reference external" href="http://neupy.com">neupy.com</a> - <a class="reference external" href="http://neupy.com/2016/12/17/hyperparameter_optimization_for_neural_networks.html">Hyperparmeter optimization for Neural Networks</a></em></p></li>
-<li><p><em><a class="reference external" href="http://ekamperi.github.io">ekamperi.github.io</a> - <a class="reference external" href="https://ekamperi.github.io/machine%20learning/2021/06/11/acquisition-functions.html">Acquisition functions</a></em></p></li>
-<li><p><em><a class="reference external" href="http://blog.ml.cmu.edu">blog.ml.cmu.edu</a> - <a class="reference external" href="https://blog.ml.cmu.edu/2018/12/12/massively-parallel-hyperparameter-optimization/">Massively parallel hyperparameter optimization</a></em></p></li>
-<li><p><em><a class="reference external" href="http://deepmind.com">deepmind.com</a> - <a class="reference external" href="https://www.deepmind.com/blog/population-based-training-of-neural-networks">Population based training of Neural Networks</a></em></p></li>
+<li><p><em>automl - <a class="reference external" href="https://www.automl.org/automl/hpo-packages/">Overview of HPO packages</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f">A conceptual explanation of Bayesian hyperparameter optimization for Machine Learning</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://medium.com/criteo-engineering/hyper-parameter-optimization-algorithms-2fe447525903">Hyperparameter optimization algorithms: a short review</a></em></p></li>
+<li><p><em>krasserm.github - <a class="reference external" href="https://krasserm.github.io/2018/03/21/bayesian-optimization/">Bayesian Optimization</a></em></p></li>
+<li><p><em>distill - <a class="reference external" href="https://distill.pub/2020/bayesian-optimization/">Exploring Bayesian Optimization</a></em></p></li>
+<li><p><em>borealisai - <a class="reference external" href="https://www.borealisai.com/research-blogs/tutorial-8-bayesian-optimization/">Tutorial #8: Bayesian optimization</a></em></p></li>
+<li><p><em>neupy - <a class="reference external" href="http://neupy.com/2016/12/17/hyperparameter_optimization_for_neural_networks.html">Hyperparmeter optimization for Neural Networks</a></em></p></li>
+<li><p><em>ekamperi.github - <a class="reference external" href="https://ekamperi.github.io/machine%20learning/2021/06/11/acquisition-functions.html">Acquisition functions</a></em></p></li>
+<li><p><em>ml.cmu - <a class="reference external" href="https://blog.ml.cmu.edu/2018/12/12/massively-parallel-hyperparameter-optimization/">Massively parallel hyperparameter optimization</a></em></p></li>
+<li><p><em>deepmind - <a class="reference external" href="https://www.deepmind.com/blog/population-based-training-of-neural-networks">Population based training of Neural Networks</a></em></p></li>
 </ul>
 </section>
 <section id="install">

@@ -105,9 +105,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../util/intro.html">
+                    Data Science
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../01-python-programing/_intro.html">
@@ -426,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../08-time-series/darts-deep-forecasting.html">
-     (w) Darts: Deep Forecasting
+     Darts: Deep Forecasting
     </a>
    </li>
   </ul>
@@ -571,7 +579,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
             
         </div>
@@ -705,6 +713,52 @@ title="Source repository"
   </span>
 
 </a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/06-machine-learning/lenskit-recommendation.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
 <label for="__page-toc"
   class="headerbtn headerbtn-page-toc"
   
@@ -766,12 +820,12 @@ title="Source repository"
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#ap-k-and-ar-k">
-       AP@k and AR@k
+       AP@K and AR@K
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#map-k-and-mar-k">
-       MAP@k and MAR@k
+       MAP@K and MAR@K
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -941,12 +995,12 @@ title="Source repository"
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#ap-k-and-ar-k">
-       AP@k and AR@k
+       AP@K and AR@K
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#map-k-and-mar-k">
-       MAP@k and MAR@k
+       MAP@K and MAR@K
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -1592,16 +1646,16 @@ title="Source repository"
 </div></div></div>
 </div>
 <section id="ap-k-and-ar-k">
-<h4>AP&#64;k and AR&#64;k<a class="headerlink" href="#ap-k-and-ar-k" title="Permalink to this headline">#</a></h4>
+<h4>AP&#64;K and AR&#64;K<a class="headerlink" href="#ap-k-and-ar-k" title="Permalink to this headline">#</a></h4>
 <p>In a recommendation problem:</p>
 <ul class="simple">
 <li><p>Precision is calculated as the ratio between the number of correct recommendations (<span class="math notranslate nohighlight">\(\text{TP}\)</span>) and the number of recommended items (<span class="math notranslate nohighlight">\(\text{TP}+\text{FP}\)</span>)</p></li>
 <li><p>Recall is calculated as the ratio between the number of correct recommendations (<span class="math notranslate nohighlight">\(\text{TP}\)</span>) and the number of actual relevant items (<span class="math notranslate nohighlight">\(\text{TP}+\text{FN}\)</span>)</p></li>
 </ul>
-<p>Since our system only has a chance to show a few top products to the customers, thus we consider the first <span class="math notranslate nohighlight">\(k\)</span> items to calculate Precision and Recall, resulting in Precision and Recall at cutoff <span class="math notranslate nohighlight">\(k\)</span> (P&#64;k and R&#64;k). However, these two metrics seem to not care about ordering, we would want the metrics to reward for front-loading the relevant items. This is where Average Precision and Average Recall up to the <span class="math notranslate nohighlight">\(k^{th}\)</span> item (AP&#64;k and AR&#64;k) is used to tackle the problem. Given <span class="math notranslate nohighlight">\(rel_i\)</span> indicates the relevance status (<span class="math notranslate nohighlight">\(rel_i=1\)</span> if the <span class="math notranslate nohighlight">\(i^{th}\)</span> item is relevant), here is the formula for AP&#64;k (AR&#64;k can be calculated the same way):</p>
+<p>Since our system only has a chance to show a few top products to the customers, thus we consider the first <span class="math notranslate nohighlight">\(k\)</span> items to calculate Precision and Recall, resulting in Precision and Recall at cutoff <span class="math notranslate nohighlight">\(K\)</span> (P&#64;K and R&#64;K). However, these two metrics seem to not care about orders, we would want the metrics to reward for front-loading the relevant items. This is where Average Precision and Average Recall up to the <span class="math notranslate nohighlight">\(K^\text{th}\)</span> item (AP&#64;K and AR&#64;K) is used to tackle the problem. Given <span class="math notranslate nohighlight">\(\text{rel}_k\)</span> indicates the relevance status (<span class="math notranslate nohighlight">\(\text{rel}_k=1\)</span> if the <span class="math notranslate nohighlight">\(k^{th}\)</span> item is relevant), here is the formula for AP&#64;K (AR&#64;K can be calculated the same way):</p>
 <div class="math notranslate nohighlight">
-\[\text{AP&#64;k}=\frac{1}{k}\sum_{k=1}^{K}\text{P&#64;k}\cdot \text{rel}_k\]</div>
-<p>In this formula, the higher rank a relevant item has, the more times it will appear in the calculation of P&#64;i, and the more value it contributes to AP&#64;k. The example below computes P&#64;k, R&#64;k, AP&#64;k and AR&#64;k for a recommendation of 8 items to a single user.</p>
+\[\text{AP&#64;K}=\frac{1}{K}\sum_{k=1}^{K}\text{P&#64;k}\cdot \text{rel}_k\]</div>
+<p>In this formula, the higher rank a relevant item has, the more times it will appear in the calculation of P&#64;K, and the more value it contributes to AP&#64;K. The example below computes P&#64;K, R&#64;K, AP&#64;K and AR&#64;K for a recommendation of 8 items to a single user.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">relevant</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -1757,9 +1811,9 @@ title="Source repository"
 </div>
 </section>
 <section id="map-k-and-mar-k">
-<h4>MAP&#64;k and MAR&#64;k<a class="headerlink" href="#map-k-and-mar-k" title="Permalink to this headline">#</a></h4>
-<p>Now we have already known AP&#64;k and AR&#64;k is defined for a single user, there should be an aggregation for all available users. This gives us Mean Average Precision/Recall up to cutoff <span class="math notranslate nohighlight">\(K\)</span> (MAP&#64;k and MAR&#64;k), calculated by taking the mean of all AP&#64;k or AR&#64;k. MAR&#64;k seems not very trustworthy since the number of actual relevant items (<span class="math notranslate nohighlight">\(\text{TP}+\text{FN}\)</span>) fluctuates dramatically from user to user, which makes the vector of AR&#64;k have low values and a high variance.</p>
-<p>To calculate MAP&#64;k and MAR&#64;k, it is required to have the binary relevance status. Let’s assume if a user rated an item higher than his average rating, that item is considered relevant.</p>
+<h4>MAP&#64;K and MAR&#64;K<a class="headerlink" href="#map-k-and-mar-k" title="Permalink to this headline">#</a></h4>
+<p>Now we have already known AP&#64;K and AR&#64;K is defined for a single user, there should be an aggregation for all available users. This gives us Mean Average Precision/Recall up to cutoff <span class="math notranslate nohighlight">\(K\)</span> (MAP&#64;K and MAR&#64;K), calculated by taking the mean of all AP&#64;K or AR&#64;K. MAR&#64;K seems not very trustworthy since the number of actual relevant items (<span class="math notranslate nohighlight">\(\text{TP}+\text{FN}\)</span>) fluctuates dramatically from user to user, which makes the vector of AR&#64;K have low values and a high variance.</p>
+<p>To calculate MAP&#64;K and MAR&#64;K, it is required to have the binary relevance status. Let’s assume if a user rated an item higher than his average rating, that item is considered relevant.</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfRatingMean</span> <span class="o">=</span> <span class="n">dfPredict</span>\
@@ -2104,7 +2158,7 @@ title="Source repository"
 </section>
 <section id="ndcg">
 <h4>nDCG<a class="headerlink" href="#ndcg" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Discounted_cumulative_gain">Normalized Discounted Cumulative Gain</a> (nDCG) is another popular metric beside MAP&#64;k. Despite having no <em>mean</em> and <em>&#64;k</em> part in the name, NDCG shares the same calculation with MAP&#64;k: computing the metric for a user considering the top <span class="math notranslate nohighlight">\(k\)</span> items, then taking the mean of that metric for all users. The difference is that nDCG defined <span class="math notranslate nohighlight">\(rel_i\)</span> being the continuous rating score rather than a binary status, hence it contains more information than MAP&#64;k.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Discounted_cumulative_gain">Normalized Discounted Cumulative Gain</a> (nDCG) is another popular metric beside MAP&#64;K. Despite having no <em>mean</em> and <em>&#64;K</em> part in the name, NDCG shares the same calculation with MAP&#64;K: computing the metric for a user considering the top <span class="math notranslate nohighlight">\(K\)</span> items, then taking the mean of that metric for all users. The difference is that nDCG defined <span class="math notranslate nohighlight">\(\text{rel}_k\)</span> being the continuous rating score rather than a binary status, hence it contains more information than MAP&#64;K.</p>
 <p>The <em>cumulative gain</em> part in nDCG is simply the sum of graded relevance values. We give it <em>ordering information</em> by making each value <em>discounted</em> before summing:</p>
 <div class="math notranslate nohighlight">
 \[\text{DCG}=\sum_{k=1}^{K}\frac{\text{rel}_k}{\log_2(k+1)}\]</div>
