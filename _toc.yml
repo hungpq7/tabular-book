@@ -77,7 +77,6 @@ chapters:
   - file: 08-time-series/prophet-forecasting-algorithms
   - file: 08-time-series/sktime-forecasting-pipeline
   - file: 08-time-series/darts-deep-forecasting
-    title: "(w) Darts: Deep Forecasting"
 
 # Unsupervised Learning
 - file: 09-unsupervised-learning/_intro

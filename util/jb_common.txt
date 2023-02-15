@@ -1,4 +1,4 @@
-DIRECTIVES:
+IRECTIVES:
 admonitions, tableofcontents, tab-set, tab-item
 
 ADMONITIONS:
