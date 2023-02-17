@@ -799,11 +799,16 @@ title="Print to PDF"
        Slicing
       </a>
      </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#plotting">
+       Plotting
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#data-transformation">
-     1.2. Data transformation
+    <a class="reference internal nav-link" href="#data-enrichment">
+     1.2. Data enrichment
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -899,11 +904,16 @@ title="Print to PDF"
        Slicing
       </a>
      </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#plotting">
+       Plotting
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#data-transformation">
-     1.2. Data transformation
+    <a class="reference internal nav-link" href="#data-enrichment">
+     1.2. Data enrichment
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -979,7 +989,9 @@ title="Print to PDF"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">darts</span> <span class="kn">import</span> <span class="n">TimeSeries</span>
-<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">AutoARIMA</span><span class="p">,</span> <span class="n">ExponentialSmoothing</span>
+<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">AutoARIMA</span><span class="p">,</span> <span class="n">ExponentialSmoothing</span><span class="p">,</span> <span class="n">StatsForecastETS</span>
+<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">LightGBMModel</span><span class="p">,</span> <span class="n">CatBoostModel</span><span class="p">,</span> <span class="n">XGBModel</span>
+<span class="kn">from</span> <span class="nn">darts.utils.utils</span> <span class="kn">import</span> <span class="n">ModelMode</span>
 <span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mape</span><span class="p">,</span> <span class="n">mase</span><span class="p">,</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mae</span>
 
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -993,12 +1005,455 @@ title="Print to PDF"
 </div>
 <section id="time-series-container">
 <h3>1.1. Time series container<a class="headerlink" href="#time-series-container" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.timeseries.html"><code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></a> is the main data class in Darts. There can be various instaniation ways, but it is recommended to do this <em>indirectly</em> from a Pandas dataframe with <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DatetimeIndex.html"><code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code></a> for easy data cleaning.</p>
+<p><a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.timeseries.html"><code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></a> is the main data class in Darts. There can be various instaniation ways, but it is recommended to do this <em>indirectly</em> from a Pandas dataframe with <code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code>, which is usually obtained via the <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.asfreq.html"><code class="docutils literal notranslate"><span class="pre">asfreq()</span></code></a> method for easy data cleaning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEco</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/macroeconomic.csv&#39;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">select_columns</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s1">&#39;period&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime64&#39;</span><span class="p">})</span>
+    <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;period&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s1">&#39;QS&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">tsEco</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">dfEco</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">pd_dataframe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>component</th>
+      <th>realgdp</th>
+      <th>realcons</th>
+      <th>realinv</th>
+      <th>realgovt</th>
+      <th>realdpi</th>
+      <th>cpi</th>
+      <th>m1</th>
+      <th>tbilrate</th>
+      <th>unemp</th>
+      <th>pop</th>
+      <th>infl</th>
+      <th>realint</th>
+    </tr>
+    <tr>
+      <th>period</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1959-01-01</th>
+      <td>2710.349</td>
+      <td>1707.4</td>
+      <td>286.898</td>
+      <td>470.045</td>
+      <td>1886.9</td>
+      <td>28.980</td>
+      <td>139.7</td>
+      <td>2.82</td>
+      <td>5.8</td>
+      <td>177.146</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1959-04-01</th>
+      <td>2778.801</td>
+      <td>1733.7</td>
+      <td>310.859</td>
+      <td>481.301</td>
+      <td>1919.7</td>
+      <td>29.150</td>
+      <td>141.7</td>
+      <td>3.08</td>
+      <td>5.1</td>
+      <td>177.830</td>
+      <td>2.34</td>
+      <td>0.74</td>
+    </tr>
+    <tr>
+      <th>1959-07-01</th>
+      <td>2775.488</td>
+      <td>1751.8</td>
+      <td>289.226</td>
+      <td>491.260</td>
+      <td>1916.4</td>
+      <td>29.350</td>
+      <td>140.5</td>
+      <td>3.82</td>
+      <td>5.3</td>
+      <td>178.657</td>
+      <td>2.74</td>
+      <td>1.09</td>
+    </tr>
+    <tr>
+      <th>1959-10-01</th>
+      <td>2785.204</td>
+      <td>1753.7</td>
+      <td>299.356</td>
+      <td>484.052</td>
+      <td>1931.3</td>
+      <td>29.370</td>
+      <td>140.0</td>
+      <td>4.33</td>
+      <td>5.6</td>
+      <td>179.386</td>
+      <td>0.27</td>
+      <td>4.06</td>
+    </tr>
+    <tr>
+      <th>1960-01-01</th>
+      <td>2847.699</td>
+      <td>1770.5</td>
+      <td>331.722</td>
+      <td>462.199</td>
+      <td>1955.5</td>
+      <td>29.540</td>
+      <td>139.6</td>
+      <td>3.50</td>
+      <td>5.2</td>
+      <td>180.007</td>
+      <td>2.31</td>
+      <td>1.19</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2008-07-01</th>
+      <td>13324.600</td>
+      <td>9267.7</td>
+      <td>1990.693</td>
+      <td>991.551</td>
+      <td>9838.3</td>
+      <td>216.889</td>
+      <td>1474.7</td>
+      <td>1.17</td>
+      <td>6.0</td>
+      <td>305.270</td>
+      <td>-3.16</td>
+      <td>4.33</td>
+    </tr>
+    <tr>
+      <th>2008-10-01</th>
+      <td>13141.920</td>
+      <td>9195.3</td>
+      <td>1857.661</td>
+      <td>1007.273</td>
+      <td>9920.4</td>
+      <td>212.174</td>
+      <td>1576.5</td>
+      <td>0.12</td>
+      <td>6.9</td>
+      <td>305.952</td>
+      <td>-8.79</td>
+      <td>8.91</td>
+    </tr>
+    <tr>
+      <th>2009-01-01</th>
+      <td>12925.410</td>
+      <td>9209.2</td>
+      <td>1558.494</td>
+      <td>996.287</td>
+      <td>9926.4</td>
+      <td>212.671</td>
+      <td>1592.8</td>
+      <td>0.22</td>
+      <td>8.1</td>
+      <td>306.547</td>
+      <td>0.94</td>
+      <td>-0.71</td>
+    </tr>
+    <tr>
+      <th>2009-04-01</th>
+      <td>12901.504</td>
+      <td>9189.0</td>
+      <td>1456.678</td>
+      <td>1023.528</td>
+      <td>10077.5</td>
+      <td>214.469</td>
+      <td>1653.6</td>
+      <td>0.18</td>
+      <td>9.2</td>
+      <td>307.226</td>
+      <td>3.37</td>
+      <td>-3.19</td>
+    </tr>
+    <tr>
+      <th>2009-07-01</th>
+      <td>12990.341</td>
+      <td>9256.0</td>
+      <td>1486.398</td>
+      <td>1044.088</td>
+      <td>10040.6</td>
+      <td>216.385</td>
+      <td>1673.9</td>
+      <td>0.12</td>
+      <td>9.6</td>
+      <td>308.013</td>
+      <td>3.56</td>
+      <td>-3.44</td>
+    </tr>
+  </tbody>
+</table>
+<p>203 rows × 12 columns</p>
+</div></div></div>
+</div>
+<section id="basic-methods">
+<h4>Basic methods<a class="headerlink" href="#basic-methods" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;float64&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">freq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;QuarterBegin: startingMonth=1&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;realgdp&#39;, &#39;realcons&#39;, &#39;realinv&#39;, &#39;realgovt&#39;, &#39;realdpi&#39;, &#39;cpi&#39;, &#39;m1&#39;,
+       &#39;tbilrate&#39;, &#39;unemp&#39;, &#39;pop&#39;, &#39;infl&#39;, &#39;realint&#39;],
+      dtype=&#39;object&#39;, name=&#39;component&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">n_components</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">n_timesteps</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>203
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">duration</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timedelta(&#39;18444 days 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="slicing">
+<h4>Slicing<a class="headerlink" href="#slicing" title="Permalink to this headline">#</a></h4>
+<p>Luckily, the slicing syntaxes is almost similar to Pandas dataframes. Except when you want to access specific times, we must use an appropriate Pandas object: a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.Timestamp.html"><code class="docutils literal notranslate"><span class="pre">Timestamp</span></code></a> for a single time, or a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DatetimeIndex.html"><code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code></a> for multiple times. The later case can also be done indirectly with the help of the <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.date_range.html"><code class="docutils literal notranslate"><span class="pre">date_range()</span></code></a> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># select a series</span>
+<span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgdp&#39;</span><span class="p">]</span>
+
+<span class="c1"># select multiple series</span>
+<span class="n">tsEco</span><span class="p">[[</span><span class="s1">&#39;realgdp&#39;</span><span class="p">,</span> <span class="s1">&#39;realcons&#39;</span><span class="p">]]</span>
+
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># select last 10 observations</span>
+<span class="n">tsEco</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">:]</span>
+
+<span class="c1"># split the time series by ratio</span>
+<span class="n">tsEco</span><span class="o">.</span><span class="n">split_after</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="c1"># access a specific time stamp</span>
+<span class="n">tsEco</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2002-07-01&#39;</span><span class="p">)]</span>
+
+<span class="c1"># access multiple time stamps</span>
+<span class="n">tsEco</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;1959-01-01&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;1960-01-01&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;QS&#39;</span><span class="p">)]</span>
+
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="plotting">
+<h4>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">tsEco</span><span class="p">[[</span><span class="s1">&#39;tbilrate&#39;</span><span class="p">,</span> <span class="s1">&#39;infl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realint&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_17_0.png"><img alt="../_images/darts-deep-forecasting_17_0.png" class="align-center" src="../_images/darts-deep-forecasting_17_0.png" style="width: 590.5px; height: 272.0px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="data-enrichment">
+<h3>1.2. Data enrichment<a class="headerlink" href="#data-enrichment" title="Permalink to this headline">#</a></h3>
+<p>With a univariate time series, there can be a lot of ways to create additional data. This section guides us through some techniques, made easy with Darts:</p>
+<ul class="simple">
+<li><p>basic time series transformations such as <code class="docutils literal notranslate"><span class="pre">diff()</span></code>, <code class="docutils literal notranslate"><span class="pre">lag()</span></code> and <code class="docutils literal notranslate"><span class="pre">shift()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">map()</span></code> the series to a new one using any Numpy function, then <code class="docutils literal notranslate"><span class="pre">stack()</span></code> it to the original</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_datetime_attribute()</span></code> to extract <em>cyclic attributes</em> from <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DatetimeIndex.html"><code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_holidays()</span></code> to get a binary component representing holidays for a specific country, which reduces the need of <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.tseries.offsets.CustomBusinessDay.html"><code class="docutils literal notranslate"><span class="pre">CustomBusinessDay</span></code></a></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfQty</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/weekly_quantity.csv&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;date = date.astype(&#39;datetime64&#39;)&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">tsQty</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">dfQty</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">tsQty</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">tsQty</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;diff&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_20_0.png"><img alt="../_images/darts-deep-forecasting_20_0.png" class="align-center" src="../_images/darts-deep-forecasting_20_0.png" style="width: 931.0px; height: 286.5px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsLog</span> <span class="o">=</span> <span class="n">tsQty</span><span class="o">.</span><span class="n">with_columns_renamed</span><span class="p">(</span><span class="s1">&#39;quantity&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">tsQty</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">tsLog</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/darts-deep-forecasting_21_0.png" src="../_images/darts-deep-forecasting_21_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">tsQty</span><span class="o">.</span><span class="n">add_datetime_attribute</span><span class="p">(</span><span class="s1">&#39;weekday&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/darts-deep-forecasting_22_0.png" src="../_images/darts-deep-forecasting_22_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="p">(</span><span class="n">tsQty</span><span class="o">/</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">add_holidays</span><span class="p">(</span><span class="s1">&#39;VN&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/darts-deep-forecasting_23_0.png" src="../_images/darts-deep-forecasting_23_0.png" />
+</div>
+</div>
+</section>
+<section id="forecasting">
+<h3>1.3. Forecasting<a class="headerlink" href="#forecasting" title="Permalink to this headline">#</a></h3>
+<p>Darts unifies a wide range of common forecasting algorithms:</p>
+<ul class="simple">
+<li><p>Statistical models: traditional <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.auto_arima.html"><code class="docutils literal notranslate"><span class="pre">AutoARIMA</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.exponential_smoothing.html"><code class="docutils literal notranslate"><span class="pre">ExponentialSmoothing</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.tbats.html#darts.models.forecasting.tbats.TBATS"><code class="docutils literal notranslate"><span class="pre">TBATS</span></code></a> and modern <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.prophet_model.html"><code class="docutils literal notranslate"><span class="pre">Prophet</span></code></a></p></li>
+<li><p>Reduction to regression: general <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.regression_model.html"><code class="docutils literal notranslate"><span class="pre">RegressionModel</span></code></a> and state-of-the-art <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.xgboost.html"><code class="docutils literal notranslate"><span class="pre">XGBModel</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.lgbm.html"><code class="docutils literal notranslate"><span class="pre">LightGBMModel</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.catboost_model.html"><code class="docutils literal notranslate"><span class="pre">CatBoostModel</span></code></a></p></li>
+<li><p>Neural Networks: Darts implements various RNN-based architectures, which is the key difference with Sktime</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEco</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/macroeconomic.csv&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s1">&#39;period&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime64&#39;</span><span class="p">})</span>
     <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;period&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s1">&#39;QS&#39;</span><span class="p">)</span>
@@ -1142,2198 +1597,29 @@ title="Print to PDF"
 </table>
 </div></div></div>
 </div>
-<section id="basic-methods">
-<h4>Basic methods<a class="headerlink" href="#basic-methods" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">dtype</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsTrain</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">tsTest</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">20</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tsTrain</span><span class="p">)</span>
+<span class="n">tsPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">tsPred</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;float64&#39;)
-</pre></div>
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_28_0.png"><img alt="../_images/darts-deep-forecasting_28_0.png" class="align-center" src="../_images/darts-deep-forecasting_28_0.png" style="width: 490.0px; height: 353.5px;" /></a>
 </div>
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">freq</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;QuarterBegin: startingMonth=1&gt;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">columns</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;realgdp&#39;, &#39;realcons&#39;, &#39;realinv&#39;, &#39;realgovt&#39;, &#39;realdpi&#39;, &#39;cpi&#39;, &#39;m1&#39;,
-       &#39;tbilrate&#39;, &#39;unemp&#39;, &#39;pop&#39;, &#39;infl&#39;, &#39;realint&#39;],
-      dtype=&#39;object&#39;, name=&#39;component&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">n_components</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">n_timesteps</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>203
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="o">.</span><span class="n">duration</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timedelta(&#39;18444 days 00:00:00&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="slicing">
-<h4>Slicing<a class="headerlink" href="#slicing" title="Permalink to this headline">#</a></h4>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgdp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
-<defs>
-<symbol id="icon-database" viewBox="0 0 32 32">
-<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
-<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-</symbol>
-<symbol id="icon-file-text2" viewBox="0 0 32 32">
-<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
-<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-</symbol>
-</defs>
-</svg>
-<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
- *
- */
-
-:root {
-  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
-  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
-  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
-  --xr-border-color: var(--jp-border-color2, #e0e0e0);
-  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
-  --xr-background-color: var(--jp-layout-color0, white);
-  --xr-background-color-row-even: var(--jp-layout-color1, white);
-  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
-}
-
-html[theme=dark],
-body.vscode-dark {
-  --xr-font-color0: rgba(255, 255, 255, 1);
-  --xr-font-color2: rgba(255, 255, 255, 0.54);
-  --xr-font-color3: rgba(255, 255, 255, 0.38);
-  --xr-border-color: #1F1F1F;
-  --xr-disabled-color: #515151;
-  --xr-background-color: #111111;
-  --xr-background-color-row-even: #111111;
-  --xr-background-color-row-odd: #313131;
-}
-
-.xr-wrap {
-  display: block !important;
-  min-width: 300px;
-  max-width: 700px;
-}
-
-.xr-text-repr-fallback {
-  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
-  display: none;
-}
-
-.xr-header {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  margin-bottom: 4px;
-  border-bottom: solid 1px var(--xr-border-color);
-}
-
-.xr-header > div,
-.xr-header > ul {
-  display: inline;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.xr-obj-type,
-.xr-array-name {
-  margin-left: 2px;
-  margin-right: 10px;
-}
-
-.xr-obj-type {
-  color: var(--xr-font-color2);
-}
-
-.xr-sections {
-  padding-left: 0 !important;
-  display: grid;
-  grid-template-columns: 150px auto auto 1fr 20px 20px;
-}
-
-.xr-section-item {
-  display: contents;
-}
-
-.xr-section-item input {
-  display: none;
-}
-
-.xr-section-item input + label {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-item input:enabled + label {
-  cursor: pointer;
-  color: var(--xr-font-color2);
-}
-
-.xr-section-item input:enabled + label:hover {
-  color: var(--xr-font-color0);
-}
-
-.xr-section-summary {
-  grid-column: 1;
-  color: var(--xr-font-color2);
-  font-weight: 500;
-}
-
-.xr-section-summary > span {
-  display: inline-block;
-  padding-left: 0.5em;
-}
-
-.xr-section-summary-in:disabled + label {
-  color: var(--xr-font-color2);
-}
-
-.xr-section-summary-in + label:before {
-  display: inline-block;
-  content: '►';
-  font-size: 11px;
-  width: 15px;
-  text-align: center;
-}
-
-.xr-section-summary-in:disabled + label:before {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-summary-in:checked + label:before {
-  content: '▼';
-}
-
-.xr-section-summary-in:checked + label > span {
-  display: none;
-}
-
-.xr-section-summary,
-.xr-section-inline-details {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.xr-section-inline-details {
-  grid-column: 2 / -1;
-}
-
-.xr-section-details {
-  display: none;
-  grid-column: 1 / -1;
-  margin-bottom: 5px;
-}
-
-.xr-section-summary-in:checked ~ .xr-section-details {
-  display: contents;
-}
-
-.xr-array-wrap {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 20px auto;
-}
-
-.xr-array-wrap > label {
-  grid-column: 1;
-  vertical-align: top;
-}
-
-.xr-preview {
-  color: var(--xr-font-color3);
-}
-
-.xr-array-preview,
-.xr-array-data {
-  padding: 0 5px !important;
-  grid-column: 2;
-}
-
-.xr-array-data,
-.xr-array-in:checked ~ .xr-array-preview {
-  display: none;
-}
-
-.xr-array-in:checked ~ .xr-array-data,
-.xr-array-preview {
-  display: inline-block;
-}
-
-.xr-dim-list {
-  display: inline-block !important;
-  list-style: none;
-  padding: 0 !important;
-  margin: 0;
-}
-
-.xr-dim-list li {
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-}
-
-.xr-dim-list:before {
-  content: '(';
-}
-
-.xr-dim-list:after {
-  content: ')';
-}
-
-.xr-dim-list li:not(:last-child):after {
-  content: ',';
-  padding-right: 5px;
-}
-
-.xr-has-index {
-  font-weight: bold;
-}
-
-.xr-var-list,
-.xr-var-item {
-  display: contents;
-}
-
-.xr-var-item > div,
-.xr-var-item label,
-.xr-var-item > .xr-var-name span {
-  background-color: var(--xr-background-color-row-even);
-  margin-bottom: 0;
-}
-
-.xr-var-item > .xr-var-name:hover span {
-  padding-right: 5px;
-}
-
-.xr-var-list > li:nth-child(odd) > div,
-.xr-var-list > li:nth-child(odd) > label,
-.xr-var-list > li:nth-child(odd) > .xr-var-name span {
-  background-color: var(--xr-background-color-row-odd);
-}
-
-.xr-var-name {
-  grid-column: 1;
-}
-
-.xr-var-dims {
-  grid-column: 2;
-}
-
-.xr-var-dtype {
-  grid-column: 3;
-  text-align: right;
-  color: var(--xr-font-color2);
-}
-
-.xr-var-preview {
-  grid-column: 4;
-}
-
-.xr-var-name,
-.xr-var-dims,
-.xr-var-dtype,
-.xr-preview,
-.xr-attrs dt {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-right: 10px;
-}
-
-.xr-var-name:hover,
-.xr-var-dims:hover,
-.xr-var-dtype:hover,
-.xr-attrs dt:hover {
-  overflow: visible;
-  width: auto;
-  z-index: 1;
-}
-
-.xr-var-attrs,
-.xr-var-data {
-  display: none;
-  background-color: var(--xr-background-color) !important;
-  padding-bottom: 5px !important;
-}
-
-.xr-var-attrs-in:checked ~ .xr-var-attrs,
-.xr-var-data-in:checked ~ .xr-var-data {
-  display: block;
-}
-
-.xr-var-data > table {
-  float: right;
-}
-
-.xr-var-name span,
-.xr-var-data,
-.xr-attrs {
-  padding-left: 25px !important;
-}
-
-.xr-attrs,
-.xr-var-attrs,
-.xr-var-data {
-  grid-column: 1 / -1;
-}
-
-dl.xr-attrs {
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 125px auto;
-}
-
-.xr-attrs dt,
-.xr-attrs dd {
-  padding: 0;
-  margin: 0;
-  float: left;
-  padding-right: 10px;
-  width: auto;
-}
-
-.xr-attrs dt {
-  font-weight: normal;
-  grid-column: 1;
-}
-
-.xr-attrs dt:hover span {
-  display: inline-block;
-  background: var(--xr-background-color);
-  padding-right: 10px;
-}
-
-.xr-attrs dd {
-  grid-column: 2;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-
-.xr-icon-database,
-.xr-icon-file-text2 {
-  display: inline-block;
-  vertical-align: middle;
-  width: 1em;
-  height: 1.5em !important;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-}
-</style><pre class='xr-text-repr-fallback'>&lt;TimeSeries (DataArray) (period: 5, component: 1, sample: 1)&gt;
-array([[[2710.349]],
-
-       [[2778.801]],
-
-       [[2775.488]],
-
-       [[2785.204]],
-
-       [[2847.699]]])
-Coordinates:
-  * period     (period) datetime64[ns] 1959-01-01 1959-04-01 ... 1960-01-01
-  * component  (component) object &#x27;realgdp&#x27;
-Dimensions without coordinates: sample
-Attributes:
-    static_covariates:  None
-    hierarchy:          None</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>TimeSeries (DataArray)</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>period</span>: 5</li><li><span class='xr-has-index'>component</span>: 1</li><li><span>sample</span>: 1</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-d89e444e-f066-4a8b-b472-214c306402f0' class='xr-array-in' type='checkbox' checked><label for='section-d89e444e-f066-4a8b-b472-214c306402f0' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>2.71e+03 2.779e+03 2.775e+03 2.785e+03 2.848e+03</span></div><div class='xr-array-data'><pre>array([[[2710.349]],
-
-       [[2778.801]],
-
-       [[2775.488]],
-
-       [[2785.204]],
-
-       [[2847.699]]])</pre></div></div></li><li class='xr-section-item'><input id='section-9f435828-a33d-4878-bc8d-252d6df12cf1' class='xr-section-summary-in' type='checkbox'  checked><label for='section-9f435828-a33d-4878-bc8d-252d6df12cf1' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>period</span></div><div class='xr-var-dims'>(period)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>1959-01-01 ... 1960-01-01</div><input id='attrs-395c9b8f-7fba-41b9-8990-b12b8f8e1df8' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-395c9b8f-7fba-41b9-8990-b12b8f8e1df8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-11ca34bc-35cc-4eb8-881a-a9aaa9697efd' class='xr-var-data-in' type='checkbox'><label for='data-11ca34bc-35cc-4eb8-881a-a9aaa9697efd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;1959-01-01T00:00:00.000000000&#x27;, &#x27;1959-04-01T00:00:00.000000000&#x27;,
-       &#x27;1959-07-01T00:00:00.000000000&#x27;, &#x27;1959-10-01T00:00:00.000000000&#x27;,
-       &#x27;1960-01-01T00:00:00.000000000&#x27;], dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>component</span></div><div class='xr-var-dims'>(component)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;realgdp&#x27;</div><input id='attrs-bfb01cfa-5af9-4e46-86d1-5120dffa79f2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-bfb01cfa-5af9-4e46-86d1-5120dffa79f2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-7be1c6b3-72a2-4978-9ff4-964bf1088105' class='xr-var-data-in' type='checkbox'><label for='data-7be1c6b3-72a2-4978-9ff4-964bf1088105' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;realgdp&#x27;], dtype=object)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-92ec1a59-c83b-4e47-81b6-f292ec56afe4' class='xr-section-summary-in' type='checkbox'  checked><label for='section-92ec1a59-c83b-4e47-81b6-f292ec56afe4' class='xr-section-summary' >Attributes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>static_covariates :</span></dt><dd>None</dd><dt><span>hierarchy :</span></dt><dd>None</dd></dl></div></li></ul></div></div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="p">[[</span><span class="s1">&#39;realgdp&#39;</span><span class="p">,</span> <span class="s1">&#39;realcons&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
-<defs>
-<symbol id="icon-database" viewBox="0 0 32 32">
-<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
-<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-</symbol>
-<symbol id="icon-file-text2" viewBox="0 0 32 32">
-<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
-<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-</symbol>
-</defs>
-</svg>
-<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
- *
- */
-
-:root {
-  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
-  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
-  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
-  --xr-border-color: var(--jp-border-color2, #e0e0e0);
-  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
-  --xr-background-color: var(--jp-layout-color0, white);
-  --xr-background-color-row-even: var(--jp-layout-color1, white);
-  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
-}
-
-html[theme=dark],
-body.vscode-dark {
-  --xr-font-color0: rgba(255, 255, 255, 1);
-  --xr-font-color2: rgba(255, 255, 255, 0.54);
-  --xr-font-color3: rgba(255, 255, 255, 0.38);
-  --xr-border-color: #1F1F1F;
-  --xr-disabled-color: #515151;
-  --xr-background-color: #111111;
-  --xr-background-color-row-even: #111111;
-  --xr-background-color-row-odd: #313131;
-}
-
-.xr-wrap {
-  display: block !important;
-  min-width: 300px;
-  max-width: 700px;
-}
-
-.xr-text-repr-fallback {
-  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
-  display: none;
-}
-
-.xr-header {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  margin-bottom: 4px;
-  border-bottom: solid 1px var(--xr-border-color);
-}
-
-.xr-header > div,
-.xr-header > ul {
-  display: inline;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.xr-obj-type,
-.xr-array-name {
-  margin-left: 2px;
-  margin-right: 10px;
-}
-
-.xr-obj-type {
-  color: var(--xr-font-color2);
-}
-
-.xr-sections {
-  padding-left: 0 !important;
-  display: grid;
-  grid-template-columns: 150px auto auto 1fr 20px 20px;
-}
-
-.xr-section-item {
-  display: contents;
-}
-
-.xr-section-item input {
-  display: none;
-}
-
-.xr-section-item input + label {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-item input:enabled + label {
-  cursor: pointer;
-  color: var(--xr-font-color2);
-}
-
-.xr-section-item input:enabled + label:hover {
-  color: var(--xr-font-color0);
-}
-
-.xr-section-summary {
-  grid-column: 1;
-  color: var(--xr-font-color2);
-  font-weight: 500;
-}
-
-.xr-section-summary > span {
-  display: inline-block;
-  padding-left: 0.5em;
-}
-
-.xr-section-summary-in:disabled + label {
-  color: var(--xr-font-color2);
-}
-
-.xr-section-summary-in + label:before {
-  display: inline-block;
-  content: '►';
-  font-size: 11px;
-  width: 15px;
-  text-align: center;
-}
-
-.xr-section-summary-in:disabled + label:before {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-summary-in:checked + label:before {
-  content: '▼';
-}
-
-.xr-section-summary-in:checked + label > span {
-  display: none;
-}
-
-.xr-section-summary,
-.xr-section-inline-details {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.xr-section-inline-details {
-  grid-column: 2 / -1;
-}
-
-.xr-section-details {
-  display: none;
-  grid-column: 1 / -1;
-  margin-bottom: 5px;
-}
-
-.xr-section-summary-in:checked ~ .xr-section-details {
-  display: contents;
-}
-
-.xr-array-wrap {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 20px auto;
-}
-
-.xr-array-wrap > label {
-  grid-column: 1;
-  vertical-align: top;
-}
-
-.xr-preview {
-  color: var(--xr-font-color3);
-}
-
-.xr-array-preview,
-.xr-array-data {
-  padding: 0 5px !important;
-  grid-column: 2;
-}
-
-.xr-array-data,
-.xr-array-in:checked ~ .xr-array-preview {
-  display: none;
-}
-
-.xr-array-in:checked ~ .xr-array-data,
-.xr-array-preview {
-  display: inline-block;
-}
-
-.xr-dim-list {
-  display: inline-block !important;
-  list-style: none;
-  padding: 0 !important;
-  margin: 0;
-}
-
-.xr-dim-list li {
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-}
-
-.xr-dim-list:before {
-  content: '(';
-}
-
-.xr-dim-list:after {
-  content: ')';
-}
-
-.xr-dim-list li:not(:last-child):after {
-  content: ',';
-  padding-right: 5px;
-}
-
-.xr-has-index {
-  font-weight: bold;
-}
-
-.xr-var-list,
-.xr-var-item {
-  display: contents;
-}
-
-.xr-var-item > div,
-.xr-var-item label,
-.xr-var-item > .xr-var-name span {
-  background-color: var(--xr-background-color-row-even);
-  margin-bottom: 0;
-}
-
-.xr-var-item > .xr-var-name:hover span {
-  padding-right: 5px;
-}
-
-.xr-var-list > li:nth-child(odd) > div,
-.xr-var-list > li:nth-child(odd) > label,
-.xr-var-list > li:nth-child(odd) > .xr-var-name span {
-  background-color: var(--xr-background-color-row-odd);
-}
-
-.xr-var-name {
-  grid-column: 1;
-}
-
-.xr-var-dims {
-  grid-column: 2;
-}
-
-.xr-var-dtype {
-  grid-column: 3;
-  text-align: right;
-  color: var(--xr-font-color2);
-}
-
-.xr-var-preview {
-  grid-column: 4;
-}
-
-.xr-var-name,
-.xr-var-dims,
-.xr-var-dtype,
-.xr-preview,
-.xr-attrs dt {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-right: 10px;
-}
-
-.xr-var-name:hover,
-.xr-var-dims:hover,
-.xr-var-dtype:hover,
-.xr-attrs dt:hover {
-  overflow: visible;
-  width: auto;
-  z-index: 1;
-}
-
-.xr-var-attrs,
-.xr-var-data {
-  display: none;
-  background-color: var(--xr-background-color) !important;
-  padding-bottom: 5px !important;
-}
-
-.xr-var-attrs-in:checked ~ .xr-var-attrs,
-.xr-var-data-in:checked ~ .xr-var-data {
-  display: block;
-}
-
-.xr-var-data > table {
-  float: right;
-}
-
-.xr-var-name span,
-.xr-var-data,
-.xr-attrs {
-  padding-left: 25px !important;
-}
-
-.xr-attrs,
-.xr-var-attrs,
-.xr-var-data {
-  grid-column: 1 / -1;
-}
-
-dl.xr-attrs {
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 125px auto;
-}
-
-.xr-attrs dt,
-.xr-attrs dd {
-  padding: 0;
-  margin: 0;
-  float: left;
-  padding-right: 10px;
-  width: auto;
-}
-
-.xr-attrs dt {
-  font-weight: normal;
-  grid-column: 1;
-}
-
-.xr-attrs dt:hover span {
-  display: inline-block;
-  background: var(--xr-background-color);
-  padding-right: 10px;
-}
-
-.xr-attrs dd {
-  grid-column: 2;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-
-.xr-icon-database,
-.xr-icon-file-text2 {
-  display: inline-block;
-  vertical-align: middle;
-  width: 1em;
-  height: 1.5em !important;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-}
-</style><pre class='xr-text-repr-fallback'>&lt;TimeSeries (DataArray) (period: 3, component: 2, sample: 1)&gt;
-array([[[2710.349],
-        [1707.4  ]],
-
-       [[2778.801],
-        [1733.7  ]],
-
-       [[2775.488],
-        [1751.8  ]]])
-Coordinates:
-  * period     (period) datetime64[ns] 1959-01-01 1959-04-01 1959-07-01
-  * component  (component) object &#x27;realgdp&#x27; &#x27;realcons&#x27;
-Dimensions without coordinates: sample
-Attributes:
-    static_covariates:  None
-    hierarchy:          None</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>TimeSeries (DataArray)</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>period</span>: 3</li><li><span class='xr-has-index'>component</span>: 2</li><li><span>sample</span>: 1</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-597f8b28-ceeb-4cff-b265-093190d6fea9' class='xr-array-in' type='checkbox' checked><label for='section-597f8b28-ceeb-4cff-b265-093190d6fea9' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>2.71e+03 1.707e+03 2.779e+03 1.734e+03 2.775e+03 1.752e+03</span></div><div class='xr-array-data'><pre>array([[[2710.349],
-        [1707.4  ]],
-
-       [[2778.801],
-        [1733.7  ]],
-
-       [[2775.488],
-        [1751.8  ]]])</pre></div></div></li><li class='xr-section-item'><input id='section-9b9dde68-b72b-4c7d-b66b-bc64acb9153c' class='xr-section-summary-in' type='checkbox'  checked><label for='section-9b9dde68-b72b-4c7d-b66b-bc64acb9153c' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>period</span></div><div class='xr-var-dims'>(period)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>1959-01-01 1959-04-01 1959-07-01</div><input id='attrs-7c97c43f-e435-42f2-8a67-c4693381e90f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7c97c43f-e435-42f2-8a67-c4693381e90f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e82e4506-bddc-4f02-a33b-7980ddd2b80c' class='xr-var-data-in' type='checkbox'><label for='data-e82e4506-bddc-4f02-a33b-7980ddd2b80c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;1959-01-01T00:00:00.000000000&#x27;, &#x27;1959-04-01T00:00:00.000000000&#x27;,
-       &#x27;1959-07-01T00:00:00.000000000&#x27;], dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>component</span></div><div class='xr-var-dims'>(component)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;realgdp&#x27; &#x27;realcons&#x27;</div><input id='attrs-8d8905e5-d0af-4dfe-9ffb-09eced4e92da' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-8d8905e5-d0af-4dfe-9ffb-09eced4e92da' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-860a9c7f-9a26-4b78-965d-a1036fe0b9b9' class='xr-var-data-in' type='checkbox'><label for='data-860a9c7f-9a26-4b78-965d-a1036fe0b9b9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;realgdp&#x27;, &#x27;realcons&#x27;], dtype=object)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-cddece3b-d4f3-4302-a5c8-dc35b08f448c' class='xr-section-summary-in' type='checkbox'  checked><label for='section-cddece3b-d4f3-4302-a5c8-dc35b08f448c' class='xr-section-summary' >Attributes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>static_covariates :</span></dt><dd>None</dd><dt><span>hierarchy :</span></dt><dd>None</dd></dl></div></li></ul></div></div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;1959-01-01&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;1960-01-01&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;QS&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DatetimeIndex([&#39;1959-01-01&#39;, &#39;1959-04-01&#39;, &#39;1959-07-01&#39;, &#39;1959-10-01&#39;,
-               &#39;1960-01-01&#39;],
-              dtype=&#39;datetime64[ns]&#39;, freq=&#39;QS-JAN&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;1959-01-01&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;1960-01-01&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;QS&#39;</span><span class="p">)]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
-<defs>
-<symbol id="icon-database" viewBox="0 0 32 32">
-<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
-<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-</symbol>
-<symbol id="icon-file-text2" viewBox="0 0 32 32">
-<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
-<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-</symbol>
-</defs>
-</svg>
-<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
- *
- */
-
-:root {
-  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
-  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
-  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
-  --xr-border-color: var(--jp-border-color2, #e0e0e0);
-  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
-  --xr-background-color: var(--jp-layout-color0, white);
-  --xr-background-color-row-even: var(--jp-layout-color1, white);
-  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
-}
-
-html[theme=dark],
-body.vscode-dark {
-  --xr-font-color0: rgba(255, 255, 255, 1);
-  --xr-font-color2: rgba(255, 255, 255, 0.54);
-  --xr-font-color3: rgba(255, 255, 255, 0.38);
-  --xr-border-color: #1F1F1F;
-  --xr-disabled-color: #515151;
-  --xr-background-color: #111111;
-  --xr-background-color-row-even: #111111;
-  --xr-background-color-row-odd: #313131;
-}
-
-.xr-wrap {
-  display: block !important;
-  min-width: 300px;
-  max-width: 700px;
-}
-
-.xr-text-repr-fallback {
-  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
-  display: none;
-}
-
-.xr-header {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  margin-bottom: 4px;
-  border-bottom: solid 1px var(--xr-border-color);
-}
-
-.xr-header > div,
-.xr-header > ul {
-  display: inline;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.xr-obj-type,
-.xr-array-name {
-  margin-left: 2px;
-  margin-right: 10px;
-}
-
-.xr-obj-type {
-  color: var(--xr-font-color2);
-}
-
-.xr-sections {
-  padding-left: 0 !important;
-  display: grid;
-  grid-template-columns: 150px auto auto 1fr 20px 20px;
-}
-
-.xr-section-item {
-  display: contents;
-}
-
-.xr-section-item input {
-  display: none;
-}
-
-.xr-section-item input + label {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-item input:enabled + label {
-  cursor: pointer;
-  color: var(--xr-font-color2);
-}
-
-.xr-section-item input:enabled + label:hover {
-  color: var(--xr-font-color0);
-}
-
-.xr-section-summary {
-  grid-column: 1;
-  color: var(--xr-font-color2);
-  font-weight: 500;
-}
-
-.xr-section-summary > span {
-  display: inline-block;
-  padding-left: 0.5em;
-}
-
-.xr-section-summary-in:disabled + label {
-  color: var(--xr-font-color2);
-}
-
-.xr-section-summary-in + label:before {
-  display: inline-block;
-  content: '►';
-  font-size: 11px;
-  width: 15px;
-  text-align: center;
-}
-
-.xr-section-summary-in:disabled + label:before {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-summary-in:checked + label:before {
-  content: '▼';
-}
-
-.xr-section-summary-in:checked + label > span {
-  display: none;
-}
-
-.xr-section-summary,
-.xr-section-inline-details {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.xr-section-inline-details {
-  grid-column: 2 / -1;
-}
-
-.xr-section-details {
-  display: none;
-  grid-column: 1 / -1;
-  margin-bottom: 5px;
-}
-
-.xr-section-summary-in:checked ~ .xr-section-details {
-  display: contents;
-}
-
-.xr-array-wrap {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 20px auto;
-}
-
-.xr-array-wrap > label {
-  grid-column: 1;
-  vertical-align: top;
-}
-
-.xr-preview {
-  color: var(--xr-font-color3);
-}
-
-.xr-array-preview,
-.xr-array-data {
-  padding: 0 5px !important;
-  grid-column: 2;
-}
-
-.xr-array-data,
-.xr-array-in:checked ~ .xr-array-preview {
-  display: none;
-}
-
-.xr-array-in:checked ~ .xr-array-data,
-.xr-array-preview {
-  display: inline-block;
-}
-
-.xr-dim-list {
-  display: inline-block !important;
-  list-style: none;
-  padding: 0 !important;
-  margin: 0;
-}
-
-.xr-dim-list li {
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-}
-
-.xr-dim-list:before {
-  content: '(';
-}
-
-.xr-dim-list:after {
-  content: ')';
-}
-
-.xr-dim-list li:not(:last-child):after {
-  content: ',';
-  padding-right: 5px;
-}
-
-.xr-has-index {
-  font-weight: bold;
-}
-
-.xr-var-list,
-.xr-var-item {
-  display: contents;
-}
-
-.xr-var-item > div,
-.xr-var-item label,
-.xr-var-item > .xr-var-name span {
-  background-color: var(--xr-background-color-row-even);
-  margin-bottom: 0;
-}
-
-.xr-var-item > .xr-var-name:hover span {
-  padding-right: 5px;
-}
-
-.xr-var-list > li:nth-child(odd) > div,
-.xr-var-list > li:nth-child(odd) > label,
-.xr-var-list > li:nth-child(odd) > .xr-var-name span {
-  background-color: var(--xr-background-color-row-odd);
-}
-
-.xr-var-name {
-  grid-column: 1;
-}
-
-.xr-var-dims {
-  grid-column: 2;
-}
-
-.xr-var-dtype {
-  grid-column: 3;
-  text-align: right;
-  color: var(--xr-font-color2);
-}
-
-.xr-var-preview {
-  grid-column: 4;
-}
-
-.xr-var-name,
-.xr-var-dims,
-.xr-var-dtype,
-.xr-preview,
-.xr-attrs dt {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-right: 10px;
-}
-
-.xr-var-name:hover,
-.xr-var-dims:hover,
-.xr-var-dtype:hover,
-.xr-attrs dt:hover {
-  overflow: visible;
-  width: auto;
-  z-index: 1;
-}
-
-.xr-var-attrs,
-.xr-var-data {
-  display: none;
-  background-color: var(--xr-background-color) !important;
-  padding-bottom: 5px !important;
-}
-
-.xr-var-attrs-in:checked ~ .xr-var-attrs,
-.xr-var-data-in:checked ~ .xr-var-data {
-  display: block;
-}
-
-.xr-var-data > table {
-  float: right;
-}
-
-.xr-var-name span,
-.xr-var-data,
-.xr-attrs {
-  padding-left: 25px !important;
-}
-
-.xr-attrs,
-.xr-var-attrs,
-.xr-var-data {
-  grid-column: 1 / -1;
-}
-
-dl.xr-attrs {
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 125px auto;
-}
-
-.xr-attrs dt,
-.xr-attrs dd {
-  padding: 0;
-  margin: 0;
-  float: left;
-  padding-right: 10px;
-  width: auto;
-}
-
-.xr-attrs dt {
-  font-weight: normal;
-  grid-column: 1;
-}
-
-.xr-attrs dt:hover span {
-  display: inline-block;
-  background: var(--xr-background-color);
-  padding-right: 10px;
-}
-
-.xr-attrs dd {
-  grid-column: 2;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-
-.xr-icon-database,
-.xr-icon-file-text2 {
-  display: inline-block;
-  vertical-align: middle;
-  width: 1em;
-  height: 1.5em !important;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-}
-</style><pre class='xr-text-repr-fallback'>&lt;TimeSeries (DataArray) (period: 5, component: 12, sample: 1)&gt;
-array([[[2710.349],
-        [1707.4  ],
-        [ 286.898],
-        [ 470.045],
-        [1886.9  ],
-        [  28.98 ],
-        [ 139.7  ],
-        [   2.82 ],
-        [   5.8  ],
-        [ 177.146],
-        [   0.   ],
-        [   0.   ]],
-
-       [[2778.801],
-        [1733.7  ],
-        [ 310.859],
-        [ 481.301],
-        [1919.7  ],
-        [  29.15 ],
-        [ 141.7  ],
-...
-        [  29.37 ],
-        [ 140.   ],
-        [   4.33 ],
-        [   5.6  ],
-        [ 179.386],
-        [   0.27 ],
-        [   4.06 ]],
-
-       [[2847.699],
-        [1770.5  ],
-        [ 331.722],
-        [ 462.199],
-        [1955.5  ],
-        [  29.54 ],
-        [ 139.6  ],
-        [   3.5  ],
-        [   5.2  ],
-        [ 180.007],
-        [   2.31 ],
-        [   1.19 ]]])
-Coordinates:
-  * period     (period) datetime64[ns] 1959-01-01 1959-04-01 ... 1960-01-01
-  * component  (component) object &#x27;realgdp&#x27; &#x27;realcons&#x27; ... &#x27;infl&#x27; &#x27;realint&#x27;
-Dimensions without coordinates: sample
-Attributes:
-    static_covariates:  None
-    hierarchy:          None</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>TimeSeries (DataArray)</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>period</span>: 5</li><li><span class='xr-has-index'>component</span>: 12</li><li><span>sample</span>: 1</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-33e24137-ad7b-40df-850c-295d3e6f2259' class='xr-array-in' type='checkbox' checked><label for='section-33e24137-ad7b-40df-850c-295d3e6f2259' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>2.71e+03 1.707e+03 286.9 470.0 1.887e+03 ... 3.5 5.2 180.0 2.31 1.19</span></div><div class='xr-array-data'><pre>array([[[2710.349],
-        [1707.4  ],
-        [ 286.898],
-        [ 470.045],
-        [1886.9  ],
-        [  28.98 ],
-        [ 139.7  ],
-        [   2.82 ],
-        [   5.8  ],
-        [ 177.146],
-        [   0.   ],
-        [   0.   ]],
-
-       [[2778.801],
-        [1733.7  ],
-        [ 310.859],
-        [ 481.301],
-        [1919.7  ],
-        [  29.15 ],
-        [ 141.7  ],
-...
-        [  29.37 ],
-        [ 140.   ],
-        [   4.33 ],
-        [   5.6  ],
-        [ 179.386],
-        [   0.27 ],
-        [   4.06 ]],
-
-       [[2847.699],
-        [1770.5  ],
-        [ 331.722],
-        [ 462.199],
-        [1955.5  ],
-        [  29.54 ],
-        [ 139.6  ],
-        [   3.5  ],
-        [   5.2  ],
-        [ 180.007],
-        [   2.31 ],
-        [   1.19 ]]])</pre></div></div></li><li class='xr-section-item'><input id='section-b19a2895-1c9c-446d-b28b-595690a393d5' class='xr-section-summary-in' type='checkbox'  checked><label for='section-b19a2895-1c9c-446d-b28b-595690a393d5' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>period</span></div><div class='xr-var-dims'>(period)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>1959-01-01 ... 1960-01-01</div><input id='attrs-8daf6914-e041-40a8-8131-79e772694368' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-8daf6914-e041-40a8-8131-79e772694368' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-19d83839-e04e-49dc-820c-5ba291ebb1a3' class='xr-var-data-in' type='checkbox'><label for='data-19d83839-e04e-49dc-820c-5ba291ebb1a3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;1959-01-01T00:00:00.000000000&#x27;, &#x27;1959-04-01T00:00:00.000000000&#x27;,
-       &#x27;1959-07-01T00:00:00.000000000&#x27;, &#x27;1959-10-01T00:00:00.000000000&#x27;,
-       &#x27;1960-01-01T00:00:00.000000000&#x27;], dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>component</span></div><div class='xr-var-dims'>(component)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;realgdp&#x27; &#x27;realcons&#x27; ... &#x27;realint&#x27;</div><input id='attrs-df71f8c7-392e-42c7-9c0f-7810769a0e28' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-df71f8c7-392e-42c7-9c0f-7810769a0e28' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-014d4fad-bc6f-4b5e-a8ef-2f67d57223b7' class='xr-var-data-in' type='checkbox'><label for='data-014d4fad-bc6f-4b5e-a8ef-2f67d57223b7' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;realgdp&#x27;, &#x27;realcons&#x27;, &#x27;realinv&#x27;, &#x27;realgovt&#x27;, &#x27;realdpi&#x27;, &#x27;cpi&#x27;, &#x27;m1&#x27;,
-       &#x27;tbilrate&#x27;, &#x27;unemp&#x27;, &#x27;pop&#x27;, &#x27;infl&#x27;, &#x27;realint&#x27;], dtype=object)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-7b0ad33c-fbb1-4e58-b45d-6bf23a804d2d' class='xr-section-summary-in' type='checkbox'  checked><label for='section-7b0ad33c-fbb1-4e58-b45d-6bf23a804d2d' class='xr-section-summary' >Attributes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>static_covariates :</span></dt><dd>None</dd><dt><span>hierarchy :</span></dt><dd>None</dd></dl></div></li></ul></div></div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;1959-01-01&#39;</span><span class="p">)]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
-<defs>
-<symbol id="icon-database" viewBox="0 0 32 32">
-<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
-<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-</symbol>
-<symbol id="icon-file-text2" viewBox="0 0 32 32">
-<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
-<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-</symbol>
-</defs>
-</svg>
-<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
- *
- */
-
-:root {
-  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
-  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
-  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
-  --xr-border-color: var(--jp-border-color2, #e0e0e0);
-  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
-  --xr-background-color: var(--jp-layout-color0, white);
-  --xr-background-color-row-even: var(--jp-layout-color1, white);
-  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
-}
-
-html[theme=dark],
-body.vscode-dark {
-  --xr-font-color0: rgba(255, 255, 255, 1);
-  --xr-font-color2: rgba(255, 255, 255, 0.54);
-  --xr-font-color3: rgba(255, 255, 255, 0.38);
-  --xr-border-color: #1F1F1F;
-  --xr-disabled-color: #515151;
-  --xr-background-color: #111111;
-  --xr-background-color-row-even: #111111;
-  --xr-background-color-row-odd: #313131;
-}
-
-.xr-wrap {
-  display: block !important;
-  min-width: 300px;
-  max-width: 700px;
-}
-
-.xr-text-repr-fallback {
-  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
-  display: none;
-}
-
-.xr-header {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  margin-bottom: 4px;
-  border-bottom: solid 1px var(--xr-border-color);
-}
-
-.xr-header > div,
-.xr-header > ul {
-  display: inline;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.xr-obj-type,
-.xr-array-name {
-  margin-left: 2px;
-  margin-right: 10px;
-}
-
-.xr-obj-type {
-  color: var(--xr-font-color2);
-}
-
-.xr-sections {
-  padding-left: 0 !important;
-  display: grid;
-  grid-template-columns: 150px auto auto 1fr 20px 20px;
-}
-
-.xr-section-item {
-  display: contents;
-}
-
-.xr-section-item input {
-  display: none;
-}
-
-.xr-section-item input + label {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-item input:enabled + label {
-  cursor: pointer;
-  color: var(--xr-font-color2);
-}
-
-.xr-section-item input:enabled + label:hover {
-  color: var(--xr-font-color0);
-}
-
-.xr-section-summary {
-  grid-column: 1;
-  color: var(--xr-font-color2);
-  font-weight: 500;
-}
-
-.xr-section-summary > span {
-  display: inline-block;
-  padding-left: 0.5em;
-}
-
-.xr-section-summary-in:disabled + label {
-  color: var(--xr-font-color2);
-}
-
-.xr-section-summary-in + label:before {
-  display: inline-block;
-  content: '►';
-  font-size: 11px;
-  width: 15px;
-  text-align: center;
-}
-
-.xr-section-summary-in:disabled + label:before {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-summary-in:checked + label:before {
-  content: '▼';
-}
-
-.xr-section-summary-in:checked + label > span {
-  display: none;
-}
-
-.xr-section-summary,
-.xr-section-inline-details {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.xr-section-inline-details {
-  grid-column: 2 / -1;
-}
-
-.xr-section-details {
-  display: none;
-  grid-column: 1 / -1;
-  margin-bottom: 5px;
-}
-
-.xr-section-summary-in:checked ~ .xr-section-details {
-  display: contents;
-}
-
-.xr-array-wrap {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 20px auto;
-}
-
-.xr-array-wrap > label {
-  grid-column: 1;
-  vertical-align: top;
-}
-
-.xr-preview {
-  color: var(--xr-font-color3);
-}
-
-.xr-array-preview,
-.xr-array-data {
-  padding: 0 5px !important;
-  grid-column: 2;
-}
-
-.xr-array-data,
-.xr-array-in:checked ~ .xr-array-preview {
-  display: none;
-}
-
-.xr-array-in:checked ~ .xr-array-data,
-.xr-array-preview {
-  display: inline-block;
-}
-
-.xr-dim-list {
-  display: inline-block !important;
-  list-style: none;
-  padding: 0 !important;
-  margin: 0;
-}
-
-.xr-dim-list li {
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-}
-
-.xr-dim-list:before {
-  content: '(';
-}
-
-.xr-dim-list:after {
-  content: ')';
-}
-
-.xr-dim-list li:not(:last-child):after {
-  content: ',';
-  padding-right: 5px;
-}
-
-.xr-has-index {
-  font-weight: bold;
-}
-
-.xr-var-list,
-.xr-var-item {
-  display: contents;
-}
-
-.xr-var-item > div,
-.xr-var-item label,
-.xr-var-item > .xr-var-name span {
-  background-color: var(--xr-background-color-row-even);
-  margin-bottom: 0;
-}
-
-.xr-var-item > .xr-var-name:hover span {
-  padding-right: 5px;
-}
-
-.xr-var-list > li:nth-child(odd) > div,
-.xr-var-list > li:nth-child(odd) > label,
-.xr-var-list > li:nth-child(odd) > .xr-var-name span {
-  background-color: var(--xr-background-color-row-odd);
-}
-
-.xr-var-name {
-  grid-column: 1;
-}
-
-.xr-var-dims {
-  grid-column: 2;
-}
-
-.xr-var-dtype {
-  grid-column: 3;
-  text-align: right;
-  color: var(--xr-font-color2);
-}
-
-.xr-var-preview {
-  grid-column: 4;
-}
-
-.xr-var-name,
-.xr-var-dims,
-.xr-var-dtype,
-.xr-preview,
-.xr-attrs dt {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-right: 10px;
-}
-
-.xr-var-name:hover,
-.xr-var-dims:hover,
-.xr-var-dtype:hover,
-.xr-attrs dt:hover {
-  overflow: visible;
-  width: auto;
-  z-index: 1;
-}
-
-.xr-var-attrs,
-.xr-var-data {
-  display: none;
-  background-color: var(--xr-background-color) !important;
-  padding-bottom: 5px !important;
-}
-
-.xr-var-attrs-in:checked ~ .xr-var-attrs,
-.xr-var-data-in:checked ~ .xr-var-data {
-  display: block;
-}
-
-.xr-var-data > table {
-  float: right;
-}
-
-.xr-var-name span,
-.xr-var-data,
-.xr-attrs {
-  padding-left: 25px !important;
-}
-
-.xr-attrs,
-.xr-var-attrs,
-.xr-var-data {
-  grid-column: 1 / -1;
-}
-
-dl.xr-attrs {
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 125px auto;
-}
-
-.xr-attrs dt,
-.xr-attrs dd {
-  padding: 0;
-  margin: 0;
-  float: left;
-  padding-right: 10px;
-  width: auto;
-}
-
-.xr-attrs dt {
-  font-weight: normal;
-  grid-column: 1;
-}
-
-.xr-attrs dt:hover span {
-  display: inline-block;
-  background: var(--xr-background-color);
-  padding-right: 10px;
-}
-
-.xr-attrs dd {
-  grid-column: 2;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-
-.xr-icon-database,
-.xr-icon-file-text2 {
-  display: inline-block;
-  vertical-align: middle;
-  width: 1em;
-  height: 1.5em !important;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-}
-</style><pre class='xr-text-repr-fallback'>&lt;TimeSeries (DataArray) (period: 1, component: 12, sample: 1)&gt;
-array([[[2710.349],
-        [1707.4  ],
-        [ 286.898],
-        [ 470.045],
-        [1886.9  ],
-        [  28.98 ],
-        [ 139.7  ],
-        [   2.82 ],
-        [   5.8  ],
-        [ 177.146],
-        [   0.   ],
-        [   0.   ]]])
-Coordinates:
-  * period     (period) datetime64[ns] 1959-01-01
-  * component  (component) object &#x27;realgdp&#x27; &#x27;realcons&#x27; ... &#x27;infl&#x27; &#x27;realint&#x27;
-Dimensions without coordinates: sample
-Attributes:
-    static_covariates:  None
-    hierarchy:          None</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>TimeSeries (DataArray)</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>period</span>: 1</li><li><span class='xr-has-index'>component</span>: 12</li><li><span>sample</span>: 1</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-021ada24-bac9-419b-bf38-0c8be96a128b' class='xr-array-in' type='checkbox' checked><label for='section-021ada24-bac9-419b-bf38-0c8be96a128b' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>2.71e+03 1.707e+03 286.9 470.0 1.887e+03 ... 2.82 5.8 177.1 0.0 0.0</span></div><div class='xr-array-data'><pre>array([[[2710.349],
-        [1707.4  ],
-        [ 286.898],
-        [ 470.045],
-        [1886.9  ],
-        [  28.98 ],
-        [ 139.7  ],
-        [   2.82 ],
-        [   5.8  ],
-        [ 177.146],
-        [   0.   ],
-        [   0.   ]]])</pre></div></div></li><li class='xr-section-item'><input id='section-d78131ec-981e-4182-bb2f-3148c7cc1378' class='xr-section-summary-in' type='checkbox'  checked><label for='section-d78131ec-981e-4182-bb2f-3148c7cc1378' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>period</span></div><div class='xr-var-dims'>(period)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>1959-01-01</div><input id='attrs-c3c67e5e-99d6-4c4a-b962-cf253bc44610' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-c3c67e5e-99d6-4c4a-b962-cf253bc44610' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-98cd21e1-4eaf-4df6-a82b-e328897f9d67' class='xr-var-data-in' type='checkbox'><label for='data-98cd21e1-4eaf-4df6-a82b-e328897f9d67' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;1959-01-01T00:00:00.000000000&#x27;], dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>component</span></div><div class='xr-var-dims'>(component)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;realgdp&#x27; &#x27;realcons&#x27; ... &#x27;realint&#x27;</div><input id='attrs-579dedd8-b18a-4c98-90d9-5e43b1f01ce8' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-579dedd8-b18a-4c98-90d9-5e43b1f01ce8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-12921cdc-2f25-4085-ba47-51e221789967' class='xr-var-data-in' type='checkbox'><label for='data-12921cdc-2f25-4085-ba47-51e221789967' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;realgdp&#x27;, &#x27;realcons&#x27;, &#x27;realinv&#x27;, &#x27;realgovt&#x27;, &#x27;realdpi&#x27;, &#x27;cpi&#x27;, &#x27;m1&#x27;,
-       &#x27;tbilrate&#x27;, &#x27;unemp&#x27;, &#x27;pop&#x27;, &#x27;infl&#x27;, &#x27;realint&#x27;], dtype=object)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-f8f016d2-38fc-42d1-9c57-88cdd0e6de94' class='xr-section-summary-in' type='checkbox'  checked><label for='section-f8f016d2-38fc-42d1-9c57-88cdd0e6de94' class='xr-section-summary' >Attributes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>static_covariates :</span></dt><dd>None</dd><dt><span>hierarchy :</span></dt><dd>None</dd></dl></div></li></ul></div></div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
-<defs>
-<symbol id="icon-database" viewBox="0 0 32 32">
-<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
-<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
-</symbol>
-<symbol id="icon-file-text2" viewBox="0 0 32 32">
-<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
-<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-</symbol>
-</defs>
-</svg>
-<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
- *
- */
-
-:root {
-  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
-  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
-  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
-  --xr-border-color: var(--jp-border-color2, #e0e0e0);
-  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
-  --xr-background-color: var(--jp-layout-color0, white);
-  --xr-background-color-row-even: var(--jp-layout-color1, white);
-  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
-}
-
-html[theme=dark],
-body.vscode-dark {
-  --xr-font-color0: rgba(255, 255, 255, 1);
-  --xr-font-color2: rgba(255, 255, 255, 0.54);
-  --xr-font-color3: rgba(255, 255, 255, 0.38);
-  --xr-border-color: #1F1F1F;
-  --xr-disabled-color: #515151;
-  --xr-background-color: #111111;
-  --xr-background-color-row-even: #111111;
-  --xr-background-color-row-odd: #313131;
-}
-
-.xr-wrap {
-  display: block !important;
-  min-width: 300px;
-  max-width: 700px;
-}
-
-.xr-text-repr-fallback {
-  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
-  display: none;
-}
-
-.xr-header {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  margin-bottom: 4px;
-  border-bottom: solid 1px var(--xr-border-color);
-}
-
-.xr-header > div,
-.xr-header > ul {
-  display: inline;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.xr-obj-type,
-.xr-array-name {
-  margin-left: 2px;
-  margin-right: 10px;
-}
-
-.xr-obj-type {
-  color: var(--xr-font-color2);
-}
-
-.xr-sections {
-  padding-left: 0 !important;
-  display: grid;
-  grid-template-columns: 150px auto auto 1fr 20px 20px;
-}
-
-.xr-section-item {
-  display: contents;
-}
-
-.xr-section-item input {
-  display: none;
-}
-
-.xr-section-item input + label {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-item input:enabled + label {
-  cursor: pointer;
-  color: var(--xr-font-color2);
-}
-
-.xr-section-item input:enabled + label:hover {
-  color: var(--xr-font-color0);
-}
-
-.xr-section-summary {
-  grid-column: 1;
-  color: var(--xr-font-color2);
-  font-weight: 500;
-}
-
-.xr-section-summary > span {
-  display: inline-block;
-  padding-left: 0.5em;
-}
-
-.xr-section-summary-in:disabled + label {
-  color: var(--xr-font-color2);
-}
-
-.xr-section-summary-in + label:before {
-  display: inline-block;
-  content: '►';
-  font-size: 11px;
-  width: 15px;
-  text-align: center;
-}
-
-.xr-section-summary-in:disabled + label:before {
-  color: var(--xr-disabled-color);
-}
-
-.xr-section-summary-in:checked + label:before {
-  content: '▼';
-}
-
-.xr-section-summary-in:checked + label > span {
-  display: none;
-}
-
-.xr-section-summary,
-.xr-section-inline-details {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.xr-section-inline-details {
-  grid-column: 2 / -1;
-}
-
-.xr-section-details {
-  display: none;
-  grid-column: 1 / -1;
-  margin-bottom: 5px;
-}
-
-.xr-section-summary-in:checked ~ .xr-section-details {
-  display: contents;
-}
-
-.xr-array-wrap {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 20px auto;
-}
-
-.xr-array-wrap > label {
-  grid-column: 1;
-  vertical-align: top;
-}
-
-.xr-preview {
-  color: var(--xr-font-color3);
-}
-
-.xr-array-preview,
-.xr-array-data {
-  padding: 0 5px !important;
-  grid-column: 2;
-}
-
-.xr-array-data,
-.xr-array-in:checked ~ .xr-array-preview {
-  display: none;
-}
-
-.xr-array-in:checked ~ .xr-array-data,
-.xr-array-preview {
-  display: inline-block;
-}
-
-.xr-dim-list {
-  display: inline-block !important;
-  list-style: none;
-  padding: 0 !important;
-  margin: 0;
-}
-
-.xr-dim-list li {
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-}
-
-.xr-dim-list:before {
-  content: '(';
-}
-
-.xr-dim-list:after {
-  content: ')';
-}
-
-.xr-dim-list li:not(:last-child):after {
-  content: ',';
-  padding-right: 5px;
-}
-
-.xr-has-index {
-  font-weight: bold;
-}
-
-.xr-var-list,
-.xr-var-item {
-  display: contents;
-}
-
-.xr-var-item > div,
-.xr-var-item label,
-.xr-var-item > .xr-var-name span {
-  background-color: var(--xr-background-color-row-even);
-  margin-bottom: 0;
-}
-
-.xr-var-item > .xr-var-name:hover span {
-  padding-right: 5px;
-}
-
-.xr-var-list > li:nth-child(odd) > div,
-.xr-var-list > li:nth-child(odd) > label,
-.xr-var-list > li:nth-child(odd) > .xr-var-name span {
-  background-color: var(--xr-background-color-row-odd);
-}
-
-.xr-var-name {
-  grid-column: 1;
-}
-
-.xr-var-dims {
-  grid-column: 2;
-}
-
-.xr-var-dtype {
-  grid-column: 3;
-  text-align: right;
-  color: var(--xr-font-color2);
-}
-
-.xr-var-preview {
-  grid-column: 4;
-}
-
-.xr-var-name,
-.xr-var-dims,
-.xr-var-dtype,
-.xr-preview,
-.xr-attrs dt {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-right: 10px;
-}
-
-.xr-var-name:hover,
-.xr-var-dims:hover,
-.xr-var-dtype:hover,
-.xr-attrs dt:hover {
-  overflow: visible;
-  width: auto;
-  z-index: 1;
-}
-
-.xr-var-attrs,
-.xr-var-data {
-  display: none;
-  background-color: var(--xr-background-color) !important;
-  padding-bottom: 5px !important;
-}
-
-.xr-var-attrs-in:checked ~ .xr-var-attrs,
-.xr-var-data-in:checked ~ .xr-var-data {
-  display: block;
-}
-
-.xr-var-data > table {
-  float: right;
-}
-
-.xr-var-name span,
-.xr-var-data,
-.xr-attrs {
-  padding-left: 25px !important;
-}
-
-.xr-attrs,
-.xr-var-attrs,
-.xr-var-data {
-  grid-column: 1 / -1;
-}
-
-dl.xr-attrs {
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 125px auto;
-}
-
-.xr-attrs dt,
-.xr-attrs dd {
-  padding: 0;
-  margin: 0;
-  float: left;
-  padding-right: 10px;
-  width: auto;
-}
-
-.xr-attrs dt {
-  font-weight: normal;
-  grid-column: 1;
-}
-
-.xr-attrs dt:hover span {
-  display: inline-block;
-  background: var(--xr-background-color);
-  padding-right: 10px;
-}
-
-.xr-attrs dd {
-  grid-column: 2;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-
-.xr-icon-database,
-.xr-icon-file-text2 {
-  display: inline-block;
-  vertical-align: middle;
-  width: 1em;
-  height: 1.5em !important;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-}
-</style><pre class='xr-text-repr-fallback'>&lt;TimeSeries (DataArray) (period: 5, component: 12, sample: 1)&gt;
-array([[[2710.349],
-        [1707.4  ],
-        [ 286.898],
-        [ 470.045],
-        [1886.9  ],
-        [  28.98 ],
-        [ 139.7  ],
-        [   2.82 ],
-        [   5.8  ],
-        [ 177.146],
-        [   0.   ],
-        [   0.   ]],
-
-       [[2778.801],
-        [1733.7  ],
-        [ 310.859],
-        [ 481.301],
-        [1919.7  ],
-        [  29.15 ],
-        [ 141.7  ],
-...
-        [  29.37 ],
-        [ 140.   ],
-        [   4.33 ],
-        [   5.6  ],
-        [ 179.386],
-        [   0.27 ],
-        [   4.06 ]],
-
-       [[2847.699],
-        [1770.5  ],
-        [ 331.722],
-        [ 462.199],
-        [1955.5  ],
-        [  29.54 ],
-        [ 139.6  ],
-        [   3.5  ],
-        [   5.2  ],
-        [ 180.007],
-        [   2.31 ],
-        [   1.19 ]]])
-Coordinates:
-  * period     (period) datetime64[ns] 1959-01-01 1959-04-01 ... 1960-01-01
-  * component  (component) object &#x27;realgdp&#x27; &#x27;realcons&#x27; ... &#x27;infl&#x27; &#x27;realint&#x27;
-Dimensions without coordinates: sample
-Attributes:
-    static_covariates:  None
-    hierarchy:          None</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>TimeSeries (DataArray)</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>period</span>: 5</li><li><span class='xr-has-index'>component</span>: 12</li><li><span>sample</span>: 1</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-0c43be2b-f170-421a-b86a-e382bbcbf22d' class='xr-array-in' type='checkbox' checked><label for='section-0c43be2b-f170-421a-b86a-e382bbcbf22d' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>2.71e+03 1.707e+03 286.9 470.0 1.887e+03 ... 3.5 5.2 180.0 2.31 1.19</span></div><div class='xr-array-data'><pre>array([[[2710.349],
-        [1707.4  ],
-        [ 286.898],
-        [ 470.045],
-        [1886.9  ],
-        [  28.98 ],
-        [ 139.7  ],
-        [   2.82 ],
-        [   5.8  ],
-        [ 177.146],
-        [   0.   ],
-        [   0.   ]],
-
-       [[2778.801],
-        [1733.7  ],
-        [ 310.859],
-        [ 481.301],
-        [1919.7  ],
-        [  29.15 ],
-        [ 141.7  ],
-...
-        [  29.37 ],
-        [ 140.   ],
-        [   4.33 ],
-        [   5.6  ],
-        [ 179.386],
-        [   0.27 ],
-        [   4.06 ]],
-
-       [[2847.699],
-        [1770.5  ],
-        [ 331.722],
-        [ 462.199],
-        [1955.5  ],
-        [  29.54 ],
-        [ 139.6  ],
-        [   3.5  ],
-        [   5.2  ],
-        [ 180.007],
-        [   2.31 ],
-        [   1.19 ]]])</pre></div></div></li><li class='xr-section-item'><input id='section-1afa15dc-0a35-4523-bb9c-faa7eed712e7' class='xr-section-summary-in' type='checkbox'  checked><label for='section-1afa15dc-0a35-4523-bb9c-faa7eed712e7' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>period</span></div><div class='xr-var-dims'>(period)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>1959-01-01 ... 1960-01-01</div><input id='attrs-6a26b8a0-f8cc-4b2d-a2ad-9a248c8aed9f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6a26b8a0-f8cc-4b2d-a2ad-9a248c8aed9f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-fc4e427a-ad30-4875-b19a-f78aa17f0278' class='xr-var-data-in' type='checkbox'><label for='data-fc4e427a-ad30-4875-b19a-f78aa17f0278' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;1959-01-01T00:00:00.000000000&#x27;, &#x27;1959-04-01T00:00:00.000000000&#x27;,
-       &#x27;1959-07-01T00:00:00.000000000&#x27;, &#x27;1959-10-01T00:00:00.000000000&#x27;,
-       &#x27;1960-01-01T00:00:00.000000000&#x27;], dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>component</span></div><div class='xr-var-dims'>(component)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;realgdp&#x27; &#x27;realcons&#x27; ... &#x27;realint&#x27;</div><input id='attrs-c316b8b9-abf4-44ae-9c00-d21e64430eb2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-c316b8b9-abf4-44ae-9c00-d21e64430eb2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-faa3da67-8a33-43de-a599-7c1bd5eca272' class='xr-var-data-in' type='checkbox'><label for='data-faa3da67-8a33-43de-a599-7c1bd5eca272' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;realgdp&#x27;, &#x27;realcons&#x27;, &#x27;realinv&#x27;, &#x27;realgovt&#x27;, &#x27;realdpi&#x27;, &#x27;cpi&#x27;, &#x27;m1&#x27;,
-       &#x27;tbilrate&#x27;, &#x27;unemp&#x27;, &#x27;pop&#x27;, &#x27;infl&#x27;, &#x27;realint&#x27;], dtype=object)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-67bfd350-3152-4264-a411-cf263271db13' class='xr-section-summary-in' type='checkbox'  checked><label for='section-67bfd350-3152-4264-a411-cf263271db13' class='xr-section-summary' >Attributes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>static_covariates :</span></dt><dd>None</dd><dt><span>hierarchy :</span></dt><dd>None</dd></dl></div></li></ul></div></div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">tsEco</span><span class="p">[[</span><span class="s1">&#39;tbilrate&#39;</span><span class="p">,</span> <span class="s1">&#39;infl&#39;</span><span class="p">,</span> <span class="s1">&#39;realint&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/darts-deep-forecasting_20_0.png" src="../_images/darts-deep-forecasting_20_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco1</span><span class="p">,</span> <span class="n">tsEco2</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;tbilrate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split_before</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
-<span class="n">tsEco1</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="n">tsEco2</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/darts-deep-forecasting_21_0.png" src="../_images/darts-deep-forecasting_21_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsEco</span><span class="p">[[</span><span class="s1">&#39;tbilrate&#39;</span><span class="p">,</span> <span class="s1">&#39;infl&#39;</span><span class="p">,</span> <span class="s1">&#39;realint&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="data-transformation">
-<h3>1.2. Data transformation<a class="headerlink" href="#data-transformation" title="Permalink to this headline">#</a></h3>
-</section>
-<section id="forecasting">
-<h3>1.3. Forecasting<a class="headerlink" href="#forecasting" title="Permalink to this headline">#</a></h3>
 </section>
 <section id="covariates">
 <h3>1.4. Covariates<a class="headerlink" href="#covariates" title="Permalink to this headline">#</a></h3>

@@ -872,14 +872,31 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-to-rank">
-   2. Learning to rank
+  <a class="reference internal nav-link" href="#uplift-modeling">
+   2. Uplift modeling
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#uplift-modeling">
-   3. Uplift modeling
+  <a class="reference internal nav-link" href="#learning-to-rank">
+   3. Learning to rank
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#approaches">
+     3.1. Approaches
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluation">
+     3.2. Evaluation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     3.3. Implementation
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#resources">
@@ -996,14 +1013,31 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-to-rank">
-   2. Learning to rank
+  <a class="reference internal nav-link" href="#uplift-modeling">
+   2. Uplift modeling
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#uplift-modeling">
-   3. Uplift modeling
+  <a class="reference internal nav-link" href="#learning-to-rank">
+   3. Learning to rank
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#approaches">
+     3.1. Approaches
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluation">
+     3.2. Evaluation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     3.3. Implementation
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#resources">
@@ -1072,19 +1106,6 @@ title="Print to PDF"
 <section id="cumulative-gains">
 <h4>Cumulative gains<a class="headerlink" href="#cumulative-gains" title="Permalink to this headline">#</a></h4>
 <p>The downside of Precision-Recall analyses is that it considers the entire dataset, while our resources (such as time and money) are limited, so caring about how the model distributes its probabilitic predictions is more practical. This is exactly what cumulative gains shows us; a good model commonly gains a high ratio of good users at the three first deciles.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span> <span class="n">p_</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1, 2, 3, 1])
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotPRChart</span><span class="p">(</span><span class="n">yTrue</span><span class="p">,</span> <span class="n">yProb</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1178,7 +1199,7 @@ Name: bad_customer, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_11_0.png"><img alt="../_images/imblearn-targeted-modeling_11_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_11_0.png" style="width: 655.5px; height: 352.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_10_0.png"><img alt="../_images/imblearn-targeted-modeling_10_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_10_0.png" style="width: 655.5px; height: 352.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1207,7 +1228,7 @@ Name: bad_customer, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_14_0.png"><img alt="../_images/imblearn-targeted-modeling_14_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_14_0.png" style="width: 655.5px; height: 352.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_13_0.png"><img alt="../_images/imblearn-targeted-modeling_13_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_13_0.png" style="width: 655.5px; height: 352.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1460,7 +1481,7 @@ Name: bad_customer, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_24_0.png"><img alt="../_images/imblearn-targeted-modeling_24_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_24_0.png" style="width: 655.5px; height: 352.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_23_0.png"><img alt="../_images/imblearn-targeted-modeling_23_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_23_0.png" style="width: 655.5px; height: 352.5px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1481,7 +1502,7 @@ Name: bad_customer, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_25_0.png"><img alt="../_images/imblearn-targeted-modeling_25_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_25_0.png" style="width: 655.5px; height: 352.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/imblearn-targeted-modeling_24_0.png"><img alt="../_images/imblearn-targeted-modeling_24_0.png" class="align-center" src="../_images/imblearn-targeted-modeling_24_0.png" style="width: 655.5px; height: 352.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1624,625 +1645,105 @@ Name: target, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/imblearn-targeted-modeling_37_0.png" src="../_images/imblearn-targeted-modeling_37_0.png" />
+<img alt="../_images/imblearn-targeted-modeling_36_0.png" src="../_images/imblearn-targeted-modeling_36_0.png" />
 </div>
 </div>
 </section>
+</section>
+<section id="uplift-modeling">
+<h2>2. Uplift modeling<a class="headerlink" href="#uplift-modeling" title="Permalink to this headline">#</a></h2>
 </section>
 <section id="learning-to-rank">
-<h2>2. Learning to rank<a class="headerlink" href="#learning-to-rank" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Learning_to_rank">Learning to rank</a>, or <em>ranking</em> in short, is the problem of <em>grading</em> a <em>document</em> given a <em>query</em>. This definition has covered a lot of terms, now let’s place them into specific contexts to have a better understanding.</p>
+<h2>3. Learning to rank<a class="headerlink" href="#learning-to-rank" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Learning_to_rank">Learning to rank</a>, or <em>ranking</em> in short, is a problem in <a class="reference external" href="https://en.wikipedia.org/wiki/Information_retrieval">Information Retrieval</a> with many applications such as recommendation systems and search engines. The problem’s goal is to <em>grade</em> a <em>document</em> given a <em>query</em>. This definition has covered a lot of terms, now let’s place them into a movie recommender to have better understanding.</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4">https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4</a></p></li>
-<li><p><a class="reference external" href="https://medium.com/&#64;nikhilbd/intuitive-explanation-of-learning-to-rank-and-ranknet-lambdarank-and-lambdamart-fe1e17fac418">https://medium.com/&#64;nikhilbd/intuitive-explanation-of-learning-to-rank-and-ranknet-lambdarank-and-lambdamart-fe1e17fac418</a></p></li>
-<li><p><a class="reference external" href="https://everdark.github.io/k9/notebooks/ml/learning_to_rank/learning_to_rank.html">https://everdark.github.io/k9/notebooks/ml/learning_to_rank/learning_to_rank.html</a></p></li>
+<li><p>A <em>query</em> <span class="math notranslate nohighlight">\(q\)</span> represents a user who wants to see a list of interesting movies displayed at the home page. Can also be a user-movie pair, where the user wants to see relevent movies to the one he is watching.</p></li>
+<li><p>A <em>document</em> <span class="math notranslate nohighlight">\(d\)</span> represents a movie to be introduced to the user.</p></li>
+<li><p>A <em>relevance score</em> <span class="math notranslate nohighlight">\(y\)</span> is the grade we give to the movie with respect to the user. The scoring system is usually binary (relevant and non-relevant) or 5-level ordinal (excellent, good, normal, bad, terrible) and is integer-encoded with higher-is-better rule.</p></li>
 </ul>
+<p>In order to learn the scoring pattern, we attemp to build a Machine Learning model <span class="math notranslate nohighlight">\(f(q,d)\rightarrow y\)</span>. This is just the general form, and we need to select the label (from <span class="math notranslate nohighlight">\(y\)</span>) for different approaches. For features, they can be genrally devided into three groups: (1) query features such as user demographic and logs data, (2) document features such as movie genre, and (3) dynamic features which consider both query and document such as number of times user <span class="math notranslate nohighlight">\(q\)</span> has watched movie <span class="math notranslate nohighlight">\(d\)</span> in the past.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We can see that with relevance scores only, our data is just the pivot-longer form of the <em>utility matrix</em>. This form allows adding features of three groups described earlier, so we can incorporate more data into model training.</p>
+</div>
+<section id="approaches">
+<h3>3.1. Approaches<a class="headerlink" href="#approaches" title="Permalink to this headline">#</a></h3>
+<p>There are three approaches to solve the learning to rank problem as follows:</p>
+<ul class="simple">
+<li><p><em>Pointwise</em>: We ignore the query column and reduce the task to a regression problem (for ordinal label) or classification problem (for binary label).</p></li>
+<li><p><em>Pairwise</em>: We take the difference between every sample pair in the same query to construct training samples. We treat the task as a binary classification problem which decides if the two documents are equal or not. Like pointwise, pairwise approach also ignores the group structure.</p></li>
+<li><p><em>Listwise</em>: This approach attemps to model the entire ranking list at once, which is more straightfoward. It is thus more complicated but can outperform pointwise and pairwise.</p></li>
+</ul>
+</section>
+<section id="evaluation">
+<h3>3.2. Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">#</a></h3>
+<p>As we see, the label of the ranking problem is similar to recommendation problem, so they use the same evaluation metric. More specifically, metrics considering only top <span class="math notranslate nohighlight">\(K\)</span> items is commonly used in practice: MAP&#64;K for binary label and NDCG for ordinal label.</p>
+</section>
+<section id="id1">
+<h3>3.3. Implementation<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>In this section we will train several Gradient Boosting rankers on the <a class="reference external" href="https://www.microsoft.com/en-us/research/project/mslr/">MS rank dataset</a>. All algorithms require features, labels and queries for training; but there are some minor differences between their implementations:</p>
+<ul class="simple">
+<li><p>During initialization: objective functions and evaluation metrics.</p></li>
+<li><p>During training: queries are provided via IDs or document counts. Features and labels are also required as usual.</p></li>
+</ul>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>Class</p></th>
+<th class="text-align:left head"><p>Objective</p></th>
+<th class="text-align:left head"><p>Metric</p></th>
+<th class="text-align:left head"><p>Query ids</p></th>
+<th class="text-align:left head"><p>Document counts</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p><a class="reference external" href="https://xgboost.readthedocs.io/en/stable/python/python_api.html#xgboost.XGBRanker"><code class="docutils literal notranslate"><span class="pre">XGBRanker</span></code></a></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">objective</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">eval_metric</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">qid</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">group</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p><a class="reference external" href="https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.LGBMRanker.html"><code class="docutils literal notranslate"><span class="pre">LGBMRanker</span></code></a></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">objective</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">metric</span></code></p></td>
+<td class="text-align:left"><p></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">group</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p><a class="reference external" href="https://catboost.ai/en/docs/concepts/python-reference_catboostranker"><code class="docutils literal notranslate"><span class="pre">CatBoostRanker</span></code></a></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">objective</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">eval_metric</span></code></p></td>
+<td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">group_id</span></code></p></td>
+<td class="text-align:left"><p></p></td>
+</tr>
+</tbody>
+</table>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
 <span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
 <span class="kn">import</span> <span class="nn">catboost</span> <span class="k">as</span> <span class="nn">cgb</span>
-<span class="kn">import</span> <span class="nn">catboost.datasets</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTrain</span><span class="p">,</span> <span class="n">dfTest</span> <span class="o">=</span> <span class="n">cgb</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">msrank_10k</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfTrain</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/msrank_train.csv&#39;</span><span class="p">)</span>
+<span class="n">dfTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/msrank_test.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xTrain</span> <span class="o">=</span> <span class="n">dfTrain</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span>
+<span class="n">yTrain</span> <span class="o">=</span> <span class="n">dfTrain</span><span class="o">.</span><span class="n">relevance_score</span>
+<span class="n">qTrain</span> <span class="o">=</span> <span class="n">dfTrain</span><span class="o">.</span><span class="n">query_id</span>
 
-<span class="n">qTrain</span> <span class="o">=</span> <span class="n">dfTrain</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">xTrain</span> <span class="o">=</span> <span class="n">dfTrain</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span>
-<span class="n">yTrain</span> <span class="o">=</span> <span class="n">dfTrain</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-<span class="n">qTest</span> <span class="o">=</span> <span class="n">dfTest</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">xTest</span> <span class="o">=</span> <span class="n">dfTest</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span>
-<span class="n">yTest</span> <span class="o">=</span> <span class="n">dfTest</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">138</span><span class="p">))</span>
-<span class="n">dfTrain</span><span class="p">[</span><span class="n">dfTrain</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>...</th>
-      <th>128</th>
-      <th>129</th>
-      <th>130</th>
-      <th>131</th>
-      <th>132</th>
-      <th>133</th>
-      <th>134</th>
-      <th>135</th>
-      <th>136</th>
-      <th>137</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>8880</th>
-      <td>3.0</td>
-      <td>1126</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>21</td>
-      <td>0</td>
-      <td>0</td>
-      <td>63406</td>
-      <td>37262</td>
-      <td>1</td>
-      <td>4</td>
-      <td>10976</td>
-      <td>17</td>
-      <td>103.857692</td>
-    </tr>
-    <tr>
-      <th>8896</th>
-      <td>0.0</td>
-      <td>1126</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>21</td>
-      <td>0</td>
-      <td>0</td>
-      <td>63406</td>
-      <td>37262</td>
-      <td>1</td>
-      <td>4</td>
-      <td>10976</td>
-      <td>17</td>
-      <td>103.857692</td>
-    </tr>
-    <tr>
-      <th>59</th>
-      <td>0.0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>44</td>
-      <td>4</td>
-      <td>30</td>
-      <td>23848</td>
-      <td>63634</td>
-      <td>3</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>79</th>
-      <td>0.0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>44</td>
-      <td>4</td>
-      <td>30</td>
-      <td>23848</td>
-      <td>63634</td>
-      <td>3</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.000000</td>
-    </tr>
-  </tbody>
-</table>
-<p>4 rows × 138 columns</p>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xTrain</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>10</th>
-      <th>11</th>
-      <th>...</th>
-      <th>128</th>
-      <th>129</th>
-      <th>130</th>
-      <th>131</th>
-      <th>132</th>
-      <th>133</th>
-      <th>134</th>
-      <th>135</th>
-      <th>136</th>
-      <th>137</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>3</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>62</td>
-      <td>11089534</td>
-      <td>2</td>
-      <td>116</td>
-      <td>64034</td>
-      <td>13</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.000000</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>54</td>
-      <td>11089534</td>
-      <td>2</td>
-      <td>124</td>
-      <td>64034</td>
-      <td>1</td>
-      <td>2</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>0</td>
-      <td>2</td>
-      <td>0</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.666667</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>45</td>
-      <td>3</td>
-      <td>1</td>
-      <td>124</td>
-      <td>3344</td>
-      <td>14</td>
-      <td>67</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.000000</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>56</td>
-      <td>11089534</td>
-      <td>13</td>
-      <td>123</td>
-      <td>63933</td>
-      <td>1</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.000000</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>64</td>
-      <td>5</td>
-      <td>7</td>
-      <td>256</td>
-      <td>49697</td>
-      <td>1</td>
-      <td>13</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>9995</th>
-      <td>2</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>2</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.500000</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>22</td>
-      <td>131</td>
-      <td>2</td>
-      <td>24231</td>
-      <td>4897</td>
-      <td>95</td>
-      <td>228</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>9996</th>
-      <td>2</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.500000</td>
-      <td>0.5</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>39</td>
-      <td>0</td>
-      <td>1</td>
-      <td>52316</td>
-      <td>55891</td>
-      <td>79</td>
-      <td>124</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>9997</th>
-      <td>2</td>
-      <td>0</td>
-      <td>2</td>
-      <td>0</td>
-      <td>2</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.000000</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>14</td>
-      <td>11040</td>
-      <td>6</td>
-      <td>44336</td>
-      <td>26674</td>
-      <td>81</td>
-      <td>153</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>9998</th>
-      <td>2</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>2</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.500000</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>31</td>
-      <td>105</td>
-      <td>0</td>
-      <td>10394</td>
-      <td>4079</td>
-      <td>34</td>
-      <td>155</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>9999</th>
-      <td>2</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2</td>
-      <td>1.0</td>
-      <td>0.5</td>
-      <td>0.500000</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>47</td>
-      <td>8</td>
-      <td>3</td>
-      <td>5820</td>
-      <td>32540</td>
-      <td>35</td>
-      <td>153</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>10000 rows × 136 columns</p>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">138</span><span class="p">))</span>
-<span class="n">dfTest</span><span class="p">[</span><span class="n">dfTest</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>...</th>
-      <th>128</th>
-      <th>129</th>
-      <th>130</th>
-      <th>131</th>
-      <th>132</th>
-      <th>133</th>
-      <th>134</th>
-      <th>135</th>
-      <th>136</th>
-      <th>137</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>7901</th>
-      <td>0.0</td>
-      <td>1003</td>
-      <td>2</td>
-      <td>0</td>
-      <td>2</td>
-      <td>0</td>
-      <td>2</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>56</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2368</td>
-      <td>47106</td>
-      <td>37</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>7902</th>
-      <td>0.0</td>
-      <td>1003</td>
-      <td>2</td>
-      <td>0</td>
-      <td>2</td>
-      <td>0</td>
-      <td>2</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>56</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2368</td>
-      <td>47106</td>
-      <td>37</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>2 rows × 138 columns</p>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">cgb</span><span class="o">.</span><span class="n">CatBoostRanker</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="n">qTrain</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;catboost.core.CatBoostRanker at 0x1cbeb858550&gt;
+<span class="n">yTest</span> <span class="o">=</span> <span class="n">dfTest</span><span class="o">.</span><span class="n">relevance_score</span>
+<span class="n">qTest</span> <span class="o">=</span> <span class="n">dfTest</span><span class="o">.</span><span class="n">query_id</span>
 </pre></div>
 </div>
 </div>
@@ -2251,11 +1752,7 @@ Name: target, dtype: int64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">cgb</span><span class="o">.</span><span class="n">CatBoostRanker</span><span class="p">()</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="n">qTrain</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;catboost.core.CatBoostRanker at 0x1cbe5547bb0&gt;
+<span class="n">yPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xTest</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2264,71 +1761,33 @@ Name: target, dtype: int64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">LGBMRanker</span><span class="p">()</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">qTrain</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="n">yPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xTest</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LGBMRanker()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">LGBMRanker</label><div class="sk-toggleable__content"><pre>LGBMRanker()</pre></div></div></div></div></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">XGBRanker</span><span class="p">()</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">qTrain</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>XGBRanker(base_score=0.5, booster=&#x27;gbtree&#x27;, callbacks=None, colsample_bylevel=1,
-          colsample_bynode=1, colsample_bytree=1, early_stopping_rounds=None,
-          enable_categorical=False, eval_metric=None, feature_types=None,
-          gamma=0, gpu_id=-1, grow_policy=&#x27;depthwise&#x27;, importance_type=None,
-          interaction_constraints=&#x27;&#x27;, learning_rate=0.300000012, max_bin=256,
-          max_cat_threshold=64, max_cat_to_onehot=4, max_delta_step=0,
-          max_depth=6, max_leaves=0, min_child_weight=1, missing=nan,
-          monotone_constraints=&#x27;()&#x27;, n_estimators=100, n_jobs=0,
-          num_parallel_tree=1, predictor=&#x27;auto&#x27;, random_state=0, ...)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">XGBRanker</label><div class="sk-toggleable__content"><pre>XGBRanker(base_score=0.5, booster=&#x27;gbtree&#x27;, callbacks=None, colsample_bylevel=1,
-          colsample_bynode=1, colsample_bytree=1, early_stopping_rounds=None,
-          enable_categorical=False, eval_metric=None, feature_types=None,
-          gamma=0, gpu_id=-1, grow_policy=&#x27;depthwise&#x27;, importance_type=None,
-          interaction_constraints=&#x27;&#x27;, learning_rate=0.300000012, max_bin=256,
-          max_cat_threshold=64, max_cat_to_onehot=4, max_delta_step=0,
-          max_depth=6, max_leaves=0, min_child_weight=1, missing=nan,
-          monotone_constraints=&#x27;()&#x27;, n_estimators=100, n_jobs=0,
-          num_parallel_tree=1, predictor=&#x27;auto&#x27;, random_state=0, ...)</pre></div></div></div></div></div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">CatBoostRanker</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="n">qTrain</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xTrain</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.8621,  0.5034, -2.3224, ...,  1.1964,  0.2582, -1.0743])
+<span class="n">yPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xTest</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="uplift-modeling">
-<h2>3. Uplift modeling<a class="headerlink" href="#uplift-modeling" title="Permalink to this headline">#</a></h2>
 </section>
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://medium.com">medium.com</a> - <a class="reference external" href="https://medium.com/quantyca/oversampling-and-undersampling-adasyn-vs-enn-60828a58db39">Oversampling and undersampling: ADASYN vs ENN</a></em></p></li>
-<li><p><em><a class="reference external" href="http://sci2s.ugr.es">sci2s.ugr.es</a> - <a class="reference external" href="https://sci2s.ugr.es/keel/keel-dataset/pdfs/2005-Han-LNCS.pdf">Borderline SMOTE</a></em></p></li>
-<li><p><em><a class="reference external" href="http://diva-portal.org">diva-portal.org</a> - <a class="reference external" href="https://www.diva-portal.org/smash/get/diva2:1519153/FULLTEXT01.pdf">ADASYN</a></em></p></li>
-<li><p><em><a class="reference external" href="http://maxhalford.github.io">maxhalford.github.io</a> - <a class="reference external" href="https://maxhalford.github.io/blog/lightgbm-focal-loss/">Focal loss implementation for LightGBM</a></em></p></li>
-<li><p><em><a class="reference external" href="http://leimao.github.io">leimao.github.io</a> - <a class="reference external" href="https://leimao.github.io/blog/Focal-Loss-Explained/">Focal Loss explained</a></em></p></li>
-<li><p><em><a class="reference external" href="http://neptune.ai">neptune.ai</a> - <a class="reference external" href="https://neptune.ai/blog/binary-classification-tips-and-tricks-from-kaggle">Binary classification tips and tricks from Kaggle</a></em></p></li>
+<li><p><em>medium - <a class="reference external" href="https://medium.com/quantyca/oversampling-and-undersampling-adasyn-vs-enn-60828a58db39">Oversampling and undersampling: ADASYN vs ENN</a></em></p></li>
+<li><p><em>sci2s.ugr - <a class="reference external" href="https://sci2s.ugr.es/keel/keel-dataset/pdfs/2005-Han-LNCS.pdf">Borderline SMOTE</a></em></p></li>
+<li><p><em>diva-portal - <a class="reference external" href="https://www.diva-portal.org/smash/get/diva2:1519153/FULLTEXT01.pdf">ADASYN</a></em></p></li>
+<li><p><em>maxhalford.github - <a class="reference external" href="https://maxhalford.github.io/blog/lightgbm-focal-loss/">Focal loss implementation for LightGBM</a></em></p></li>
+<li><p><em>leimao.github - <a class="reference external" href="https://leimao.github.io/blog/Focal-Loss-Explained/">Focal Loss explained</a></em></p></li>
+<li><p><em>neptune - <a class="reference external" href="https://neptune.ai/blog/binary-classification-tips-and-tricks-from-kaggle">Binary classification tips and tricks from Kaggle</a></em></p></li>
+<li><p><em>jstage.jst.go - <a class="reference external" href="https://www.jstage.jst.go.jp/article/transinf/E94.D/10/E94.D_10_1854/_pdf/-char/en">A short introduction to Learning to Rank</a></em></p></li>
+<li><p><em>everdark.github - <a class="reference external" href="https://everdark.github.io/k9/notebooks/ml/learning_to_rank/learning_to_rank.html">Introduction to Learning to Rank</a></em></p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
