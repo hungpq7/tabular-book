@@ -2493,13 +2493,21 @@ For forecasters who don’t support probabilistic prediction, Sktime supports so
 <h4>Scaled error<a class="headerlink" href="#scaled-error" title="Permalink to this headline">#</a></h4>
 <div class="math notranslate nohighlight">
 \[e_t=\frac{y_t-\hat{y}_t}{\text{MAE}^*}\]</div>
-<p>This is another error type makes use of a benchmark model. Specifically, it computes <span class="math notranslate nohighlight">\(\text{MAE}^*\)</span> on the naive forecaster (forecast using last observed value, or using value of the same season in the last period). The most common metric of this type, <a class="reference external" href="https://en.wikipedia.org/wiki/Mean_absolute_scaled_error">MASE</a>, a along with MAPE are considered the best metrics for forecasting problems. MASE has the following desired properties:</p>
+<p>This is another error type makes use of a benchmark model. Specifically, it computes <span class="math notranslate nohighlight">\(\text{MAE}^*\)</span> of the in-sample one-step naive forecast (forecast using last observed value, or using value of the same season in the last period). The typical metric of this type is <a class="reference external" href="https://en.wikipedia.org/wiki/Mean_absolute_scaled_error">MASE</a>, it tells us how many times our model performs worse than the naive forecast, with a <span class="math notranslate nohighlight">\(&lt;1\)</span> value indicates excellent performance. This metric, along with MAPE are considered the best metrics for forecasting problems. MASE has the following desired properties:</p>
 <ul class="simple">
 <li><p>It is scale-free, so can be used for different data with different scales</p></li>
 <li><p>It is symmetric, covers both cases that either MAPE or sMAPE suffers from</p></li>
 <li><p>It is stable when <span class="math notranslate nohighlight">\(y_t\approx0\)</span></p></li>
 <li><p>It is easy to interpret</p></li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>MASE is not a fair metric at all, as our model is usually assessed for a longer horizon than the naive method. Imagine we request forecast for the next two years (<span class="math notranslate nohighlight">\(H=8\)</span> steps ahead) of a quarterly time series (<span class="math notranslate nohighlight">\(m=4\)</span>), this means our model has stacked up errors for <span class="math notranslate nohighlight">\(H/m=2\)</span> times compared to the naive forecast. So in my opinion, the correct way to read MASE is:</p>
+<ul class="simple">
+<li><p>For seasonal time series, evaluate MASE only on forecasts of the next season</p></li>
+<li><p>For non-seasonal time series (where <span class="math notranslate nohighlight">\(m=1\)</span>), MASE cannot track how errors accumulated, so a <span class="math notranslate nohighlight">\(&gt;1\)</span> score is not that ba</p></li>
+</ul>
+</div>
 </section>
 <section id="implementation">
 <h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
@@ -3163,7 +3171,7 @@ Split #4: train [0, 110], valid [111, 113]
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/sktime-forecasting-pipeline_88_0.png"><img alt="../_images/sktime-forecasting-pipeline_88_0.png" class="align-center" src="../_images/sktime-forecasting-pipeline_88_0.png" style="width: 740.0px; height: 198.4px;" /></a>
+<a class="reference internal image-reference" href="../_images/sktime-forecasting-pipeline_89_0.png"><img alt="../_images/sktime-forecasting-pipeline_89_0.png" class="align-center" src="../_images/sktime-forecasting-pipeline_89_0.png" style="width: 740.0px; height: 198.4px;" /></a>
 </div>
 </div>
 </section>

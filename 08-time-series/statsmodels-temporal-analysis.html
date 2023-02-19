@@ -2788,8 +2788,8 @@ title="Print to PDF"
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\mathbf{y}=(y_1,y_2,\dots,y_t,\dots,y_T)\)</span> represents the entire series</p></li>
 <li><p><span class="math notranslate nohighlight">\(y_t\)</span> (for <span class="math notranslate nohighlight">\(t=1,2,\dots,T\)</span>) represents an observation, <span class="math notranslate nohighlight">\(t\)</span> represents any observed time step</p></li>
-<li><p><span class="math notranslate nohighlight">\(\hat{y}_{T+h}\)</span> (for <span class="math notranslate nohighlight">\(h=1,2,\dots,\infty\)</span>) is an unknown future value which is going to be forecasted, <span class="math notranslate nohighlight">\(h\)</span> is the forecasting horizon</p></li>
-<li><p><span class="math notranslate nohighlight">\(\hat{y}_{T+h|T}\)</span> is the forecast value <span class="math notranslate nohighlight">\(\hat{y}_{T+h}\)</span> taking into account all observations up to time <span class="math notranslate nohighlight">\(T\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_{T+H}\)</span> (for <span class="math notranslate nohighlight">\(H=1,2,\dots,\infty\)</span>) is an unknown future value which is going to be forecasted, <span class="math notranslate nohighlight">\(H\)</span> is the forecasting horizon</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_{T+H|T}\)</span> is the forecast value <span class="math notranslate nohighlight">\(\hat{y}_{T+H}\)</span> taking into account all observations up to time <span class="math notranslate nohighlight">\(T\)</span></p></li>
 </ul>
 </section>
 <section id="backshift-notation">
@@ -3149,13 +3149,7 @@ Name: seasonal, dtype: float64
 <span class="n">algo</span> <span class="o">=</span> <span class="n">rpt</span><span class="o">.</span><span class="n">Dynp</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">jump</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">sQty</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">changepoints</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">changepoints</span>
+<span class="n">changepoints</span>
 </pre></div>
 </div>
 </div>
@@ -3172,19 +3166,7 @@ Name: seasonal, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_85_0.png"><img alt="../_images/statsmodels-temporal-analysis_85_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_85_0.png" style="width: 712.5px; height: 281.0px;" /></a>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">changepoints</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[80, 100, 190, 249]
-</pre></div>
-</div>
+<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_84_0.png"><img alt="../_images/statsmodels-temporal-analysis_84_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_84_0.png" style="width: 712.5px; height: 281.0px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -3208,7 +3190,7 @@ Name: seasonal, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_87_0.png"><img alt="../_images/statsmodels-temporal-analysis_87_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_87_0.png" style="width: 720.5px; height: 428.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/statsmodels-temporal-analysis_85_0.png"><img alt="../_images/statsmodels-temporal-analysis_85_0.png" class="align-center" src="../_images/statsmodels-temporal-analysis_85_0.png" style="width: 720.5px; height: 428.0px;" /></a>
 </div>
 </div>
 </section>
@@ -3220,8 +3202,8 @@ Name: seasonal, dtype: float64
 <li><p><em>laurentoudre - <a class="reference external" href="http://www.laurentoudre.fr/publis/TOG-SP-19.pdf">Selective review of offline change point detection methods</a></em></p></li>
 <li><p><em>github - <a class="reference external" href="https://github.com/rob-med/awesome-TS-anomaly-detection">Awesome TS anomaly detection</a></em></p></li>
 <li><p><em>github - <a class="reference external" href="https://github.com/yzhao062/anomaly-detection-resources#34-time-series-outlier-detection">Anomaly detection resources</a></em></p></li>
-<li><p><a class="reference external" href="https://datascience.stackexchange.com/questions/32126/looking-for-a-good-package-for-anomaly-detection-in-time-series">https://datascience.stackexchange.com/questions/32126/looking-for-a-good-package-for-anomaly-detection-in-time-series</a></p></li>
-<li><p><a class="reference external" href="https://pro.arcgis.com/en/pro-app/2.9/tool-reference/space-time-pattern-mining/how-change-point-detection-works.htm">https://pro.arcgis.com/en/pro-app/2.9/tool-reference/space-time-pattern-mining/how-change-point-detection-works.htm</a></p></li>
+<li><p><em>stackoverflow - <a class="reference external" href="https://datascience.stackexchange.com/questions/32126/looking-for-a-good-package-for-anomaly-detection-in-time-series">Looking for a good package for anomaly detection in time series</a></em></p></li>
+<li><p><em>pro.arcgis - <a class="reference external" href="https://pro.arcgis.com/en/pro-app/2.9/tool-reference/space-time-pattern-mining/how-change-point-detection-works.htm">How Change Point Detection works</a></em></p></li>
 </ul>
 </section>
 </section>

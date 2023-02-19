@@ -1246,8 +1246,8 @@ title="Print to PDF"
 <h4>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
 <li><p><em>Estimation</em>. ARIMA estimates its parameters <span class="math notranslate nohighlight">\(c,\phi_1,\phi_2,\dots,\phi_p,\theta_1,\theta_2,\dots,\theta_q\)</span> either by minimizing sum of squared errors (<a class="reference external" href="https://en.wikipedia.org/wiki/Ordinary_least_squares">OLS</a>) or by maximizing likelihood (<a class="reference external" href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">MLE</a>). Both methods return the same result.</p></li>
-<li><p><em>Point forecasting</em>. It’s obvious, by looking at ARIMA function, that each observation at time <span class="math notranslate nohighlight">\(t\)</span> is modeled using previous step <span class="math notranslate nohighlight">\(t-1,t-2,\dots\)</span>. This prediction is written <span class="math notranslate nohighlight">\(\hat{y}_{t|t-1}\)</span>. As we have known all values up to time <span class="math notranslate nohighlight">\(T\)</span>, the forecasting is done in a <em>recursive</em> behaviour: <span class="math notranslate nohighlight">\(\hat{y}_{T+1|T},\hat{y}_{T+2|T+1},\dots,\hat{y}_{T+h|T+h-1}\)</span>.</p></li>
-<li><p><em>Prediction interval</em>. Being a regression model, ARIMA assumes that fitted residuals are normally distributed. Thus the confidence interval is given by <span class="math notranslate nohighlight">\(z_{\alpha/2}\sigma_h\)</span> where <span class="math notranslate nohighlight">\(\alpha\)</span> is significance level and <span class="math notranslate nohighlight">\(\sigma_h\)</span> is the forecast standard deviation, it is proportional to the variance of residuals and <span class="math notranslate nohighlight">\(h\)</span>. But also note that when the above assumption is not hold, then prediction interval may be incorrect.</p></li>
+<li><p><em>Point forecasting</em>. It’s obvious, by looking at ARIMA function, that each observation at time <span class="math notranslate nohighlight">\(t\)</span> is modeled using previous step <span class="math notranslate nohighlight">\(t-1,t-2,\dots\)</span>. This prediction is written <span class="math notranslate nohighlight">\(\hat{y}_{t|t-1}\)</span>. As we have known all values up to time <span class="math notranslate nohighlight">\(T\)</span>, the forecasting is done in a <em>recursive</em> behaviour: <span class="math notranslate nohighlight">\(\hat{y}_{T+1|T},\hat{y}_{T+2|T+1},\dots,\hat{y}_{T+H|T+H-1}\)</span>.</p></li>
+<li><p><em>Prediction interval</em>. Being a regression model, ARIMA assumes that fitted residuals are normally distributed. Thus the confidence interval is given by <span class="math notranslate nohighlight">\(z_{\alpha/2}\sigma_H\)</span> where <span class="math notranslate nohighlight">\(\alpha\)</span> is significance level and <span class="math notranslate nohighlight">\(\sigma_H\)</span> is the forecast standard deviation, it is proportional to the variance of residuals and <span class="math notranslate nohighlight">\(H\)</span>. But also note that when the above assumption is not hold, then prediction interval may be incorrect.</p></li>
 </ul>
 </section>
 <section id="model-selection">
@@ -2194,14 +2194,14 @@ p-value=0.000007 &lt; 0.05 | data is stationary
 <p>Here, <span class="math notranslate nohighlight">\(\beta'\,(0\leq\beta'\leq1)\)</span> is a smothing parameter. By plugging in the equation for <span class="math notranslate nohighlight">\(l_t\)</span> and denoting <span class="math notranslate nohighlight">\(\beta=\alpha\beta'\,(0\leq\beta\leq\alpha)\)</span>, we can extend the simple exponential smoothing equation:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-  \hat{y}_{t+h|t} &amp;= l_t + hb_t \\
+  \hat{y}_{t+H|t} &amp;= l_t + Hb_t \\
   l_t             &amp;= \alpha y_{t} + (1-\alpha)(l_{t-1}+b_{t-1}) \\
   b_t             &amp;= \beta(y_t-l_{t-1}) + (1-\beta)b_{t-1}
 \end{aligned}\end{split}\]</div>
 <p>Holt, the author of this method named it <em>trend</em>, but keep in mind that it is not the same <em>trend</em> as in component decomposition. An important conslusion can be drawn from the formulation is that the forecast function is now a linear function of <span class="math notranslate nohighlight">\(h\)</span> rather than a constant. This function is less naive, but tends to overforecast in further horizons. This is the motivation for a damping parameter, <span class="math notranslate nohighlight">\(\phi\,(0\leq\phi\leq1)\)</span>, which has proven its success and popularity in forecasting tasks. The equation for damped trend is given by:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-  \hat{y}_{t+h|t} &amp;= l_t + (\phi+\phi^2+\dots+\phi^h)b_t \\
+  \hat{y}_{t+H|t} &amp;= l_t + (\phi+\phi^2+\dots+\phi^H)b_t \\
   l_t             &amp;= \alpha y_{t} + (1-\alpha)(l_{t-1}+\phi b_{t-1}) \\
   b_t             &amp;= \beta(y_t-l_{t-1}) + (1-\beta)\phi b_{t-1}
 \end{aligned}\end{split}\]</div>
@@ -2215,12 +2215,12 @@ p-value=0.000007 &lt; 0.05 | data is stationary
 <p><span class="math notranslate nohighlight">\(0\leq\gamma'\leq1\)</span> is a smoothing parameter. If we substitute <span class="math notranslate nohighlight">\(l_t\)</span> from the smoothing equation and <span class="math notranslate nohighlight">\(\gamma=(1-\alpha)\gamma'\,(0\leq\gamma\leq1-\alpha)\)</span>, we end up getting the complete ETS model. When expressing the equations, the damping factor is removed for simplification purposes.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-  \hat{y}_{t+h|t} &amp;= l_{t} + hb_{t} + s_{t+h-m(k+1)} \\
+  \hat{y}_{t+H|t} &amp;= l_{t} + Hb_{t} + s_{t+H-m(k+1)} \\
   l_t &amp;= \alpha(y_{t} - s_{t-m}) + (1 - \alpha)(l_{t-1} + b_{t-1}) \\
   b_{t} &amp;= \beta(y_t-l_{t-1}-s_{t-m})+(1-\beta)b_{t-1} \\
   s_t &amp;= \gamma (y_{t}-l_{t-1}-b_{t-1}) + (1-\gamma)s_{t-m}
 \end{aligned}\end{split}\]</div>
-<p>The term <span class="math notranslate nohighlight">\(s_{t+h-m(k+1)}\)</span> where <span class="math notranslate nohighlight">\(k=\lfloor(h-1)/m\rfloor\)</span> may look ugly, but it is just the seasonal term of the same index last observed period.</p>
+<p>The term <span class="math notranslate nohighlight">\(s_{t+H-m(k+1)}\)</span> where <span class="math notranslate nohighlight">\(k=\lfloor(H-1)/m\rfloor\)</span> may look ugly, but it is just the seasonal term of the same index last observed period.</p>
 </section>
 </section>
 <section id="ets-model">
@@ -2241,7 +2241,7 @@ p-value=0.000007 &lt; 0.05 | data is stationary
 <h4>Procedure<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
 <li><p><em>Estimation</em>. Like ARIMA, ETS also estimates its parameters either by minimizing sum of squared error or maximizing the likelihood that error follows a normal distribution. ETS’s parameters are coefficients (both smoothing and damping): <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span>, <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> and initial values: <span class="math notranslate nohighlight">\(l_0\)</span>, <span class="math notranslate nohighlight">\(b_0\)</span> and <span class="math notranslate nohighlight">\(s_0,s_{-1},\dots,s_{-m+1}\)</span>.</p></li>
-<li><p><em>Point forecasting</em>. When forecasting future points using ETS equations (<span class="math notranslate nohighlight">\(t&gt;T\)</span>), we only need to set <span class="math notranslate nohighlight">\(\epsilon_t=0\)</span>. For further forecasts (<span class="math notranslate nohighlight">\(h&gt;1\)</span>), the same <em>recursion</em> fashion used in ARIMA is applied.</p></li>
+<li><p><em>Point forecasting</em>. When forecasting future points using ETS equations (<span class="math notranslate nohighlight">\(t&gt;T\)</span>), we only need to set <span class="math notranslate nohighlight">\(\epsilon_t=0\)</span>. For further forecasts (<span class="math notranslate nohighlight">\(H&gt;1\)</span>), the same <em>recursion</em> fashion used in ARIMA is applied.</p></li>
 <li><p><em>Prediction interval</em>. ETS also uses forecast variance to add confidence interval to point forecast. The formulas gets more and more complicated as we add more components and use multiplicative method, so they aren’t going to be presented here.</p></li>
 </ul>
 </section>
