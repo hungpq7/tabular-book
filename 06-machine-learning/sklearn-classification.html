@@ -1430,13 +1430,10 @@ beside <a class="reference external" href="https://scikit-learn.org/stable/modul
 <li><p>Stopping criteria (optional)</p></li>
 </ul>
 <p><em>Step 1</em>. For each unsplit node <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> (starting from the root node):</p>
-<ul>
-<li><p>Compute the impurity of node <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>.</p></li>
-<li><p>For each candiate (which is a combination a feature and a threshold):</p>
 <ul class="simple">
-<li><p>Split node <span class="math notranslate nohighlight">\(D\)</span> into 2 smaller nodes, <span class="math notranslate nohighlight">\(\mathcal{D}_{\text{left}}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{D}_{\text{right}}\)</span>.</p></li>
-<li><p>Calculate the impurity for these child nodes.</p></li>
-<li><p>Calculate the information gain for the candidate:</p></li>
+<li><p>Compute the impurity of node <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>.</p></li>
+<li><p>For each candiate (which is a combination a feature and a threshold), split node <span class="math notranslate nohighlight">\(D\)</span> into 2 smaller nodes, <span class="math notranslate nohighlight">\(\mathcal{D}_{\text{left}}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{D}_{\text{right}}\)</span>.</p></li>
+<li><p>Calculate the impurity for child nodes and information gain for the candidate:</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[
@@ -1446,8 +1443,8 @@ beside <a class="reference external" href="https://scikit-learn.org/stable/modul
         \frac{|\mathcal{D}_{\text{left}}|}{|\mathcal{D}|}\,\text{Impurity}_{\text{left}}+
         \frac{|\mathcal{D}_{\text{right}}|}{|\mathcal{D}|}\,\text{Impurity}_{\text{right}}
     \right)
-    \]</div>
-</li>
+\]</div>
+<ul class="simple">
 <li><p>Choose the candidate with the highest information gain. Split node <span class="math notranslate nohighlight">\(D\)</span> using that candidate.</p></li>
 </ul>
 <p><em>Step 2</em>. Go back and prune the tree  until all stopping conditions are met. The purpose of this step is to prevent overfitting. For example, you can set the minimum number of observations to perform a split to 20, the algorithm will find all branches whose root node is not large enough. For each branch, it removes the entire branch and keeps only the root node.</p>

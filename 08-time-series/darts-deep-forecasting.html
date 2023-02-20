@@ -827,6 +827,18 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#covariates">
      1.4. Covariates
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#future-covariates">
+       Future covariates
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#past-covariates">
+       Past covariates
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#backtesting">
@@ -939,6 +951,18 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#covariates">
      1.4. Covariates
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#future-covariates">
+       Future covariates
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#past-covariates">
+       Past covariates
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#backtesting">
@@ -1444,7 +1468,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">tsQty</span><span class="o">.</span><span class="n">add_datetime_attribute</span><span class="p">(</span><span class="s1">&#39;weekday&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="p">(</span><span class="n">tsQty</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">add_datetime_attribute</span><span class="p">(</span><span class="s1">&#39;weekday&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add_holidays</span><span class="p">(</span><span class="s1">&#39;VN&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1452,26 +1476,10 @@ title="Print to PDF"
 <img alt="../_images/darts-deep-forecasting_22_0.png" src="../_images/darts-deep-forecasting_22_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="p">(</span><span class="n">tsQty</span><span class="o">/</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">add_holidays</span><span class="p">(</span><span class="s1">&#39;VN&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/darts-deep-forecasting_23_0.png" src="../_images/darts-deep-forecasting_23_0.png" />
-</div>
-</div>
 </section>
 <section id="forecasting">
 <h3>1.3. Forecasting<a class="headerlink" href="#forecasting" title="Permalink to this headline">#</a></h3>
-<p>Darts unifies a wide range of common <a class="reference external" href="https://github.com/unit8co/darts#forecasting-models">forecasting algorithms</a>:</p>
-<ul class="simple">
-<li><p>Statistical models: traditional <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.sf_auto_arima.html"><code class="docutils literal notranslate"><span class="pre">StatsForecastAutoARIMA</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.exponential_smoothing.html"><code class="docutils literal notranslate"><span class="pre">ExponentialSmoothing</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.tbats.html#darts.models.forecasting.tbats.TBATS"><code class="docutils literal notranslate"><span class="pre">TBATS</span></code></a> and modern <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.prophet_model.html"><code class="docutils literal notranslate"><span class="pre">Prophet</span></code></a></p></li>
-<li><p>Reduction to regression: general <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.regression_model.html"><code class="docutils literal notranslate"><span class="pre">RegressionModel</span></code></a> and state-of-the-art <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.xgboost.html"><code class="docutils literal notranslate"><span class="pre">XGBModel</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.lgbm.html"><code class="docutils literal notranslate"><span class="pre">LightGBMModel</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.catboost_model.html"><code class="docutils literal notranslate"><span class="pre">CatBoostModel</span></code></a></p></li>
-<li><p>Neural Networks: Darts implements various RNN-based architectures, which is the key difference with Sktime</p></li>
-</ul>
+<p>Darts unifies a wide range of common forecasting algorithms, which can be found <a class="reference external" href="https://github.com/unit8co/darts#forecasting-models">here</a>. They use the same</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1653,7 +1661,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit-predict API just like Scikit-learn</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ETS</span><span class="p">()</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tsTrain</span><span class="p">)</span>
 <span class="n">tsPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 
@@ -1662,22 +1670,26 @@ title="Print to PDF"
 <span class="n">mape</span> <span class="o">=</span> <span class="n">MAPE</span><span class="p">(</span><span class="n">tsTest</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
 <span class="n">mase</span> <span class="o">=</span> <span class="n">MASE</span><span class="p">(</span><span class="n">tsTest</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">,</span> <span class="n">tsTrain</span><span class="p">)</span>
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 <span class="n">tsPred</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;forecast&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MAE = </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | MAPE = </span><span class="si">{</span><span class="n">mape</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1"> | MASE = </span><span class="si">{</span><span class="n">mase</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MAE = </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | MAPE = </span><span class="si">{</span><span class="n">mape</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1"> | MASE = </span><span class="si">{</span><span class="n">mase</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_29_0.png"><img alt="../_images/darts-deep-forecasting_29_0.png" class="align-center" src="../_images/darts-deep-forecasting_29_0.png" style="width: 490.0px; height: 368.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_28_0.png"><img alt="../_images/darts-deep-forecasting_28_0.png" class="align-center" src="../_images/darts-deep-forecasting_28_0.png" style="width: 713.0px; height: 341.5px;" /></a>
 </div>
 </div>
 <section id="probabilistic-forecast">
 <h4>Probabilistic forecast<a class="headerlink" href="#probabilistic-forecast" title="Permalink to this headline">#</a></h4>
 <p>Prediction interval is an important output of forecasting problems, mainly because of high error and data drift. Unfortunately, a number of forecasting algorithms in Darts does not support this feature, so we carefully select and implement only algorithms with this ability.</p>
-<p>To request probabilistic forecasts (for supported algorithms), Darts performs Monte Carlo sampling (via the parameter <code class="docutils literal notranslate"><span class="pre">num_samples</span></code> during prediction) to construct a distribution for predicted values. Hundreds of Monte Carlo samples should be enough to provide a reliable result.</p>
+<ul class="simple">
+<li><p>For most statistical algorithms (traditional <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.sf_auto_arima.html"><code class="docutils literal notranslate"><span class="pre">StatsForecastAutoARIMA</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.exponential_smoothing.html"><code class="docutils literal notranslate"><span class="pre">ExponentialSmoothing</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.tbats.html#darts.models.forecasting.tbats.TBATS"><code class="docutils literal notranslate"><span class="pre">TBATS</span></code></a> and modern <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.prophet_model.html"><code class="docutils literal notranslate"><span class="pre">Prophet</span></code></a>), they support this feature by nature. To request probabilistic forecasts, Darts performs Monte Carlo sampling (via the parameter <code class="docutils literal notranslate"><span class="pre">num_samples</span></code> during prediction) to construct a distribution for predicted values. Hundreds of Monte Carlo samples should be enough to provide a reliable result. Finally, call the <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.timeseries.html#darts.timeseries.TimeSeries.quantiles_df"><code class="docutils literal notranslate"><span class="pre">quantiles_df()</span></code></a> method on the sampled series to extract predictions at specific quantiles.</p></li>
+<li><p>For reduction-to-regression methods (<a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.xgboost.html"><code class="docutils literal notranslate"><span class="pre">XGBModel</span></code></a>, <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.lgbm.html"><code class="docutils literal notranslate"><span class="pre">LightGBMModel</span></code></a> and <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.models.forecasting.catboost_model.html"><code class="docutils literal notranslate"><span class="pre">CatBoostModel</span></code></a>), we must specify the <code class="docutils literal notranslate"><span class="pre">likelihood</span></code> parameter during model initialization. Doing so will overwirte the objective function of the regression algorithm and enables probabilistic prediction. Requesting prediction is the same.</p></li>
+<li><p>For recurrent networks, we must also specify a <code class="docutils literal notranslate"><span class="pre">likelihood</span></code>; but this parameter accepts a <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.utils.likelihood_models.html">likelihood model</a> rather than a string. Requesting prediction is the same.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">AutoARIMA</span><span class="p">()</span>
@@ -1720,33 +1732,33 @@ title="Print to PDF"
   <tbody>
     <tr>
       <th>2004-10-01</th>
-      <td>856.804190</td>
-      <td>879.555832</td>
-      <td>900.198420</td>
+      <td>859.778029</td>
+      <td>878.973368</td>
+      <td>894.436742</td>
     </tr>
     <tr>
       <th>2005-01-01</th>
-      <td>849.274222</td>
-      <td>881.769171</td>
-      <td>908.456360</td>
+      <td>853.138987</td>
+      <td>877.747642</td>
+      <td>907.254163</td>
     </tr>
     <tr>
       <th>2005-04-01</th>
-      <td>854.737799</td>
-      <td>883.465770</td>
-      <td>915.948522</td>
+      <td>852.227291</td>
+      <td>882.300101</td>
+      <td>913.823995</td>
     </tr>
     <tr>
       <th>2005-07-01</th>
-      <td>847.845177</td>
-      <td>883.615981</td>
-      <td>918.972038</td>
+      <td>850.728000</td>
+      <td>889.882035</td>
+      <td>923.080659</td>
     </tr>
     <tr>
       <th>2005-10-01</th>
-      <td>852.735257</td>
-      <td>885.828288</td>
-      <td>923.798402</td>
+      <td>856.773183</td>
+      <td>887.636369</td>
+      <td>935.293484</td>
     </tr>
   </tbody>
 </table>
@@ -1759,22 +1771,27 @@ title="Print to PDF"
 <span class="n">mape</span> <span class="o">=</span> <span class="n">MAPE</span><span class="p">(</span><span class="n">tsTest</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
 <span class="n">mase</span> <span class="o">=</span> <span class="n">MASE</span><span class="p">(</span><span class="n">tsTest</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">,</span> <span class="n">tsTrain</span><span class="p">)</span>
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 <span class="n">tsPred</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;forecast&#39;</span><span class="p">,</span> <span class="n">low_quantile</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">high_quantile</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MAE = </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | MAPE = </span><span class="si">{</span><span class="n">mape</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1"> | MASE = </span><span class="si">{</span><span class="n">mase</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MAE = </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | MAPE = </span><span class="si">{</span><span class="n">mape</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1"> | MASE = </span><span class="si">{</span><span class="n">mase</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/darts-deep-forecasting_32_0.png" src="../_images/darts-deep-forecasting_32_0.png" />
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_31_0.png"><img alt="../_images/darts-deep-forecasting_31_0.png" class="align-center" src="../_images/darts-deep-forecasting_31_0.png" style="width: 713.0px; height: 341.5px;" /></a>
 </div>
 </div>
 </section>
 </section>
 <section id="covariates">
 <h3>1.4. Covariates<a class="headerlink" href="#covariates" title="Permalink to this headline">#</a></h3>
+<p>Real-world time series are highly affected by external factors, which are called <em>covariates</em> by Darts. Taking these data into consideration, if done correctly, can improve forecasting quality a lot, especially in modeling trends. There are mainly two types of covariates:</p>
+<ul class="simple">
+<li><p><em>Past covariates</em>: covariates known only into the past, such as purchased quantity. In practice, data are usually of this type.</p></li>
+<li><p><em>Future covariates</em>: covariates known into the future, such as weather forecasts and holidays. This type is less common and is rarely used.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
@@ -1804,13 +1821,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">darts.utils.statistics</span> <span class="kn">import</span> <span class="n">stationarity_tests</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">darts.dataprocessing.transformers</span> <span class="kn">import</span> <span class="n">InvertibleMapper</span><span class="p">,</span> <span class="n">WindowTransformer</span>
+<span class="kn">from</span> <span class="nn">darts.dataprocessing.transformers</span> <span class="kn">import</span> <span class="n">InvertibleMapper</span><span class="p">,</span> <span class="n">WindowTransformer</span>
 </pre></div>
 </div>
 </div>
@@ -1962,6 +1973,19 @@ title="Print to PDF"
 </table>
 </div></div></div>
 </div>
+<section id="future-covariates">
+<h4>Future covariates<a class="headerlink" href="#future-covariates" title="Permalink to this headline">#</a></h4>
+<p>Most important algorithms support future covariates, except for TBATS and some Deep Learning models. In fact, they have been introduced in the early days of forecasting models under the name <em>exogenous</em> (while the original series is called <em>endogenous</em>).</p>
+<p>As stated earlier, future covariates are simply deterministic events such as holidays and weekdays. Darts provides a convenient way to produces such features by specifying datetime attributes, using the parameter <code class="docutils literal notranslate"><span class="pre">add_encoders</span></code> in the supported algorithms. The detailed usage can be found <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.dataprocessing.encoders.encoders.html">here</a>.</p>
+</section>
+<section id="past-covariates">
+<h4>Past covariates<a class="headerlink" href="#past-covariates" title="Permalink to this headline">#</a></h4>
+<p>Past covariate is a way more powerful feature, but is not a part of statistical algorithms, namely: ARIMA, ETS and Prophet. It is supported by Darts in regression reductions and recurrent networks. There are two ways to build a forecasting model with past covariates:</p>
+<ul class="simple">
+<li><p>Shifting past covariates to the right, which makes them known to the future. Further horizons require shifting more, so we are wasting a lot of information.</p></li>
+<li><p>Build a model to predict each time step in the future (by specifying <code class="docutils literal notranslate"><span class="pre">output_chunk_length</span></code>). Require more models to be trained, but will be more effective.</p></li>
+</ul>
+<p>It is recommended to use the second strategy in practice as (1) forecasting models don’t use a lot of data, (2) simple implementation and (3) better performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsTrain</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">20</span><span class="p">]</span>
@@ -1975,20 +1999,36 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lagPastCovariates</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">lags</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">lags_past_covariates</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
     <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
     <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>
     <span class="n">likelihood</span><span class="o">=</span><span class="s1">&#39;quantile&#39;</span><span class="p">,</span>
+    <span class="n">output_chunk_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> 
 <span class="p">)</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">LightGBMModel</span><span class="p">(</span><span class="n">lags</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">lags_past_covariates</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_chunk_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LightGBMModel</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tsTrain</span><span class="o">.</span><span class="n">diff</span><span class="p">(),</span> <span class="n">past_covariates</span><span class="o">=</span><span class="n">tsCovar</span><span class="p">)</span>
 
 <span class="c1"># predict diff</span>
-<span class="n">tsPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">tsPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">revert_diff</span><span class="p">(</span><span class="n">tsTrain</span><span class="p">,</span> <span class="n">tsDiff</span><span class="p">):</span>
+    <span class="n">nSample</span> <span class="o">=</span> <span class="n">tsDiff</span><span class="o">.</span><span class="n">n_samples</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">tsTrain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">time_index</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">tsTrain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">all_values</span><span class="p">(),</span> <span class="n">nSample</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">tsTrain</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">from_times_and_values</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
-<span class="c1"># predict original</span>
-<span class="n">trans</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;expanding&#39;</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">tsPred</span> <span class="o">=</span> <span class="n">tsTrain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tsPred</span><span class="p">)</span><span class="o">.</span><span class="n">window_transform</span><span class="p">(</span><span class="n">trans</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">trans</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;expanding&#39;</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">tsCsum</span> <span class="o">=</span> <span class="n">tsTrain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tsDiff</span><span class="p">)</span><span class="o">.</span><span class="n">window_transform</span><span class="p">(</span><span class="n">trans</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">tsCsum</span>
+
+<span class="n">tsPred</span> <span class="o">=</span> <span class="n">revert_diff</span><span class="p">(</span><span class="n">tsTrain</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1999,18 +2039,19 @@ title="Print to PDF"
 <span class="n">mape</span> <span class="o">=</span> <span class="n">MAPE</span><span class="p">(</span><span class="n">tsTest</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
 <span class="n">mase</span> <span class="o">=</span> <span class="n">MASE</span><span class="p">(</span><span class="n">tsTest</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">,</span> <span class="n">tsTrain</span><span class="p">)</span>
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 <span class="n">tsPred</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;forecast&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MAE = </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | MAPE = </span><span class="si">{</span><span class="n">mape</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1"> | MASE = </span><span class="si">{</span><span class="n">mase</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MAE = </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | MAPE = </span><span class="si">{</span><span class="n">mape</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1"> | MASE = </span><span class="si">{</span><span class="n">mase</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_41_0.png"><img alt="../_images/darts-deep-forecasting_41_0.png" class="align-center" src="../_images/darts-deep-forecasting_41_0.png" style="width: 490.0px; height: 368.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_42_0.png"><img alt="../_images/darts-deep-forecasting_42_0.png" class="align-center" src="../_images/darts-deep-forecasting_42_0.png" style="width: 713.0px; height: 341.5px;" /></a>
 </div>
 </div>
+</section>
 </section>
 <section id="backtesting">
 <h3>1.5. Backtesting<a class="headerlink" href="#backtesting" title="Permalink to this headline">#</a></h3>

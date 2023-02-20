@@ -2504,8 +2504,8 @@ For forecasters who don’t support probabilistic prediction, Sktime supports so
 <p class="admonition-title">Tip</p>
 <p>MASE is not a fair metric at all, as our model is usually assessed for a longer horizon than the naive method. Imagine we request forecast for the next two years (<span class="math notranslate nohighlight">\(H=8\)</span> steps ahead) of a quarterly time series (<span class="math notranslate nohighlight">\(m=4\)</span>), this means our model has stacked up errors for <span class="math notranslate nohighlight">\(H/m=2\)</span> times compared to the naive forecast. So in my opinion, the correct way to read MASE is:</p>
 <ul class="simple">
-<li><p>For seasonal time series, evaluate MASE only on forecasts of the next season</p></li>
-<li><p>For non-seasonal time series (where <span class="math notranslate nohighlight">\(m=1\)</span>), MASE cannot track how errors accumulated, so a <span class="math notranslate nohighlight">\(&gt;1\)</span> score is not that ba</p></li>
+<li><p>For seasonal time series, evaluate MASE only on forecasts of the next season.</p></li>
+<li><p>For non-seasonal time series (where <span class="math notranslate nohighlight">\(m=1\)</span>), MASE cannot track how errors accumulated, so a <span class="math notranslate nohighlight">\(&gt;1\)</span> score is not that bad.</p></li>
 </ul>
 </div>
 </section>
