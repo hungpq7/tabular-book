@@ -1020,8 +1020,6 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="darts-deep-forecasting">
 <h1>Darts: Deep Forecasting<a class="headerlink" href="#darts-deep-forecasting" title="Permalink to this headline">#</a></h1>
-<section id="darts-api">
-<h2>1. Darts API<a class="headerlink" href="#darts-api" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
@@ -1029,19 +1027,19 @@ title="Print to PDF"
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
 <span class="kn">from</span> <span class="nn">darts</span> <span class="kn">import</span> <span class="n">TimeSeries</span>
-<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">AutoARIMA</span><span class="p">,</span> <span class="n">ExponentialSmoothing</span><span class="p">,</span> <span class="n">StatsForecastETS</span>
-<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">LightGBMModel</span><span class="p">,</span> <span class="n">CatBoostModel</span><span class="p">,</span> <span class="n">XGBModel</span><span class="p">,</span> <span class="n">NaiveSeasonal</span>
-<span class="kn">from</span> <span class="nn">darts.utils.utils</span> <span class="kn">import</span> <span class="n">ModelMode</span>
-<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">mape</span> <span class="k">as</span> <span class="n">MAPE</span><span class="p">,</span>
-    <span class="n">mase</span> <span class="k">as</span> <span class="n">MASE</span><span class="p">,</span>
-    <span class="n">mae</span> <span class="k">as</span> <span class="n">MAE</span><span class="p">,</span>
-    <span class="n">r2_score</span> <span class="k">as</span> <span class="n">R2</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span> <span class="k">as</span> <span class="n">ETS</span>
+<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">StatsForecastAutoARIMA</span> <span class="k">as</span> <span class="n">AutoARIMA</span>
+<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">LightGBMModel</span><span class="p">,</span> <span class="n">CatBoostModel</span><span class="p">,</span> <span class="n">XGBModel</span>
+<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mape</span> <span class="k">as</span> <span class="n">MAPE</span>
+<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mase</span> <span class="k">as</span> <span class="n">MASE</span>
+<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mae</span> <span class="k">as</span> <span class="n">MAE</span>
+<span class="kn">from</span> <span class="nn">darts.utils.statistics</span> <span class="kn">import</span> <span class="n">stationarity_tests</span>
 
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
 <span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
@@ -1049,6 +1047,8 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+<section id="darts-api">
+<h2>1. Darts API<a class="headerlink" href="#darts-api" title="Permalink to this headline">#</a></h2>
 <section id="time-series-container">
 <h3>1.1. Time series container<a class="headerlink" href="#time-series-container" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.timeseries.html"><code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></a> is the main data class in Darts. There can be various instaniation ways, but it is recommended to do this <em>indirectly</em> from a Pandas dataframe with <code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code>, which is usually obtained via the <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.asfreq.html"><code class="docutils literal notranslate"><span class="pre">asfreq()</span></code></a> method for easy data cleaning.</p>
@@ -1414,7 +1414,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_17_0.png"><img alt="../_images/darts-deep-forecasting_17_0.png" class="align-center" src="../_images/darts-deep-forecasting_17_0.png" style="width: 590.5px; height: 272.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_18_0.png"><img alt="../_images/darts-deep-forecasting_18_0.png" class="align-center" src="../_images/darts-deep-forecasting_18_0.png" style="width: 590.5px; height: 272.0px;" /></a>
 </div>
 </div>
 </section>
@@ -1449,7 +1449,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/darts-deep-forecasting_20_0.png" src="../_images/darts-deep-forecasting_20_0.png" />
+<img alt="../_images/darts-deep-forecasting_22_0.png" src="../_images/darts-deep-forecasting_22_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1462,7 +1462,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/darts-deep-forecasting_21_0.png" src="../_images/darts-deep-forecasting_21_0.png" />
+<img alt="../_images/darts-deep-forecasting_23_0.png" src="../_images/darts-deep-forecasting_23_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1473,35 +1473,13 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/darts-deep-forecasting_22_0.png" src="../_images/darts-deep-forecasting_22_0.png" />
+<img alt="../_images/darts-deep-forecasting_24_0.png" src="../_images/darts-deep-forecasting_24_0.png" />
 </div>
 </div>
 </section>
 <section id="forecasting">
 <h3>1.3. Forecasting<a class="headerlink" href="#forecasting" title="Permalink to this headline">#</a></h3>
 <p>Darts unifies a wide range of common forecasting algorithms, which can be found <a class="reference external" href="https://github.com/unit8co/darts#forecasting-models">here</a>. They use the same</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">darts</span> <span class="kn">import</span> <span class="n">TimeSeries</span>
-<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span> <span class="k">as</span> <span class="n">ETS</span>
-<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">StatsForecastAutoARIMA</span> <span class="k">as</span> <span class="n">AutoARIMA</span>
-<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">LightGBMModel</span><span class="p">,</span> <span class="n">CatBoostModel</span><span class="p">,</span> <span class="n">XGBModel</span>
-<span class="kn">from</span> <span class="nn">darts.utils.utils</span> <span class="kn">import</span> <span class="n">ModelMode</span>
-<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mape</span> <span class="k">as</span> <span class="n">MAPE</span>
-<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mase</span> <span class="k">as</span> <span class="n">MASE</span>
-<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mae</span> <span class="k">as</span> <span class="n">MAE</span>
-
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEco</span> <span class="o">=</span> <span class="p">(</span>
@@ -1653,7 +1631,6 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsTrain</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">20</span><span class="p">]</span>
 <span class="n">tsTest</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">20</span><span class="p">:]</span>
-<span class="n">tsCovar</span> <span class="o">=</span> <span class="n">tsEco</span><span class="o">.</span><span class="n">drop_columns</span><span class="p">(</span><span class="s1">&#39;realgovt&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">20</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1679,7 +1656,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_28_0.png"><img alt="../_images/darts-deep-forecasting_28_0.png" class="align-center" src="../_images/darts-deep-forecasting_28_0.png" style="width: 713.0px; height: 341.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_30_0.png"><img alt="../_images/darts-deep-forecasting_30_0.png" class="align-center" src="../_images/darts-deep-forecasting_30_0.png" style="width: 713.0px; height: 341.5px;" /></a>
 </div>
 </div>
 <section id="probabilistic-forecast">
@@ -1780,7 +1757,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_31_0.png"><img alt="../_images/darts-deep-forecasting_31_0.png" class="align-center" src="../_images/darts-deep-forecasting_31_0.png" style="width: 713.0px; height: 341.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_33_0.png"><img alt="../_images/darts-deep-forecasting_33_0.png" class="align-center" src="../_images/darts-deep-forecasting_33_0.png" style="width: 713.0px; height: 341.5px;" /></a>
 </div>
 </div>
 </section>
@@ -1790,42 +1767,8 @@ title="Print to PDF"
 <p>Real-world time series are highly affected by external factors, which are called <em>covariates</em> by Darts. Taking these data into consideration, if done correctly, can improve forecasting quality a lot, especially in modeling trends. There are mainly two types of covariates:</p>
 <ul class="simple">
 <li><p><em>Past covariates</em>: covariates known only into the past, such as purchased quantity. In practice, data are usually of this type.</p></li>
-<li><p><em>Future covariates</em>: covariates known into the future, such as weather forecasts and holidays. This type is less common and is rarely used.</p></li>
+<li><p><em>Future covariates</em>: covariates known into the future, such as weather forecasts and holidays. This data is harder to collect and is thus rarely used.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="kn">from</span> <span class="nn">darts</span> <span class="kn">import</span> <span class="n">TimeSeries</span>
-<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span> <span class="k">as</span> <span class="n">ETS</span>
-<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">StatsForecastAutoARIMA</span> <span class="k">as</span> <span class="n">AutoARIMA</span>
-<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">LightGBMModel</span><span class="p">,</span> <span class="n">CatBoostModel</span><span class="p">,</span> <span class="n">XGBModel</span>
-<span class="kn">from</span> <span class="nn">darts.utils.utils</span> <span class="kn">import</span> <span class="n">ModelMode</span>
-<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mape</span> <span class="k">as</span> <span class="n">MAPE</span>
-<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mase</span> <span class="k">as</span> <span class="n">MASE</span>
-<span class="kn">from</span> <span class="nn">darts.metrics</span> <span class="kn">import</span> <span class="n">mae</span> <span class="k">as</span> <span class="n">MAE</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">darts.utils.statistics</span> <span class="kn">import</span> <span class="n">stationarity_tests</span>
-<span class="kn">from</span> <span class="nn">darts.dataprocessing.transformers</span> <span class="kn">import</span> <span class="n">InvertibleMapper</span><span class="p">,</span> <span class="n">WindowTransformer</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEco</span> <span class="o">=</span> <span class="p">(</span>
@@ -1841,142 +1784,53 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEco</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsTrain</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">tsTest</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">20</span><span class="p">:]</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>realgdp</th>
-      <th>realcons</th>
-      <th>realinv</th>
-      <th>realgovt</th>
-      <th>realdpi</th>
-      <th>cpi</th>
-      <th>m1</th>
-      <th>tbilrate</th>
-      <th>unemp</th>
-      <th>pop</th>
-      <th>infl</th>
-      <th>realint</th>
-    </tr>
-    <tr>
-      <th>period</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1959-01-01</th>
-      <td>2710.349</td>
-      <td>1707.4</td>
-      <td>286.898</td>
-      <td>470.045</td>
-      <td>1886.9</td>
-      <td>28.98</td>
-      <td>139.7</td>
-      <td>2.82</td>
-      <td>5.8</td>
-      <td>177.146</td>
-      <td>0.00</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>1959-04-01</th>
-      <td>2778.801</td>
-      <td>1733.7</td>
-      <td>310.859</td>
-      <td>481.301</td>
-      <td>1919.7</td>
-      <td>29.15</td>
-      <td>141.7</td>
-      <td>3.08</td>
-      <td>5.1</td>
-      <td>177.830</td>
-      <td>2.34</td>
-      <td>0.74</td>
-    </tr>
-    <tr>
-      <th>1959-07-01</th>
-      <td>2775.488</td>
-      <td>1751.8</td>
-      <td>289.226</td>
-      <td>491.260</td>
-      <td>1916.4</td>
-      <td>29.35</td>
-      <td>140.5</td>
-      <td>3.82</td>
-      <td>5.3</td>
-      <td>178.657</td>
-      <td>2.74</td>
-      <td>1.09</td>
-    </tr>
-    <tr>
-      <th>1959-10-01</th>
-      <td>2785.204</td>
-      <td>1753.7</td>
-      <td>299.356</td>
-      <td>484.052</td>
-      <td>1931.3</td>
-      <td>29.37</td>
-      <td>140.0</td>
-      <td>4.33</td>
-      <td>5.6</td>
-      <td>179.386</td>
-      <td>0.27</td>
-      <td>4.06</td>
-    </tr>
-    <tr>
-      <th>1960-01-01</th>
-      <td>2847.699</td>
-      <td>1770.5</td>
-      <td>331.722</td>
-      <td>462.199</td>
-      <td>1955.5</td>
-      <td>29.54</td>
-      <td>139.6</td>
-      <td>3.50</td>
-      <td>5.2</td>
-      <td>180.007</td>
-      <td>2.31</td>
-      <td>1.19</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <section id="future-covariates">
 <h4>Future covariates<a class="headerlink" href="#future-covariates" title="Permalink to this headline">#</a></h4>
 <p>Most important algorithms support future covariates, except for TBATS and some Deep Learning models. In fact, they have been introduced in the early days of forecasting models under the name <em>exogenous</em> (while the original series is called <em>endogenous</em>).</p>
 <p>As stated earlier, future covariates are simply deterministic events such as holidays and weekdays. Darts provides a convenient way to produces such features by specifying datetime attributes, using the parameter <code class="docutils literal notranslate"><span class="pre">add_encoders</span></code> in the supported algorithms. The detailed usage can be found <a class="reference external" href="https://unit8co.github.io/darts/generated_api/darts.dataprocessing.encoders.encoders.html">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">futureCovar</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;cyclic&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;future&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;quarter&#39;</span><span class="p">]},</span>
+    <span class="s1">&#39;datetime_attribute&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;future&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;dayofweek&#39;</span><span class="p">]},</span>
+<span class="p">}</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoARIMA</span><span class="p">(</span><span class="n">add_encoders</span><span class="o">=</span><span class="n">futureCovar</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tsTrain</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;darts.models.forecasting.sf_auto_arima.StatsForecastAutoARIMA at 0x7fec3b887e20&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">mae</span> <span class="o">=</span> <span class="n">MAE</span><span class="p">(</span><span class="n">tsTest</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">)</span>
+<span class="n">mape</span> <span class="o">=</span> <span class="n">MAPE</span><span class="p">(</span><span class="n">tsTest</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
+<span class="n">mase</span> <span class="o">=</span> <span class="n">MASE</span><span class="p">(</span><span class="n">tsTest</span><span class="p">,</span> <span class="n">tsPred</span><span class="p">,</span> <span class="n">tsTrain</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">tsPred</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;forecast&#39;</span><span class="p">,</span> <span class="n">low_quantile</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">high_quantile</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MAE = </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | MAPE = </span><span class="si">{</span><span class="n">mape</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1"> | MASE = </span><span class="si">{</span><span class="n">mase</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_40_0.png"><img alt="../_images/darts-deep-forecasting_40_0.png" class="align-center" src="../_images/darts-deep-forecasting_40_0.png" style="width: 713.0px; height: 341.5px;" /></a>
+</div>
+</div>
 </section>
 <section id="past-covariates">
 <h4>Past covariates<a class="headerlink" href="#past-covariates" title="Permalink to this headline">#</a></h4>
@@ -2048,13 +1902,170 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_42_0.png"><img alt="../_images/darts-deep-forecasting_42_0.png" class="align-center" src="../_images/darts-deep-forecasting_42_0.png" style="width: 713.0px; height: 341.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/darts-deep-forecasting_45_0.png"><img alt="../_images/darts-deep-forecasting_45_0.png" class="align-center" src="../_images/darts-deep-forecasting_45_0.png" style="width: 713.0px; height: 341.5px;" /></a>
 </div>
 </div>
 </section>
 </section>
 <section id="backtesting">
 <h3>1.5. Backtesting<a class="headerlink" href="#backtesting" title="Permalink to this headline">#</a></h3>
+<p>Backtesting is another important aspect when solving, can be thought as the validation step for forecasting problems. Every forecasting models in Darts has two methods, <code class="docutils literal notranslate"><span class="pre">historical_forecasts()</span></code> for computing historical predictions at each cutoff (also called backcasts) and <code class="docutils literal notranslate"><span class="pre">backtest()</span></code> for computing average scores. Both use the same parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">start</span></code>: the cutoff point to start backtesting, defaults to <em>None</em> (automatically determined). Can be set to a float (fraction of data from index 0), an integer (index) or a specific timestamp.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stride</span></code>: the number of time steps between two cutoffs, defaults to <em>1</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">train_length</span></code>: the number of training data used for each cutoff, defaults to <em>None</em> (using all data from index 0, equivalent to expanding window). Can be set to an integer, equivalent to rolling window strategy.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">forecast_horizon</span> </code>: the length of forecasting horizon, defaults to <em>1</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">retrain</span></code>: whether to retrain the model at each iteration, defaults to <em>True</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: the scoring function, defaults to <em>MAPE</em>. Can be either a single of a list of Dart’s scoring functions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reduction</span></code>: the aggregate function to summary scores at different cutoffs, defaults to <em>np.mean</em>. Can set to <em>None</em>, which will return all scores.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">series</span></code>, <code class="docutils literal notranslate"><span class="pre">past_covariates</span> </code>, <code class="docutils literal notranslate"><span class="pre">future_covariates</span></code>, <code class="docutils literal notranslate"><span class="pre">num_samples</span></code>: same usage as in the <code class="docutils literal notranslate"><span class="pre">predict()</span></code> method.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfEco</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/macroeconomic.csv&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s1">&#39;period&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime64&#39;</span><span class="p">})</span>
+    <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;period&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s1">&#39;QS&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">tsEco</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">dfEco</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsTrain</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">tsTest</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[</span><span class="s1">&#39;realgovt&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">20</span><span class="p">:]</span>
+<span class="n">tsCovar</span> <span class="o">=</span> <span class="n">tsEco</span><span class="p">[[</span><span class="s1">&#39;realinv&#39;</span><span class="p">,</span> <span class="s1">&#39;tbilrate&#39;</span><span class="p">,</span> <span class="s1">&#39;unemp&#39;</span><span class="p">,</span> <span class="s1">&#39;realint&#39;</span><span class="p">]][:</span><span class="o">-</span><span class="mi">20</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">AutoARIMA</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tsTrain</span><span class="p">)</span>
+<span class="n">tsPred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">paramsBacktest</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">series</span><span class="o">=</span><span class="n">tsTrain</span><span class="p">,</span>
+    <span class="n">past_covariates</span><span class="o">=</span><span class="n">tsCovar</span><span class="p">,</span>
+    <span class="n">start</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;1970-01-01&#39;</span><span class="p">),</span>
+    <span class="n">stride</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+    <span class="n">last_points_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">forecast_horizon</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">listDate</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;1970-01-01&#39;</span><span class="p">,</span> <span class="n">tsTrain</span><span class="o">.</span><span class="n">time_index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;40QS&#39;</span><span class="p">)</span>
+<span class="n">listScore</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">backtest</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="p">[</span><span class="n">MAPE</span><span class="p">,</span> <span class="n">MAE</span><span class="p">],</span> <span class="n">reduction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">paramsBacktest</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">date</span><span class="p">,</span> <span class="p">(</span><span class="n">mape</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">listDate</span><span class="p">,</span> <span class="n">listScore</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s1"> | MAPE=</span><span class="si">{</span><span class="n">mape</span><span class="o">/</span><span class="mi">100</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1"> | MAE=</span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1970-01-01 00:00:00 | MAPE=6.71% | MAE=37.65
+1980-01-01 00:00:00 | MAPE=4.74% | MAE=26.51
+1990-01-01 00:00:00 | MAPE=1.62% | MAE=13.02
+2000-01-01 00:00:00 | MAPE=2.65% | MAE=18.46
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">listBackcast</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">historical_forecasts</span><span class="p">(</span><span class="o">**</span><span class="n">paramsBacktest</span><span class="p">)</span>
+<span class="n">listBackcast</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pd_dataframe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>component</th>
+      <th>realgovt</th>
+    </tr>
+    <tr>
+      <th>period</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000-01-01</th>
+      <td>712.250980</td>
+    </tr>
+    <tr>
+      <th>2000-04-01</th>
+      <td>714.973597</td>
+    </tr>
+    <tr>
+      <th>2000-07-01</th>
+      <td>718.982472</td>
+    </tr>
+    <tr>
+      <th>2000-10-01</th>
+      <td>722.843432</td>
+    </tr>
+    <tr>
+      <th>2001-01-01</th>
+      <td>725.930015</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">backtest()</span></code> method is designed for hyperparameter tuning, it does not support testing at a specific time. A workaround solution is to provide a timestamp and a large stride.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">paramsBacktest</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">series</span><span class="o">=</span><span class="n">tsTrain</span><span class="p">,</span>
+    <span class="n">past_covariates</span><span class="o">=</span><span class="n">tsCovar</span><span class="p">,</span>
+    <span class="n">start</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;1970-01-01&#39;</span><span class="p">),</span>
+    <span class="n">stride</span><span class="o">=</span><span class="n">tsTrain</span><span class="o">.</span><span class="n">n_timesteps</span><span class="p">,</span>
+    <span class="n">last_points_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">forecast_horizon</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">backtest</span><span class="p">(</span><span class="o">**</span><span class="n">paramsBacktest</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.7082212689969865
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="deep-forecasters">
