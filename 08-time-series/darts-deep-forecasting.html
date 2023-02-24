@@ -1956,10 +1956,11 @@ title="Print to PDF"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">paramsBacktest</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
     <span class="n">series</span><span class="o">=</span><span class="n">tsTrain</span><span class="p">,</span>
     <span class="n">past_covariates</span><span class="o">=</span><span class="n">tsCovar</span><span class="p">,</span>
+    <span class="n">num_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
     <span class="n">start</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;1970-01-01&#39;</span><span class="p">),</span>
     <span class="n">stride</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
     <span class="n">last_points_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">forecast_horizon</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">forecast_horizon</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1975,10 +1976,10 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1970-01-01 00:00:00 | MAPE=6.71% | MAE=37.65
-1980-01-01 00:00:00 | MAPE=4.74% | MAE=26.51
-1990-01-01 00:00:00 | MAPE=1.62% | MAE=13.02
-2000-01-01 00:00:00 | MAPE=2.65% | MAE=18.46
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1970-01-01 00:00:00 | MAPE=12.80% | MAE=67.23
+1980-01-01 00:00:00 | MAPE=8.30% | MAE=48.85
+1990-01-01 00:00:00 | MAPE=1.48% | MAE=11.77
+2000-01-01 00:00:00 | MAPE=3.53% | MAE=26.55
 </pre></div>
 </div>
 </div>
@@ -1986,60 +1987,17 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">listBackcast</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">historical_forecasts</span><span class="p">(</span><span class="o">**</span><span class="n">paramsBacktest</span><span class="p">)</span>
-<span class="n">listBackcast</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pd_dataframe</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">tsTrain</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">backcast</span> <span class="ow">in</span> <span class="n">listBackcast</span><span class="p">:</span>
+    <span class="n">backcast</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;indianred&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>component</th>
-      <th>realgovt</th>
-    </tr>
-    <tr>
-      <th>period</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2000-01-01</th>
-      <td>712.250980</td>
-    </tr>
-    <tr>
-      <th>2000-04-01</th>
-      <td>714.973597</td>
-    </tr>
-    <tr>
-      <th>2000-07-01</th>
-      <td>718.982472</td>
-    </tr>
-    <tr>
-      <th>2000-10-01</th>
-      <td>722.843432</td>
-    </tr>
-    <tr>
-      <th>2001-01-01</th>
-      <td>725.930015</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<img alt="../_images/darts-deep-forecasting_53_0.png" src="../_images/darts-deep-forecasting_53_0.png" />
+</div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>

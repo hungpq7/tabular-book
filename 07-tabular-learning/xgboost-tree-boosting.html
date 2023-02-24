@@ -1232,7 +1232,7 @@ title="Print to PDF"
 </div>
 <section id="xgboost">
 <h2>1. XGBoost<a class="headerlink" href="#xgboost" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://github.com/dmlc/xgboost">XGBoost</a> (eXtreme Gradient Boosting) is a variant of GBM released in 2014 and dominated competitions in 2015. XGBoost develops an unique tree mechanic using both <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient">gradient</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Hessian_matrix">hessian</a> of the loss function (these two terms refer to the first and second order derivatives in the context of univariate Calculus), while inherits the boosting process from GBM. Until now, it is still widely used by Data Scientists to achive state-of-the-art performance on tabular datasets.</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1603.02754">XGBoost</a> (eXtreme Gradient Boosting) is a variant of GBM released in 2014 and dominated competitions in 2015. XGBoost develops an unique tree mechanic using both <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient">gradient</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Hessian_matrix">hessian</a> of the loss function (these two terms refer to the first and second order derivatives in the context of univariate Calculus), while inherits the boosting process from GBM. Until now, it is still widely used by Data Scientists to achive state-of-the-art performance on tabular datasets.</p>
 <section id="algorithm">
 <h3>1.1. Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">#</a></h3>
 <section id="objective-function">
@@ -1469,12 +1469,6 @@ By enforcing such a relationship, we are helping our model to learn patterns bet
 
 <span class="n">modelLoaded</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">Booster</span><span class="p">()</span>
 <span class="n">modelLoaded</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/lib/python3.8/site-packages/xgboost/sklearn.py:722: UserWarning: callbacks is not saved in Scikit-Learn meta.
-  warnings.warn(str(k) + &#39; is not saved in Scikit-Learn meta.&#39;, UserWarning)
 </pre></div>
 </div>
 </div>
@@ -1726,7 +1720,7 @@ By enforcing such a relationship, we are helping our model to learn patterns bet
 </section>
 <section id="lightgbm">
 <h2>2. LightGBM<a class="headerlink" href="#lightgbm" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://github.com/microsoft/LightGBM">LightGBM</a> (Light Gradient Boosting Machines) is an implementation of Gradient Boosting developed by Microsoft in 2016, in attempt to deal with large datasets. According to <a class="reference external" href="https://proceedings.neurips.cc/paper/2017/file/6449f44a102fde848669bdd9eb6b76fa-Paper.pdf">LightGBM paper</a>, the main cost in GBDT lies in learning the decision trees, and the most time-consuming part in learning a decision tree is to find the best split points. XGBoost has developed histogram-based split finding that reduces the complexity of the algorithm from <span class="math notranslate nohighlight">\(O(\#instance \times \#feature)\)</span> to <span class="math notranslate nohighlight">\(O(\#bin \times \#feature)\)</span> where <span class="math notranslate nohighlight">\(\#bin\ll \#instance\)</span>, which outperforms other implementations in terms of memory consumption.</p>
+<p><a class="reference external" href="https://papers.nips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html">LightGBM</a> (Light Gradient Boosting Machines) is an implementation of Gradient Boosting developed by Microsoft in 2016, in attempt to deal with large datasets. According to paper, the main cost in GBDT lies in learning the decision trees, and the most time-consuming part in learning a decision tree is to find the best split points. XGBoost has developed histogram-based split finding that reduces the complexity of the algorithm from <span class="math notranslate nohighlight">\(O(\#instance \times \#feature)\)</span> to <span class="math notranslate nohighlight">\(O(\#bin \times \#feature)\)</span> where <span class="math notranslate nohighlight">\(\#bin\ll \#instance\)</span>, which outperforms other implementations in terms of memory consumption.</p>
 <p>However, XGBoost still does not meet the satisfactory of scalability when working on large datasets. To improve the performance of previous implementations, LightGBM introduces two novels techniques, GOSS (Gradient-based One-Side Sampling) for reducing data instances and EFB (Exclusive Feature Bundling) for reducing data dimensions.</p>
 <section id="id1">
 <h3>2.1. Algorithm<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
@@ -2037,7 +2031,7 @@ Early stopping, best iteration is:
 </section>
 <section id="catboost">
 <h2>3. CatBoost<a class="headerlink" href="#catboost" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://github.com/catboost/catboost">CatBoost</a> (Categorical Boosting) is a variant of Gradient Boosting developed by Yandex in 2017. CatBoost introduces <em>ordered encoding</em> and <em>ordered boosting</em>, two advanced algorithms to fight <em>prediction shift</em>, a special kind of target leakage presents in all other Graddient Boosting implementations. The implementation of CatBoost prepares default values for each hyperparameter carefully, which makes CatBoost works well without many effort in hyperparameter tuning.</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1706.09516">CatBoost</a> (Categorical Boosting) is a variant of Gradient Boosting developed by Yandex in 2017. CatBoost introduces <em>ordered encoding</em> and <em>ordered boosting</em>, two advanced algorithms to fight <em>prediction shift</em>, a special kind of target leakage presents in all other Graddient Boosting implementations. The implementation of CatBoost prepares default values for each hyperparameter carefully, which makes CatBoost works well without many effort in hyperparameter tuning.</p>
 <section id="id6">
 <h3>3.1. Algorithm<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
 <section id="ordered-encoding">
@@ -2529,7 +2523,7 @@ Shrink model to first 396 iterations.
 </section>
 <section id="ngboost">
 <h2>4. NGBoost<a class="headerlink" href="#ngboost" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://github.com/stanfordmlgroup/ngboost">NGBoost</a> (Natural Gradient Boosting) is published in 2018 by Duan and Avati in order to add probabilistic <em>prediction interval</em> to point estimation which is typically seen in most regression algorithms. However, unlike XGBoost, LightGBM and CatBoost who integrate so many hyperparameters, optimizations, suppports and customizations; NGBoost’s implementation is quite simple.</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1910.03225">NGBoost</a> (Natural Gradient Boosting) is published in 2018 by Duan and Avati in order to add probabilistic <em>prediction interval</em> to point estimation which is typically seen in most regression algorithms. However, unlike XGBoost, LightGBM and CatBoost who integrate so many hyperparameters, optimizations, suppports and customizations; NGBoost’s implementation is quite simple.</p>
 <section id="id12">
 <h3>4.1. Algorithm<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
 <p><em>Input</em>: mostly the same as other tree boosting algorithms, with some differences:</p>
@@ -2919,13 +2913,8 @@ Shrink model to first 396 iterations.
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em>cs.columbia - <a class="reference external" href="http://www.cs.columbia.edu/~jebara/6772/papers/IntroToBoosting.pdf">A short introduction to Boosting</a></em></p></li>
-<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1603.02754.pdf">XGBoost: A scalable tree boosting system</a></em></p></li>
-<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1706.09516.pdf">CatBoost: Unbiased Boosting with categorical features</a></em></p></li>
-<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1910.03225.pdf">NGBoost: Natural Gradient Boosting for probabilistic prediction</a></em></p></li>
 <li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1505.01866.pdf">DART: Dropouts meet Multiple Additive Regression Trees</a></em></p></li>
 <li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1802.05640.pdf">Gradient Boosting with Piece-Wise Linear Regression Trees</a></em></p></li>
-<li><p><em>papers.nips - <a class="reference external" href="https://papers.nips.cc/paper/2017/file/6449f44a102fde848669bdd9eb6b76fa-Paper.pdf">LightGBM: A highly efficient Gradient Boosting Decision Tree</a></em></p></li>
 <li><p><em>papers.nips - <a class="reference external" href="https://papers.nips.cc/paper/2017/file/4fac9ba115140ac4f1c22da82aa0bc7f-Paper.pdf">Cost efficient gradient boosting</a></em></p></li>
 <li><p><em>deep-and-shallow - <a class="reference external" href="https://deep-and-shallow.com/2020/06/27/the-gradient-boosters-vib-ngboost/">The Gradient Booster IV(B): NGBoost</a></em></p></li>
 <li><p><em>medium - <a class="reference external" href="https://pub.towardsai.net/state-of-the-art-models-in-every-machine-learning-field-2021-c7cf074da8b2">State of the Art Models in Every Machine Learning Field 2021</a></em></p></li>
