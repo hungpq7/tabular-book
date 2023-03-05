@@ -887,11 +887,45 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#attention">
      2.2. Attention
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bahdanau-style">
+       Bahdanau style
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#luong-style">
+       Luong style
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#attention-mechanism">
+       Attention mechanism
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#transformer">
      2.2. Transformer
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#scaled-dot-product">
+       Scaled dot product
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#self-attention">
+       Self Attention
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#positional-encoding">
+       Positional encoding
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -1030,11 +1064,45 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#attention">
      2.2. Attention
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bahdanau-style">
+       Bahdanau style
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#luong-style">
+       Luong style
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#attention-mechanism">
+       Attention mechanism
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#transformer">
      2.2. Transformer
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#scaled-dot-product">
+       Scaled dot product
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#self-attention">
+       Self Attention
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#positional-encoding">
+       Positional encoding
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -1410,9 +1478,11 @@ _________________________________________________________________
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Seq2seq">Seq2Seq</a> (Sequence-to-Sequence) is a Deep Learning architecture published in 2014 mainly for <a class="reference external" href="https://en.wikipedia.org/wiki/Neural_machine_translation">neural machine translation</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Question_answering">question answering</a>. It aims to transform an input sequence to a new one, both can be of arbitrary lengths. Its design is very natural to translation problems, and has resolved the fixed-length constraint in standalone recurrent layers.</p>
 <section id="id4">
 <h4>Architecture<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
-<p>The Seq2Seq uses an encoder-decoder architecture, in which each process uses a recurrent layer(s) such as LSTM and GRU. With <span class="math notranslate nohighlight">\((\mathbf{x}_1,\dots,\mathbf{x}_M)\)</span> a source sentence and <span class="math notranslate nohighlight">\((\mathbf{y}_1,\dots,\mathbf{y}_N)\)</span> the target sentence, the architecture of Seq2Seq is described in the following image:</p>
-<p>The <em>encoder</em> is simply a recurrent layer where the hidden state at a time step is expressed by <span class="math notranslate nohighlight">\((\mathbf{x}_m,\mathbf{e}_{m-1})\mapsto\mathbf{e}_m\)</span>. The last hidden state will be used as the output, known under the name <em>context vector</em> <span class="math notranslate nohighlight">\(\mathbf{c}=\mathbf{e}_M\)</span> (sometimes called <em>sentence embedding</em> or <em>thought vector</em>).</p>
-<p>The <em>decoder</em> is a bit different, in which the hidden state has the signature <span class="math notranslate nohighlight">\((\mathbf{y}_{n-1},\mathbf{d}_{n-1})\mapsto\mathbf{d}_n\)</span>. Note that each hidden state <span class="math notranslate nohighlight">\(\mathbf{d}_n\)</span> must be computed using previous target token <span class="math notranslate nohighlight">\(\mathbf{y}_{n-1}\)</span> to prevent target leakage. We also include <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> as the initialization state.</p>
+<p>The Seq2Seq uses an encoder-decoder architecture, in which each process uses a recurrent layer(s) such as LSTM and GRU. With <span class="math notranslate nohighlight">\((\mathbf{x}_1,\dots,\mathbf{x}_S)\)</span> a source sentence and <span class="math notranslate nohighlight">\((\mathbf{y}_1,\dots,\mathbf{y}_T)\)</span> the target sentence, the architecture of Seq2Seq is described in the following image:</p>
+<a class="reference internal image-reference" href="../_images/seq2seq.png"><img alt="../_images/seq2seq.png" class="align-center" src="../_images/seq2seq.png" style="height: 250px;" /></a>
+<br>
+<p>The <em>encoder</em> is simply a recurrent layer where the hidden state at a time step is expressed by <span class="math notranslate nohighlight">\((\mathbf{x}_s,\mathbf{e}_{s-1})\mapsto\mathbf{e}_s\)</span>. The last hidden state will be used as the output, known under the name <em>context vector</em> <span class="math notranslate nohighlight">\(\mathbf{c}=\mathbf{e}_S\)</span> (sometimes called <em>sentence embedding</em> or <em>thought vector</em>).</p>
+<p>The <em>decoder</em> is a bit different, in which the hidden state has the signature <span class="math notranslate nohighlight">\((\mathbf{y}_{t-1},\mathbf{d}_{t-1})\mapsto\mathbf{d}_t\)</span>. Note that each hidden state <span class="math notranslate nohighlight">\(\mathbf{d}_t\)</span> must be computed using previous target token <span class="math notranslate nohighlight">\(\mathbf{y}_{t-1}\)</span> to prevent target leakage. We also include <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> as the initialization state.</p>
 <p>Because our goal is to take string input to predict string output, pre-trained embedding will not be used, at least for target text. Therefore, an embedding layer is used to process data in both encoder and decoder. This layer turns each word into a vector, just like Word2Vec or BERT do, but all embedding values are treated learnable parameters by our network.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1422,20 +1492,6 @@ _________________________________________________________________
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tensorflow_addons.seq2seq.basic_decoder.BasicDecoder at 0x7fa012776fa0&gt;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">units</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">()</span>
-    
-    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        
 </pre></div>
 </div>
 </div>
@@ -1457,10 +1513,30 @@ _________________________________________________________________
 <li><p><a class="reference external" href="https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f">https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f</a></p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7">https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7</a></p></li>
 </ul>
+<section id="bahdanau-style">
+<h4>Bahdanau style<a class="headerlink" href="#bahdanau-style" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://arxiv.org/abs/1409.0473">https://arxiv.org/abs/1409.0473</a></p>
+</section>
+<section id="luong-style">
+<h4>Luong style<a class="headerlink" href="#luong-style" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://arxiv.org/abs/1508.04025">https://arxiv.org/abs/1508.04025</a></p>
+</section>
+<section id="attention-mechanism">
+<h4>Attention mechanism<a class="headerlink" href="#attention-mechanism" title="Permalink to this headline">#</a></h4>
+</section>
 </section>
 <section id="transformer">
 <h3>2.2. Transformer<a class="headerlink" href="#transformer" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformer</a></p>
+<section id="scaled-dot-product">
+<h4>Scaled dot product<a class="headerlink" href="#scaled-dot-product" title="Permalink to this headline">#</a></h4>
+</section>
+<section id="self-attention">
+<h4>Self Attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">#</a></h4>
+</section>
+<section id="positional-encoding">
+<h4>Positional encoding<a class="headerlink" href="#positional-encoding" title="Permalink to this headline">#</a></h4>
+</section>
 </section>
 </section>
 <section id="resources">

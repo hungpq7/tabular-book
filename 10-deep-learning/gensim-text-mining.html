@@ -907,8 +907,13 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#w-bert">
-       (w) BERT
+      <a class="reference internal nav-link" href="#bert">
+       BERT
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#implementation">
+       Implementation
       </a>
      </li>
     </ul>
@@ -1126,8 +1131,13 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#w-bert">
-       (w) BERT
+      <a class="reference internal nav-link" href="#bert">
+       BERT
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#implementation">
+       Implementation
       </a>
      </li>
     </ul>
@@ -2142,18 +2152,30 @@ Each pair of a center vector and a context vector will contribute an observation
 <h3>2.3. Contextual embedding<a class="headerlink" href="#contextual-embedding" title="Permalink to this headline">#</a></h3>
 <p>Word embedding has done a decent job improving the text representation task, but they cannot handle <a class="reference external" href="https://en.wikipedia.org/wiki/Heteronym_(linguistics)">heteronyms</a>. This is because, the context is needed to determine the true meaning of such words. For example, the word “bank” in “river bank” and “bank deposit” has completely different meanings but will gain the same embedding by Word2Vec or GloVe.</p>
 <p>This problem can be solved using contextual embedding, a technique that pretrains a <em>logical</em> model rather than a <em>physical</em> vectors collection. The model has the capable of transforming a word into different embedding vectors based on specific context. Many contextual embedding methods have been proposed out there, where the most noticeable ones are ULMFiT, ELMo, BERT and <a class="reference external" href="https://tfhub.dev/google/collections/transformer_encoders_text/1">Transformer</a>.</p>
-<section id="w-bert">
-<h4>(w) BERT<a class="headerlink" href="#w-bert" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/BERT_(language_model)">BERT</a> (Bidirectional Encoder Representations from Transformers) is a state-of-the-art architecture for pretraining word representation proposed by Google in 2018. It is designed so that the embedding of a word takes into account both left and right context words. BERT models are pre-trained on a large corpus of text, can be then fine-tuned for specific tasks. There are a lot of BERT pre-train models can be found in TensorFlow Hub:</p>
+<section id="bert">
+<h4>BERT<a class="headerlink" href="#bert" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://arxiv.org/abs/1810.04805v2">BERT</a> (Bidirectional Encoder Representations from Transformers) is a state-of-the-art architecture for pretraining word representation proposed by Google in 2018. Its architechture consists of a fixed-size embedding layer (the sequence length is usually <span class="math notranslate nohighlight">\(T=128\)</span>) followed by <span class="math notranslate nohighlight">\(L\)</span> bi-directional Transformer layers, each has <span class="math notranslate nohighlight">\(A\)</span> attention heads and the hidden size of <span class="math notranslate nohighlight">\(H\)</span>. This design allows the embedding of each word can take into account both left and right context words, and is used for both  pre-training and fine-tuning phases presented as follows:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://tfhub.dev/google/collections/bert/1">BERT-base</a>, models by original authors</p></li>
-<li><p><a class="reference external" href="https://tfhub.dev/google/collections/experts/bert/1">BERT-experts</a>, fine-tuned BERT-base models for different domains</p></li>
+<li><p><em>Pre-training</em> is done using two unsupervised tasks, NSP (next sentence prediction) and MLM (masked language modeling). Here, NSP is the primary task; it forces the model to focus on the relationship between sentence pairs, which is popular in NLP applications such as question answering. MLM, on the other hand, enhances the contextual expressivity by masking <span class="math notranslate nohighlight">\(15\%\)</span> words at random and ask the model to predict them.</p></li>
+<li><p><em>Fine-tuning</em> in BERT is the process of retraining all pre-trained parameters using task-specific inputs and outputs (these tasks are called <em>downstream</em>). The learning rate in this phase is set to be very small so that the model doesn’t erase what it has learned so far. In terms of training time, this phase only takes several hours while pre-training takes days.</p></li>
+</ul>
+<p>There are a lot of BERT pre-train models can be found in TensorFlow Hub:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tfhub.dev/google/collections/bert/1">BERT-base</a>, pre-trained models (original)</p></li>
+<li><p><a class="reference external" href="https://tfhub.dev/google/collections/experts/bert/1">BERT-experts</a>, fine-tuned models for different tasks and domains (original)</p></li>
 <li><p><a class="reference external" href="https://tfhub.dev/google/collections/albert/1">ALBERT</a>, a lite version of BERT with reduced number of parameters</p></li>
 <li><p><a class="reference external" href="https://tfhub.dev/google/collections/electra/1">ELECTRA</a>, a BERT-like architecture that pre-trains a discriminator</p></li>
 </ul>
-<p>When using BERT in TensorFlow, the corpus needs to go through a preprocessor first (read the documentation to know which processor should be used). Then, the BERT model takes the processed data as input to generate embedding vectors. This object has two important keys,
-<code class="docutils literal notranslate"><span class="pre">sequence_output</span></code> which represents each token a vector and
-<code class="docutils literal notranslate"><span class="pre">pooled_output</span></code> which represents the whole sequence a vector.</p>
+</section>
+<section id="implementation">
+<h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
+<p>When using BERT in TensorFlow, the corpus needs to go through a preprocessor first (read the documentation to know which processor should be used). Then, the BERT model takes the processed data as input to generate embedding vectors. This object has two important keys, <code class="docutils literal notranslate"><span class="pre">pooled_output</span></code> which represents the whole sequence a vector and <code class="docutils literal notranslate"><span class="pre">sequence_output</span></code> which represents each token a vector. The corpus embedding shapes for the later case is <span class="math notranslate nohighlight">\(N\times T\times H\)</span>, where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span> is the number of documents</p></li>
+<li><p><span class="math notranslate nohighlight">\(T\)</span> is the sequence length</p></li>
+<li><p><span class="math notranslate nohighlight">\(H\)</span> is the hidden size</p></li>
+</ul>
+<p>When choosing BERT model sizes, higher values of <span class="math notranslate nohighlight">\(L\)</span>, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(H\)</span> will increase complexity (and thus improve embedding quality), but only <span class="math notranslate nohighlight">\(H\)</span> affects embedding shape. We can also adjust sequence length by setting in the preprocessor, but the default value <span class="math notranslate nohighlight">\(T=128\)</span> works well in most cases.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bertProcessor</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="s1">&#39;https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3&#39;</span><span class="p">)</span>
@@ -2775,6 +2797,164 @@ b&#39;Ti\\u1ebfng Vi\\u1ec7t&#39;
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">underthesea</span><span class="p">[</span><span class="n">deep</span><span class="p">]</span> <span class="o">--</span><span class="n">user</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">tensorflow</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: tensorflow in /opt/anaconda3/lib/python3.8/site-packages (2.11.0)
+Requirement already satisfied: numpy&gt;=1.20 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (1.21.6)
+Requirement already satisfied: opt-einsum&gt;=2.3.2 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (3.3.0)
+Requirement already satisfied: tensorflow-io-gcs-filesystem&gt;=0.23.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (0.24.0)
+Requirement already satisfied: keras&lt;2.12,&gt;=2.11.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (2.11.0)
+Requirement already satisfied: setuptools in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (59.8.0)
+Requirement already satisfied: grpcio&lt;2.0,&gt;=1.24.3 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (1.43.0)
+Requirement already satisfied: google-pasta&gt;=0.1.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (0.2.0)
+Requirement already satisfied: termcolor&gt;=1.1.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (1.1.0)
+Requirement already satisfied: absl-py&gt;=1.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (1.0.0)
+Requirement already satisfied: protobuf&lt;3.20,&gt;=3.9.2 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (3.11.2)
+Requirement already satisfied: typing-extensions&gt;=3.6.6 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (4.3.0)
+Requirement already satisfied: gast&lt;=0.4.0,&gt;=0.2.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (0.4.0)
+Requirement already satisfied: six&gt;=1.12.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (1.15.0)
+Requirement already satisfied: packaging in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (21.3)
+Requirement already satisfied: h5py&gt;=2.9.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (2.10.0)
+Requirement already satisfied: flatbuffers&gt;=2.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (2.0)
+Requirement already satisfied: astunparse&gt;=1.6.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (1.6.3)
+Requirement already satisfied: wrapt&gt;=1.11.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (1.12.1)
+Requirement already satisfied: tensorflow-estimator&lt;2.12,&gt;=2.11.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (2.11.0)
+Requirement already satisfied: tensorboard&lt;2.12,&gt;=2.11 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (2.11.0)
+Requirement already satisfied: libclang&gt;=13.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow) (13.0.0)
+Requirement already satisfied: wheel&lt;1.0,&gt;=0.23.0 in /opt/anaconda3/lib/python3.8/site-packages (from astunparse&gt;=1.6.0-&gt;tensorflow) (0.38.4)
+Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.4.6)
+Requirement already satisfied: tensorboard-plugin-wit&gt;=1.6.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (1.8.1)
+Requirement already satisfied: requests&lt;3,&gt;=2.21.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.25.1)
+Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.6.0)
+Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.6.1)
+Requirement already satisfied: werkzeug&gt;=1.0.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (1.0.1)
+Requirement already satisfied: markdown&gt;=2.6.8 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (3.3.6)
+Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /opt/anaconda3/lib/python3.8/site-packages (from packaging-&gt;tensorflow) (2.4.7)
+Requirement already satisfied: cachetools&lt;6.0,&gt;=2.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (5.0.0)
+Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /opt/anaconda3/lib/python3.8/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.2.8)
+Requirement already satisfied: rsa&lt;5,&gt;=3.1.4 in /opt/anaconda3/lib/python3.8/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (4.8)
+Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /opt/anaconda3/lib/python3.8/site-packages (from google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (1.3.1)
+Requirement already satisfied: importlib-metadata&gt;=4.4 in /opt/anaconda3/lib/python3.8/site-packages (from markdown&gt;=2.6.8-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (4.11.1)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/anaconda3/lib/python3.8/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2022.6.15.1)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /opt/anaconda3/lib/python3.8/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (1.26.4)
+Requirement already satisfied: chardet&lt;5,&gt;=3.0.2 in /opt/anaconda3/lib/python3.8/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (4.0.0)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /opt/anaconda3/lib/python3.8/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.10)
+Requirement already satisfied: zipp&gt;=0.5 in /opt/anaconda3/lib/python3.8/site-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (3.4.1)
+Requirement already satisfied: pyasn1&lt;0.5.0,&gt;=0.4.6 in /opt/anaconda3/lib/python3.8/site-packages (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.4.8)
+Requirement already satisfied: oauthlib&gt;=3.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from requests-oauthlib&gt;=0.7.0-&gt;google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (3.2.0)
+
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip available: <span class=" -Color -Color-Red">22.3.1</span> -&gt; <span class=" -Color -Color-Green">23.0.1</span>
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">pip install --upgrade pip</span>
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">pip</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pip in /opt/anaconda3/lib/python3.8/site-packages (22.3.1)
+Collecting pip
+  Downloading pip-23.0.1-py3-none-any.whl (2.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.1/2.1 MB</span> <span class=" -Color -Color-Red">749.8 kB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>00:0100:01
+?25hInstalling collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 22.3.1
+    Uninstalling pip-22.3.1:
+      Successfully uninstalled pip-22.3.1
+Successfully installed pip-23.0.1
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;2.11.0&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: tensorflow-text in /Users/hungpq/.local/lib/python3.8/site-packages (2.8.2)
+Collecting tensorflow-text
+  Downloading tensorflow_text-2.11.0-cp38-cp38-macosx_10_9_x86_64.whl (5.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">5.6/5.6 MB</span> <span class=" -Color -Color-Red">1.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>00:0100:010m
+?25hRequirement already satisfied: tensorflow&lt;2.12,&gt;=2.11.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow-text) (2.11.0)
+Requirement already satisfied: tensorflow-hub&gt;=0.8.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow-text) (0.12.0)
+Requirement already satisfied: typing-extensions&gt;=3.6.6 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (4.3.0)
+Requirement already satisfied: h5py&gt;=2.9.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2.10.0)
+Requirement already satisfied: setuptools in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (59.8.0)
+Requirement already satisfied: absl-py&gt;=1.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.0.0)
+Requirement already satisfied: termcolor&gt;=1.1.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.1.0)
+Requirement already satisfied: libclang&gt;=13.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (13.0.0)
+Requirement already satisfied: protobuf&lt;3.20,&gt;=3.9.2 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (3.11.2)
+Requirement already satisfied: grpcio&lt;2.0,&gt;=1.24.3 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.43.0)
+Requirement already satisfied: tensorflow-io-gcs-filesystem&gt;=0.23.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (0.24.0)
+Requirement already satisfied: keras&lt;2.12,&gt;=2.11.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2.11.0)
+Requirement already satisfied: tensorboard&lt;2.12,&gt;=2.11 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2.11.0)
+Requirement already satisfied: six&gt;=1.12.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.15.0)
+Requirement already satisfied: tensorflow-estimator&lt;2.12,&gt;=2.11.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2.11.0)
+Requirement already satisfied: astunparse&gt;=1.6.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.6.3)
+Requirement already satisfied: numpy&gt;=1.20 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.21.6)
+Requirement already satisfied: google-pasta&gt;=0.1.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (0.2.0)
+Requirement already satisfied: wrapt&gt;=1.11.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.12.1)
+Requirement already satisfied: flatbuffers&gt;=2.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2.0)
+Requirement already satisfied: gast&lt;=0.4.0,&gt;=0.2.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (0.4.0)
+Requirement already satisfied: opt-einsum&gt;=2.3.2 in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (3.3.0)
+Requirement already satisfied: packaging in /opt/anaconda3/lib/python3.8/site-packages (from tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (21.3)
+Requirement already satisfied: wheel&lt;1.0,&gt;=0.23.0 in /opt/anaconda3/lib/python3.8/site-packages (from astunparse&gt;=1.6.0-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (0.38.4)
+Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2.6.0)
+Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (0.6.1)
+Requirement already satisfied: tensorboard-plugin-wit&gt;=1.6.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.8.1)
+Requirement already satisfied: werkzeug&gt;=1.0.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.0.1)
+Requirement already satisfied: markdown&gt;=2.6.8 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (3.3.6)
+Requirement already satisfied: requests&lt;3,&gt;=2.21.0 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2.25.1)
+Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /opt/anaconda3/lib/python3.8/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (0.4.6)
+Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /opt/anaconda3/lib/python3.8/site-packages (from packaging-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2.4.7)
+Requirement already satisfied: cachetools&lt;6.0,&gt;=2.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (5.0.0)
+Requirement already satisfied: rsa&lt;5,&gt;=3.1.4 in /opt/anaconda3/lib/python3.8/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (4.8)
+Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /opt/anaconda3/lib/python3.8/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (0.2.8)
+Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /opt/anaconda3/lib/python3.8/site-packages (from google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.3.1)
+Requirement already satisfied: importlib-metadata&gt;=4.4 in /opt/anaconda3/lib/python3.8/site-packages (from markdown&gt;=2.6.8-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (4.11.1)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /opt/anaconda3/lib/python3.8/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (1.26.4)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/anaconda3/lib/python3.8/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2022.6.15.1)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /opt/anaconda3/lib/python3.8/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (2.10)
+Requirement already satisfied: chardet&lt;5,&gt;=3.0.2 in /opt/anaconda3/lib/python3.8/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (4.0.0)
+Requirement already satisfied: zipp&gt;=0.5 in /opt/anaconda3/lib/python3.8/site-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (3.4.1)
+Requirement already satisfied: pyasn1&lt;0.5.0,&gt;=0.4.6 in /opt/anaconda3/lib/python3.8/site-packages (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (0.4.8)
+Requirement already satisfied: oauthlib&gt;=3.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from requests-oauthlib&gt;=0.7.0-&gt;google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow&lt;2.12,&gt;=2.11.0-&gt;tensorflow-text) (3.2.0)
+Installing collected packages: tensorflow-text
+  Attempting uninstall: tensorflow-text
+    Found existing installation: tensorflow-text 2.8.2
+    Uninstalling tensorflow-text-2.8.2:
+      Successfully uninstalled tensorflow-text-2.8.2
+Successfully installed tensorflow-text-2.11.0
+Note: you may need to restart the kernel to use updated packages.
 </pre></div>
 </div>
 </div>
