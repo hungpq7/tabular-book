@@ -889,6 +889,11 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#attention-mechanism">
+       Attention mechanism
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#bahdanau-style">
        Bahdanau style
       </a>
@@ -896,11 +901,6 @@ title="Print to PDF"
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#luong-style">
        Luong style
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#attention-mechanism">
-       Attention mechanism
       </a>
      </li>
     </ul>
@@ -911,13 +911,13 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#scaled-dot-product">
-       Scaled dot product
+      <a class="reference internal nav-link" href="#self-attention">
+       Self-attention
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#self-attention">
-       Self Attention
+      <a class="reference internal nav-link" href="#scaled-dot-product">
+       Scaled dot product
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -1066,6 +1066,11 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#attention-mechanism">
+       Attention mechanism
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#bahdanau-style">
        Bahdanau style
       </a>
@@ -1073,11 +1078,6 @@ title="Print to PDF"
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#luong-style">
        Luong style
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#attention-mechanism">
-       Attention mechanism
       </a>
      </li>
     </ul>
@@ -1088,13 +1088,13 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#scaled-dot-product">
-       Scaled dot product
+      <a class="reference internal nav-link" href="#self-attention">
+       Self-attention
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#self-attention">
-       Self Attention
+      <a class="reference internal nav-link" href="#scaled-dot-product">
+       Scaled dot product
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -1475,64 +1475,41 @@ _________________________________________________________________
 <h2>2. Recurrent architectures<a class="headerlink" href="#recurrent-architectures" title="Permalink to this headline">#</a></h2>
 <section id="seq2seq">
 <h3>2.1. Seq2Seq<a class="headerlink" href="#seq2seq" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Seq2seq">Seq2Seq</a> (Sequence-to-Sequence) is a Deep Learning architecture published in 2014 mainly for <a class="reference external" href="https://en.wikipedia.org/wiki/Neural_machine_translation">neural machine translation</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Question_answering">question answering</a>. It aims to transform an input sequence to a new one, both can be of arbitrary lengths. Its design is very natural to translation problems, and has resolved the fixed-length constraint in standalone recurrent layers.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Seq2seq">Seq2Seq</a>, introduced in the paper <a class="reference external" href="https://arxiv.org/abs/1409.3215">Sequence to Sequence Learning with Neural Networks</a> (2014), is a Deep Learning architecture desgined mainly for <a class="reference external" href="https://en.wikipedia.org/wiki/Neural_machine_translation">neural machine translation</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Question_answering">question answering</a>. It aims to transform an input sequence to a new one, both can be of arbitrary lengths. Its design is very natural to translation problems, and has resolved the fixed-length constraint in standalone recurrent layers.</p>
 <section id="id4">
 <h4>Architecture<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
 <p>The Seq2Seq uses an encoder-decoder architecture, in which each process uses a recurrent layer(s) such as LSTM and GRU. With <span class="math notranslate nohighlight">\((\mathbf{x}_1,\dots,\mathbf{x}_S)\)</span> a source sentence and <span class="math notranslate nohighlight">\((\mathbf{y}_1,\dots,\mathbf{y}_T)\)</span> the target sentence, the architecture of Seq2Seq is described in the following image:</p>
-<a class="reference internal image-reference" href="../_images/seq2seq.png"><img alt="../_images/seq2seq.png" class="align-center" src="../_images/seq2seq.png" style="height: 250px;" /></a>
+<a class="reference internal image-reference" href="../_images/seq2seq.png"><img alt="../_images/seq2seq.png" class="align-center" src="../_images/seq2seq.png" style="height: 300px;" /></a>
 <br>
 <p>The <em>encoder</em> is simply a recurrent layer where the hidden state at a time step is expressed by <span class="math notranslate nohighlight">\((\mathbf{x}_s,\mathbf{e}_{s-1})\mapsto\mathbf{e}_s\)</span>. The last hidden state will be used as the output, known under the name <em>context vector</em> <span class="math notranslate nohighlight">\(\mathbf{c}=\mathbf{e}_S\)</span> (sometimes called <em>sentence embedding</em> or <em>thought vector</em>).</p>
 <p>The <em>decoder</em> is a bit different, in which the hidden state has the signature <span class="math notranslate nohighlight">\((\mathbf{y}_{t-1},\mathbf{d}_{t-1})\mapsto\mathbf{d}_t\)</span>. Note that each hidden state <span class="math notranslate nohighlight">\(\mathbf{d}_t\)</span> must be computed using previous target token <span class="math notranslate nohighlight">\(\mathbf{y}_{t-1}\)</span> to prevent target leakage. We also include <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> as the initialization state.</p>
 <p>Because our goal is to take string input to predict string output, pre-trained embedding will not be used, at least for target text. Therefore, an embedding layer is used to process data in both encoder and decoder. This layer turns each word into a vector, just like Word2Vec or BERT do, but all embedding values are treated learnable parameters by our network.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfa</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">BasicDecoder</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">LSTMCell</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">sampler</span><span class="o">=</span><span class="n">tfa</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">TrainingSampler</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tensorflow_addons.seq2seq.basic_decoder.BasicDecoder at 0x7fa012776fa0&gt;
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="attention">
 <h3>2.2. Attention<a class="headerlink" href="#attention" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Attention_(machine_learning)">Attention</a> implement <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Attention"><code class="docutils literal notranslate"><span class="pre">Attention</span></code></a></p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://blog.floydhub.com/attention-mechanism/">https://blog.floydhub.com/attention-mechanism/</a></p></li>
-<li><p><a class="reference external" href="https://lilianweng.github.io/posts/2018-06-24-attention/">https://lilianweng.github.io/posts/2018-06-24-attention/</a></p></li>
-<li><p><a class="reference external" href="https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html">https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html</a></p></li>
-<li><p><a class="reference external" href="https://erdem.pl/2021/05/introduction-to-attention-mechanism">https://erdem.pl/2021/05/introduction-to-attention-mechanism</a></p></li>
-<li><p><a class="reference external" href="https://vaclavkosar.com/ml/transformers-self-attention-mechanism-simplified">https://vaclavkosar.com/ml/transformers-self-attention-mechanism-simplified</a></p></li>
-<li><p><a class="reference external" href="https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html">https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html</a></p></li>
-<li><p><a class="reference external" href="https://www.baeldung.com/cs/attention-mechanism-transformers">https://www.baeldung.com/cs/attention-mechanism-transformers</a></p></li>
-<li><p><a class="reference external" href="https://theaisummer.com/attention/">https://theaisummer.com/attention/</a></p></li>
-<li><p><a class="reference external" href="https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f">https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f</a></p></li>
-<li><p><a class="reference external" href="https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7">https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7</a></p></li>
-</ul>
+<section id="attention-mechanism">
+<h4>Attention mechanism<a class="headerlink" href="#attention-mechanism" title="Permalink to this headline">#</a></h4>
+<p>The idea of attention mechanism has been around for a while and has been applied in different areas. In the NLP field, it is first used to improve Seq2Seq, as introduced in the paper <a class="reference external" href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a> (2014). Then, in 2017, the paper <a class="reference external" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> generalizes attention mechanism using the concept of <em>query</em>, <em>key</em> and <em>values</em>, denoted respectively by <span class="math notranslate nohighlight">\(\mathbf{q}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>.</p>
+</section>
 <section id="bahdanau-style">
 <h4>Bahdanau style<a class="headerlink" href="#bahdanau-style" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://arxiv.org/abs/1409.0473">https://arxiv.org/abs/1409.0473</a></p>
+<p><a class="reference external" href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a> (2014)</p>
 </section>
 <section id="luong-style">
 <h4>Luong style<a class="headerlink" href="#luong-style" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://arxiv.org/abs/1508.04025">https://arxiv.org/abs/1508.04025</a></p>
-</section>
-<section id="attention-mechanism">
-<h4>Attention mechanism<a class="headerlink" href="#attention-mechanism" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://arxiv.org/abs/1508.04025">Effective Approaches to Attention-based Neural Machine Translation</a> (2015)</p>
 </section>
 </section>
 <section id="transformer">
 <h3>2.2. Transformer<a class="headerlink" href="#transformer" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformer</a></p>
+<section id="self-attention">
+<h4>Self-attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">#</a></h4>
+</section>
 <section id="scaled-dot-product">
 <h4>Scaled dot product<a class="headerlink" href="#scaled-dot-product" title="Permalink to this headline">#</a></h4>
-</section>
-<section id="self-attention">
-<h4>Self Attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">#</a></h4>
 </section>
 <section id="positional-encoding">
 <h4>Positional encoding<a class="headerlink" href="#positional-encoding" title="Permalink to this headline">#</a></h4>
@@ -1542,21 +1519,19 @@ _________________________________________________________________
 <section id="resources">
 <h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><em><a class="reference external" href="http://bioinf.jku.at">bioinf.jku.at</a> - <a class="reference external" href="https://www.bioinf.jku.at/publications/older/2604.pdf">Long Short-Term Memory</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1409.1259.pdf">On the Properties of Neural Machine Translation: Encoder–Decoder Approaches</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1409.3215v3.pdf">Sequence to Sequence Learning with Neural Networks</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1409.0473.pdf">Neural Machine Translation by Jointly Learning to Align and Translate</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1508.04025.pdf">Effective Approaches to Attention-based Neural Machine Translation</a></em></p></li>
-<li><p><em><a class="reference external" href="http://arxiv.org">arxiv.org</a> - <a class="reference external" href="https://arxiv.org/pdf/1706.03762.pdf">Attention is All You Need</a></em></p></li>
-<li><p><em><a class="reference external" href="http://amitness.com">amitness.com</a> - <a class="reference external" href="https://amitness.com/2020/04/recurrent-layers-keras/">Recurrent Keras layer</a></em></p></li>
-<li><p><em><a class="reference external" href="http://colah.github.io">colah.github.io</a> - <a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></em></p></li>
-<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="https://d2l.ai/chapter_recurrent-neural-networks/rnn.html">Recurrent Neural Networks</a></em></p></li>
-<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="https://d2l.ai/chapter_recurrent-modern/lstm.html">Long Short-Term Memory</a></em></p></li>
-<li><p><em><a class="reference external" href="http://d2l.ai">d2l.ai</a> - <a class="reference external" href="https://d2l.ai/chapter_recurrent-modern/gru.html">Gated Recurrent Units</a></em></p></li>
-<li><p><em>distill.pub - <a class="reference external" href="https://distill.pub/2019/memorization-in-rnns/">Memorization in RNNs</a></em></p></li>
-<li><p><em>distill.pub - <a class="reference external" href="https://distill.pub/2016/augmented-rnns/">Augumented RNNs</a></em></p></li>
-<li><p><em><a class="reference external" href="http://lilianweng.github.io">lilianweng.github.io</a> - <a class="reference external" href="https://lilianweng.github.io/posts/2018-06-24-attention/">Attention? Attention!</a></em></p></li>
-<li><p><em><a class="reference external" href="http://blog.floydhub.com">blog.floydhub.com</a> - <a class="reference external" href="https://blog.floydhub.com/attention-mechanism/amp/">Attention mechanism</a></em></p></li>
+<li><p><em>bioinf.jku - <a class="reference external" href="https://www.bioinf.jku.at/publications/older/2604.pdf">Long Short-Term Memory</a></em></p></li>
+<li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1409.1259.pdf">On the Properties of Neural Machine Translation: Encoder–Decoder Approaches</a></em></p></li>
+<li><p><em>amitness - <a class="reference external" href="https://amitness.com/2020/04/recurrent-layers-keras/">Recurrent Keras layer</a></em></p></li>
+<li><p><em>colah.github - <a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></em></p></li>
+<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_recurrent-neural-networks/rnn.html">Recurrent Neural Networks</a></em></p></li>
+<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_recurrent-modern/lstm.html">Long Short-Term Memory</a></em></p></li>
+<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_recurrent-modern/gru.html">Gated Recurrent Units</a></em></p></li>
+<li><p><em>distill - <a class="reference external" href="https://distill.pub/2019/memorization-in-rnns/">Memorization in RNNs</a></em></p></li>
+<li><p><em>distill - <a class="reference external" href="https://distill.pub/2016/augmented-rnns/">Augumented RNNs</a></em></p></li>
+<li><p><em>lilianweng.github - <a class="reference external" href="https://lilianweng.github.io/posts/2018-06-24-attention/">Attention? Attention!</a></em></p></li>
+<li><p><em>blog.floydhub - <a class="reference external" href="https://blog.floydhub.com/attention-mechanism/amp/">Attention mechanism</a></em></p></li>
+<li><p><em>sebastianraschka - <a class="reference external" href="https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html">Understanding and Coding the Self-Attention Mechanism of Large Language Models From Scratch</a></em></p></li>
+<li><p><em>slds-lmu.github - <a class="reference external" href="https://slds-lmu.github.io/seminar_nlp_ss20/attention-and-self-attention-for-nlp.html">Attention and Self-Attention for NLP</a></em></p></li>
 </ul>
 <hr class="docutils" />
 <ul class="simple">
@@ -1566,6 +1541,14 @@ _________________________________________________________________
 <li><p><a class="reference external" href="https://towardsdatascience.com/day-1-2-attention-seq2seq-models-65df3f49e263">https://towardsdatascience.com/day-1-2-attention-seq2seq-models-65df3f49e263</a></p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/seq2seq-model-in-tensorflow-ec0c557e560f">https://towardsdatascience.com/seq2seq-model-in-tensorflow-ec0c557e560f</a></p></li>
 <li><p><a class="reference external" href="https://storrs.io/attention/amp/">https://storrs.io/attention/amp/</a></p></li>
+<li><p><a class="reference external" href="https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html">https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html</a></p></li>
+<li><p><a class="reference external" href="https://erdem.pl/2021/05/introduction-to-attention-mechanism">https://erdem.pl/2021/05/introduction-to-attention-mechanism</a></p></li>
+<li><p><a class="reference external" href="https://vaclavkosar.com/ml/transformers-self-attention-mechanism-simplified">https://vaclavkosar.com/ml/transformers-self-attention-mechanism-simplified</a></p></li>
+<li><p><a class="reference external" href="https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html">https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html</a></p></li>
+<li><p><a class="reference external" href="https://www.baeldung.com/cs/attention-mechanism-transformers">https://www.baeldung.com/cs/attention-mechanism-transformers</a></p></li>
+<li><p><a class="reference external" href="https://theaisummer.com/attention/">https://theaisummer.com/attention/</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f">https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7">https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7</a></p></li>
 </ul>
 </section>
 <section id="installs">

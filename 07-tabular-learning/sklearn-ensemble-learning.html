@@ -1089,38 +1089,18 @@ title="Print to PDF"
 <h3>1.1. Big picture<a class="headerlink" href="#big-picture" title="Permalink to this headline">#</a></h3>
 <p>The branches of Ensemble Learning is summarized in the tree diagram below, where italic ones are specific algorithms.</p>
 <ul class="simple">
-<li><p>Stacking (Wolpert, 1992)</p>
+<li><p>Stacking (1992)</p>
 <ul>
 <li><p>Voting</p></li>
 <li><p>Stacking</p></li>
 <li><p>Blending</p></li>
 </ul>
 </li>
-<li><p>Bagging</p>
-<ul>
-<li><p><em>RandomForest</em> (Breiman, 1995)</p></li>
-<li><p><em>ExtraTrees</em> (Geurts, 2006)</p></li>
-</ul>
-</li>
+<li><p>Bagging: <em>RandomForest</em> (1995), <em>ExtraTrees</em> (2006)</p></li>
 <li><p>Boosting</p>
 <ul>
-<li><p>Adaptive Boosting</p>
-<ul>
-<li><p><em>AdaBoost</em> (Freund and Schapire, 1995)</p></li>
-</ul>
-</li>
-<li><p>Gradient Boosting</p>
-<ul>
-<li><p><em>GBDT</em> (Friedman, 2001)</p>
-<ul>
-<li><p><em>XGBoost</em> (Chen and Guestrin, 2014-02)</p></li>
-<li><p><em>LightGBM</em> (Guolin, 2016-08)</p></li>
-<li><p><em>CatBoost</em> (Yandex, 2017-07)</p></li>
-<li><p><em>NGBoost</em> (Duan and Avati, 2018-06)</p></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><p>Adaptive Boosting: <em>AdaBoost</em> (1997)</p></li>
+<li><p>Gradient Boosting: <em>GBDT</em> (2001), <em>XGBoost</em> (2014), <em>LightGBM</em> (2016), <em>CatBoost</em> (2017), <em>NGBoost</em> (2018)</p></li>
 </ul>
 </li>
 </ul>
@@ -1408,7 +1388,9 @@ AUC = 0.9749 [ExtraTreesClassifier]
 </ul>
 <section id="adaptive-boosting">
 <h3>4.1. Adaptive Boosting<a class="headerlink" href="#adaptive-boosting" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/AdaBoost">Adaptive Boosting</a> was originally designed for binary classification problems. This method can be used to boost any algorithm, but Decision Tree is always the go-to choice. More specifically, Decision Trees used here are very shallow, they only have one root and two leaves, explaining why they are also called Decision Stumps.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/AdaBoost">Adaptive Boosting</a>, published in the paper
+<a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S002200009791504X?via%3Dihub">A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting</a>
+(1997), was originally designed for binary classification problems. This method can be used to boost any algorithm, but Decision Tree is always the go-to choice. More specifically, Decision Trees used here are very shallow, they only have one root and two leaves, explaining why they are also called Decision Stumps.</p>
 <section id="algorithm">
 <h4>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">#</a></h4>
 <p><em>Input:</em></p>
