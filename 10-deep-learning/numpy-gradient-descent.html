@@ -1600,7 +1600,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </section>
 <section id="adadelta">
 <h4>AdaDelta<a class="headerlink" href="#adadelta" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://arxiv.org/abs/1212.5701">AdaDelta</a> (Adaptive <span class="math notranslate nohighlight">\(\Delta x\)</span>) has both been developed in around the same time, but independently with RMSprop. Its main idea is very much like RMSprop, with an additional variable <span class="math notranslate nohighlight">\(u_t\)</span>, the exponential smoothing of <span class="math notranslate nohighlight">\(\Delta^2 x_t\)</span>. Both <span class="math notranslate nohighlight">\(u_t\)</span> and <span class="math notranslate nohighlight">\(v_t\)</span> share the same smoothing parameter, <span class="math notranslate nohighlight">\(\rho\)</span>. The update rules of AdaDelta is given below:</p>
+<p>AdaDelta (Adaptive <span class="math notranslate nohighlight">\(\Delta x\)</span>), published in the paper <a class="reference external" href="https://arxiv.org/abs/1212.5701">ADADELTA: An Adaptive Learning Rate Method</a> (2012), has both been developed in around the same time, but independently with RMSprop. Its main idea is very much like RMSprop, with an additional variable <span class="math notranslate nohighlight">\(u_t\)</span>, the exponential smoothing of <span class="math notranslate nohighlight">\(\Delta^2 x_t\)</span>. Both <span class="math notranslate nohighlight">\(u_t\)</span> and <span class="math notranslate nohighlight">\(v_t\)</span> share the same smoothing parameter, <span class="math notranslate nohighlight">\(\rho\)</span>. The update rules of AdaDelta is given below:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 v_t &amp;= \rho v_{t-1}+(1-\rho)g_t^2 \\
@@ -1678,7 +1678,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <h3>2.3. Addams family<a class="headerlink" href="#addams-family" title="Permalink to this headline">#</a></h3>
 <section id="adam">
 <h4>Adam<a class="headerlink" href="#adam" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://arxiv.org/abs/1412.6980">Adam</a> (Adaptive Momentum) is the combination of Momentum and RMSprop. It inherits <span class="math notranslate nohighlight">\(m_t\)</span>, the exponential smoothing of <em>gradient</em> from Momentum and <span class="math notranslate nohighlight">\(v_t\)</span>, the exponential smoothing of <em>squared gradient</em> from RMSprop. According to the author of Adam, the inititialize value of <span class="math notranslate nohighlight">\(m_t\)</span> and <span class="math notranslate nohighlight">\(v_t\)</span> are 0 so they are biased towards 0, especially with a large smoothing factor. Adam fixes these biases by computing the corrected version of exponential smoothing, <span class="math notranslate nohighlight">\(\hat{m}_t\)</span> and <span class="math notranslate nohighlight">\(\hat{v}_t\)</span>.</p>
+<p>Adaptive Momentum, introduced in the paper <a class="reference external" href="https://arxiv.org/abs/1412.6980">Adam: A Method for Stochastic Optimization</a> (2014) is the combination of Momentum and RMSprop. It inherits <span class="math notranslate nohighlight">\(m_t\)</span>, the exponential smoothing of <em>gradient</em> from Momentum and <span class="math notranslate nohighlight">\(v_t\)</span>, the exponential smoothing of <em>squared gradient</em> from RMSprop. According to the author of Adam, the inititialize value of <span class="math notranslate nohighlight">\(m_t\)</span> and <span class="math notranslate nohighlight">\(v_t\)</span> are 0 so they are biased towards 0, especially with a large smoothing factor. Adam fixes these biases by computing the corrected version of exponential smoothing, <span class="math notranslate nohighlight">\(\hat{m}_t\)</span> and <span class="math notranslate nohighlight">\(\hat{v}_t\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 m_t &amp;= \gamma m_{t-1} + (1-\gamma)g_t \\
@@ -1782,7 +1782,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </section>
 <section id="adamax">
 <h4>AdaMax<a class="headerlink" href="#adamax" title="Permalink to this headline">#</a></h4>
-<p>While Adam only updates <span class="math notranslate nohighlight">\(v_t\)</span> using current gradient <span class="math notranslate nohighlight">\(g_t\)</span> and past gradient <span class="math notranslate nohighlight">\(v_{t-1}\)</span>, it scales the gradient inversely proportionally with <span class="math notranslate nohighlight">\(L_2\)</span> norm, AdaMax can generalize this update to the <span class="math notranslate nohighlight">\(L_p\)</span> norm. But with large value of <span class="math notranslate nohighlight">\(p\)</span>, norms become unstable, however <span class="math notranslate nohighlight">\(L_\infty\)</span> also generally exhibits stable behavior:
+<p>AdaMax is an improved version, introduced in the same paper with Adam. While Adam only updates <span class="math notranslate nohighlight">\(v_t\)</span> using current gradient <span class="math notranslate nohighlight">\(g_t\)</span> and past gradient <span class="math notranslate nohighlight">\(v_{t-1}\)</span>, it scales the gradient inversely proportionally with <span class="math notranslate nohighlight">\(L_2\)</span> norm, AdaMax can generalize this update to the <span class="math notranslate nohighlight">\(L_p\)</span> norm. But with large value of <span class="math notranslate nohighlight">\(p\)</span>, norms become unstable, however <span class="math notranslate nohighlight">\(L_\infty\)</span> also generally exhibits stable behavior:
 <span class="math notranslate nohighlight">\(\rho^\infty v_{t-1} + (1-\rho^\infty)|g_t|^\infty=\max(\rho v_{t-1},|g_t|)\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
@@ -1796,7 +1796,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </section>
 <section id="nadam">
 <h4>Nadam<a class="headerlink" href="#nadam" title="Permalink to this headline">#</a></h4>
-<p>Nadam (Nesterov accelerated Adam) is a combination of NAG and Adam. NAG performs more accurately than standard momentum because it allows to perform a more accurate step in the gradient direction by updating the parameters with the momentum step before computing the gradient.</p>
+<p>Nadam (Nesterov accelerated Adam), introduced in the paper <a class="reference external" href="https://openreview.net/forum?id=OM0jvwB8jIp57ZJjtNEZ">Incorporating Nesterov Momentum into Adam</a> (2016), is a combination of NAG and Adam. NAG performs more accurately than standard momentum because it allows to perform a more accurate step in the gradient direction by updating the parameters with the momentum step before computing the gradient.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 m_t &amp;= \gamma m_{t-1} + (1-\gamma)g_t \\
@@ -1809,7 +1809,7 @@ x_{t+1} &amp;= x_t+\Delta x_t
 </section>
 <section id="amsgrad">
 <h4>AMSGrad<a class="headerlink" href="#amsgrad" title="Permalink to this headline">#</a></h4>
-<p>AMSGrad is a variant of Adam which revisits the adaptive learning rate component in Adam and changes it to ensure that the current <span class="math notranslate nohighlight">\(v\)</span> is always larger than the <span class="math notranslate nohighlight">\(v\)</span> from the previous time step. In Adam, it has been observed that some minibatches provide large and informative gradients, but as these minibatches only occur rarely, exponential averaging diminishes their influence, which leads to poor convergence. By selecting max <span class="math notranslate nohighlight">\(v\)</span>, AMSGrad results in a non-increasing step size, which avoids the problems suffered by Adam.</p>
+<p>AMSGrad, introduced in the paper <a class="reference external" href="https://arxiv.org/abs/1904.09237v1">On the Convergence of Adam and Beyond</a> (2019) is a variant of Adam which revisits the adaptive learning rate component in Adam and changes it to ensure that the current <span class="math notranslate nohighlight">\(v\)</span> is always larger than the <span class="math notranslate nohighlight">\(v\)</span> from the previous time step. In Adam, it has been observed that some minibatches provide large and informative gradients, but as these minibatches only occur rarely, exponential averaging diminishes their influence, which leads to poor convergence. By selecting max <span class="math notranslate nohighlight">\(v\)</span>, AMSGrad results in a non-increasing step size, which avoids the problems suffered by Adam.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 m_t &amp;= \gamma m_{t-1} + (1-\gamma)g_t \\
@@ -1827,8 +1827,6 @@ x_{t+1} &amp;= x_t+\Delta x_t
 <li><p><em>ruder - <a class="reference external" href="https://www.ruder.io/optimizing-gradient-descent/">An overview of gradient descent optimization algorithms</a></em></p></li>
 <li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1212.0901v2.pdf">Advances in optimizing Recurrent Networks</a></em></p></li>
 <li><p><em>web.stanford - <a class="reference external" href="https://web.stanford.edu/~jduchi/projects/DuchiHaSi10_colt.pdf">Adaptive Subgradient Methods for Online Learning and Stochastic Optimization</a></em></p></li>
-<li><p><em>cs229.stanford - <a class="reference external" href="https://cs229.stanford.edu/proj2015/054_report.pdf">Incoporating Nesterov Momentum into Adam</a></em></p></li>
-<li><p><em>openreview - <a class="reference external" href="https://openreview.net/pdf?id=ryQu7f-RZ">On the Convergence of Adam and Beyond</a></em></p></li>
 <li><p><em>d2l - <a class="reference external" href="http://d2l.ai/chapter_optimization/index.html">Optimization algorithms</a></em></p></li>
 <li><p><em>distill - <a class="reference external" href="https://distill.pub/2017/momentum/">Why Momentum really works</a></em></p></li>
 <li><p><em>compphysics.github - <a class="reference external" href="https://compphysics.github.io/MachineLearningMSU/doc/pub/GradientOptim/html/._GradientOptim-bs000.html">Optimization and Gradient Methods</a></em></p></li>

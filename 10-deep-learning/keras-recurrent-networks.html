@@ -895,7 +895,7 @@ title="Print to PDF"
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#bahdanau-style">
-       Bahdanau style
+       Bahdanau-style
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -935,8 +935,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#installs">
-   Installs
+  <a class="reference internal nav-link" href="#install">
+   Install
   </a>
  </li>
 </ul>
@@ -1072,7 +1072,7 @@ title="Print to PDF"
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#bahdanau-style">
-       Bahdanau style
+       Bahdanau-style
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -1112,8 +1112,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#installs">
-   Installs
+  <a class="reference internal nav-link" href="#install">
+   Install
   </a>
  </li>
 </ul>
@@ -1488,14 +1488,35 @@ _________________________________________________________________
 </section>
 <section id="attention">
 <h3>2.2. Attention<a class="headerlink" href="#attention" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Attention_(machine_learning)">Attention</a> implement <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Attention"><code class="docutils literal notranslate"><span class="pre">Attention</span></code></a></p>
+<p>A weakness of Seq2Seq can be easily observed, is the bottleneck at the context vector <span class="math notranslate nohighlight">\(\mathbf{c}\)</span>, which prevents the network from remembering long sequences, especially the first part. This problem is resolved by applying an <a class="reference external" href="https://en.wikipedia.org/wiki/Attention_(machine_learning)">Attention mechanism</a> to compute a distinct context vector for each target token, proposed by Bahdanau in 2014. Note that the idea of Attention mechanism has been around for a while and has been applied in different areas, but this is the first time applied in the NLP field.</p>
 <section id="attention-mechanism">
 <h4>Attention mechanism<a class="headerlink" href="#attention-mechanism" title="Permalink to this headline">#</a></h4>
-<p>The idea of attention mechanism has been around for a while and has been applied in different areas. In the NLP field, it is first used to improve Seq2Seq, as introduced in the paper <a class="reference external" href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a> (2014). Then, in 2017, the paper <a class="reference external" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> generalizes attention mechanism using the concept of <em>query</em>, <em>key</em> and <em>values</em>, denoted respectively by <span class="math notranslate nohighlight">\(\mathbf{q}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>.</p>
+<p>In 2017, the paper
+<a class="reference external" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a>
+generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em> and <em>values</em>, denoted respectively by the vectors <span class="math notranslate nohighlight">\(\mathbf{q}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>.</p>
+<p>Let’s talk about <em>key</em> and <em>value</em> first, as they share the same meaning as in Python dictionaries, so they should be familiar to Data Scientists. Intuitively, think about a <em>key</em> as consumer behaviour and demographic data, and <em>value</em> as consumer income. Each pair of key-value forms an observation, then the database can be denoted <span class="math notranslate nohighlight">\(\mathcal{D}=\{(\mathbf{k}_1,\mathbf{v}_1),\ldots,(\mathbf{k}_N,\mathbf{v}_N)\}\)</span>. For a new user whose feature space denoted by <span class="math notranslate nohighlight">\(\mathbf{q}\)</span>, we perform a <em>query over the database</em> to calculate the <em>attention score</em>:</p>
+<div class="math notranslate nohighlight">
+\[\alpha_n=\text{softmax }\alpha(\mathbf{q},\mathbf{k}_n)\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\alpha\)</span> is the <em>alignment function</em> which measures the similarity between two vectors, in which the most simple form is just the dot product. This function outputs <span class="math notranslate nohighlight">\(\alpha_n\)</span>, implies how similar the query is to each key. In practice, we would want <span class="math notranslate nohighlight">\(\alpha_1,\ldots,\alpha_N\)</span> to (1) be positive and (2) add up to <span class="math notranslate nohighlight">\(1\)</span>, so that they resemble normalized weights. This is addressed nicely by applying a softmax function, explaining its existence in the formula. Now, the output for <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> can be easily computed as the weighted sum of all values in the database:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{o}=\sum_{n=1}^{N}{\alpha_n\mathbf{v}_n}\]</div>
+<a class="reference internal image-reference" href="../_images/attention_mechanism.png"><img alt="../_images/attention_mechanism.png" class="align-center" src="../_images/attention_mechanism.png" style="height: 300px;" /></a>
 </section>
 <section id="bahdanau-style">
-<h4>Bahdanau style<a class="headerlink" href="#bahdanau-style" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a> (2014)</p>
+<h4>Bahdanau-style<a class="headerlink" href="#bahdanau-style" title="Permalink to this headline">#</a></h4>
+<p>In the paper
+<a class="reference external" href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a>
+(2014), Bahdanau introduces Additive Attention being an extension to the Seq2Seq network. The architecture of this network leaves the encoder in Seq2Seq untouched (which produces hidden states <span class="math notranslate nohighlight">\(\mathbf{e}_1,\dots,\mathbf{e}_S\)</span>), and modifies only the decoder. Let’s say we are at decoder step <span class="math notranslate nohighlight">\(t\)</span>, the Attention mechanism is applied as follows:</p>
+<ul class="simple">
+<li><p>The encoder hidden states are used as both keys and the corresponding values: <span class="math notranslate nohighlight">\(\mathbf{k}_s=\mathbf{v}_s=\mathbf{e}_s\)</span></p></li>
+<li><p>The <em>previous</em> decoder hidden state is used as the query: <span class="math notranslate nohighlight">\(\mathbf{q}=\mathbf{d}_{t-1}\)</span></p></li>
+<li><p>The output of Attention mechanism is the context vector for the current step: <span class="math notranslate nohighlight">\(\mathbf{o}=\mathbf{c}_t\)</span></p></li>
+<li><p>The alignment function is designed to be <em>learnable</em> by concatenating the query and the key, then passing to two bias-free Fully Connected layers. The first layer with the weight <span class="math notranslate nohighlight">\(\mathbf{W}^{(1)}\)</span> brings <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> to the same dimension. The second layer with the weight <span class="math notranslate nohighlight">\(\mathbf{W}^{(2)}\)</span>, in fact, is just a vector that accounts for producing a scalar.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\alpha(\mathbf{q},\mathbf{k}_s)=\text{tanh}([\mathbf{q},\mathbf{k}_s]\mathbf{W}^{(1)})\mathbf{W}^{(2)} \]</div>
+<p>After producing <span class="math notranslate nohighlight">\(\mathbf{c}_t\)</span>, this vector is concatenated to <span class="math notranslate nohighlight">\(\mathbf{y}_{t-1}\)</span> and the signature of the decode is turned into <span class="math notranslate nohighlight">\(([\mathbf{y}_{t-1};\mathbf{c}_t],\mathbf{d}_{t-1})\mapsto\mathbf{d}_t\)</span>. This process is repeated for <span class="math notranslate nohighlight">\(t=1,2,\ldots,T\)</span>, in which the intialization is <span class="math notranslate nohighlight">\(\mathbf{d}_0=\mathbf{e}_S\)</span>.</p>
+<a class="reference internal image-reference" href="../_images/attention_bahdanau.png"><img alt="../_images/attention_bahdanau.png" class="align-center" src="../_images/attention_bahdanau.png" style="height: 350px;" /></a>
 </section>
 <section id="luong-style">
 <h4>Luong style<a class="headerlink" href="#luong-style" title="Permalink to this headline">#</a></h4>
@@ -1532,6 +1553,7 @@ _________________________________________________________________
 <li><p><em>blog.floydhub - <a class="reference external" href="https://blog.floydhub.com/attention-mechanism/amp/">Attention mechanism</a></em></p></li>
 <li><p><em>sebastianraschka - <a class="reference external" href="https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html">Understanding and Coding the Self-Attention Mechanism of Large Language Models From Scratch</a></em></p></li>
 <li><p><em>slds-lmu.github - <a class="reference external" href="https://slds-lmu.github.io/seminar_nlp_ss20/attention-and-self-attention-for-nlp.html">Attention and Self-Attention for NLP</a></em></p></li>
+<li><p><em>e2eml - <a class="reference external" href="https://e2eml.school/transformers.html">Transformers from Scratch</a></em></p></li>
 </ul>
 <hr class="docutils" />
 <ul class="simple">
@@ -1549,10 +1571,11 @@ _________________________________________________________________
 <li><p><a class="reference external" href="https://theaisummer.com/attention/">https://theaisummer.com/attention/</a></p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f">https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f</a></p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7">https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7</a></p></li>
+<li><p><a class="reference external" href="https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html">https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html</a></p></li>
 </ul>
 </section>
-<section id="installs">
-<h2>Installs<a class="headerlink" href="#installs" title="Permalink to this headline">#</a></h2>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python3 -m pip --version
