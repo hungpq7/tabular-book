@@ -900,7 +900,7 @@ title="Print to PDF"
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#luong-style">
-       Luong style
+       Luong-style
       </a>
      </li>
     </ul>
@@ -1077,7 +1077,7 @@ title="Print to PDF"
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#luong-style">
-       Luong style
+       Luong-style
       </a>
      </li>
     </ul>
@@ -1158,7 +1158,8 @@ title="Print to PDF"
 <p>This section introduces common blocks in recurrent architectures. Knowing each of them separately helps us understanding compicated designs better.</p>
 <section id="concatenation">
 <h4>Concatenation<a class="headerlink" href="#concatenation" title="Permalink to this headline">#</a></h4>
-<a class="reference internal image-reference" href="../_images/rnn_concatenation.png"><img alt="../_images/rnn_concatenation.png" class="align-center" src="../_images/rnn_concatenation.png" style="height: 100px;" /></a>
+<a class="reference internal image-reference" href="../_images/rnn_concatenation.png"><img alt="../_images/rnn_concatenation.png" class="align-center" src="../_images/rnn_concatenation.png" style="height: 300px;" /></a>
+<br>
 <p>Let’s say we want to transform two input vectors <span class="math notranslate nohighlight">\(\mathbf{u}\in\mathbb{R}^{U\times1}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\in\mathbb{R}^{V\times1}\)</span> into <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^{D\times1}\)</span>. Note that <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> are fixed dimensionalities of input, while <span class="math notranslate nohighlight">\(D\)</span> is the desired output size. With weight matrices
 <span class="math notranslate nohighlight">\(\mathbf{W}_{yu}\in\mathbb{R}^{D\times U},\mathbf{W}_{yv}\in\mathbb{R}^{D\times V}\)</span>
 and bias vector <span class="math notranslate nohighlight">\(\mathbf{b}_y\in\mathbb{R}^{D\times1}\)</span>,
@@ -1515,12 +1516,15 @@ generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em
 </ul>
 <div class="math notranslate nohighlight">
 \[\alpha(\mathbf{q},\mathbf{k}_s)=\text{tanh}([\mathbf{q},\mathbf{k}_s]\mathbf{W}^{(1)})\mathbf{W}^{(2)} \]</div>
-<p>After producing <span class="math notranslate nohighlight">\(\mathbf{c}_t\)</span>, this vector is concatenated to <span class="math notranslate nohighlight">\(\mathbf{y}_{t-1}\)</span> and the signature of the decode is turned into <span class="math notranslate nohighlight">\(([\mathbf{y}_{t-1};\mathbf{c}_t],\mathbf{d}_{t-1})\mapsto\mathbf{d}_t\)</span>. This process is repeated for <span class="math notranslate nohighlight">\(t=1,2,\ldots,T\)</span>, in which the intialization is <span class="math notranslate nohighlight">\(\mathbf{d}_0=\mathbf{e}_S\)</span>.</p>
-<a class="reference internal image-reference" href="../_images/attention_bahdanau.png"><img alt="../_images/attention_bahdanau.png" class="align-center" src="../_images/attention_bahdanau.png" style="height: 350px;" /></a>
+<p>After producing <span class="math notranslate nohighlight">\(\mathbf{c}_t\)</span>, this vector is concatenated to <span class="math notranslate nohighlight">\(\mathbf{y}_{t-1}\)</span> and the signature of the decode is turned into <span class="math notranslate nohighlight">\(([\mathbf{y}_{t-1};\mathbf{c}_t],\mathbf{d}_{t-1})\mapsto\mathbf{d}_t\)</span>. This process is repeated for <span class="math notranslate nohighlight">\(t=1,2,\ldots,T\)</span>, in which the intialization is <span class="math notranslate nohighlight">\(\mathbf{d}_0=\mathbf{e}_S\)</span>. The below image illustrates how to use Attention to predict the second word (<span class="math notranslate nohighlight">\(t-2\)</span>).</p>
+<a class="reference internal image-reference" href="../_images/attention_bahdanau.png"><img alt="../_images/attention_bahdanau.png" class="align-center" src="../_images/attention_bahdanau.png" style="height: 380px;" /></a>
 </section>
 <section id="luong-style">
-<h4>Luong style<a class="headerlink" href="#luong-style" title="Permalink to this headline">#</a></h4>
-<p><a class="reference external" href="https://arxiv.org/abs/1508.04025">Effective Approaches to Attention-based Neural Machine Translation</a> (2015)</p>
+<h4>Luong-style<a class="headerlink" href="#luong-style" title="Permalink to this headline">#</a></h4>
+<p>In 2015, Thang Luong proposed another Attention style via the paper
+<a class="reference external" href="https://arxiv.org/abs/1508.04025">Effective Approaches to Attention-based Neural Machine Translation</a>. It is also meant for improving Seq2Seq, with some two differences.</p>
+<p>First, there is a modification in the order of steps. With an intermediate variable <span class="math notranslate nohighlight">\(\tilde{d}_t\)</span>, the process of predicting the word “đi” is describled quite clearly in the image below.</p>
+<a class="reference internal image-reference" href="../_images/attention_luong.png"><img alt="../_images/attention_luong.png" class="align-center" src="../_images/attention_luong.png" style="height: 380px;" /></a>
 </section>
 </section>
 <section id="transformer">
