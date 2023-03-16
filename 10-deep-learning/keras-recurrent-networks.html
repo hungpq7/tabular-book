@@ -903,6 +903,11 @@ title="Print to PDF"
        Luong-style
       </a>
      </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#intuition">
+       Intuition
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -1078,6 +1083,11 @@ title="Print to PDF"
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#luong-style">
        Luong-style
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#intuition">
+       Intuition
       </a>
      </li>
     </ul>
@@ -1516,20 +1526,52 @@ generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em
 </ul>
 <div class="math notranslate nohighlight">
 \[\alpha(\mathbf{q},\mathbf{k}_s)=\text{tanh}([\mathbf{q},\mathbf{k}_s]\mathbf{W}^{(1)})\mathbf{W}^{(2)} \]</div>
-<p>After producing <span class="math notranslate nohighlight">\(\mathbf{c}_t\)</span>, this vector is concatenated to <span class="math notranslate nohighlight">\(\mathbf{y}_{t-1}\)</span> and the signature of the decode is turned into <span class="math notranslate nohighlight">\(([\mathbf{y}_{t-1};\mathbf{c}_t],\mathbf{d}_{t-1})\mapsto\mathbf{d}_t\)</span>. This process is repeated for <span class="math notranslate nohighlight">\(t=1,2,\ldots,T\)</span>, in which the intialization is <span class="math notranslate nohighlight">\(\mathbf{d}_0=\mathbf{e}_S\)</span>. The below image illustrates how to use Attention to predict the second word (<span class="math notranslate nohighlight">\(t-2\)</span>).</p>
+<p>After producing <span class="math notranslate nohighlight">\(\mathbf{c}_t\)</span>, this vector is concatenated to <span class="math notranslate nohighlight">\(\mathbf{y}_{t-1}\)</span> and the signature of the decode is turned into <span class="math notranslate nohighlight">\(([\mathbf{y}_{t-1};\mathbf{c}_t],\mathbf{d}_{t-1})\mapsto\mathbf{d}_t\)</span>. This process is repeated for <span class="math notranslate nohighlight">\(t=1,2,\ldots,T\)</span>, in which the intialization is <span class="math notranslate nohighlight">\(\mathbf{d}_0=\mathbf{e}_S\)</span>. The below image illustrates how to use Attention to predict the second word (<span class="math notranslate nohighlight">\(t=2\)</span>).</p>
 <a class="reference internal image-reference" href="../_images/attention_bahdanau.png"><img alt="../_images/attention_bahdanau.png" class="align-center" src="../_images/attention_bahdanau.png" style="height: 380px;" /></a>
 </section>
 <section id="luong-style">
 <h4>Luong-style<a class="headerlink" href="#luong-style" title="Permalink to this headline">#</a></h4>
 <p>In 2015, Thang Luong proposed another Attention style via the paper
-<a class="reference external" href="https://arxiv.org/abs/1508.04025">Effective Approaches to Attention-based Neural Machine Translation</a>. It is also meant for improving Seq2Seq, with some two differences.</p>
-<p>First, there is a modification in the order of steps. With an intermediate variable <span class="math notranslate nohighlight">\(\tilde{d}_t\)</span>, the process of predicting the word “đi” is describled quite clearly in the image below.</p>
+<a class="reference external" href="https://arxiv.org/abs/1508.04025">Effective Approaches to Attention-based Neural Machine Translation</a>. It is also meant for improving Seq2Seq, with two differences.</p>
+<p>First, there is a modification in the order of steps. With an intermediate variable <span class="math notranslate nohighlight">\(\tilde{\mathbf{d}}_t\)</span> used as query, Luong-style Attention is easier to implement and thus allows different alignment functions to be pluged in. The image below shows the prediction process for the same word as Bahdanau example.</p>
 <a class="reference internal image-reference" href="../_images/attention_luong.png"><img alt="../_images/attention_luong.png" class="align-center" src="../_images/attention_luong.png" style="height: 380px;" /></a>
+<p>The second difference in this paper, is the introduction of three new alignment functions:</p>
+<ul class="simple">
+<li><p><em>dot</em> (which is simply the dot product): <span class="math notranslate nohighlight">\(\alpha(\mathbf{q},\mathbf{k}_s)=\mathbf{q}^\text{T}\mathbf{k}_s\)</span></p></li>
+<li><p><em>general</em> (which extends the dot product to be learnable): <span class="math notranslate nohighlight">\(\alpha(\mathbf{q},\mathbf{k}_s)=\mathbf{q}^\text{T}\mathbf{W}\mathbf{k}_s\)</span></p></li>
+<li><p><em>location</em> (which is computed solely on the decoder hidden state): <span class="math notranslate nohighlight">\(\alpha(\mathbf{q},\mathbf{k}_s)=\mathbf{W}\mathbf{q}\)</span></p></li>
+</ul>
+</section>
+<section id="intuition">
+<h4>Intuition<a class="headerlink" href="#intuition" title="Permalink to this headline">#</a></h4>
+<p>Attention is not only powerful, but also interpretable.</p>
+<p>Imagine we are translating documents from English to Vietnamese. With the Seq2Seq model, we read the full sentence at once, remember it (context vector) and then translate. Because the context vector is too small to summarize the sentence, there will be a high chance that we <em>forget</em> some details from the English document. A better way is to write down <em>keywords</em> during reading, which will be very helpful for translation later. This is exactly what Attention trying to model: how each Vietnamese word <em>attends</em> to different parts of the English sentence.</p>
+<p>So can we ask the Attention model to <em>share</em> those <em>keywords</em> with us after learning? The answer is yes, they are the set of attention weights <span class="math notranslate nohighlight">\(\alpha_{t,s}\)</span>. They can be interpreted as a <span class="math notranslate nohighlight">\(S\times T\)</span> attention matrix.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)[</span><span class="mi">10</span><span class="p">:]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/keras-recurrent-networks_41_0.png"><img alt="../_images/keras-recurrent-networks_41_0.png" class="align-center" src="../_images/keras-recurrent-networks_41_0.png" style="width: 302.5px; height: 295.5px;" /></a>
+</div>
+</div>
 </section>
 </section>
 <section id="transformer">
 <h3>2.2. Transformer<a class="headerlink" href="#transformer" title="Permalink to this headline">#</a></h3>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformer</a></p>
+<p>The final boss is here: <a class="reference external" href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformer</a>, published in the paper
+<a class="reference external" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> (2017).
+It goes a step futher in applying Attention, which outperforms RNNs and become state-of-the-art for a long time.</p>
 <section id="self-attention">
 <h4>Self-attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">#</a></h4>
 </section>
@@ -1548,9 +1590,9 @@ generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em
 <li><p><em>arxiv - <a class="reference external" href="https://arxiv.org/pdf/1409.1259.pdf">On the Properties of Neural Machine Translation: Encoder–Decoder Approaches</a></em></p></li>
 <li><p><em>amitness - <a class="reference external" href="https://amitness.com/2020/04/recurrent-layers-keras/">Recurrent Keras layer</a></em></p></li>
 <li><p><em>colah.github - <a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></em></p></li>
-<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_recurrent-neural-networks/rnn.html">Recurrent Neural Networks</a></em></p></li>
-<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_recurrent-modern/lstm.html">Long Short-Term Memory</a></em></p></li>
-<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_recurrent-modern/gru.html">Gated Recurrent Units</a></em></p></li>
+<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_recurrent-neural-networks/index.html">Recurrent Neural Networks</a></em></p></li>
+<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_recurrent-modern/index.html">Modern Recurrent Neural Networks</a></em></p></li>
+<li><p><em>d2l - <a class="reference external" href="https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html">Attention Mechanisms and Transformers</a></em></p></li>
 <li><p><em>distill - <a class="reference external" href="https://distill.pub/2019/memorization-in-rnns/">Memorization in RNNs</a></em></p></li>
 <li><p><em>distill - <a class="reference external" href="https://distill.pub/2016/augmented-rnns/">Augumented RNNs</a></em></p></li>
 <li><p><em>lilianweng.github - <a class="reference external" href="https://lilianweng.github.io/posts/2018-06-24-attention/">Attention? Attention!</a></em></p></li>
@@ -1561,16 +1603,11 @@ generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em
 </ul>
 <hr class="docutils" />
 <ul class="simple">
-<li><p><a class="reference external" href="https://www.kaggle.com/code/tanulsingh077/deep-learning-for-nlp-zero-to-transformers-bert">https://www.kaggle.com/code/tanulsingh077/deep-learning-for-nlp-zero-to-transformers-bert</a></p></li>
-<li><p><a class="reference external" href="https://github.com/bentrevett/pytorch-seq2seq">https://github.com/bentrevett/pytorch-seq2seq</a></p></li>
-<li><p><a class="reference external" href="https://medium.com/analytics-vidhya/encoder-decoder-seq2seq-models-clearly-explained-c34186fbf49b">https://medium.com/analytics-vidhya/encoder-decoder-seq2seq-models-clearly-explained-c34186fbf49b</a></p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/day-1-2-attention-seq2seq-models-65df3f49e263">https://towardsdatascience.com/day-1-2-attention-seq2seq-models-65df3f49e263</a></p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/seq2seq-model-in-tensorflow-ec0c557e560f">https://towardsdatascience.com/seq2seq-model-in-tensorflow-ec0c557e560f</a></p></li>
 <li><p><a class="reference external" href="https://storrs.io/attention/amp/">https://storrs.io/attention/amp/</a></p></li>
-<li><p><a class="reference external" href="https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html">https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html</a></p></li>
 <li><p><a class="reference external" href="https://erdem.pl/2021/05/introduction-to-attention-mechanism">https://erdem.pl/2021/05/introduction-to-attention-mechanism</a></p></li>
 <li><p><a class="reference external" href="https://vaclavkosar.com/ml/transformers-self-attention-mechanism-simplified">https://vaclavkosar.com/ml/transformers-self-attention-mechanism-simplified</a></p></li>
-<li><p><a class="reference external" href="https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html">https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html</a></p></li>
 <li><p><a class="reference external" href="https://www.baeldung.com/cs/attention-mechanism-transformers">https://www.baeldung.com/cs/attention-mechanism-transformers</a></p></li>
 <li><p><a class="reference external" href="https://theaisummer.com/attention/">https://theaisummer.com/attention/</a></p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f">https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f</a></p></li>
