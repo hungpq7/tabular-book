@@ -1551,27 +1551,27 @@ generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)[</span><span class="mi">10</span><span class="p">:]</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
     <span class="n">df</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">cmap</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span>
-    <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/keras-recurrent-networks_41_0.png"><img alt="../_images/keras-recurrent-networks_41_0.png" class="align-center" src="../_images/keras-recurrent-networks_41_0.png" style="width: 302.5px; height: 295.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/keras-recurrent-networks_41_0.png"><img alt="../_images/keras-recurrent-networks_41_0.png" class="align-center" src="../_images/keras-recurrent-networks_41_0.png" style="width: 254.0px; height: 198.0px;" /></a>
 </div>
 </div>
 </section>
 </section>
 <section id="transformer">
 <h3>2.2. Transformer<a class="headerlink" href="#transformer" title="Permalink to this headline">#</a></h3>
-<p>The final boss is here: <a class="reference external" href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformer</a>, published in the paper
+<p>The final boss is here: state-of-the-art <a class="reference external" href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformer</a>, published in the paper
 <a class="reference external" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> (2017).
-It goes a step futher in applying Attention, which outperforms RNNs and become state-of-the-art for a long time.</p>
+It goes a step futher in applying Attention, which outperforms RNNs and becomes the foundation for many famous Deep Learning models such as BERT and GPT.</p>
 <section id="self-attention">
 <h4>Self-attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">#</a></h4>
 </section>
