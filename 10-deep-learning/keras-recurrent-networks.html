@@ -916,6 +916,11 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       Architecture
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#self-attention">
        Self-attention
       </a>
@@ -1097,6 +1102,11 @@ title="Print to PDF"
      2.2. Transformer
     </a>
     <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       Architecture
+      </a>
+     </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#self-attention">
        Self-attention
@@ -1517,7 +1527,7 @@ generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em
 <h4>Bahdanau-style<a class="headerlink" href="#bahdanau-style" title="Permalink to this headline">#</a></h4>
 <p>In the paper
 <a class="reference external" href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a>
-(2014), Bahdanau introduces Additive Attention being an extension to the Seq2Seq network. The architecture of this network leaves the encoder in Seq2Seq untouched (which produces hidden states <span class="math notranslate nohighlight">\(\mathbf{e}_1,\dots,\mathbf{e}_S\)</span>), and modifies only the decoder. Let’s say we are at decoder step <span class="math notranslate nohighlight">\(t\)</span>, the Attention mechanism is applied as follows:</p>
+(2014), Bahdanau introduces Additive Attention being an extension to Seq2Seq. The architecture of this network leaves the encoder in Seq2Seq untouched (which produces hidden states <span class="math notranslate nohighlight">\(\mathbf{e}_1,\dots,\mathbf{e}_S\)</span>), and modifies only the decoder. Let’s say we are at decoder step <span class="math notranslate nohighlight">\(t\)</span>, the Attention mechanism is applied as follows:</p>
 <ul class="simple">
 <li><p>The encoder hidden states are used as both keys and the corresponding values: <span class="math notranslate nohighlight">\(\mathbf{k}_s=\mathbf{v}_s=\mathbf{e}_s\)</span></p></li>
 <li><p>The <em>previous</em> decoder hidden state is used as the query: <span class="math notranslate nohighlight">\(\mathbf{q}=\mathbf{d}_{t-1}\)</span></p></li>
@@ -1535,6 +1545,7 @@ generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em
 <a class="reference external" href="https://arxiv.org/abs/1508.04025">Effective Approaches to Attention-based Neural Machine Translation</a>. It is also meant for improving Seq2Seq, with two differences.</p>
 <p>First, there is a modification in the order of steps. With an intermediate variable <span class="math notranslate nohighlight">\(\tilde{\mathbf{d}}_t\)</span> used as query, Luong-style Attention is easier to implement and thus allows different alignment functions to be pluged in. The image below shows the prediction process for the same word as Bahdanau example.</p>
 <a class="reference internal image-reference" href="../_images/attention_luong.png"><img alt="../_images/attention_luong.png" class="align-center" src="../_images/attention_luong.png" style="height: 380px;" /></a>
+<br>
 <p>The second difference in this paper, is the introduction of three new alignment functions:</p>
 <ul class="simple">
 <li><p><em>dot</em> (which is simply the dot product): <span class="math notranslate nohighlight">\(\alpha(\mathbf{q},\mathbf{k}_s)=\mathbf{q}^\text{T}\mathbf{k}_s\)</span></p></li>
@@ -1544,7 +1555,6 @@ generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em
 </section>
 <section id="intuition">
 <h4>Intuition<a class="headerlink" href="#intuition" title="Permalink to this headline">#</a></h4>
-<p>Attention is not only powerful, but also interpretable.</p>
 <p>Imagine we are translating documents from English to Vietnamese. With the Seq2Seq model, we read the full sentence at once, remember it (context vector) and then translate. Because the context vector is too small to summarize the sentence, there will be a high chance that we <em>forget</em> some details from the English document. A better way is to write down <em>keywords</em> during reading, which will be very helpful for translation later. This is exactly what Attention trying to model: how each Vietnamese word <em>attends</em> to different parts of the English sentence.</p>
 <p>So can we ask the Attention model to <em>share</em> those <em>keywords</em> with us after learning? The answer is yes, they are the set of attention weights <span class="math notranslate nohighlight">\(\alpha_{t,s}\)</span>. They can be interpreted as a <span class="math notranslate nohighlight">\(S\times T\)</span> attention matrix.</p>
 <div class="cell tag_hide-input docutils container">
@@ -1572,6 +1582,18 @@ generalizes Attention mechanism using the concept of <em>query</em>, <em>key</em
 <p>The final boss is here: state-of-the-art <a class="reference external" href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformer</a>, published in the paper
 <a class="reference external" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> (2017).
 It goes a step futher in applying Attention, which outperforms RNNs and becomes the foundation for many famous Deep Learning models such as BERT and GPT.</p>
+<section id="id5">
+<h4>Architecture<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
+<a class="reference internal image-reference" href="../_images/transformer_architecture.png"><img alt="../_images/transformer_architecture.png" class="align-center" src="../_images/transformer_architecture.png" style="height: 420px;" /></a>
+<br>
+<p>Transformer also uses an encoder-decoder architecture, but is way more complicated. Compared to Seq2Seq + Attention, here are the main points that Transformer differ:</p>
+<ul class="simple">
+<li><p>Instead of traditional RNNs, the novel <em>Self-Attention</em> mechanism is used. As the name states, this technique uses token embeddings for queries, keys and values to directly learn the relationship between words in a document.</p></li>
+<li><p>Because Self-Attention is not aware of word order, <em>Positional Encoding</em> is proposed to address the problem.</p></li>
+<li><p>The Attention mechanism accounts for communication between encoder and decoder is almost the same as Luong-style Attention, with a small change in the alignment function. It is refered to as Cross-Attention to distinguish with Self-Attention mentioned earlier.</p></li>
+<li><p>All Attention applications in Transformer are multi-head, which get us different Attention matrices and enables the ability to capture dependencies in different ranges. Luong and Bahdanau-style Attention are both single-head.</p></li>
+</ul>
+</section>
 <section id="self-attention">
 <h4>Self-attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">#</a></h4>
 </section>
