@@ -205,7 +205,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../02-mathematics/numpy-applied-mathematics.html">
-     (w) NumPy: Applied Mathematics
+     NumPy: Applied Mathematics
     </a>
    </li>
    <li class="toctree-l2">
@@ -351,7 +351,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../06-machine-learning/sklearn-feature-engineering.html">
-     Featuretools: Feature Engineering
+     Sklearn: Feature Engineering
     </a>
    </li>
    <li class="toctree-l2">
@@ -492,7 +492,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="opencv-image-processing.html">
-     (w) OpenCV: Image Processing
+     OpenCV: Image Processing
     </a>
    </li>
    <li class="toctree-l2">
@@ -512,7 +512,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="keras-convolutional-networks.html">
-     (w) Keras: Convolutional Networks
+     Keras: Convolutional Networks
     </a>
    </li>
    <li class="toctree-l2">
@@ -522,7 +522,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="transformers-transfer-learning.html">
-     (w) Transformers: Transfer Learning
+     Transformers: Transfer Learning
     </a>
    </li>
   </ul>
@@ -921,8 +921,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#self-attention">
-       Self-attention
+      <a class="reference internal nav-link" href="#multi-head-attention">
+       Multi-head Attention
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -1108,8 +1108,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#self-attention">
-       Self-attention
+      <a class="reference internal nav-link" href="#multi-head-attention">
+       Multi-head Attention
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -1588,14 +1588,19 @@ It goes a step futher in applying Attention, which outperforms RNNs and becomes 
 <br>
 <p>Transformer also uses an encoder-decoder architecture, but is way more complicated. Compared to Seq2Seq + Attention, here are the main points that Transformer differ:</p>
 <ul class="simple">
-<li><p>Instead of traditional RNNs, the novel <em>Self-Attention</em> mechanism is used. As the name states, this technique uses token embeddings for queries, keys and values to directly learn the relationship between words in a document.</p></li>
+<li><p>Instead of traditional RNNs, the novel <em>Self-Attention</em> mechanism is used. It directly learns the relationship between words in a document.</p></li>
 <li><p>Because Self-Attention is not aware of word order, <em>Positional Encoding</em> is proposed to address the problem.</p></li>
 <li><p>The Attention mechanism accounts for communication between encoder and decoder is almost the same as Luong-style Attention, with a small change in the alignment function. It is refered to as Cross-Attention to distinguish with Self-Attention mentioned earlier.</p></li>
 <li><p>All Attention applications in Transformer are multi-head, which get us different Attention matrices and enables the ability to capture dependencies in different ranges. Luong and Bahdanau-style Attention are both single-head.</p></li>
 </ul>
 </section>
-<section id="self-attention">
-<h4>Self-attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">#</a></h4>
+<section id="multi-head-attention">
+<h4>Multi-head Attention<a class="headerlink" href="#multi-head-attention" title="Permalink to this headline">#</a></h4>
+<p>The Attention mechanism in Transformer is similar to Luong-style Attention with dot product alignment function, with the following improvements:</p>
+<ul class="simple">
+<li><p>The dot-product alignment is divided by <span class="math notranslate nohighlight">\(\sqrt{d_k}\)</span>, where <span class="math notranslate nohighlight">\(d_k\)</span> is the dimension of keys. This is because for big matrices, dot products grow large in magnitude, thus push the softmax function into regions where it has extremely small gradients. The effect of this scaling factor is to stablize gradients.</p></li>
+<li><p>Queries, keys and values go through a Feed Foward layer first, before being fed into Attention mechanism. In other words, each query, key and value matrix is multiplied by a</p></li>
+</ul>
 </section>
 <section id="scaled-dot-product">
 <h4>Scaled dot product<a class="headerlink" href="#scaled-dot-product" title="Permalink to this headline">#</a></h4>
