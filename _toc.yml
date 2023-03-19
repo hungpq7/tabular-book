@@ -23,7 +23,7 @@ chapters:
   - file: 02-mathematics/numpy-statistics
   - file: 02-mathematics/scipy-hypothesis-testing
   - file: 02-mathematics/numpy-applied-mathematics
-    title: "(w) NumPy: Applied Mathematics"
+    # title: "(w) NumPy: Applied Mathematics"
   - file: 02-mathematics/networkx-network-analysis
     title: "(w) NetworkX: Network Analysis"
 
@@ -92,15 +92,15 @@ chapters:
   sections:
   - file: 10-deep-learning/gensim-text-mining
   - file: 10-deep-learning/opencv-image-processing
-    title: "(w) OpenCV: Image Processing"
+    # title: "(w) OpenCV: Image Processing"
   - file: 10-deep-learning/numpy-gradient-descent
   - file: 10-deep-learning/keras-multilayer-perceptron
   - file: 10-deep-learning/keras-recurrent-networks
   - file: 10-deep-learning/keras-convolutional-networks
-    title: "(w) Keras: Convolutional Networks"
+    # title: "(w) Keras: Convolutional Networks"
   - file: 10-deep-learning/pytorch-deep-learning
   - file: 10-deep-learning/transformers-transfer-learning
-    title: "(w) Transformers: Transfer Learning"
+    # title: "(w) Transformers: Transfer Learning"
 
 # R Programming
 - file: 11-r-programing/_intro
