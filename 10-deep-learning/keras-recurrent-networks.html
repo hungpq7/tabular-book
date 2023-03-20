@@ -926,13 +926,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#scaled-dot-product">
-       Scaled dot product
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#positional-encoding">
-       Positional encoding
+      <a class="reference internal nav-link" href="#self-attention">
+       Self-Attention
       </a>
      </li>
     </ul>
@@ -1113,13 +1108,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#scaled-dot-product">
-       Scaled dot product
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#positional-encoding">
-       Positional encoding
+      <a class="reference internal nav-link" href="#self-attention">
+       Self-Attention
       </a>
      </li>
     </ul>
@@ -1586,27 +1576,27 @@ It goes a step futher in applying Attention, which outperforms RNNs and becomes 
 <h4>Architecture<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
 <a class="reference internal image-reference" href="../_images/transformer_architecture.png"><img alt="../_images/transformer_architecture.png" class="align-center" src="../_images/transformer_architecture.png" style="height: 420px;" /></a>
 <br>
-<p>Transformer also uses an encoder-decoder architecture, but is way more complicated. Compared to Seq2Seq + Attention, here are the main points that Transformer differ:</p>
-<ul class="simple">
-<li><p>Instead of traditional RNNs, the novel <em>Self-Attention</em> mechanism is used. It directly learns the relationship between words in a document.</p></li>
-<li><p>Because Self-Attention is not aware of word order, <em>Positional Encoding</em> is proposed to address the problem.</p></li>
-<li><p>The Attention mechanism accounts for communication between encoder and decoder is almost the same as Luong-style Attention, with a small change in the alignment function. It is refered to as Cross-Attention to distinguish with Self-Attention mentioned earlier.</p></li>
-<li><p>All Attention applications in Transformer are multi-head, which get us different Attention matrices and enables the ability to capture dependencies in different ranges. Luong and Bahdanau-style Attention are both single-head.</p></li>
-</ul>
+<p>Transformer also uses an encoder-decoder architecture. The encoder is composed of 6 identical layers; each layer has two
+sub-layers. The first is a Multi-head Self-Attention mechanism, and the second is a position-wise Feed-Forward network. Both sub-layers are wrapped by a Residual Connection, followed by Layer Normalization (denoted by <em>Add &amp; Norm</em> in the image). The output of the last encoder layer will be used as input for the decoder.</p>
+<p>The decoder is also composed of 6 identical layers. These layers are similar to encoder layers, with two changes. First, the Self-Attention sub-layer is applied with a mask vector so that the prediction of a token is only made by previous tokens. Second, a third sub-layer being a Multi-head Cross-Attention mechanism is inserted to each decoder layer, in order to perform attention over the encoder output.</p>
 </section>
 <section id="multi-head-attention">
 <h4>Multi-head Attention<a class="headerlink" href="#multi-head-attention" title="Permalink to this headline">#</a></h4>
 <p>The Attention mechanism in Transformer is similar to Luong-style Attention with dot product alignment function, with the following improvements:</p>
 <ul class="simple">
 <li><p>The dot-product alignment is divided by <span class="math notranslate nohighlight">\(\sqrt{d_k}\)</span>, where <span class="math notranslate nohighlight">\(d_k\)</span> is the dimension of keys. This is because for big matrices, dot products grow large in magnitude, thus push the softmax function into regions where it has extremely small gradients. The effect of this scaling factor is to stablize gradients.</p></li>
-<li><p>Queries, keys and values go through a Feed Foward layer first, before being fed into Attention mechanism. In other words, each query, key and value matrix is multiplied by a</p></li>
+<li><p>Queries, keys and values go through a Feed Foward layer first, before being fed into Attention mechanism. This layer is represented as matrix multiplication, in which the respective weight matrices are <span class="math notranslate nohighlight">\(\mathbf{W}_q\)</span>, <span class="math notranslate nohighlight">\(\mathbf{W}_k\)</span> and <span class="math notranslate nohighlight">\(\mathbf{W}_v\)</span>.</p></li>
+<li><p>Each Attention mechanism described earlier is a called a <em>head</em>. Transformer uses Multi-head Attention, each head learns a different set of weight matrices and thus can capture dependencies in a different range.</p></li>
 </ul>
 </section>
-<section id="scaled-dot-product">
-<h4>Scaled dot product<a class="headerlink" href="#scaled-dot-product" title="Permalink to this headline">#</a></h4>
-</section>
-<section id="positional-encoding">
-<h4>Positional encoding<a class="headerlink" href="#positional-encoding" title="Permalink to this headline">#</a></h4>
+<section id="self-attention">
+<h4>Self-Attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p>Instead of traditional RNNs, the novel <em>Self-Attention</em> mechanism is used. It directly learns the relationship between words in a document.</p></li>
+<li><p>Because Self-Attention is not aware of word order, <em>Positional Encoding</em> is proposed to address the problem.</p></li>
+<li><p>The Attention mechanism accounts for communication between encoder and decoder is almost the same as Luong-style Attention, with a small change in the alignment function. It is refered to as Cross-Attention to distinguish with Self-Attention mentioned earlier.</p></li>
+<li><p>All Attention applications in Transformer are multi-head, which get us different Attention matrices and enables the ability to capture dependencies in different ranges. Luong and Bahdanau-style Attention are both single-head.</p></li>
+</ul>
 </section>
 </section>
 </section>
