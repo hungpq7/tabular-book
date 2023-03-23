@@ -1591,12 +1591,55 @@ sub-layers. The first is a Multi-head Self-Attention mechanism, and the second i
 </section>
 <section id="self-attention">
 <h4>Self-Attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">#</a></h4>
+<p>Recurrent networks, despite how complicated the architectures are, still struggle from the problem of capturing long-term dependencies. Another weakness is the sequential behaviour, which prevents training in parallel and thus makes the network not scalable. So, instead of developing a new Recurrent architecture, Transformer’s author propose and apply Self-Attention which addresses both problems.</p>
+<p>Self-Attention uses the embeddings of the source sentence for all queries, keys and values. What Self-Attention trying to learn can be thought of a correlation matrix in which each token represents a feature. Unfortunately, Self-Attention by nature is not aware of order of words. Thus, a technique called Positional Encoding is added to the input embeddings. Denote <span class="math notranslate nohighlight">\(D\)</span> the size of embedding vectors and <span class="math notranslate nohighlight">\(T\)</span> the sequence length, the formula for Positional Encoding is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{PE}_{t,d}=\begin{cases}
+\cos\left(\dfrac{t}{1000^{d/D}}\right) &amp; \text{for }d=1,3,5,\ldots \\
+\sin\left(\dfrac{t}{1000^{d/D}}\right) &amp; \text{for }d=2,4,6,\ldots
+\end{cases}\end{split}\]</div>
+<p>Positional Encoding is a simple yet genius technique that satisfies the following desired properties:</p>
 <ul class="simple">
-<li><p>Instead of traditional RNNs, the novel <em>Self-Attention</em> mechanism is used. It directly learns the relationship between words in a document.</p></li>
-<li><p>Because Self-Attention is not aware of word order, <em>Positional Encoding</em> is proposed to address the problem.</p></li>
-<li><p>The Attention mechanism accounts for communication between encoder and decoder is almost the same as Luong-style Attention, with a small change in the alignment function. It is refered to as Cross-Attention to distinguish with Self-Attention mentioned earlier.</p></li>
-<li><p>All Attention applications in Transformer are multi-head, which get us different Attention matrices and enables the ability to capture dependencies in different ranges. Luong and Bahdanau-style Attention are both single-head.</p></li>
+<li><p>The encoding is unique for each position</p></li>
+<li><p>The distance between every two consecutive time steps is consistant</p></li>
+<li><p>Ability to generate encodings for any sequence length without any efforts.</p></li>
 </ul>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">positional_encoding</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">length</span><span class="p">,</span> <span class="n">depth</span>
+    <span class="n">PE</span> <span class="o">=</span> <span class="p">[[</span><span class="n">t</span><span class="o">/</span><span class="mi">10000</span><span class="o">**</span><span class="p">(</span><span class="n">d</span><span class="o">/</span><span class="n">D</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">D</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="n">PE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">PE</span><span class="p">)</span>
+
+    <span class="n">PE</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">PE</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">PE</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">PE</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">PE</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PE</span> <span class="o">=</span> <span class="n">positional_encoding</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">matrixDistance</span> <span class="o">=</span> <span class="n">PE</span><span class="nd">@PE</span><span class="o">.</span><span class="n">T</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">PE</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">mosaic</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;pe&#39;</span><span class="p">,</span> <span class="s1">&#39;pe&#39;</span><span class="p">,</span> <span class="s1">&#39;distance&#39;</span><span class="p">]]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot_mosaic</span><span class="p">(</span><span class="n">mosaic</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="s1">&#39;pe&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">PE</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="s1">&#39;pe&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Positional Encoding&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">matrixDistance</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distance Matrix&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/keras-recurrent-networks_48_0.png"><img alt="../_images/keras-recurrent-networks_48_0.png" class="align-center" src="../_images/keras-recurrent-networks_48_0.png" style="width: 872.0px; height: 322.5px;" /></a>
+</div>
+</div>
 </section>
 </section>
 </section>
@@ -1617,6 +1660,7 @@ sub-layers. The first is a Multi-head Self-Attention mechanism, and the second i
 <li><p><em>sebastianraschka - <a class="reference external" href="https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html">Understanding and Coding the Self-Attention Mechanism of Large Language Models From Scratch</a></em></p></li>
 <li><p><em>slds-lmu.github - <a class="reference external" href="https://slds-lmu.github.io/seminar_nlp_ss20/attention-and-self-attention-for-nlp.html">Attention and Self-Attention for NLP</a></em></p></li>
 <li><p><em>e2eml - <a class="reference external" href="https://e2eml.school/transformers.html">Transformers from Scratch</a></em></p></li>
+<li><p><em>notesonai - <a class="reference external" href="https://notesonai.com/Positional+Encoding">Positional Encoding</a></em></p></li>
 </ul>
 <hr class="docutils" />
 <ul class="simple">
@@ -1629,7 +1673,6 @@ sub-layers. The first is a Multi-head Self-Attention mechanism, and the second i
 <li><p><a class="reference external" href="https://theaisummer.com/attention/">https://theaisummer.com/attention/</a></p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f">https://towardsdatascience.com/intuitive-understanding-of-attention-mechanism-in-deep-learning-6c9482aecf4f</a></p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7">https://towardsdatascience.com/word-level-english-to-marathi-neural-machine-translation-using-seq2seq-encoder-decoder-lstm-model-1a913f2dc4a7</a></p></li>
-<li><p><a class="reference external" href="https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html">https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html</a></p></li>
 </ul>
 </section>
 <section id="install">
