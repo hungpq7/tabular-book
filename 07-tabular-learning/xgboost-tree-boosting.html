@@ -858,8 +858,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#exclusive-feature-bundling">
-       Exclusive feature bundling
+      <a class="reference internal nav-link" href="#feature-bundling">
+       Feature bundling
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -1072,8 +1072,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#exclusive-feature-bundling">
-       Exclusive feature bundling
+      <a class="reference internal nav-link" href="#feature-bundling">
+       Feature bundling
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -1222,6 +1222,7 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">ngboost.distns</span> <span class="kn">import</span> <span class="n">Poisson</span><span class="p">,</span> <span class="n">Bernoulli</span><span class="p">,</span> <span class="n">k_categorical</span><span class="p">,</span> <span class="n">ClassificationDistn</span>
 <span class="kn">from</span> <span class="nn">ngboost.distns</span> <span class="kn">import</span> <span class="n">Normal</span><span class="p">,</span> <span class="n">Laplace</span><span class="p">,</span> <span class="n">Cauchy</span><span class="p">,</span> <span class="n">Exponential</span><span class="p">,</span> <span class="n">RegressionDistn</span>
 <span class="kn">from</span> <span class="nn">ngboost.scores</span> <span class="kn">import</span> <span class="n">LogScore</span><span class="p">,</span> <span class="n">CRPScore</span>
+<span class="kn">import</span> <span class="nn">dtreeviz</span>
 
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
@@ -1388,7 +1389,7 @@ By enforcing such a relationship, we are helping our model to learn patterns bet
 <span class="c1"># train the model with early stopping of 10% of number of trees</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span>
-    <span class="c1"># eval_set=[(xValid, yValid)],</span>
+    <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">xValid</span><span class="p">,</span> <span class="n">yValid</span><span class="p">)],</span>
 <span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
@@ -1428,9 +1429,8 @@ By enforcing such a relationship, we are helping our model to learn patterns bet
 [26]	validation_0-logloss:0.04881	validation_0-auc:0.99899
 [27]	validation_0-logloss:0.04581	validation_0-auc:0.99899
 [28]	validation_0-logloss:0.04429	validation_0-auc:0.99899
-[29]	validation_0-logloss:0.04409	validation_0-auc:0.99899
-[29]	validation_0-logloss:0.04409	validation_0-auc:0.99899
-0:00:00.194506
+[28]	validation_0-logloss:0.04429	validation_0-auc:0.99899
+0:00:00.145552
 </pre></div>
 </div>
 </div>
@@ -1494,17 +1494,23 @@ By enforcing such a relationship, we are helping our model to learn patterns bet
 <a class="reference internal image-reference" href="../_images/xgboost-tree-boosting_21_0.png"><img alt="../_images/xgboost-tree-boosting_21_0.png" class="align-center" src="../_images/xgboost-tree-boosting_21_0.png" style="width: 420.0px; height: 180.5px;" /></a>
 </div>
 </div>
-<div class="cell tag_hide-output docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-<span class="n">xgb</span><span class="o">.</span><span class="n">plot_tree</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dtreeviz</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">dtreeviz</span><span class="o">.</span><span class="n">model</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">xTrain</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">yTrain</span><span class="p">,</span>
+    <span class="n">tree_index</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+    <span class="n">feature_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">xTrain</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+    <span class="n">target_name</span><span class="o">=</span><span class="n">yTrain</span><span class="o">.</span><span class="n">name</span>
+<span class="p">)</span>
+<span class="n">explainer</span><span class="o">.</span><span class="n">view</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/xgboost-tree-boosting_22_0.png"><img alt="../_images/xgboost-tree-boosting_22_0.png" class="align-center" src="../_images/xgboost-tree-boosting_22_0.png" style="width: 938.0px; height: 240.4px;" /></a>
-</div>
+<img alt="../_images/xgboost-tree-boosting_22_0.svg" src="../_images/xgboost-tree-boosting_22_0.svg" /></div>
 </div>
 </section>
 <section id="xgboost-interface">
@@ -1586,6 +1592,47 @@ By enforcing such a relationship, we are helping our model to learn patterns bet
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yTrain</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>395    1
+236    0
+394    1
+319    1
+175    1
+      ..
+438    1
+168    0
+166    1
+79     1
+551    1
+Name: target, Length: 341, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dtreeviz</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">dtreeviz</span><span class="o">.</span><span class="n">model</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">xTrain</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">yTrain</span><span class="p">,</span>
+    <span class="n">tree_index</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">feature_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">xTrain</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+    <span class="n">target_name</span><span class="o">=</span><span class="n">yTrain</span><span class="o">.</span><span class="n">name</span>
+<span class="p">)</span>
+<span class="n">explainer</span><span class="o">.</span><span class="n">view</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/xgboost-tree-boosting_29_0.svg" src="../_images/xgboost-tree-boosting_29_0.svg" /></div>
 </div>
 </section>
 <section id="multilabel-problem">
@@ -1740,8 +1787,8 @@ By enforcing such a relationship, we are helping our model to learn patterns bet
 <p><em>Step 2:</em> Perform random sampling <span class="math notranslate nohighlight">\(\lfloor bN \rfloor\)</span> observations from the rest of the data. In order to compensate the information losses that affect data distribution, each instance in this well-trained set is amplified by a constant <span class="math notranslate nohighlight">\(\dfrac{1-a}{b}&gt;1\)</span> when calculating information gain in the next tree. “One-side sampling” in fact means that sampling is done on the small gradient side.</p>
 <p><em>Step 3:</em> Combine the under-trained set and the well-trained set above to form a single set to be used in learning the Decision Tree. By using this technique, <em>we put more focus on the under-trained instances without changing the original data distribution by much</em>.</p>
 </section>
-<section id="exclusive-feature-bundling">
-<h4>Exclusive feature bundling<a class="headerlink" href="#exclusive-feature-bundling" title="Permalink to this headline">#</a></h4>
+<section id="feature-bundling">
+<h4>Feature bundling<a class="headerlink" href="#feature-bundling" title="Permalink to this headline">#</a></h4>
 <p>One of the biggest problems that occur in high dimensional data is the sparsity. Sparse features spend A specific case is when some features <em>never</em> or <em>rarely</em> take non-zero values <em>simultaneously</em>; such features are called <em>mutually exclusive</em>. A typical situation is that features returned by an one-hot encoder are perfectly mutually exclusive. This situation is rarely met in real-world datasets, thus the EFB algorithm allows a small fraction of conflicts. To achieve this, two questions need to be answered: (1) <em>Which features should be bundled together?</em> and (2) <em>How to construct the bundles?</em>.</p>
 <p><em>Step 1:</em> Greedy bundling.</p>
 <ul class="simple">
@@ -2388,7 +2435,7 @@ Shrink model to first 343 iterations.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/xgboost-tree-boosting_84_0.svg" src="../_images/xgboost-tree-boosting_84_0.svg" /></div>
+<img alt="../_images/xgboost-tree-boosting_86_0.svg" src="../_images/xgboost-tree-boosting_86_0.svg" /></div>
 </div>
 </section>
 <section id="catboost-interface">
