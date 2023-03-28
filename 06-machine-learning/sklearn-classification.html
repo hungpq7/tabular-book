@@ -52,8 +52,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -865,11 +865,6 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#tree-structure">
-       Tree structure
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#multilabel-problem">
        Multilabel problem
       </a>
@@ -1068,11 +1063,6 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#tree-structure">
-       Tree structure
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#multilabel-problem">
        Multilabel problem
       </a>
@@ -1196,6 +1186,7 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">GridSearchCV</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span> <span class="k">as</span> <span class="n">AUC</span><span class="p">,</span> <span class="n">fbeta_score</span> <span class="k">as</span> <span class="n">FScore</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">paired_cosine_distances</span><span class="p">,</span> <span class="n">cosine_distances</span>
+<span class="kn">import</span> <span class="nn">dtreeviz</span>
 
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">])</span>
@@ -1505,7 +1496,7 @@ beside <a class="reference external" href="https://scikit-learn.org/stable/modul
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00.301890
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00.300512
 </pre></div>
 </div>
 </div>
@@ -1564,156 +1555,26 @@ beside <a class="reference external" href="https://scikit-learn.org/stable/modul
 </section>
 <section id="interpretation">
 <h4>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this headline">#</a></h4>
-<p>The Scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.plot_tree.html"><code class="docutils literal notranslate"><span class="pre">plot_tree()</span></code></a> function plots the entire structure of a Decision Tree model. In this example, I use a max depth of 3 for better visualization. Each color represents a class, the darker the color a node has, the purer it is. In contrast, it’s very hard to make a decision for bright nodes.</p>
+<p>Scikit-learn has two functions, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.plot_tree.html"><code class="docutils literal notranslate"><span class="pre">plot_tree()</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier.decision_path"><code class="docutils literal notranslate"><span class="pre">decision_path()</span></code></a> for visualization of the learned tree, but we are going to use a better library, <a class="reference external" href="https://github.com/parrt/dtreeviz">dtreeviz</a> to do this task.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
-<span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">dtreeviz</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">xTrain</span><span class="p">,</span> <span class="n">yTrain</span><span class="p">,</span> <span class="n">target_name</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">explainer</span><span class="o">.</span><span class="n">view</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/sklearn-classification_32_0.png"><img alt="../_images/sklearn-classification_32_0.png" class="align-center" src="../_images/sklearn-classification_32_0.png" style="width: 794.9000000000001px; height: 322.0px;" /></a>
-</div>
-</div>
-</section>
-<section id="tree-structure">
-<h4>Tree structure<a class="headerlink" href="#tree-structure" title="Permalink to this headline">#</a></h4>
-<p>In this section, we discuss the underlying <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html">tree structure</a> and how to use the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier.decision_path"><code class="docutils literal notranslate"><span class="pre">decision_path()</span></code></a> method to get access to the predicting process.</p>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_tree_structure</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-    <span class="n">nNode</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tree_</span><span class="o">.</span><span class="n">node_count</span>
-    <span class="n">childLeftList</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tree_</span><span class="o">.</span><span class="n">children_left</span>
-    <span class="n">childRightList</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tree_</span><span class="o">.</span><span class="n">children_right</span>
-    <span class="n">thresholdList</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tree_</span><span class="o">.</span><span class="n">threshold</span>
-    <span class="n">valuesList</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tree_</span><span class="o">.</span><span class="n">value</span>
-    
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">featureList</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;feature</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">tree_</span><span class="o">.</span><span class="n">feature</span><span class="p">]</span>
-        <span class="n">featureList</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">feature_names_in_</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="n">nodeDepthList</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">nNode</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-    <span class="n">isLeafList</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">nNode</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-    <span class="n">stack</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>  <span class="c1"># start with the root node id (0) and its depth (0)</span>
-    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="c1"># `pop` ensures each node is only visited once</span>
-        <span class="n">nodeId</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-        <span class="n">nodeDepthList</span><span class="p">[</span><span class="n">nodeId</span><span class="p">]</span> <span class="o">=</span> <span class="n">depth</span>
-
-        <span class="c1"># If the left and right child of a node is not the same we have a split node</span>
-        <span class="n">isSplitNode</span> <span class="o">=</span> <span class="n">childLeftList</span><span class="p">[</span><span class="n">nodeId</span><span class="p">]</span> <span class="o">!=</span> <span class="n">childRightList</span><span class="p">[</span><span class="n">nodeId</span><span class="p">]</span>
-        <span class="c1"># If a split node, append left and right children and depth to `stack`</span>
-        <span class="c1"># so we can loop through them</span>
-        <span class="k">if</span> <span class="n">isSplitNode</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">childLeftList</span><span class="p">[</span><span class="n">nodeId</span><span class="p">],</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">childRightList</span><span class="p">[</span><span class="n">nodeId</span><span class="p">],</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">isLeafList</span><span class="p">[</span><span class="n">nodeId</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;The binary tree structure has </span><span class="si">{</span><span class="n">nNode</span><span class="si">}</span><span class="s2"> nodes.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Data smaller than threshold goes to the left, else go to the right.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Internal syntax: &lt;splitCondition&gt;, &lt;childLeft&gt;, &lt;childRight&gt;.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Leaf syntax: &lt;prediction&gt;, &lt;probability&gt;.</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nNode</span><span class="p">):</span>
-        <span class="n">space</span> <span class="o">=</span> <span class="n">nodeDepthList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
-        <span class="n">nodeId</span> <span class="o">=</span> <span class="n">i</span>
-        <span class="n">childLeft</span> <span class="o">=</span> <span class="n">childLeftList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">childRight</span> <span class="o">=</span> <span class="n">childRightList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">feature</span> <span class="o">=</span> <span class="n">featureList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">threshold</span> <span class="o">=</span> <span class="n">thresholdList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">values</span> <span class="o">=</span> <span class="n">valuesList</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="n">predictClass</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
-        <span class="n">predictProb</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">predictClass</span><span class="p">]</span> <span class="o">/</span> <span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-
-        <span class="k">if</span> <span class="n">isLeafList</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">space</span><span class="si">}</span><span class="s2">NODE=</span><span class="si">{</span><span class="n">nodeId</span><span class="si">}</span><span class="s2"> (leaf): &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;class=</span><span class="si">{</span><span class="n">predictClass</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">predictProb</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">space</span><span class="si">}</span><span class="s2">NODE=</span><span class="si">{</span><span class="n">nodeId</span><span class="si">}</span><span class="s2"> (internal): &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">threshold</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, node</span><span class="si">{</span><span class="n">childLeft</span><span class="si">}</span><span class="s2">, node</span><span class="si">{</span><span class="n">childRight</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-</pre></div>
-</div>
-</div>
+<img alt="../_images/sklearn-classification_32_0.svg" src="../_images/sklearn-classification_32_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_tree_structure</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">explainer</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">sample</span><span class="p">,</span> <span class="n">fancy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The binary tree structure has 25 nodes.
-Data smaller than threshold goes to the left, else go to the right.
-Internal syntax: &lt;splitCondition&gt;, &lt;childLeft&gt;, &lt;childRight&gt;.
-Leaf syntax: &lt;prediction&gt;, &lt;probability&gt;.
-
-NODE=0 (internal): mean_radius=106.05, node1, node12
-	NODE=1 (internal): mean_texture=0.16, node2, node9
-		NODE=2 (internal): mean_perimeter=0.14, node3, node6
-			NODE=3 (internal): mean_area=0.64, node4, node5
-				NODE=4 (leaf): class=1, 100.00%
-				NODE=5 (leaf): class=1, 66.67%
-			NODE=6 (internal): mean_concavity=20.84, node7, node8
-				NODE=7 (leaf): class=1, 100.00%
-				NODE=8 (leaf): class=0, 100.00%
-		NODE=9 (internal): mean_fractal_dimension=16.22, node10, node11
-			NODE=10 (leaf): class=1, 100.00%
-			NODE=11 (leaf): class=0, 100.00%
-	NODE=12 (internal): perimeter_error=20.65, node13, node18
-		NODE=13 (internal): area_error=116.80, node14, node15
-			NODE=14 (leaf): class=1, 100.00%
-			NODE=15 (internal): compactness_error=0.01, node16, node17
-				NODE=16 (leaf): class=1, 100.00%
-				NODE=17 (leaf): class=0, 100.00%
-		NODE=18 (internal): symmetry_error=0.05, node19, node22
-			NODE=19 (internal): fractal_dimension_error=0.02, node20, node21
-				NODE=20 (leaf): class=0, 100.00%
-				NODE=21 (leaf): class=1, 100.00%
-			NODE=22 (internal): worst_perimeter=0.08, node23, node24
-				NODE=23 (leaf): class=1, 100.00%
-				NODE=24 (leaf): class=0, 100.00%
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_decision_path</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decision_path</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">path</span><span class="p">]</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39; -&gt; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">xTest</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
-<span class="n">print_decision_path</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>node0 -&gt; node12 -&gt; node13 -&gt; node14
-</pre></div>
-</div>
-</div>
+<img alt="../_images/sklearn-classification_33_0.svg" src="../_images/sklearn-classification_33_0.svg" /></div>
 </div>
 </section>
 <section id="multilabel-problem">

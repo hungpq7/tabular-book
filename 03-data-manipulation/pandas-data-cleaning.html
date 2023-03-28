@@ -52,8 +52,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -3230,18 +3230,18 @@ Name: information, dtype: object
 </tbody>
 </table>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="7cabc564-5f69-4573-897b-fef7bcc87552" name="78f83e8f-423a-4006-9d94-7ce36f70a973" type="radio">
-</input><label class="sd-tab-label" for="7cabc564-5f69-4573-897b-fef7bcc87552">
+<input checked="checked" id="1b5d4176-169c-40a1-a4ba-0bd9a6083065" name="855a0b4f-722e-4a6d-b286-04d37928fc59" type="radio">
+</input><label class="sd-tab-label" for="1b5d4176-169c-40a1-a4ba-0bd9a6083065">
 MCAR</label><div class="sd-tab-content docutils">
 <p>MCAR (Missing Completely At Random): The name says it all, there’s no actual reason behind the missing values. This type of missing does not lead to bias, therefore <em>deletion</em> and <em>imputation</em> are both suitable solutions.</p>
 </div>
-<input id="9682a7db-20da-4299-8c32-29f450c2afd3" name="78f83e8f-423a-4006-9d94-7ce36f70a973" type="radio">
-</input><label class="sd-tab-label" for="9682a7db-20da-4299-8c32-29f450c2afd3">
+<input id="93f13331-3bad-45da-b83d-5a37dd08af2c" name="855a0b4f-722e-4a6d-b286-04d37928fc59" type="radio">
+</input><label class="sd-tab-label" for="93f13331-3bad-45da-b83d-5a37dd08af2c">
 MAR</label><div class="sd-tab-content docutils">
 <p>MAR (Missing At Random): The missing values in a feature relate to another feature. In the example above, people under 25 years old miss their IQ score. Deleting these records causes bias, making <em>imputation</em> the best choice.</p>
 </div>
-<input id="03999a4e-6cc4-4959-ba1f-33c8d281b0da" name="78f83e8f-423a-4006-9d94-7ce36f70a973" type="radio">
-</input><label class="sd-tab-label" for="03999a4e-6cc4-4959-ba1f-33c8d281b0da">
+<input id="07c25d44-c0cd-454f-ad70-4f20b40ca02d" name="855a0b4f-722e-4a6d-b286-04d37928fc59" type="radio">
+</input><label class="sd-tab-label" for="07c25d44-c0cd-454f-ad70-4f20b40ca02d">
 MAR</label><div class="sd-tab-content docutils">
 <p>MNAR (Missing Not At Random): Assume people with IQ score of 100 or less tend to refuse to answer the survey. There is no way missing data can be inferred only by looking at collected data. Either <em>deletion</em> or <em>imputation</em> makes data biased, and Data Scientists may not even realize if they are facing a MNAR case.</p>
 </div>
